@@ -1,0 +1,319 @@
+@extends('layouts.horizon')
+
+@section('page_title', 'Pengeluaran')
+
+@section('content')
+	<div class="hz-top-row">
+		<div>
+			<h2 class="hz-top-title">Pengeluaran</h2>
+			<p class="hz-top-sub">Daftar biaya dan pengeluaran operasional.</p>
+		</div>
+		<div class="hz-top-actions" style="display:flex; align-items:center; gap:10px;">
+			<form method="GET" action="{{ route('expenses.index') }}" style="display:flex; align-items:center; gap:6px;">
+				<input type="text" name="search" value="{{ request('search') }}" placeholder="Cari kategori / keterangan" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 10px; font-size:0.8rem; color:#e5e7eb; min-width:200px;">
+				<select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 8px; font-size:0.8rem; color:#e5e7eb;">
+					<option value="10" {{ request('per_page', 20) == 10 ? 'selected' : '' }}>10</option>
+					<option value="20" {{ request('per_page', 20) == 20 ? 'selected' : '' }}>20</option>
+					<option value="50" {{ request('per_page', 20) == 50 ? 'selected' : '' }}>50</option>
+				</select>
+			</form>
+			<a href="{{ route('expenses.export.excel', request()->only('search')) }}" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; color:#e5e7eb; padding:6px 10px; font-size:0.8rem; text-decoration:none;">
+				Export Excel
+			</a>
+			<a href="{{ route('expenses.export.pdf', request()->only('search')) }}" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; color:#e5e7eb; padding:6px 10px; font-size:0.8rem; text-decoration:none;">
+				Export PDF
+			</a>
+			<form id="expenses-bulk-delete-form" onsubmit="return false;">
+				<button type="button" id="expenses-bulk-delete-btn" style="display:none; border-radius:999px; border:none; background:#b91c1c; color:#fee2e2; padding:6px 12px; font-size:0.8rem; font-weight:600; cursor:pointer;">
+					Delete selected
+				</button>
+			</form>
+			<a href="{{ route('expenses.create') }}" class="hz-btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; padding: 10px 16px; gap: 8px;">
+				<svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M10 4.5V15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+					<path d="M4.5 10H15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+				</svg>
+				<span>Catat Pengeluaran</span>
+			</a>
+		</div>
+	</div>
+
+	@if ($message = Session::get('success'))
+		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; color: #86efac;">
+			{{ $message }}
+		</div>
+	@endif
+
+	@if ($message = Session::get('error'))
+		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #fca5a5;">
+			{{ $message }}
+		</div>
+	@endif
+
+	<section class="hz-secondary-grid" style="margin-top: 24px;">
+		<div class="hz-card" style="grid-column: 1 / -1;">
+			<div class="hz-card-header" style="margin-bottom: 12px; display:flex; justify-content:space-between; align-items:center;">
+				<div>
+					<p class="hz-card-title">Daftar pengeluaran</p>
+					<p class="hz-card-sub">Total pengeluaran tercatat: <strong>Rp {{ number_format($summaryTotal ?? 0, 0, ',', '.') }}</strong></p>
+				</div>
+			</div>
+
+			<div style="margin-top: 8px; overflow-x: auto;">
+				@if ($expenses->count() > 0)
+					<form id="expenses-table-form" method="POST" action="{{ route('expenses.bulk-delete.post') }}">
+						@csrf
+						<input type="hidden" name="ids" id="expensesBulkIds">
+						<table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
+						<thead>
+							<tr style="border-bottom: 1px solid rgba(251, 191, 36, 0.4); color:#9ca3af;">
+									<th style="padding:14px 10px; text-align:center; width:36px;">
+										<input type="checkbox" id="expenses-select-all" style="cursor:pointer;">
+									</th>
+									<th style="text-align:left; padding:14px 10px;">Tanggal</th>
+								<th style="text-align:left; padding:14px 10px;">Kategori</th>
+								<th style="text-align:left; padding:14px 10px;">Keterangan</th>
+								<th style="text-align:right; padding:14px 10px;">Nominal</th>
+								<th style="text-align:left; padding:14px 10px;">Metode</th>
+								<th style="text-align:right; padding:14px 10px;">Aksi</th>
+							</tr>
+						</thead>
+							<tbody>
+								@foreach ($expenses as $e)
+									<tr style="border-bottom: 1px solid rgba(15,23,42,0.8);">
+										<td style="padding:14px 10px; text-align:center;">
+											<input type="checkbox" value="{{ $e->id }}" class="expenses-row-checkbox" style="cursor:pointer;">
+										</td>
+										<td style="padding:14px 10px; color: #e5e7eb;">{{ $e->tanggal ? $e->tanggal->format('d/m/Y') : ($e->created_at ? $e->created_at->format('d/m/Y') : '-') }}</td>
+									<td style="padding:14px 10px; color: #cbd5e1;">{{ $e->kategori ?? '-' }}</td>
+									<td style="padding:14px 10px; color: #9ca3af; max-width: 320px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ $e->keterangan ?? '-' }}</td>
+									<td style="padding:14px 10px; text-align:right; font-weight: 600; color: #fbbf24;">Rp {{ number_format($e->nominal, 0, ',', '.') }}</td>
+									<td style="padding:14px 10px; color: #cbd5e1;">{{ $e->metode_pembayaran === 'cash' ? 'Cash' : 'Non-Cash' }}</td>
+									<td style="padding:14px 10px; text-align:right; position: relative;">
+										<button type="button" class="hz-more-btn" style="background: transparent; border:none; color:#9ca3af; cursor:pointer; padding:4px 8px; border-radius:999px;">
+											&#8942;
+										</button>
+										<div class="hz-more-menu actions-dropdown" style="display:none; position:absolute; right:10px; top:32px; background:#020617; border:1px solid rgba(148,163,184,0.4); border-radius:8px; min-width:160px; z-index:10;">
+											<a href="{{ route('expenses.edit', $e->id) }}" class="actions-dropdown-item edit">
+												<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
+													<path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+												</svg>
+												<span>Edit</span>
+											</a>
+											<button type="button" class="actions-dropdown-item delete js-row-delete" data-url="{{ route('expenses.destroy.post', $e->id) }}" style="width:100%; text-align:left;">
+												<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
+													<path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+												</svg>
+												<span>Hapus</span>
+											</button>
+										</div>
+									</td>
+								</tr>
+							@endforeach
+							</tbody>
+						</table>
+					</form>
+					@if (method_exists($expenses, 'links'))
+						<div style="margin-top: 12px; display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; color:#9ca3af;">
+							<div>
+								Menampilkan {{ $expenses->firstItem() ?? 0 }} - {{ $expenses->lastItem() ?? 0 }} dari {{ $expenses->total() }} pengeluaran
+							</div>
+							<div>
+								{{ $expenses->links() }}
+							</div>
+						</div>
+					@endif
+				@else
+					<div style="padding: 40px; text-align: center; color: #9ca3af;">
+						<p style="margin-bottom: 12px;">Belum ada pengeluaran tercatat.</p>
+						<a href="{{ route('expenses.create') }}" class="hz-btn-primary" style="display: inline-block; text-decoration: none; padding: 10px 16px; border-radius: 10px;">Catat Pengeluaran Pertama</a>
+					</div>
+				@endif
+			</div>
+		</div>
+	</section>
+
+	<style>
+		.actions-dropdown {
+			background: #020617;
+			border-radius: 8px;
+			padding: 4px 0;
+			box-shadow: 0 10px 25px rgba(15,23,42,0.7);
+		}
+
+		.actions-dropdown-item {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			padding: 8px 12px;
+			font-size: 0.85rem;
+			text-decoration: none;
+			border: none;
+			background: transparent;
+			color: #e5e7eb;
+			cursor: pointer;
+		}
+
+		.actions-dropdown-item svg {
+			width: 14px;
+			height: 14px;
+		}
+
+		.actions-dropdown-item:hover {
+			background: rgba(148,163,184,0.15);
+		}
+
+		.actions-dropdown-item.edit {
+			color: #e5e7eb;
+		}
+
+		.actions-dropdown-item.delete {
+			color: #fca5a5;
+		}
+	</style>
+
+	<!-- Modal konfirmasi bulk delete pengeluaran -->
+	<div id="expenses-bulk-modal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.8); z-index:50; align-items:center; justify-content:center;">
+		<div style="background:#020617; border-radius:16px; padding:20px 22px; width:100%; max-width:360px; border:1px solid rgba(148,163,184,0.5); box-shadow:0 18px 45px rgba(15,23,42,0.9);">
+			<h3 style="font-size:1rem; font-weight:600; color:#e5e7eb; margin-bottom:4px;">Hapus pengeluaran terpilih?</h3>
+			<p style="font-size:0.85rem; color:#9ca3af; margin-bottom:16px;">Data pengeluaran yang dihapus tidak dapat dikembalikan.</p>
+			<div style="display:flex; justify-content:flex-end; gap:8px;">
+				<button type="button" id="expenses-bulk-cancel" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:transparent; color:#e5e7eb; padding:6px 14px; font-size:0.8rem; cursor:pointer;">Batal</button>
+				<button type="button" id="expenses-bulk-confirm" style="border-radius:999px; border:none; background:#b91c1c; color:#fee2e2; padding:6px 14px; font-size:0.8rem; font-weight:600; cursor:pointer;">Ya, hapus</button>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const selectAll = document.getElementById('expenses-select-all');
+			const checkboxes = document.querySelectorAll('.expenses-row-checkbox');
+			const bulkBtn = document.getElementById('expenses-bulk-delete-btn');
+			const formTable = document.getElementById('expenses-table-form');
+			const formTop = document.getElementById('expenses-bulk-delete-form');
+			const modal = document.getElementById('expenses-bulk-modal');
+			const modalConfirm = document.getElementById('expenses-bulk-confirm');
+			const modalCancel = document.getElementById('expenses-bulk-cancel');
+
+			function updateBulkButton() {
+				const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+				bulkBtn.style.display = anyChecked ? 'inline-flex' : 'none';
+			}
+
+			if (selectAll) {
+				selectAll.addEventListener('change', function () {
+					checkboxes.forEach(cb => {
+						cb.checked = selectAll.checked;
+					});
+					updateBulkButton();
+				});
+			}
+
+			checkboxes.forEach(cb => {
+				cb.addEventListener('change', function () {
+					updateBulkButton();
+				});
+			});
+
+			if (bulkBtn && modal) {
+				bulkBtn.addEventListener('click', function () {
+					const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+					if (!anyChecked) return;
+					modal.style.display = 'flex';
+				});
+			}
+
+			if (modalCancel && modal) {
+				modalCancel.addEventListener('click', function () {
+					modal.style.display = 'none';
+				});
+			}
+
+
+			function submitExpensesBulkDelete() {
+				const ids = Array.from(checkboxes)
+					.filter(cb => cb.checked)
+					.map(cb => cb.value);
+				if (!ids.length) return;
+				const idsInput = document.getElementById('expensesBulkIds');
+				if (idsInput) {
+					idsInput.value = JSON.stringify(ids);
+				}
+
+				const formData = new FormData();
+				formData.append('_token', '{{ csrf_token() }}');
+				formData.append('ids', JSON.stringify(ids));
+
+				fetch(formTable.action, {
+					method: 'POST',
+					body: formData,
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					}
+				}).then(response => {
+					if (!response.ok) {
+						throw new Error('Gagal menghapus pengeluaran.');
+					}
+					window.location.reload();
+				}).catch(error => {
+					alert(error.message || 'Gagal menghapus pengeluaran.');
+				});
+			}
+
+			if (modalConfirm && modal && formTable) {
+				modalConfirm.addEventListener('click', function () {
+					modal.style.display = 'none';
+					submitExpensesBulkDelete();
+				});
+			}
+		});
+	</script>
+
+	<script>
+		// Toggle menu tiga titik pada tabel expenses
+		document.addEventListener('click', function(e) {
+			const deleteBtn = e.target.closest('.js-row-delete');
+			if (deleteBtn) {
+				e.preventDefault();
+				const url = deleteBtn.getAttribute('data-url');
+				if (!url) return;
+				if (!confirm('Hapus pengeluaran ini?')) return;
+
+				const formData = new FormData();
+				formData.append('_token', '{{ csrf_token() }}');
+
+				fetch(url, {
+					method: 'POST',
+					body: formData,
+					headers: {
+						'X-Requested-With': 'XMLHttpRequest'
+					}
+				}).then(response => {
+					if (!response.ok) {
+						throw new Error('Gagal menghapus pengeluaran.');
+					}
+					window.location.reload();
+				}).catch(error => {
+					alert(error.message || 'Gagal menghapus pengeluaran.');
+				});
+				return;
+			}
+
+			if (e.target.closest('.hz-more-btn')) {
+				const btn = e.target.closest('.hz-more-btn');
+				const menu = btn.nextElementSibling;
+				const isShown = menu && menu.style.display === 'block';
+				// Tutup semua menu lain
+				document.querySelectorAll('.hz-more-menu').forEach(m => m.style.display = 'none');
+				if (menu) {
+					menu.style.display = isShown ? 'none' : 'block';
+				}
+			} else {
+				// Klik di luar -> tutup semua menu
+				document.querySelectorAll('.hz-more-menu').forEach(m => m.style.display = 'none');
+			}
+		});
+	</script>
+@endsection
+

@@ -15,6 +15,8 @@ class Product extends Model
         'sku',
         'nama_produk',
         'kategori', // Kategori produk umum
+        'tipe', // Tipe produk: Barang, Menu, Jasa
+        'lacak_stok', // Lacak stok: true/false
         'unit', // Satuan produk (pcs, kg, gram, dll)
         'harga_beli', // Harga modal referensi
         'harga_jual', // Harga jual - wajib untuk POS

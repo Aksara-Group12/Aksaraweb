@@ -7,6 +7,11 @@
 		<div>
 			<h2 class="hz-top-title">Buka Shift</h2>
 			<p class="hz-top-sub">Input modal awal kas untuk shift baru.</p>
+			@if(session()->has('admin_name'))
+				<p style="margin-top: 8px; font-size: 0.85rem; color: #64748b;">
+					Kasir: <strong style="color: #3b82f6;">{{ session('admin_name') }}</strong>
+				</p>
+			@endif
 		</div>
 	</div>
 
@@ -19,6 +24,11 @@
 			<form method="POST" action="{{ route('shift.store') }}">
 				@csrf
 				<div style="display: flex; flex-direction: column; gap: 16px;">
+					<div style="background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 8px;">
+						<p style="color: #b45309; font-size: 0.85rem; margin: 0; font-weight: 500;">⚠️ Perhatian:</p>
+						<p style="color: #92400e; font-size: 0.8rem; margin: 4px 0 0 0;">Modal awal hanya untuk tracking kas fisik di awal shift. Nilai ini tidak dihitung sebagai pendapatan atau pengeluaran di laporan keuangan.</p>
+					</div>
+
 					<div style="display: flex; flex-direction: column; gap: 6px;">
 						<label style="font-size: 0.85rem; font-weight: 500; color: #1e3a8a;">Modal Awal (Rp)</label>
 						<input type="number" name="modal_awal" required min="0" step="0.01" placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.9); color: #1e293b; font-size: 0.9rem;">

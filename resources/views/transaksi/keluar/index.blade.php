@@ -41,15 +41,6 @@
 					Delete selected
 				</button>
 			</form>
-			<a href="{{ route('transaksi.keluar.create') }}" class="hz-btn-primary" style="text-decoration: none; display: inline-flex;">
-				<span class="hz-icon-pill" style="background: rgba(59, 130, 246, 0.2);">
-					<svg width="12" height="12" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<path d="M10 4.5V15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-						<path d="M4.5 10H15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-					</svg>
-				</span>
-				<span>Buat Transaksi</span>
-			</a>
 		</div>
 	</div>
 
@@ -133,7 +124,7 @@
 											<span>Cetak</span>
 										</a>
 										@if (!$t->is_void)
-											<button type="button" class="actions-dropdown-item void js-row-void" data-id="{{ $t->id }}" style="width:100%; text-align:left;">
+											<button type="button" class="actions-dropdown-item void void-btn" data-id="{{ $t->id }}" data-invoice="{{ $t->invoice_no }}" data-total="{{ number_format($t->total_harga, 0, ',', '.') }}" data-stok="{{ $t->items->sum('qty') }}" style="width:100%; text-align:left;">
 												<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
 													<path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 0A9 9 0 015.636 18.364m12.728-12.728A9 9 0 015.636 5.636"></path>
 												</svg>
@@ -232,19 +223,20 @@
 	</div>
 
 	<!-- Modal Void Transaksi -->
-	<div id="void-modal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.8); z-index:50; align-items:center; justify-content:center;">
-		<div style="background:rgba(255,255,255,0.9); border-radius:16px; padding:20px 22px; width:100%; max-width:400px; border:1px solid rgba(59,130,246,0.3); box-shadow:0 18px 45px rgba(15,23,42,0.9);">
-			<h3 style="font-size:1rem; font-weight:600; color:#1e293b; margin-bottom:4px;">Void / Batalkan Transaksi</h3>
-			<p style="font-size:0.85rem; color:#9ca3af; margin-bottom:16px;">Stok akan dikembalikan ke produk. Transaksi akan ditandai sebagai void.</p>
+	<div id="void-modal" style="display:none; position:fixed; inset:0; background:rgba(30,58,138,0.5); z-index:50; align-items:center; justify-content:center;">
+		<div style="background:rgba(255,255,255,0.95); border-radius:16px; padding:20px 22px; width:100%; max-width:420px; border:1px solid rgba(59,130,246,0.3); box-shadow:0 18px 45px rgba(59,130,246,0.15);">
+			<h3 style="font-size:1rem; font-weight:600; color:#1e3a8a; margin-bottom:4px;">Void / Batalkan Transaksi</h3>
+			<div id="void-transaction-info" style="margin-bottom:12px; padding:12px; background:rgba(59,130,246,0.08); border-radius:10px; font-size:0.85rem; color:#1e293b;"></div>
+			<p style="font-size:0.85rem; color:#64748b; margin-bottom:16px;">Stok akan dikembalikan ke produk. Transaksi akan ditandai sebagai void dan tidak ikut dalam laporan.</p>
 			<form id="void-form" method="POST" action="{{ route('transaksi.keluar.void', ':id') }}">
 				@csrf
 				<div style="margin-bottom:16px;">
-					<label style="display:block; font-size:0.85rem; font-weight:500; color:#1e293b; margin-bottom:6px;">Alasan Void</label>
-					<textarea name="void_reason" required rows="3" placeholder="Masukkan alasan pembatalan..." style="width:100%; padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(15,23,42,0.6); color:#1e293b; font-size:0.9rem; resize:vertical;"></textarea>
+					<label style="display:block; font-size:0.85rem; font-weight:500; color:#1e3a8a; margin-bottom:6px;">Alasan Void (wajib)</label>
+					<textarea name="void_reason" required rows="3" placeholder="Masukkan alasan pembatalan..." style="width:100%; padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; font-size:0.9rem; resize:vertical;"></textarea>
 				</div>
 				<div style="display:flex; justify-content:flex-end; gap:8px;">
 					<button type="button" id="void-cancel" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:transparent; color:#1e293b; padding:6px 14px; font-size:0.8rem; cursor:pointer;">Batal</button>
-					<button type="submit" style="border-radius:999px; border:none; background:#b91c1c; color:#fee2e2; padding:6px 14px; font-size:0.8rem; font-weight:600; cursor:pointer;">Ya, Void</button>
+					<button type="submit" style="border-radius:999px; border:none; background:#dc2626; color:#fee2e2; padding:6px 14px; font-size:0.8rem; font-weight:600; cursor:pointer;">Ya, Void</button>
 				</div>
 			</form>
 		</div>
@@ -402,3 +394,23 @@
 	</script>
 @endsection
 
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll(".void-btn").forEach(btn => {
+        btn.addEventListener("click", function() {
+            const id = this.getAttribute("data-id");
+            const invoice = this.getAttribute("data-invoice") || "-";
+            const total = this.getAttribute("data-total") || "0";
+            const stok = this.getAttribute("data-stok") || "0";
+            document.getElementById("void-transaction-info").innerHTML = "<strong>Nomor:</strong> " + invoice + "<br><strong>Total:</strong> Rp " + total + "<br><strong>Stok kembali:</strong> " + stok;
+            document.getElementById("void-form").action = "/transaksi/keluar/" + id + "/void";
+            document.getElementById("void-modal").style.display = "flex";
+        });
+    });
+    document.getElementById("void-cancel").addEventListener("click", function() {
+        document.getElementById("void-modal").style.display = "none";
+    });
+});
+</script>

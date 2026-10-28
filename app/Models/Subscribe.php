@@ -93,5 +93,22 @@ class Subscribe extends Model
             ->latest('created_at')
             ->first();
     }
+
+    /**
+     * Get package type from subscription
+     * Returns: 1, 2, or 3 (default 1 if no subscription)
+     */
+    public static function getPackageType($userId)
+    {
+        $subscription = self::getActiveSubscription($userId);
+        if (!$subscription) {
+            return 1; // Default Paket 1 jika tidak ada subscription
+        }
+        // Extract paket number from paket_name (e.g., "Paket 1" -> 1)
+        if (preg_match('/Paket (\d+)/', $subscription->paket_name, $matches)) {
+            return (int) $matches[1];
+        }
+        return 1; // Default
+    }
 }
 

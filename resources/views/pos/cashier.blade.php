@@ -14,7 +14,7 @@
 	<div style="margin-top: 16px; padding: 12px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
 		<div style="display: flex; align-items: center; gap: 8px;">
 			<span style="color: #16a34a; font-weight: 600; font-size: 0.9rem;">Shift Aktif:</span>
-			<span style="color: #1e293b; font-size: 0.9rem;">{{ auth()->user()->name }}</span>
+			<span style="color: #1e293b; font-size: 0.9rem;">{{ session('admin_name', auth()->user()->name) }}</span>
 			<span style="color: #64748b; font-size: 0.85rem;">|</span>
 			<span style="color: #16a34a; font-weight: 600; font-size: 0.9rem;">Modal Awal:</span>
 			<span style="color: #1e293b; font-size: 0.9rem;">Rp {{ number_format(session('modal_awal', 0), 0, ',', '.') }}</span>

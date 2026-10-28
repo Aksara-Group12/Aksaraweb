@@ -848,6 +848,29 @@
 				@endforelse
 			</ul>
 		</div>
+
+		<!-- Top 5 Produk Terlaris -->
+		<div class="hz-card" style="grid-column: 1 / -1; padding: 20px;">
+			<div class="hz-card-header" style="margin-bottom: 16px;">
+				<p class="hz-card-title">Top 5 Produk Terlaris</p>
+				<p class="hz-card-sub" style="font-size: 0.85rem; color: #64748b;">Berdasarkan jumlah terjual (tanpa void)</p>
+			</div>
+			<ul style="list-style: none; padding: 0; margin: 0;">
+				@forelse ($topProducts as $product)
+					<li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(59,130,246,0.2);">
+						<div>
+							<p style="font-size: 0.9rem; font-weight: 600; color: #1e293b; margin: 0;">{{ $product->nama_produk }}</p>
+							<p style="font-size: 0.8rem; color: #64748b; margin: 4px 0 0 0;">{{ $product->total_qty }} terjual</p>
+						</div>
+						<div style="text-align: right;">
+							<p style="font-size: 0.9rem; font-weight: 600; color: #3b82f6; margin: 0;">Rp {{ number_format($product->total_revenue, 0, ',', '.') }}</p>
+						</div>
+					</li>
+				@empty
+					<li style="padding: 20px; text-align: center; color: #64748b;">Belum ada data penjualan</li>
+				@endforelse
+			</ul>
+		</div>
 	</section>
 @endsection
 

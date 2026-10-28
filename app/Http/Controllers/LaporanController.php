@@ -8,6 +8,7 @@ use App\Models\Expenses;
 use App\Models\TransaksiMasukItem;
 use App\Models\TransaksiKeluarItem;
 use App\Models\Product;
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Carbon\Carbon;
@@ -42,16 +43,23 @@ class LaporanController extends BaseController
 		// Transaksi keluar (penjualan)
 		$salesQuery = TransaksiKeluar::where('user_id', auth()->user()->id)
 			->whereBetween('tanggal_transaksi', [$start, $end])
-			->where('status', 'complete');
+			->where('status', 'complete')
+			->where('is_void', false);
 
 		$totalRevenue = (float) $salesQuery->sum('total_harga');
 		$totalSalesCount = (int) $salesQuery->count();
 
-		// HPP / COGS: pendekatan sederhana dari total pembelian complete di periode
-		$purchasesQuery = TransaksiMasuk::where('user_id', auth()->user()->id)
-			->whereBetween('tanggal_transaksi', [$start, $end])
-			->where('status', 'complete');
-		$totalHPP = (float) $purchasesQuery->sum('total_harga');
+		// HPP / COGS: dari hpp_snapshot pada item penjualan (qty × hpp_snapshot)
+		// Hanya transaksi yang tidak void
+		$HPPFromSales = TransaksiKeluarItem::join('transaksi_keluar', 'transaksi_keluar_items.transaksi_keluar_id', '=', 'transaksi_keluar.id')
+			->where('transaksi_keluar.user_id', auth()->user()->id)
+			->whereBetween('transaksi_keluar.tanggal_transaksi', [$start, $end])
+			->where('transaksi_keluar.status', 'complete')
+			->where('transaksi_keluar.is_void', false)
+			->selectRaw('SUM(transaksi_keluar_items.qty_keluar * transaksi_keluar_items.hpp_snapshot) as total_hpp')
+			->value('total_hpp');
+
+		$totalHPP = (float) ($HPPFromSales ?? 0);
 
 		$grossProfit = $totalRevenue - $totalHPP;
 		$grossMargin = $totalRevenue > 0 ? ($grossProfit / $totalRevenue) * 100 : 0.0;
@@ -95,6 +103,22 @@ class LaporanController extends BaseController
 			->limit(5)
 			->get();
 
+		// Piutang belum tertagih (AR)
+		$piutangQuery = Invoice::where('user_id', auth()->user()->id)
+			->where('sisa_tagihan', '>', 0);
+
+		$totalPiutang = (float) $piutangQuery->sum('sisa_tagihan');
+
+		// Piutang jatuh tempo
+		$piutangJatuhTempo = (float) (clone $piutangQuery)
+			->where('jatuh_tempo', '<', Carbon::now())
+			->sum('sisa_tagihan');
+
+		// Piutang belum jatuh tempo
+		$piutangBelumJatuhTempo = (float) (clone $piutangQuery)
+			->where('jatuh_tempo', '>=', Carbon::now())
+			->sum('sisa_tagihan');
+
 		return view('laporan.ringkasan-keuangan', [
 			'period' => $period,
 			'startDate' => $start->toDateString(),
@@ -114,6 +138,49 @@ class LaporanController extends BaseController
 			'paymentBreakdown' => $paymentBreakdown,
 			'expensesByType' => $expensesByType,
 			'expenses' => $recentExpenses,
+
+			// Piutang belum tertagih
+			'totalPiutang' => $totalPiutang,
+			'piutangJatuhTempo' => $piutangJatuhTempo,
+			'piutangBelumJatuhTempo' => $piutangBelumJatuhTempo,
+		]);
+	}
+
+	public function produkTerlaris(Request $request)
+	{
+		$period = $request->input('period', 'month');
+		$startDate = $request->input('start_date');
+		$endDate = $request->input('end_date');
+
+		if ($period !== 'custom') {
+			[$startDate, $endDate] = $this->resolvePeriodRange($period);
+		} else {
+			if (empty($startDate) || empty($endDate)) {
+				[$startDate, $endDate] = $this->resolvePeriodRange('month');
+				$period = 'month';
+			}
+		}
+
+		$start = Carbon::parse($startDate)->startOfDay();
+		$end = Carbon::parse($endDate)->endOfDay();
+
+		// Query produk terlaris
+		$products = TransaksiKeluarItem::join('transaksi_keluar', 'transaksi_keluar_items.transaksi_keluar_id', '=', 'transaksi_keluar.id')
+			->join('products', 'transaksi_keluar_items.product_id', '=', 'products.id')
+			->where('transaksi_keluar.user_id', auth()->user()->id)
+			->whereBetween('transaksi_keluar.tanggal_transaksi', [$start, $end])
+			->where('transaksi_keluar.status', 'complete')
+			->where('transaksi_keluar.is_void', false)
+			->selectRaw('products.nama_produk, products.tipe, SUM(transaksi_keluar_items.qty_keluar) as total_qty, SUM(transaksi_keluar_items.total_harga) as total_revenue')
+			->groupBy('products.id', 'products.nama_produk', 'products.tipe')
+			->orderByDesc('total_qty')
+			->get();
+
+		return view('laporan.produk-terlaris', [
+			'period' => $period,
+			'startDate' => $start->toDateString(),
+			'endDate' => $end->toDateString(),
+			'products' => $products,
 		]);
 	}
 

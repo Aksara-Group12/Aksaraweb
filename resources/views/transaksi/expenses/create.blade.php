@@ -50,7 +50,13 @@
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
 						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Kategori</label>
-						<input type="text" name="kategori" value="{{ old('kategori') }}" placeholder="Listrik, sewa, gaji, dll" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
+						<select name="kategori_produk_id" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
+							<option value="">-- Pilih Kategori --</option>
+							@foreach($kategoriProduk as $kat)
+								<option value="{{ $kat->id }}" {{ old('kategori_produk_id') == $kat->id ? 'selected' : '' }}>{{ $kat->nama_kategori }}</option>
+							@endforeach
+						</select>
+						<input type="text" name="kategori" value="{{ old('kategori') }}" placeholder="Atau ketik kategori lain..." style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem; margin-top: 4px;">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">

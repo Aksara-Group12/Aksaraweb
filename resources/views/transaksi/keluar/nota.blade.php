@@ -235,7 +235,7 @@
 		<div class="items-table">
 			@foreach($transaksiKeluar->items as $item)
 				@php
-					$serials = json_decode($item->nomor_seri ?? '[]', true) ?: [];
+					$serials = json_decode($item->-- hidden nomor_seri -- ?? '[]', true) ?: [];
 					$qty = max(count($serials), 1);
 					$unitPrice = $qty > 0 ? $item->total_harga / $qty : $item->total_harga;
 				@endphp

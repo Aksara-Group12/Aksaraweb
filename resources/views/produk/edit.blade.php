@@ -50,12 +50,42 @@
 				</div>
 
 				<div style="display: flex; flex-direction: column; gap: 6px;">
-					<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Kategori</label>
-					<input type="text" name="kategori" value="{{ old('kategori', $product->kategori) }}" placeholder="Contoh: Makanan, Minuman, Pakaian"
-					       style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(148,163,184,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
+					<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Kategori Produk</label>
+					<select name="kategori_produk_id" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(148,163,184,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
+						<option value="">-- Pilih Kategori --</option>
+						@foreach($kategoriProduk as $kat)
+							<option value="{{ $kat->id }}" {{ old('kategori_produk_id', $product->kategori_produk_id) == $kat->id ? 'selected' : '' }}>{{ $kat->nama_kategori }}</option>
+						@endforeach
+					</select>
+					<small style="color: #64748b; font-size: 0.8rem;">Opsional - data master kategori</small>
 				</div>
 
 				<div style="display: flex; flex-direction: column; gap: 6px;">
+					<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Kategori (Free Text)</label>
+					<input type="text" name="kategori" value="{{ old('kategori', $product->kategori) }}" placeholder="Contoh: Makanan, Minuman, Pakaian"
+					       style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(148,163,184,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
+					<small style="color: #64748b; font-size: 0.8rem;">Opsional - fallback jika tidak ada di dropdown</small>
+				</div>
+
+				<div style="display: flex; flex-direction: column; gap: 6px;">
+n				<div style="display: flex; flex-direction: column; gap: 6px;">
+					<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Tipe Produk <span style="color: #3b82f6;">*</span></label>
+					<select name="tipe" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
+						<option value="Barang" {{ old('tipe', $product->tipe) == 'Barang' ? 'selected' : '' }}>Barang (beli jadi, jual lagi)</option>
+						<option value="Menu" {{ old('tipe', $product->tipe) == 'Menu' ? 'selected' : '' }}>Menu (makanan/minuman olahan)</option>
+						<option value="Jasa" {{ old('tipe', $product->tipe) == 'Jasa' ? 'selected' : '' }}>Jasa (servis/jasa)</option>
+					</select>
+				</div>
+
+				<div style="display: flex; flex-direction: column; gap: 6px;">
+					<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Lacak Stok?</label>
+					<div style="display: flex; align-items: center; gap: 8px;">
+						<input type="checkbox" name="lacak_stok" value="1" {{ old('lacak_stok', $product->lacak_stok) ? 'checked' : ($product->lacak_stok ? 'checked' : '') }} id="lacak_stok"
+						       style="width: 18px; height: 18px; cursor: pointer;">
+						<label for="lacak_stok" style="font-size: 0.85rem; color: #64748b; cursor: pointer;">Ya, lacak stok</label>
+					</div>
+					<small style="color: #64748b; font-size: 0.8rem;">Centang jika perlu tracking inventory (contoh: Barang jual, Menu dengan bahan, Jasa spa dengan bahan pijat)</small>
+				</div>
 					<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Satuan (Unit) <span style="color: #3b82f6;">*</span></label>
 					<input type="text" name="unit" value="{{ old('unit', $product->unit) }}" required
 					       style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">

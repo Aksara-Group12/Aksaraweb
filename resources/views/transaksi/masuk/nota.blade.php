@@ -235,7 +235,7 @@
 		<div class="items-table">
 			@foreach($transaksiMasuk->items as $item)
 				@php
-					$serials = json_decode($item->nomor_seri ?? '[]', true) ?: [];
+					$serials = json_decode($item->-- hidden nomor_seri -- ?? '[]', true) ?: [];
 				@endphp
 				<div class="item-row">
 					<div class="item-name">
@@ -251,7 +251,7 @@
 						</div>
 					@endif
 					<div class="item-details">
-						<span>{{ number_format($item->berat, 2, ',', '.') }} gr x Rp {{ number_format($item->harga_gram, 0, ',', '.') }}</span>
+						<span>{{ number_format($item->-- hidden berat --, 2, ',', '.') }} gr x Rp {{ number_format($item->harga_gram, 0, ',', '.') }}</span>
 						<span>Rp {{ number_format($item->total_harga, 0, ',', '.') }}</span>
 					</div>
 				</div>

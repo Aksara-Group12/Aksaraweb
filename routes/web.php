@@ -85,7 +85,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Protected application routes
-Route::middleware(['auth', 'subscription.access'])->group(function () {
+Route::middleware(['auth', 'subscription.access', 'employee.access'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
@@ -120,6 +120,9 @@ Route::middleware(['auth', 'subscription.access'])->group(function () {
     Route::get('/laporan/keuangan', [LaporanController::class, 'ringkasanKeuangan'])
 		->name('laporan.keuangan');
 
+    Route::get('/laporan/produk-terlaris', [LaporanController::class, 'produkTerlaris'])
+		->name('laporan.produk-terlaris');
+
     Route::get('/laporan/tracking-produk/export', [LaporanController::class, 'exportTrackingProduk'])
 		->name('laporan.tracking-produk.export');
 
@@ -147,6 +150,7 @@ Route::middleware(['auth', 'subscription.access'])->group(function () {
         Route::post('/subscription/{subscription}/approve', [ManajemenUserController::class, 'approveSubscription'])->name('subscription.approve');
         Route::post('/subscription/{subscription}/reject', [ManajemenUserController::class, 'rejectSubscription'])->name('subscription.reject');
         Route::get('/subscription/{subscription}/edit', [ManajemenUserController::class, 'editSubscription'])->name('subscription.edit');
+        Route::put('/subscription/{subscription}', [ManajemenUserController::class, 'updateSubscription'])->name('subscription.update');
         
         // User CRUD routes
         Route::get('/{user}/edit', [ManajemenUserController::class, 'edit'])->name('edit');
@@ -246,7 +250,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Protected application routes
-Route::middleware(['auth', 'subscription.access'])->group(function () {
+Route::middleware(['auth', 'subscription.access', 'employee.access'])->group(function () {
     Route::prefix('transaksi')->group(function () {
         Route::get('/masuk', [TransaksiController::class, 'masuk'])->name('transaksi.masuk');
         Route::get('/masuk/export/excel', [TransaksiController::class, 'exportMasukExcel'])->name('transaksi.masuk.export.excel');
@@ -263,7 +267,7 @@ Route::middleware(['auth', 'subscription.access'])->group(function () {
         Route::get('/keluar', [TransaksiController::class, 'keluar'])->name('transaksi.keluar');
         Route::get('/keluar/export/excel', [TransaksiController::class, 'exportKeluarExcel'])->name('transaksi.keluar.export.excel');
         Route::get('/keluar/export/pdf', [TransaksiController::class, 'exportKeluarPdf'])->name('transaksi.keluar.export.pdf');
-        Route::get('/keluar/create', [TransaksiController::class, 'createKeluar'])->name('transaksi.keluar.create');
+        // Route::get('/keluar/create', [TransaksiController::class, 'createKeluar'])->name('transaksi.keluar.create'); // Dihapus: semua penjualan lewat POS
         Route::post('/keluar', [TransaksiController::class, 'storeKeluar'])->name('transaksi.keluar.store');
         Route::get('/pos', [TransaksiController::class, 'createKeluar'])->name('transaksi.pos');
 	Route::get('/keluar/{transaksiKeluar}/nota', [TransaksiController::class, 'printKeluar'])->name('transaksi.keluar.print');
@@ -277,19 +281,20 @@ Route::middleware(['auth', 'subscription.access'])->group(function () {
     Route::post('/keluar/{id}/void', [TransaksiController::class, 'voidTransaksi'])->name('transaksi.keluar.void');
 
         Route::get('/laporan', [TransaksiController::class, 'laporan'])->name('transaksi.laporan');
-        Route::get('/laba-rugi', [LaporanController::class, 'labaRugi'])->name('laporan.laba-rugi');
+        // Route::get('/laba-rugi', [LaporanController::class, 'labaRugi'])->name('laporan.laba-rugi'); // Digabung ke laporan.keuangan
+        Route::get('/laba-rugi', [LaporanController::class, 'ringkasanKeuangan'])->name('laporan.laba-rugi'); // Redirect
 
         Route::get('/log', [TransaksiController::class, 'logTransaksi'])->name('transaksi.log');
         Route::get('/log/export/excel', [TransaksiController::class, 'logTransaksiExportExcel'])->name('transaksi.log.export.excel');
         Route::get('/log/export/pdf', [TransaksiController::class, 'logTransaksiExportPdf'])->name('transaksi.log.export.pdf');
 
-        // API endpoints untuk cascading dropdown
-        Route::get('/api/brands/{jenisLogam}', [TransaksiController::class, 'getBrands']);
-        Route::get('/api/weights/{jenisLogam}/{brand}', [TransaksiController::class, 'getWeights']);
-        Route::get('/api/products/{jenisLogam}/{brand}/{berat}', [TransaksiController::class, 'getProducts']);
-        Route::get('/api/products-by-jenis/{jenisLogam}', [TransaksiController::class, 'getProductsByJenisLogam']);
-        Route::get('/api/all-products', [TransaksiController::class, 'getAllProducts']);
-        Route::get('/api/serial-numbers/{productId}', [TransaksiController::class, 'getSerialNumbers']);
+        // API endpoints untuk cascading dropdown (disembunyikan - legacy logam mulia)
+        // Route::get('/api/brands/{jenisLogam}', [TransaksiController::class, 'getBrands']);
+        // Route::get('/api/weights/{jenisLogam}/{brand}', [TransaksiController::class, 'getWeights']);
+        // Route::get('/api/products/{jenisLogam}/{brand}/{berat}', [TransaksiController::class, 'getProducts']);
+        // Route::get('/api/products-by-jenis/{jenisLogam}', [TransaksiController::class, 'getProductsByJenisLogam']);
+        // Route::get('/api/all-products', [TransaksiController::class, 'getAllProducts']);
+        // Route::get('/api/serial-numbers/{productId}', [TransaksiController::class, 'getSerialNumbers']);
     });
 
     // Subscribe routes (hanya untuk owner)

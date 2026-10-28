@@ -6,7 +6,7 @@
 	<div class="hz-top-row">
 		<div>
 			<h2 class="hz-top-title">Buat Transaksi Masuk</h2>
-			<p class="hz-top-sub">Pencatatan pembelian barang untuk menambah persediaan.</p>
+			<p class="hz-top-sub">Pencatatan pembelian barang untuk menambah persediaan. <span style="color: #3b82f6; font-weight: 500;">Catatan: Hanya untuk Barang yang dijual kembali. Belanja bahan olahan dicatat di Expenses.</span></p>
 		</div>
 	</div>
 
@@ -64,13 +64,13 @@
 
 				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Nama Supplier <span style="color: #3b82f6;">*</span></label>
-						<input type="text" name="supplier_name" placeholder="Nama supplier/pemasok..." required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Nama Supplier (Opsional)</label>
+						<input type="text" name="supplier_name" placeholder="Nama supplier/pemasok (kosongkan jika tidak ada)..." style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Kontak <span style="color: #3b82f6;">*</span></label>
-						<input type="text" name="supplier_contact" placeholder="No. HP atau email..." required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Kontak (Opsional)</label>
+						<input type="text" name="supplier_contact" placeholder="No. HP atau email (kosongkan jika tidak ada)..." style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">

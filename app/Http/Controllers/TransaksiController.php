@@ -137,8 +137,8 @@ class TransaksiController extends BaseController
 		try {
 			// Validate basic transaction data
 			$validated = $request->validate([
-				'supplier_name' => 'required|string|max:100',
-				'supplier_contact' => 'required|string|max:100',
+				'supplier_name' => 'nullable|string|max:100',
+				'supplier_contact' => 'nullable|string|max:100',
 				'lokasi' => 'nullable|string|max:100',
 				'po_invoice' => 'nullable|string',
 				'tanggal_transaksi' => 'required|date',
@@ -224,6 +224,8 @@ class TransaksiController extends BaseController
 					// Get product from master products
 					$product = Product::where('id', $itemData['product_id'])
 						->where('user_id', auth()->user()->id)
+						->where('tipe', 'Barang') // Hanya Barang yang bisa dibeli
+						->where('lacak_stok', true) // Hanya yang lacak stok
 						->first();
 
 					if (!$product) {
@@ -294,6 +296,11 @@ class TransaksiController extends BaseController
 	 */
 	public function keluar(Request $request)
 	{
+		// Hanya owner yang bisa akses riwayat penjualan
+		if (auth()->user()->role !== 'owner') {
+			abort(403, 'Akses ditolak. Hanya owner yang bisa melihat riwayat penjualan.');
+		}
+
 		$query = TransaksiKeluar::where('user_id', auth()->user()->id)
 			->with(['items.product', 'admin'])
 			->orderBy('created_at', 'desc');
@@ -497,7 +504,9 @@ class TransaksiController extends BaseController
 				}
 
 				$qty = floatval($item['qty_keluar']);
-				if ($qty > $product->stock) {
+
+				// Validasi stok hanya untuk produk dengan lacak_stok = true
+				if ($product->lacak_stok && $qty > $product->stock) {
 					return back()->with('error', "Item #$itemNum: Stok tidak cukup. Stok tersedia: {$product->stock}")->withInput();
 				}
 			}
@@ -556,9 +565,11 @@ class TransaksiController extends BaseController
 						'hpp_snapshot' => $hppSnapshot,
 					]);
 
-					// Update stok produk
-					$product->stock -= $qty;
-					$product->save();
+					// Update stok produk hanya jika lacak_stok = true
+					if ($product->lacak_stok) {
+						$product->stock -= $qty;
+						$product->save();
+					}
 
 					$totalHarga += $itemTotal;
 				}

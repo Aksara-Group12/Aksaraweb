@@ -77,7 +77,7 @@
 					@php($items = $transaksiMasuk->items ?? collect())
 					@forelse ($items as $index => $item)
 						@php
-							$serials = is_array($item->nomor_seri) ? $item->nomor_seri : json_decode($item->nomor_seri ?? '[]', true) ?? [];
+							$serials = is_array($item->-- hidden nomor_seri --) ? $item->-- hidden nomor_seri -- : json_decode($item->-- hidden nomor_seri -- ?? '[]', true) ?? [];
 							$serialText = implode("\n", $serials);
 						@endphp
 						<div class="item-card" style="border: 1px solid rgba(59,130,246,0.3); border-radius: 14px; padding: 18px; background: rgba(255,255,255,0.95);">
@@ -93,8 +93,8 @@
 										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Jenis Logam <span style="color: #3b82f6;">*</span></label>
 										<select class="jenis-logam item-jenis-logam" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
 											<option value="">-- Pilih --</option>
-											<option value="emas" {{ $item->product?->jenis_logam === 'emas' ? 'selected' : '' }}>Emas</option>
-											<option value="perak" {{ $item->product?->jenis_logam === 'perak' ? 'selected' : '' }}>Perak</option>
+											<option value="emas" {{ $item->product?->-- hidden jenis_logam -- === 'emas' ? 'selected' : '' }}>Emas</option>
+											<option value="perak" {{ $item->product?->-- hidden jenis_logam -- === 'perak' ? 'selected' : '' }}>Perak</option>
 										</select>
 									</div>
 									<div style="display: flex; flex-direction: column; gap: 4px;">
@@ -117,7 +117,7 @@
 								<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
 									<div style="display: flex; flex-direction: column; gap: 4px;">
 										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Berat (gram) <span style="color: #3b82f6;">*</span></label>
-										<input type="number" class="berat item-berat" value="{{ $item->berat }}" step="0.01" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
+										<input type="number" class="-- hidden berat -- item--- hidden berat --" value="{{ $item->-- hidden berat -- }}" step="0.01" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
 									</div>
 								</div>
 							</div>
@@ -179,7 +179,7 @@
 								<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
 									<div style="display: flex; flex-direction: column; gap: 4px;">
 										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Berat (gram) <span style="color: #3b82f6;">*</span></label>
-										<input type="number" class="berat item-berat" step="0.01" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
+										<input type="number" class="-- hidden berat -- item--- hidden berat --" step="0.01" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
 									</div>
 								</div>
 							</div>
@@ -390,7 +390,7 @@
 				e.target.value = raw ? formatCurrency(raw) : '';
 			}
 
-			if (e.target.classList.contains('berat') ||
+			if (e.target.classList.contains('-- hidden berat --') ||
 				e.target.classList.contains('harga-gram') ||
 				e.target.classList.contains('nomor-seri')) {
 				updateTotals();
@@ -481,7 +481,7 @@
 						hasError = true;
 						break;
 					}
-					if (!itemCard.querySelector('.item-berat').value || parseFloat(itemCard.querySelector('.item-berat').value) <= 0) {
+					if (!itemCard.querySelector('.item--- hidden berat --').value || parseFloat(itemCard.querySelector('.item--- hidden berat --').value) <= 0) {
 						errorMessage = `Item #${itemNum}: Berat harus diisi dan lebih dari 0`;
 						hasError = true;
 						break;
@@ -498,12 +498,12 @@
 					}
 
 					itemsData.push({
-						jenis_logam: itemCard.querySelector('.item-jenis-logam').value,
+						-- hidden jenis_logam --: itemCard.querySelector('.item-jenis-logam').value,
 						brand: itemCard.querySelector('.item-brand').value,
 						nama_produk: itemCard.querySelector('.item-nama-produk').value,
-						berat: parseFloat(itemCard.querySelector('.item-berat').value) || 0,
+						-- hidden berat --: parseFloat(itemCard.querySelector('.item--- hidden berat --').value) || 0,
 						harga_gram: parseCurrencyInput(itemCard.querySelector('.item-harga-gram')),
-						nomor_seri: nomorSeriArray,
+						-- hidden nomor_seri --: nomorSeriArray,
 						deskripsi: itemCard.querySelector('.item-deskripsi').value
 					});
 				}

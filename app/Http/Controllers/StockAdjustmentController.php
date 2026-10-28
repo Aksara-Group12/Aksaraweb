@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\StockAdjustment;
 use App\Models\StockAdjustmentItem;
 use App\Models\Product;
+use App\Models\StockMovement;
 use Illuminate\Http\Request;
 
 class StockAdjustmentController extends Controller
@@ -86,6 +87,18 @@ class StockAdjustmentController extends Controller
                 // Update stok produk
                 $product->stock = $stokFisik;
                 $product->save();
+
+                // Catat ke Log Produk (StockMovement)
+                StockMovement::create([
+                    'user_id' => auth()->user()->id,
+                    'product_id' => $product->id,
+                    'tipe' => 'adjustment',
+                    'jumlah' => $selisih,
+                    'stok_sebelum' => $stokSistem,
+                    'stok_sesudah' => $stokFisik,
+                    'tanggal' => now(),
+                    'keterangan' => 'Stock Adjustment #' . $nomorAdjustment . ' - ' . $item['alasan'],
+                ]);
             }
 
             $adjustmentRef = $adjustment;

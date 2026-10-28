@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\TransaksiKeluar;
 use App\Models\TransaksiMasuk;
+use App\Models\TransaksiKeluarItem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -97,12 +98,26 @@ class DashboardController extends BaseController
 			->limit(3)
 			->get();
 
+		// Top 5 produk terlaris di periode (tanpa void)
+		$topProducts = TransaksiKeluarItem::join('transaksi_keluar', 'transaksi_keluar_items.transaksi_keluar_id', '=', 'transaksi_keluar.id')
+			->join('products', 'transaksi_keluar_items.product_id', '=', 'products.id')
+			->where('transaksi_keluar.user_id', auth()->user()->id)
+			->whereBetween('transaksi_keluar.tanggal_transaksi', [$start, $end])
+			->where('transaksi_keluar.status', 'complete')
+			->where('transaksi_keluar.is_void', false)
+			->selectRaw('products.nama_produk, SUM(transaksi_keluar_items.qty_keluar) as total_qty, SUM(transaksi_keluar_items.total_harga) as total_revenue')
+			->groupBy('products.id', 'products.nama_produk')
+			->orderByDesc('total_qty')
+			->limit(5)
+			->get();
+
 		return view('dashboard', [
 			'period' => $period,
 			'startDate' => $start->toDateString(),
 			'endDate' => $end->toDateString(),
 			'totalRevenue' => $totalRevenue,
 			'todayRevenue' => $todayRevenue,
+			'topProducts' => $topProducts,
 			'totalSalesTransactions' => $totalSalesTransactions,
 			'totalTransactions' => $totalTransactions,
 			'todayTransactions' => $todayTransactions,

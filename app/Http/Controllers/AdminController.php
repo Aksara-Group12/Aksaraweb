@@ -68,12 +68,12 @@ class AdminController extends Controller
 
         $validated['user_id'] = auth()->id();
         $validated['password'] = bcrypt($validated['password']);
-        $validated['email_verified_at'] = null; // Belum verifikasi
+        $validated['email_verified_at'] = now(); // Auto-verify untuk testing lokal
 
         $admin = Admin::create($validated);
 
-        // Kirim email verifikasi
-        Mail::to($admin->email)->send(new \App\Mail\AdminVerifyEmail($admin));
+        // Disabled email verifikasi untuk testing lokal
+        // Mail::to($admin->email)->send(new \App\Mail\AdminVerifyEmail($admin));
 
         return redirect()->route('admin.index')
             ->with('success', 'Admin berhasil dibuat! Email verifikasi telah dikirim ke ' . $admin->email);

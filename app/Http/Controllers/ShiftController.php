@@ -18,6 +18,19 @@ class ShiftController extends Controller
             $query->where('shift_number', 'like', "%{$search}%");
         }
 
+        // Filter berdasarkan kasir (admin_id)
+        if ($adminId = $request->input('admin_id')) {
+            $query->where('admin_id', $adminId);
+        }
+
+        // Filter berdasarkan tanggal
+        if ($startDate = $request->input('start_date')) {
+            $query->whereDate('tanggal_shift', '>=', $startDate);
+        }
+        if ($endDate = $request->input('end_date')) {
+            $query->whereDate('tanggal_shift', '<=', $endDate);
+        }
+
         $perPage = (int) $request->input('per_page', 20);
         if ($perPage <= 0) {
             $perPage = 20;
@@ -26,9 +39,12 @@ class ShiftController extends Controller
         $shifts = $query
             ->orderBy('created_at', 'desc')
             ->paginate($perPage)
-            ->appends($request->only('search', 'per_page'));
+            ->appends($request->only('search', 'per_page', 'admin_id', 'start_date', 'end_date'));
 
-        return view('shift.index', compact('shifts'));
+        // Ambil daftar admin/karyawan untuk filter
+        $admins = \App\Models\Admin::where('user_id', auth()->user()->id)->get();
+
+        return view('shift.index', compact('shifts', 'admins'));
     }
 
     public function create()
@@ -56,7 +72,7 @@ class ShiftController extends Controller
         DB::transaction(function () use ($validated, &$shiftRef) {
             $shift = Shift::create([
                 'user_id' => auth()->user()->id,
-                'admin_id' => session('admin_id'),
+                'admin_id' => session('admin_id') ?: null,
                 'shift_number' => Shift::generateNumber(),
                 'tanggal_shift' => today(),
                 'modal_awal' => $validated['modal_awal'],

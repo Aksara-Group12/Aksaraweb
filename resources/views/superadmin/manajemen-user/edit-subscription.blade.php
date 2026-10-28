@@ -1,11 +1,11 @@
 @extends('layouts.horizon')
 
-@section('page_title', 'Approve Subscription')
+@section('page_title', 'Edit Subscription')
 
 @section('content')
 <div class="hz-top-row">
     <div>
-        <h2 class="hz-top-title">Approve Subscription</h2>
+        <h2 class="hz-top-title">Edit Subscription</h2>
         <p class="hz-top-sub">User: {{ $user->name }} ({{ $user->email }})</p>
     </div>
 </div>
@@ -68,15 +68,16 @@
 
     <div class="hz-card">
         <div class="hz-card-header" style="margin-bottom: 16px;">
-            <p class="hz-card-title">Approve Settings</p>
+            <p class="hz-card-title">Pindah Paket</p>
         </div>
 
-        <form method="POST" action="{{ route('manajemen-user.subscription.approve', $subscription) }}">
+        <form method="POST" action="{{ route('manajemen-user.subscription.update', $subscription) }}">
+            @method('PUT')
             @csrf
 
             <div style="margin-bottom: 16px;">
                 <label for="paket_id" style="color: #64748b; font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 6px;">
-                    Pilih Paket *
+                    Pilih Paket Baru *
                 </label>
                 <select name="paket_id" id="paket_id" required style="width: 100%; background: rgba(148,163,184,0.1); border: 1px solid rgba(148,163,184,0.3); color: #1e293b; padding: 10px 12px; border-radius: 6px; font-size: 0.95rem;">
                     <option value="">-- Pilih Paket --</option>
@@ -86,6 +87,7 @@
                         </option>
                     @endforeach
                 </select>
+                <small style="color: #64748b; display: block; margin-top: 4px;">Data transaksi akan tetap tersimpan</small>
             </div>
 
             <div style="margin-bottom: 16px;">
@@ -98,6 +100,22 @@
             </div>
 
             <div style="margin-bottom: 16px;">
+                <label for="start_date" style="color: #64748b; font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 6px;">
+                    Tanggal Mulai *
+                </label>
+                <input type="date" name="start_date" id="start_date" value="{{ $subscription->start_date ?? now()->format('Y-m-d') }}" 
+                       required style="width: 100%; background: rgba(148,163,184,0.1); border: 1px solid rgba(148,163,184,0.3); color: #1e293b; padding: 10px 12px; border-radius: 6px; font-size: 0.95rem;">
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label for="end_date" style="color: #64748b; font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 6px;">
+                    Tanggal Berakhir *
+                </label>
+                <input type="date" name="end_date" id="end_date" value="{{ $subscription->end_date }}" 
+                       required style="width: 100%; background: rgba(148,163,184,0.1); border: 1px solid rgba(148,163,184,0.3); color: #1e293b; padding: 10px 12px; border-radius: 6px; font-size: 0.95rem;">
+            </div>
+
+            <div style="margin-bottom: 16px;">
                 <label for="admin_notes" style="color: #64748b; font-size: 0.85rem; font-weight: 500; display: block; margin-bottom: 6px;">
                     Catatan Admin (Optional)
                 </label>
@@ -105,8 +123,8 @@
             </div>
 
             <div style="display: flex; gap: 8px;">
-                <button type="submit" style="flex: 1; background: rgba(16,185,129,0.2); color: #10b981; border: 1px solid rgba(16,185,129,0.5); padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 0.95rem;">
-                    ✓ Approve Subscription
+                <button type="submit" style="flex: 1; background: rgba(59,130,246,0.2); color: #3b82f6; border: 1px solid rgba(59,130,246,0.5); padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 0.95rem;">
+                    ✓ Simpan Perubahan
                 </button>
                 <a href="{{ route('manajemen-user.index') }}" style="flex: 1; background: rgba(148,163,184,0.2); color: #64748b; border: 1px solid rgba(148,163,184,0.5); padding: 10px 16px; border-radius: 6px; text-decoration: none; text-align: center; font-weight: 500; font-size: 0.95rem;">
                     Batal

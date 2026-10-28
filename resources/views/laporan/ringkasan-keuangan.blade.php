@@ -1,12 +1,12 @@
 @extends('layouts.horizon')
 
-@section('page_title', 'Ringkasan Keuangan')
+@section('page_title', 'Laporan Keuangan')
 
 @section('content')
 	<div class="hz-top-row">
 		<div>
-			<h2 class="hz-top-title">Ringkasan Keuangan</h2>
-			<p class="hz-top-sub">Ikhtisar pendapatan, HPP, laba, dan arus kas.</p>
+			<h2 class="hz-top-title">Laporan Keuangan</h2>
+			<p class="hz-top-sub">Ikhtisar pendapatan, HPP, laba kotor, beban operasional, laba bersih, dan arus kas.</p>
 		</div>
 		<div style="display: flex; gap: 10px; align-items: center;">
 			<!-- Filter Periode -->
@@ -73,6 +73,30 @@
 					<p style="font-size:0.8rem; opacity:0.8;">Net Profit (Laba Bersih)</p>
 					<p style="font-size:1.6rem; font-weight:700; margin-top:4px;">Rp {{ number_format($netProfit, 0, ',', '.') }}</p>
 					<p style="font-size:0.75rem; opacity:0.8; margin-top:2px;">Margin: {{ number_format($netMargin, 2) }}%</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="hz-card" style="grid-column: 1 / -1; padding: 20px;">
+			<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+				<h3 class="hz-card-title">Piutang Belum Tertagih (AR)</h3>
+				<p style="font-size:0.8rem; color:#9ca3af;">Semua waktu</p>
+			</div>
+			<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
+				<div class="hz-card-soft">
+					<p class="hz-card-sub">Total Piutang</p>
+					<p class="hz-card-metric">Rp {{ number_format($totalPiutang, 0, ',', '.') }}</p>
+					<p style="font-size:0.75rem; color:#9ca3af; margin-top:4px;">Sisa tagihan invoice</p>
+				</div>
+				<div class="hz-card-soft">
+					<p class="hz-card-sub">Jatuh Tempo</p>
+					<p class="hz-card-metric" style="color: #ef4444;">Rp {{ number_format($piutangJatuhTempo, 0, ',', '.') }}</p>
+					<p style="font-size:0.75rem; color:#9ca3af; margin-top:4px;">Invoice overdue</p>
+				</div>
+				<div class="hz-card-soft">
+					<p class="hz-card-sub">Belum Jatuh Tempo</p>
+					<p class="hz-card-metric" style="color: #22c55e;">Rp {{ number_format($piutangBelumJatuhTempo, 0, ',', '.') }}</p>
+					<p style="font-size:0.75rem; color:#9ca3af; margin-top:4px;">Invoice on-time</p>
 				</div>
 			</div>
 		</div>

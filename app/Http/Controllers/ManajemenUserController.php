@@ -378,6 +378,49 @@ class ManajemenUserController extends Controller
     }
 
     /**
+     * Update subscription (pindah paket tanpa menghapus data)
+     */
+    public function updateSubscription(Request $request, Subscribe $subscription)
+    {
+        $validated = $request->validate([
+            'paket_id' => 'required|exists:paket,id',
+            'duration_days' => 'required|integer|min:1',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
+            'admin_notes' => 'nullable|string',
+        ]);
+
+        $newPackage = Paket::find($validated['paket_id']);
+
+        // Set subscription lama ke status 'cancelled' (tidak dihapus, hanya di-nonaktifkan)
+        $subscription->update([
+            'status' => 'cancelled',
+            'admin_notes' => $validated['admin_notes'] ?? 'Pindah paket ke ' . $newPackage->nama_paket,
+        ]);
+
+        // Buat subscription baru dengan paket baru
+        $newSubscription = Subscribe::create([
+            'user_id' => $subscription->user_id,
+            'paket_id' => $newPackage->id,
+            'paket_name' => $newPackage->nama_paket,
+            'price' => $newPackage->harga ?? 0,
+            'duration_days' => $validated['duration_days'],
+            'start_date' => $validated['start_date'],
+            'end_date' => $validated['end_date'],
+            'status' => 'active',
+            'approval_status' => 'approved',
+            'approved_at' => Carbon::now(),
+            'approved_by' => auth()->id(),
+            'is_trial' => false,
+            'admin_notes' => $validated['admin_notes'] ?? 'Pindah paket dari ' . $subscription->paket_name,
+        ]);
+
+        return redirect()
+            ->route('manajemen-user.index')
+            ->with('success', 'Paket berhasil diubah. Data transaksi tetap tersimpan.');
+    }
+
+    /**
      * Download bukti transaksi
      */
     public function downloadBukti($filename)

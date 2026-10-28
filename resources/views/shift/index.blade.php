@@ -7,10 +7,24 @@
 		<div>
 			<h2 class="hz-top-title">Shift Kasir</h2>
 			<p class="hz-top-sub">Manajemen shift kasir dan modal kas.</p>
+			@if(session()->has('admin_name'))
+				<p style="margin-top: 8px; font-size: 0.85rem; color: #64748b;">
+					Kasir Aktif: <strong style="color: #3b82f6;">{{ session('admin_name') }}</strong>
+				</p>
+			@endif
 		</div>
 		<div class="hz-top-actions" style="display:flex; align-items:center; gap:10px;">
 			<form method="GET" action="{{ route('shift.index') }}" style="display:flex; align-items:center; gap:6px;">
 				<input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nomor shift..." style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b; min-width:200px;">
+				<select name="admin_id" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b;">
+					<option value="">Semua Kasir</option>
+					@foreach($admins as $admin)
+						<option value="{{ $admin->id }}" {{ request('admin_id') == $admin->id ? 'selected' : '' }}>{{ $admin->name }}</option>
+					@endforeach
+				</select>
+				<input type="date" name="start_date" value="{{ request('start_date') }}" placeholder="Dari" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b;">
+				<input type="date" name="end_date" value="{{ request('end_date') }}" placeholder="Sampai" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b;">
+				<button type="submit" style="border-radius:999px; border:none; background:#3b82f6; color:#fff; padding:6px 12px; font-size:0.8rem; cursor:pointer;">Filter</button>
 			</form>
 			@if (!session('active_shift_id'))
 				<a href="{{ route('shift.create') }}" class="hz-btn hz-btn-primary">

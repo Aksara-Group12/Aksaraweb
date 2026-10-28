@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\ProductSerialNumber;
 use App\Models\TransaksiMasukItem;
 use App\Models\TransaksiKeluarItem;
+use App\Models\KategoriProduk;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -54,7 +55,9 @@ class ProdukController extends BaseController
 			abort(403, 'Anda tidak memiliki akses ke produk ini');
 		}
 
-		return view('produk.edit', compact('product'));
+		$kategoriProduk = KategoriProduk::where('tipe', 'produk')->get();
+
+		return view('produk.edit', compact('product', 'kategoriProduk'));
 	}
 
 	/**
@@ -77,6 +80,7 @@ class ProdukController extends BaseController
 			'stock' => 'nullable|integer|min:0',
 			'min_stock' => 'nullable|integer|min:0',
 			'kategori' => 'nullable|string',
+			'kategori_produk_id' => 'nullable|exists:kategori_produk,id',
 			'lokasi' => 'nullable|string',
 			'description' => 'nullable|string',
 			'barcode' => 'nullable|string|max:50',
@@ -137,7 +141,9 @@ class ProdukController extends BaseController
 	 */
 	public function create()
 	{
-		return view('produk.create');
+		$kategoriProduk = KategoriProduk::where('tipe', 'produk')->get();
+
+		return view('produk.create', compact('kategoriProduk'));
 	}
 
 	/**
@@ -151,11 +157,14 @@ class ProdukController extends BaseController
 				'code' => 'nullable|string|max:50|unique:products,code',
 				'sku' => 'nullable|string|max:50',
 				'unit' => 'required|string|max:50',
+				'tipe' => 'required|in:Barang,Menu,Jasa',
+				'lacak_stok' => 'nullable|boolean',
 				'harga_beli' => 'nullable|numeric|min:0',
 				'harga_jual' => 'required|numeric|min:0',
 				'stock' => 'nullable|integer|min:0',
 				'min_stock' => 'nullable|integer|min:0',
 				'kategori' => 'nullable|string',
+				'kategori_produk_id' => 'nullable|exists:kategori_produk,id',
 				'lokasi' => 'nullable|string',
 				'description' => 'nullable|string',
 				'barcode' => 'nullable|string|max:50',
@@ -169,6 +178,14 @@ class ProdukController extends BaseController
 			}
 
 			$validated['user_id'] = auth()->user()->id;
+
+			// Handle lacak_stok checkbox
+			$validated['lacak_stok'] = isset($validated['lacak_stok']) ? true : false;
+
+			// Menu dan Jasa otomatis lacak_stok = false
+			if (in_array($validated['tipe'], ['Menu', 'Jasa'])) {
+				$validated['lacak_stok'] = false;
+			}
 
 			// Membuat produk TIDAK otomatis menambah stok
 			$product = Product::create($validated);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expenses;
+use App\Models\KategoriProduk;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -37,7 +38,8 @@ class ExpensesController extends BaseController
 
 	public function create()
 	{
-		return view('transaksi.expenses.create');
+		$kategoriProduk = KategoriProduk::where('tipe', 'expenses')->get();
+		return view('transaksi.expenses.create', compact('kategoriProduk'));
 	}
 
 	public function store(Request $request)
@@ -46,6 +48,7 @@ class ExpensesController extends BaseController
 			$validated = $request->validate([
 				'tanggal' => 'required|date',
 				'kategori' => 'nullable|string|max:100',
+				'kategori_produk_id' => 'nullable|exists:kategori_produk,id',
 				'nominal' => 'required|numeric|min:0',
 				'metode_pembayaran' => 'required|in:cash,non-cash',
 				'keterangan' => 'nullable|string',
@@ -77,7 +80,8 @@ class ExpensesController extends BaseController
 			abort(403, 'Anda tidak memiliki akses ke pengeluaran ini');
 		}
 		
-		return view('transaksi.expenses.edit', compact('expense'));
+		$kategoriProduk = KategoriProduk::where('tipe', 'expenses')->get();
+		return view('transaksi.expenses.edit', compact('expense', 'kategoriProduk'));
 	}
 
 	public function update(Request $request, Expenses $expense)
@@ -91,6 +95,7 @@ class ExpensesController extends BaseController
 			$validated = $request->validate([
 				'tanggal' => 'required|date',
 				'kategori' => 'nullable|string|max:100',
+				'kategori_produk_id' => 'nullable|exists:kategori_produk,id',
 				'nominal' => 'required|numeric|min:0',
 				'metode_pembayaran' => 'required|in:cash,non-cash',
 				'keterangan' => 'nullable|string',

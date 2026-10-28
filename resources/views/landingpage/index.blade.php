@@ -3,8 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="Sistem kasir, manajemen stok, dan keuangan logam mulia. Kelola emas dan perak dengan akurat, aman, dan cepat.">
-	<title>Golday - Sistem Kasir & Stok Logam Mulia</title>
+	<meta name="description" content="Sistem kasir, manajemen stok, CRM, dan keuangan terpadu untuk UMKM Retail, F&B, dan Jasa. Kelola bisnis dengan mudah, akurat, dan cepat.">
+	<title>Aksara - Sistem Kasir, Stok, CRM & Keuangan UMKM</title>
 	<script src="https://cdn.tailwindcss.com"></script>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -119,9 +119,9 @@
 		<div class="glass bg-white/5 border border-white/10 rounded-3xl shadow-2xl shadow-black/20">
 			<div class="flex items-center justify-between h-auto px-6 py-3">
 				<div class="flex items-center gap-4">
-					<img src="{{ asset('assets/images/IdoTech x GolDay.png') }}" alt="IdoTech x Golday Logo" class="h-16 w-auto">
+					<img src="{{ asset('assets/images/IdoTech x GolDay.png') }}" alt="Aksara Logo" class="h-16 w-auto">
 					<div class="hidden sm:block pl-2 border-l border-white/20">
-						<h2 class="text-white font-bold text-base leading-tight">IdoTech x<br><span class="text-[#d9a441]">Golday</span></h2>
+						<h2 class="text-white font-bold text-base leading-tight"><span class="text-[#d9a441]">Aksara</span></h2>
 					</div>
 				</div>
 				<div class="hidden md:flex items-center gap-8 text-sm">
@@ -143,13 +143,13 @@
 			<div class="space-y-6">
 				<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass bg-white/5 border border-white/10 text-xs tracking-wide">
 					<span class="w-2 h-2 bg-[#7dd3fc] rounded-full"></span>
-					Sistem kasir khusus logam mulia
+					Sistem kasir, stok, CRM & keuangan terpadu UMKM
 				</div>
 				<h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
-					Kelola <span class="text-[#f6d365]">emas & perak</span> dengan kasir, stok, dan keuangan yang presisi.
+					Kelola <span class="text-[#f6d365]">bisnis UMKM</span> dengan kasir, stok, CRM, dan keuangan terpadu.
 				</h1>
 				<p class="text-white/70 text-lg">
-					Golday membantu toko logam mulia mencatat transaksi harian, memantau kadar, berat, dan harga jual, serta membuat laporan keuangan otomatis.
+					Aksara membantu Retail, F&B, dan Jasa mencatat transaksi harian, kontrol stok, pencatatan piutang, dan laporan laba rugi otomatis dengan mudah.
 				</p>
 				<div class="flex flex-col sm:flex-row gap-4">
 				<a href="{{ route('register') }}" class="bg-[#d9a441] text-black px-8 py-4 rounded-2xl font-bold text-base hover:bg-[#f2c66b] transition">Mulai Gratis 7 Hari</a>
@@ -174,7 +174,7 @@
 				<div class="glass bg-white/5 border border-white/10 rounded-3xl p-8 space-y-8 shadow-2xl">
 					<div>
 						<h3 class="text-2xl font-bold text-[#f6d365] mb-4">Visi</h3>
-						<p class="text-white/80 leading-relaxed">Menjadi platform digital terpercaya dalam pengelolaan bisnis logam mulia (emas dan perak) yang membantu pelaku usaha mengelola transaksi, stok, dan keuangan secara mudah, akurat, dan terintegrasi.</p>
+						<p class="text-white/80 leading-relaxed">Transformasi UMKM Indonesia dari pencatatan manual menuju tata kelola bisnis berbasis digital yang transparan dan efisien.</p>
 					</div>
 					<div class="border-t border-white/10"></div>
 					<div>
@@ -183,36 +183,29 @@
 							<li class="flex gap-3">
 								<span class="text-[#f6d365] font-bold mt-1">•</span>
 								<div>
-									<p class="font-semibold text-white mb-1">Menyediakan sistem kasir yang cepat dan efisien</p>
-									<p class="text-white/70 text-sm">Memudahkan proses transaksi jual beli emas dan perak secara real-time dengan pencatatan yang akurat.</p>
+									<p class="font-semibold text-white mb-1">Kasir POS serbaguna</p>
+									<p class="text-white/70 text-sm">Transaksi cepat tunai/non-tunai/tempo dengan pencatatan yang akurat dan cetak nota instan.</p>
 								</div>
 							</li>
 							<li class="flex gap-3">
 								<span class="text-[#f6d365] font-bold mt-1">•</span>
 								<div>
-									<p class="font-semibold text-white mb-1">Mengoptimalkan manajemen produk dan stok</p>
-									<p class="text-white/70 text-sm">Membantu pengguna dalam mengelola data produk logam mulia serta memantau ketersediaan stok dengan lebih terstruktur.</p>
+									<p class="font-semibold text-white mb-1">Kontrol stok & opname presisi</p>
+									<p class="text-white/70 text-sm">Alert stok menipis, tracking pergerakan stok, dan penyesuaian selisih stok fisik vs sistem.</p>
 								</div>
 							</li>
 							<li class="flex gap-3">
 								<span class="text-[#f6d365] font-bold mt-1">•</span>
 								<div>
-									<p class="font-semibold text-white mb-1">Menyajikan pencatatan keuangan yang transparan</p>
-									<p class="text-white/70 text-sm">Memberikan laporan keuangan yang jelas untuk memantau pemasukan, pengeluaran, dan keuntungan usaha.</p>
+									<p class="font-semibold text-white mb-1">Pengelolaan piutang pelanggan & pengeluaran operasional</p>
+									<p class="text-white/70 text-sm">Master pelanggan, pencatatan cicilan invoice, dan kontrol biaya operasional dengan rapi.</p>
 								</div>
 							</li>
 							<li class="flex gap-3">
 								<span class="text-[#f6d365] font-bold mt-1">•</span>
 								<div>
-									<p class="font-semibold text-white mb-1">Meningkatkan produktivitas dan kemudahan pengguna</p>
-									<p class="text-white/70 text-sm">Menghadirkan tampilan yang sederhana dan mudah digunakan oleh semua kalangan, termasuk pemula.</p>
-								</div>
-							</li>
-							<li class="flex gap-3">
-								<span class="text-[#f6d365] font-bold mt-1">•</span>
-								<div>
-									<p class="font-semibold text-white mb-1">Mendukung digitalisasi bisnis logam mulia</p>
-									<p class="text-white/70 text-sm">Membantu pelaku usaha beralih dari sistem manual ke sistem digital yang lebih modern dan efisien.</p>
+									<p class="font-semibold text-white mb-1">Laporan laba rugi otomatis</p>
+									<p class="text-white/70 text-sm">Kalkulasi HPP, margin bersih, dan breakdown pendapatan vs beban operasional secara real-time.</p>
 								</div>
 							</li>
 						</ul>
@@ -226,33 +219,33 @@
 	<section id="fitur" class="relative py-24 px-6 lg:px-8">
 		<div class="max-w-6xl mx-auto">
 			<div class="text-center mb-14">
-				<h2 class="text-4xl md:text-5xl font-bold">Fitur Inti Golday</h2>
-				<p class="text-white/60 mt-4 max-w-2xl mx-auto">Dirancang khusus untuk toko emas dan perak: akurasi, keamanan, dan laporan instan.</p>
+				<h2 class="text-4xl md:text-5xl font-bold">Fitur Inti Aksara</h2>
+				<p class="text-white/60 mt-4 max-w-2xl mx-auto">Dirancang khusus untuk UMKM Retail, F&B, dan Jasa: kasir, stok, CRM, dan keuangan terpadu.</p>
 			</div>
 			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 				<div class="glass bg-white/5 border border-white/10 rounded-3xl p-6 hover-lift">
-					<h3 class="text-xl font-semibold mb-3">Kasir Logam Mulia</h3>
-					<p class="text-white/60">Input berat, kadar, dan harga pasar otomatis. Struk detail dengan profit margin.</p>
+					<h3 class="text-xl font-semibold mb-3">POS Kasir Cepat</h3>
+					<p class="text-white/60">Transaksi instan, cetak nota, dan dukungan pembayaran tempo (Invoice/AR).</p>
 				</div>
 				<div class="glass bg-white/5 border border-white/10 rounded-3xl p-6 hover-lift">
-					<h3 class="text-xl font-semibold mb-3">Manajemen Stok</h3>
-					<p class="text-white/60">Tracking stok emas/perak berdasarkan kategori, berat, dan seri.</p>
+					<h3 class="text-xl font-semibold mb-3">Manajemen Stok & Opname</h3>
+					<p class="text-white/60">Alert stok menipis dan penyesuaian selisih stok fisik vs sistem dengan nilai kerugian.</p>
 				</div>
 				<div class="glass bg-white/5 border border-white/10 rounded-3xl p-6 hover-lift">
-					<h3 class="text-xl font-semibold mb-3">Laporan Keuangan</h3>
-					<p class="text-white/60">Ringkasan harian, margin, hutang/piutang, serta laporan laba rugi.</p>
-				</div>
-				<!-- <div class="glass bg-white/5 border border-white/10 rounded-3xl p-6 hover-lift">
-					<h3 class="text-xl font-semibold mb-3">Multi Cabang</h3>
-					<p class="text-white/60">Pantau performa cabang dan transfer stok antar toko secara real-time.</p>
-				</div> -->
-				<div class="glass bg-white/5 border border-white/10 rounded-3xl p-6 hover-lift">
-					<h3 class="text-xl font-semibold mb-3">Akses Karyawan</h3>
-					<p class="text-white/60">Role-based access untuk kasir, owner, dan supervisor.</p>
+					<h3 class="text-xl font-semibold mb-3">CRM & Invoice Piutang</h3>
+					<p class="text-white/60">Master pelanggan dan pencatatan cicilan tagihan (Account Receivable).</p>
 				</div>
 				<div class="glass bg-white/5 border border-white/10 rounded-3xl p-6 hover-lift">
-					<h3 class="text-xl font-semibold mb-3">Backup Aman</h3>
-					<p class="text-white/60">Backup otomatis harian dan proteksi data transaksi.</p>
+					<h3 class="text-xl font-semibold mb-3">Pembelian & Supplier</h3>
+					<p class="text-white/60">Transaksi masuk dengan update stok otomatis dan master supplier.</p>
+				</div>
+				<div class="glass bg-white/5 border border-white/10 rounded-3xl p-6 hover-lift">
+					<h3 class="text-xl font-semibold mb-3">Shift Kasir & Rekonsiliasi</h3>
+					<p class="text-white/60">Pengendalian kas dengan modal awal/akhir dan rekonsiliasi kas harian.</p>
+				</div>
+				<div class="glass bg-white/5 border border-white/10 rounded-3xl p-6 hover-lift">
+					<h3 class="text-xl font-semibold mb-3">Laporan Keuangan & Laba Rugi</h3>
+					<p class="text-white/60">Kalkulasi HPP, beban operasional, dan laba bersih secara otomatis.</p>
 				</div>
 			</div>
 		</div>
@@ -262,30 +255,30 @@
 		<div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
 			<div>
 				<h2 class="text-4xl md:text-5xl font-bold mb-6">Alur Kerja Harian</h2>
-				<p class="text-white/60 mb-8">Satu dashboard untuk kasir, stok, dan laporan keuangan logam mulia.</p>
+				<p class="text-white/60 mb-8">Satu dashboard untuk kasir, stok, CRM, dan laporan keuangan UMKM.</p>
 				<ol class="space-y-4">
-					<li class="glass bg-white/5 border border-white/10 rounded-2xl p-4">1. Catat transaksi emas/perak dengan harga pasar terkini.</li>
-					<li class="glass bg-white/5 border border-white/10 rounded-2xl p-4">2. Stok otomatis berkurang/bertambah sesuai jual-beli.</li>
-					<li class="glass bg-white/5 border border-white/10 rounded-2xl p-4">3. Laporan keuangan langsung terbentuk per hari.</li>
+					<li class="glass bg-white/5 border border-white/10 rounded-2xl p-4">1. Buka shift kasir dan catat transaksi penjualan (cash/tempo).</li>
+					<li class="glass bg-white/5 border border-white/10 rounded-2xl p-4">2. Stok otomatis berkurang/bertambah dan piutang tercatat jika tempo.</li>
+					<li class="glass bg-white/5 border border-white/10 rounded-2xl p-4">3. Laporan laba rugi langsung terbentuk dengan HPP dan margin.</li>
 				</ol>
 			</div>
 			<div class="glass bg-white/5 border border-white/10 rounded-3xl p-6">
 				<div class="text-sm text-white/60 mb-2">Dashboard Snapshot</div>
 				<div class="grid grid-cols-2 gap-4">
 					<div class="bg-[var(--metal-700)] rounded-2xl p-4">
-						<p class="text-xs text-white/50">Omset</p>
+						<p class="text-xs text-white/50">Omset Penjualan</p>
 						<p class="text-xl font-bold">Rp 145Jt</p>
 					</div>
 					<div class="bg-[var(--metal-700)] rounded-2xl p-4">
-						<p class="text-xs text-white/50">Stok Emas</p>
-						<p class="text-xl font-bold">2.4 Kg</p>
+						<p class="text-xs text-white/50">Total Produk/SKU</p>
+						<p class="text-xl font-bold">284</p>
 					</div>
 					<div class="bg-[var(--metal-700)] rounded-2xl p-4">
-						<p class="text-xs text-white/50">Stok Perak</p>
-						<p class="text-xl font-bold">5.8 Kg</p>
+						<p class="text-xs text-white/50">Piutang/Invoice</p>
+						<p class="text-xl font-bold">Rp 32Jt</p>
 					</div>
 					<div class="bg-[var(--metal-700)] rounded-2xl p-4">
-						<p class="text-xs text-white/50">Margin</p>
+						<p class="text-xs text-white/50">Laba Bersih</p>
 						<p class="text-xl font-bold">Rp 18Jt</p>
 					</div>
 				</div>
@@ -327,7 +320,7 @@
 		<div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
 			<div>
 				<h2 class="text-3xl md:text-4xl font-bold mb-4">Siap Naik Level?</h2>
-				<p class="text-white/60">Konsultasi gratis untuk setup toko emas/perak Anda.</p>
+				<p class="text-white/60">Konsultasi gratis untuk setup sistem kasir UMKM Anda.</p>
 			</div>
 			<div class="flex flex-col sm:flex-row gap-4">
 				<a href="{{ route('register') }}" class="bg-[#d9a441] text-black px-6 py-4 rounded-2xl font-bold text-center">Mulai Gratis 7 Hari</a>
@@ -337,11 +330,11 @@
 	</section>
 
 	<footer class="py-10 text-center text-white/40 text-sm">
-		© 2026 Golday. Sistem kasir logam mulia untuk Indonesia.
+		© 2026 Aksara. Sistem kasir, stok, CRM & keuangan UMKM untuk Indonesia.
 	</footer>
 
 	<div class="btn-whatsapp-wrap">
-		<a href="https://wa.me/6288231321669?text=Halo%20Golday%2C%20saya%20tertarik%20dengan%20sistem%20kasir%20logam%20mulia" target="_blank" rel="noopener noreferrer" aria-label="Chat WhatsApp">
+		<a href="https://wa.me/6288231321669?text=Halo%20Aksara%2C%20saya%20tertarik%20dengan%20sistem%20kasir%20UMKM" target="_blank" rel="noopener noreferrer" aria-label="Chat WhatsApp">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="whatsapp-icon">
 				<path d="M414.73,97.1A222.14,222.14,0,0,0,256.94,32C134,32,33.92,131.58,33.87,254A220.61,220.61,0,0,0,63.65,365L32,480l118.25-30.87a223.63,223.63,0,0,0,106.6,27h.09c122.93,0,223-99.59,223.06-222A220.18,220.18,0,0,0,414.73,97.1ZM256.94,438.66h-.08a185.75,185.75,0,0,1-94.36-25.72l-6.77-4L85.56,427.26l18.73-68.09-4.41-7A183.46,183.46,0,0,1,71.53,254c0-101.73,83.21-184.5,185.48-184.5A185,185,0,0,1,442.34,254.14C442.3,355.88,359.13,438.66,256.94,438.66ZM358.63,300.47c-5.57-2.78-33-16.2-38.08-18.05s-8.83-2.78-12.54,2.78-14.4,18-17.65,21.75-6.5,4.16-12.07,1.38-23.54-8.63-44.83-27.53c-16.57-14.71-27.75-32.87-31-38.42s-.35-8.56,2.44-11.32c2.51-2.49,5.57-6.48,8.36-9.72s3.72-5.56,5.57-9.26.93-6.94-.46-9.71-12.54-30.08-17.18-41.19c-4.53-10.82-9.12-9.35-12.54-9.52-3.25-.16-7-.2-10.69-.2a20.53,20.53,0,0,0-14.86,6.94c-5.11,5.56-19.51,19-19.51,46.28s20,53.68,22.76,57.38,39.3,59.73,95.21,83.76a323.11,323.11,0,0,0,31.78,11.68c13.35,4.22,25.5,3.63,35.1,2.2,10.71-1.59,33-13.42,37.63-26.38s4.64-24.06,3.25-26.37S364.21,303.24,358.63,300.47Z" fill="currentColor"/>
 			</svg>

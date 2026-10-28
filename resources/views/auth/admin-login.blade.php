@@ -5,6 +5,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<title>Login Admin - {{ config('app.name', 'Aksara') }}</title>
+		<link rel="icon" type="image/png" href="{{ asset('assets/images/aksara-logo.png') }}">
+		<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
 		<link rel="preconnect" href="https://fonts.bunny.net">
 		<link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
@@ -174,13 +176,15 @@
 		<div class="auth-shell">
 			<div class="auth-card">
 				<div class="auth-header">
-					<div class="logo-badge">
-						<img src="{{ asset('images/logo.png') }}" alt="Logo">
-					</div>
-					<div>
-						<div class="logo-text-title">{{ config('app.name', 'Golday') }}</div>
-						<div class="logo-text-sub">Admin Access</div>
-					</div>
+					<a href="{{ url('/') }}" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+						<div class="logo-badge">
+							<img src="{{ asset('assets/images/aksara-logo.png') }}" alt="Aksara Logo" style="width: 100%; height: 100%; object-fit: contain;">
+						</div>
+						<div>
+							<div class="logo-text-title">Aksara</div>
+							<div class="logo-text-sub">Admin Access</div>
+						</div>
+					</a>
 				</div>
 
 				<div class="auth-title">Login Admin</div>

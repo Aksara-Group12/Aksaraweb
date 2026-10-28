@@ -5,6 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Sistem kasir, manajemen stok, CRM, dan keuangan terpadu untuk UMKM Retail, F&B, dan Jasa. Kelola bisnis dengan mudah, akurat, dan cepat.">
 	<title>Aksara - Sistem Kasir, Stok, CRM & Keuangan UMKM</title>
+	<link rel="icon" type="image/png" href="{{ asset('assets/images/aksara-logo.png') }}">
+	<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 	<script src="https://cdn.tailwindcss.com"></script>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -118,12 +120,12 @@
 	<nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-6xl">
 		<div class="glass bg-blue-50/5 border border-blue-200/10 rounded-3xl shadow-2xl shadow-black/20">
 			<div class="flex items-center justify-between h-auto px-6 py-3">
-				<div class="flex items-center gap-4">
-					<img src="{{ asset('assets/images/IdoTech x GolDay.png') }}" alt="Aksara Logo" class="h-16 w-auto">
+				<a href="{{ url('/') }}" class="flex items-center gap-3 group">
+					<img src="{{ asset('assets/images/aksara-logo.png') }}" alt="Aksara Logo" class="h-12 w-auto object-contain transition-transform group-hover:scale-105">
 					<div class="hidden sm:block pl-2 border-l border-blue-200/20">
-						<h2 class="text-blue-900 font-bold text-base leading-tight"><span class="text-[#3b82f6]">Aksara</span></h2>
+						<h2 class="text-blue-900 font-bold text-base leading-tight"><span class="text-[#3b82f6]">Aksara Developer</span></h2>
 					</div>
-				</div>
+				</a>
 				<div class="hidden md:flex items-center gap-8 text-sm">
 					<a href="#fitur" class="text-blue-900/80 hover:text-[#3b82f6] transition">Fitur</a>
 					<a href="#alur" class="text-blue-900/80 hover:text-[#3b82f6] transition">Alur</a>

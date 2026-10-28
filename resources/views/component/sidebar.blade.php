@@ -8,21 +8,23 @@
 		$storeInitial = mb_strtoupper(mb_substr($storeName, 0, 1));
 	@endphp
 	<div class="hz-sidebar-header">
-		<div class="hz-logo-badge">
+		<div class="hz-logo-badge" style="width: 38px; height: 38px; border-radius: 12px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 3px;">
 			@if($profile && $profile->logo_path)
 				@php
 					$logoPath = asset('storage/' . $profile->logo_path);
-					// Debug: Log the path
-					// echo "<!-- Logo Path: $logoPath -->";
 				@endphp
 				<img 
 					src="{{ $logoPath }}" 
 					alt="{{ $storeName }}" 
-					style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
-					onerror="this.style.display='none'; this.parentElement.innerHTML='{{ $storeInitial }}';"
+					style="width: 100%; height: 100%; object-fit: contain;"
+					onerror="this.src='{{ asset('assets/images/aksara-logo.png') }}';"
 				>
 			@else
-				<span style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-weight: 700; font-size: 20px;">{{ $storeInitial }}</span>
+				<img 
+					src="{{ asset('assets/images/aksara-logo.png') }}" 
+					alt="Aksara Logo" 
+					style="width: 100%; height: 100%; object-fit: contain;"
+				>
 			@endif
 		</div>
 		<div class="hz-logo-text">

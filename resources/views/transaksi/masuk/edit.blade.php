@@ -14,7 +14,7 @@
 	</div>
 
 	@if ($errors->any())
-		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #fca5a5;">
+		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626;">
 			<p style="font-weight: 600; margin-bottom: 8px;">❌ Terjadi kesalahan validasi:</p>
 			<ul style="margin: 0; padding-left: 20px;">
 				@foreach ($errors->all() as $error)
@@ -25,12 +25,12 @@
 	@endif
 
 	@if ($message = Session::get('error'))
-		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #fca5a5;">
+		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626;">
 			{{ $message }}
 		</div>
 	@endif
 
-	<div id="reopened-warning" style="display:none; margin-top: 20px; padding: 14px 16px; background: rgba(251, 191, 36, 0.12); border: 1px solid rgba(251, 191, 36, 0.35); border-radius: 10px; color: #fbbf24;">
+	<div id="reopened-warning" style="display:none; margin-top: 20px; padding: 14px 16px; background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 10px; color: #3b82f6;">
 		<strong>Perhatian:</strong> Status transaksi sedang <strong>reopened</strong>. Stok dan laporan belum dihitung sampai status dikembalikan ke <strong>complete</strong>.
 	</div>
 
@@ -46,14 +46,14 @@
 
 				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Tanggal Transaksi <span style="color: #fbbf24;">*</span></label>
-						<input type="date" name="tanggal_transaksi" value="{{ old('tanggal_transaksi', optional($transaksiMasuk->tanggal_transaksi)->format('Y-m-d')) }}" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Tanggal Transaksi <span style="color: #3b82f6;">*</span></label>
+						<input type="date" name="tanggal_transaksi" value="{{ old('tanggal_transaksi', optional($transaksiMasuk->tanggal_transaksi)->format('Y-m-d')) }}" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Status <span style="color: #fbbf24;">*</span></label>
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Status <span style="color: #3b82f6;">*</span></label>
 						@php($status = old('status', $transaksiMasuk->status))
-						<select name="status" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<select name="status" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 							<option value="pending" {{ $status === 'pending' ? 'selected' : '' }}>Pending</option>
 							<option value="complete" {{ $status === 'complete' ? 'selected' : '' }}>Complete</option>
 							<option value="reopened" {{ $status === 'reopened' ? 'selected' : '' }}>Reopened (Edit)</option>
@@ -70,7 +70,7 @@
 			<div class="hz-card" style="grid-column: 1 / -1;">
 				<div class="hz-card-header" style="margin-bottom: 16px;">
 					<p class="hz-card-title">Detail Item Masuk</p>
-					<p style="font-size: 0.75rem; color: #9ca3af; margin-top: 6px;">Edit item hanya aktif saat status transaksi = reopened.</p>
+					<p style="font-size: 0.75rem; color: #64748b; margin-top: 6px;">Edit item hanya aktif saat status transaksi = reopened.</p>
 				</div>
 
 				<div id="itemsContainer" style="display: flex; flex-direction: column; gap: 16px;">
@@ -80,125 +80,125 @@
 							$serials = is_array($item->nomor_seri) ? $item->nomor_seri : json_decode($item->nomor_seri ?? '[]', true) ?? [];
 							$serialText = implode("\n", $serials);
 						@endphp
-						<div class="item-card" style="border: 1px solid rgba(251,191,36,0.3); border-radius: 14px; padding: 18px; background: rgba(15,23,42,0.7);">
+						<div class="item-card" style="border: 1px solid rgba(59,130,246,0.3); border-radius: 14px; padding: 18px; background: rgba(255,255,255,0.95);">
 							<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-								<p style="font-size: 0.9rem; font-weight: 600; color: #fbbf24;">Item #{{ $index + 1 }}</p>
-								<button type="button" class="btn-remove-item" style="padding: 4px 8px; background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: none; border-radius: 6px; cursor: pointer; font-size: 0.75rem; display: none;">Hapus</button>
+								<p style="font-size: 0.9rem; font-weight: 600; color: #3b82f6;">Item #{{ $index + 1 }}</p>
+								<button type="button" class="btn-remove-item" style="padding: 4px 8px; background: rgba(239, 68, 68, 0.2); color: #dc2626; border: none; border-radius: 6px; cursor: pointer; font-size: 0.75rem; display: none;">Hapus</button>
 							</div>
 
 							<div style="border-bottom: 1px solid rgba(251,191,36,0.2); padding-bottom: 14px; margin-bottom: 14px;">
-								<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; margin-bottom: 12px;">Informasi Dasar</p>
+								<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; margin-bottom: 12px;">Informasi Dasar</p>
 								<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
 									<div style="display: flex; flex-direction: column; gap: 4px;">
-										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Jenis Logam <span style="color: #fbbf24;">*</span></label>
-										<select class="jenis-logam item-jenis-logam" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(251,191,36,0.3); background: rgba(15,23,42,0.8); color: #e5e7eb; font-size: 0.85rem;">
+										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Jenis Logam <span style="color: #3b82f6;">*</span></label>
+										<select class="jenis-logam item-jenis-logam" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
 											<option value="">-- Pilih --</option>
 											<option value="emas" {{ $item->product?->jenis_logam === 'emas' ? 'selected' : '' }}>Emas</option>
 											<option value="perak" {{ $item->product?->jenis_logam === 'perak' ? 'selected' : '' }}>Perak</option>
 										</select>
 									</div>
 									<div style="display: flex; flex-direction: column; gap: 4px;">
-										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Brand <span style="color: #fbbf24;">*</span></label>
-										<input type="text" class="brand item-brand" value="{{ $item->product?->brand }}" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(251,191,36,0.3); background: rgba(15,23,42,0.8); color: #e5e7eb; font-size: 0.85rem;">
+										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Brand <span style="color: #3b82f6;">*</span></label>
+										<input type="text" class="brand item-brand" value="{{ $item->product?->brand }}" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
 									</div>
 									<div style="display: flex; flex-direction: column; gap: 4px;">
-										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Nama Produk <span style="color: #fbbf24;">*</span></label>
-										<input type="text" class="nama-produk item-nama-produk" value="{{ $item->product?->nama_produk }}" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(251,191,36,0.3); background: rgba(15,23,42,0.8); color: #e5e7eb; font-size: 0.85rem;">
+										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Nama Produk <span style="color: #3b82f6;">*</span></label>
+										<input type="text" class="nama-produk item-nama-produk" value="{{ $item->product?->nama_produk }}" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
 									</div>
 								</div>
 								<div style="margin-top: 12px;">
 									<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Deskripsi (Opsional)</label>
-									<textarea class="deskripsi item-deskripsi" style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(251,191,36,0.3); background: rgba(15,23,42,0.8); color: #e5e7eb; font-size: 0.85rem; width: 100%; height: 70px; margin-top: 4px; resize: vertical;">{{ $item->deskripsi }}</textarea>
+									<textarea class="deskripsi item-deskripsi" style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem; width: 100%; height: 70px; margin-top: 4px; resize: vertical;">{{ $item->deskripsi }}</textarea>
 								</div>
 							</div>
 
 							<div style="border-bottom: 1px solid rgba(251,191,36,0.2); padding-bottom: 14px; margin-bottom: 14px;">
-								<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; margin-bottom: 12px;">Spesifikasi Produk</p>
+								<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; margin-bottom: 12px;">Spesifikasi Produk</p>
 								<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
 									<div style="display: flex; flex-direction: column; gap: 4px;">
-										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Berat (gram) <span style="color: #fbbf24;">*</span></label>
-										<input type="number" class="berat item-berat" value="{{ $item->berat }}" step="0.01" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(251,191,36,0.3); background: rgba(15,23,42,0.8); color: #e5e7eb; font-size: 0.85rem;">
+										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Berat (gram) <span style="color: #3b82f6;">*</span></label>
+										<input type="number" class="berat item-berat" value="{{ $item->berat }}" step="0.01" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
 									</div>
 								</div>
 							</div>
 
 							<div style="border-bottom: 1px solid rgba(251,191,36,0.2); padding-bottom: 14px; margin-bottom: 14px;">
-								<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; margin-bottom: 12px;">Identitas Produk</p>
+								<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; margin-bottom: 12px;">Identitas Produk</p>
 								<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
 									<div style="display: flex; flex-direction: column; gap: 4px;">
-										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Nomor Seri <span style="color: #fbbf24;">*</span></label>
-										<textarea class="nomor-seri item-nomor-seri" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(251,191,36,0.3); background: rgba(15,23,42,0.8); color: #e5e7eb; font-size: 0.85rem; width: 100%; height: 100px; resize: vertical;">{{ $serialText }}</textarea>
-										<p style="font-size: 0.7rem; color: #9ca3af; margin-top: 4px;">Jumlah unit mengikuti jumlah nomor seri yang diinput.</p>
+										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Nomor Seri <span style="color: #3b82f6;">*</span></label>
+										<textarea class="nomor-seri item-nomor-seri" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem; width: 100%; height: 100px; resize: vertical;">{{ $serialText }}</textarea>
+										<p style="font-size: 0.7rem; color: #64748b; margin-top: 4px;">Jumlah unit mengikuti jumlah nomor seri yang diinput.</p>
 									</div>
 								</div>
 							</div>
 
 							<div style="border-bottom: 1px solid rgba(251,191,36,0.2); padding-bottom: 14px; margin-bottom: 14px;">
-								<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; margin-bottom: 12px;">Informasi Harga</p>
+								<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; margin-bottom: 12px;">Informasi Harga</p>
 								<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
 									<div style="display: flex; flex-direction: column; gap: 4px;">
-										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Harga Beli per Gram (Rp) <span style="color: #fbbf24;">*</span></label>
-										<input type="text" class="harga-gram item-harga-gram" value="{{ number_format($item->harga_gram ?? 0, 0, ',', '.') }}" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(251,191,36,0.3); background: rgba(15,23,42,0.8); color: #e5e7eb; font-size: 0.85rem;">
+										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Harga Beli per Gram (Rp) <span style="color: #3b82f6;">*</span></label>
+										<input type="text" class="harga-gram item-harga-gram" value="{{ number_format($item->harga_gram ?? 0, 0, ',', '.') }}" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
 									</div>
 								</div>
 							</div>
 						</div>
 					@empty
-						<div class="item-card" style="border: 1px solid rgba(251,191,36,0.3); border-radius: 14px; padding: 18px; background: rgba(15,23,42,0.7);">
+						<div class="item-card" style="border: 1px solid rgba(59,130,246,0.3); border-radius: 14px; padding: 18px; background: rgba(255,255,255,0.95);">
 							<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-								<p style="font-size: 0.9rem; font-weight: 600; color: #fbbf24;">Item #1</p>
-								<button type="button" class="btn-remove-item" style="padding: 4px 8px; background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: none; border-radius: 6px; cursor: pointer; font-size: 0.75rem; display: none;">Hapus</button>
+								<p style="font-size: 0.9rem; font-weight: 600; color: #3b82f6;">Item #1</p>
+								<button type="button" class="btn-remove-item" style="padding: 4px 8px; background: rgba(239, 68, 68, 0.2); color: #dc2626; border: none; border-radius: 6px; cursor: pointer; font-size: 0.75rem; display: none;">Hapus</button>
 							</div>
 							<div style="border-bottom: 1px solid rgba(251,191,36,0.2); padding-bottom: 14px; margin-bottom: 14px;">
-								<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; margin-bottom: 12px;">Informasi Dasar</p>
+								<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; margin-bottom: 12px;">Informasi Dasar</p>
 								<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
 									<div style="display: flex; flex-direction: column; gap: 4px;">
-										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Jenis Logam <span style="color: #fbbf24;">*</span></label>
-										<select class="jenis-logam item-jenis-logam" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(251,191,36,0.3); background: rgba(15,23,42,0.8); color: #e5e7eb; font-size: 0.85rem;">
+										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Jenis Logam <span style="color: #3b82f6;">*</span></label>
+										<select class="jenis-logam item-jenis-logam" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
 											<option value="">-- Pilih --</option>
 											<option value="emas">Emas</option>
 											<option value="perak">Perak</option>
 										</select>
 									</div>
 									<div style="display: flex; flex-direction: column; gap: 4px;">
-										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Brand <span style="color: #fbbf24;">*</span></label>
-										<input type="text" class="brand item-brand" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(251,191,36,0.3); background: rgba(15,23,42,0.8); color: #e5e7eb; font-size: 0.85rem;">
+										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Brand <span style="color: #3b82f6;">*</span></label>
+										<input type="text" class="brand item-brand" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
 									</div>
 									<div style="display: flex; flex-direction: column; gap: 4px;">
-										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Nama Produk <span style="color: #fbbf24;">*</span></label>
-										<input type="text" class="nama-produk item-nama-produk" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(251,191,36,0.3); background: rgba(15,23,42,0.8); color: #e5e7eb; font-size: 0.85rem;">
+										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Nama Produk <span style="color: #3b82f6;">*</span></label>
+										<input type="text" class="nama-produk item-nama-produk" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
 									</div>
 								</div>
 								<div style="margin-top: 12px;">
 									<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Deskripsi (Opsional)</label>
-									<textarea class="deskripsi item-deskripsi" style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(251,191,36,0.3); background: rgba(15,23,42,0.8); color: #e5e7eb; font-size: 0.85rem; width: 100%; height: 70px; margin-top: 4px; resize: vertical;"></textarea>
+									<textarea class="deskripsi item-deskripsi" style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem; width: 100%; height: 70px; margin-top: 4px; resize: vertical;"></textarea>
 								</div>
 							</div>
 							<div style="border-bottom: 1px solid rgba(251,191,36,0.2); padding-bottom: 14px; margin-bottom: 14px;">
-								<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; margin-bottom: 12px;">Spesifikasi Produk</p>
+								<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; margin-bottom: 12px;">Spesifikasi Produk</p>
 								<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;">
 									<div style="display: flex; flex-direction: column; gap: 4px;">
-										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Berat (gram) <span style="color: #fbbf24;">*</span></label>
-										<input type="number" class="berat item-berat" step="0.01" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(251,191,36,0.3); background: rgba(15,23,42,0.8); color: #e5e7eb; font-size: 0.85rem;">
+										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Berat (gram) <span style="color: #3b82f6;">*</span></label>
+										<input type="number" class="berat item-berat" step="0.01" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
 									</div>
 								</div>
 							</div>
 							<div style="border-bottom: 1px solid rgba(251,191,36,0.2); padding-bottom: 14px; margin-bottom: 14px;">
-								<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; margin-bottom: 12px;">Identitas Produk</p>
+								<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; margin-bottom: 12px;">Identitas Produk</p>
 								<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
 									<div style="display: flex; flex-direction: column; gap: 4px;">
-										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Nomor Seri <span style="color: #fbbf24;">*</span></label>
-										<textarea class="nomor-seri item-nomor-seri" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(251,191,36,0.3); background: rgba(15,23,42,0.8); color: #e5e7eb; font-size: 0.85rem; width: 100%; height: 100px; resize: vertical;"></textarea>
-										<p style="font-size: 0.7rem; color: #9ca3af; margin-top: 4px;">Jumlah unit mengikuti jumlah nomor seri yang diinput.</p>
+										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Nomor Seri <span style="color: #3b82f6;">*</span></label>
+										<textarea class="nomor-seri item-nomor-seri" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem; width: 100%; height: 100px; resize: vertical;"></textarea>
+										<p style="font-size: 0.7rem; color: #64748b; margin-top: 4px;">Jumlah unit mengikuti jumlah nomor seri yang diinput.</p>
 									</div>
 								</div>
 							</div>
 							<div style="border-bottom: 1px solid rgba(251,191,36,0.2); padding-bottom: 14px; margin-bottom: 14px;">
-								<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; margin-bottom: 12px;">Informasi Harga</p>
+								<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: #64748b; margin-bottom: 12px;">Informasi Harga</p>
 								<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
 									<div style="display: flex; flex-direction: column; gap: 4px;">
-										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Harga Beli per Gram (Rp) <span style="color: #fbbf24;">*</span></label>
-										<input type="text" class="harga-gram item-harga-gram" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(251,191,36,0.3); background: rgba(15,23,42,0.8); color: #e5e7eb; font-size: 0.85rem;">
+										<label style="font-size: 0.8rem; font-weight: 500; color: #cbd5e1;">Harga Beli per Gram (Rp) <span style="color: #3b82f6;">*</span></label>
+										<input type="text" class="harga-gram item-harga-gram" required style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
 									</div>
 								</div>
 							</div>
@@ -206,7 +206,7 @@
 					@endforelse
 				</div>
 
-				<button type="button" id="addItemBtn" style="margin-top: 16px; padding: 10px 16px; background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.4); border-radius: 10px; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;">
+				<button type="button" id="addItemBtn" style="margin-top: 16px; padding: 10px 16px; background: rgba(251,191,36,0.15); color: #3b82f6; border: 1px solid rgba(59,130,246,0.4); border-radius: 10px; cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: all 0.2s;">
 					+ Tambah Item
 				</button>
 			</div>
@@ -219,8 +219,8 @@
 				</div>
 				<div style="display: flex; flex-direction: column; gap: 12px;">
 					<div style="display: flex; justify-content: space-between; padding: 14px 0; background: rgba(251,191,36,0.1); padding: 14px 12px; border-radius: 10px;">
-						<span style="color: #fbbf24; font-weight: 600; font-size: 1rem;">Total Transaksi :</span>
-						<span id="totalAmount" style="color: #fbbf24; font-weight: 700; font-size: 1.1rem;">Rp 0</span>
+						<span style="color: #3b82f6; font-weight: 600; font-size: 1rem;">Total Transaksi :</span>
+						<span id="totalAmount" style="color: #3b82f6; font-weight: 700; font-size: 1.1rem;">Rp 0</span>
 					</div>
 				</div>
 			</div>
@@ -234,23 +234,23 @@
 
 				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Nama Supplier <span style="color: #fbbf24;">*</span></label>
-						<input type="text" name="supplier_name" value="{{ old('supplier_name', $transaksiMasuk->supplier_name) }}" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Nama Supplier <span style="color: #3b82f6;">*</span></label>
+						<input type="text" name="supplier_name" value="{{ old('supplier_name', $transaksiMasuk->supplier_name) }}" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Kontak <span style="color: #fbbf24;">*</span></label>
-						<input type="text" name="supplier_contact" value="{{ old('supplier_contact', $transaksiMasuk->supplier_contact) }}" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Kontak <span style="color: #3b82f6;">*</span></label>
+						<input type="text" name="supplier_contact" value="{{ old('supplier_contact', $transaksiMasuk->supplier_contact) }}" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Lokasi (Kota/Kabupaten)</label>
-						<input type="text" name="lokasi" value="{{ old('lokasi', $transaksiMasuk->lokasi ?? '') }}" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Lokasi (Kota/Kabupaten)</label>
+						<input type="text" name="lokasi" value="{{ old('lokasi', $transaksiMasuk->lokasi ?? '') }}" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">PO / Invoice Supplier</label>
-						<input type="text" name="po_invoice" value="{{ old('po_invoice', $transaksiMasuk->po_invoice) }}" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">PO / Invoice Supplier</label>
+						<input type="text" name="po_invoice" value="{{ old('po_invoice', $transaksiMasuk->po_invoice) }}" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 				</div>
 			</div>
@@ -264,9 +264,9 @@
 
 				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Metode Pembayaran <span style="color: #fbbf24;">*</span></label>
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Metode Pembayaran <span style="color: #3b82f6;">*</span></label>
 						@php($metode = old('metode_pembayaran', $transaksiMasuk->metode_pembayaran))
-						<select name="metode_pembayaran" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<select name="metode_pembayaran" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 							<option value="">-- Pilih --</option>
 							<option value="cash" {{ $metode === 'cash' ? 'selected' : '' }}>Cash</option>
 							<option value="non-cash" {{ $metode === 'non-cash' ? 'selected' : '' }}>Non-Cash</option>
@@ -274,14 +274,14 @@
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Nominal Bayar (Rp)</label>
-						<input type="number" name="nominal_bayar" value="{{ old('nominal_bayar', $transaksiMasuk->nominal_bayar ?? 0) }}" step="0.01" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Nominal Bayar (Rp)</label>
+						<input type="number" name="nominal_bayar" value="{{ old('nominal_bayar', $transaksiMasuk->nominal_bayar ?? 0) }}" step="0.01" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 				</div>
 
 				<div style="margin-top: 16px; display: flex; flex-direction: column; gap: 6px;">
-					<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Catatan</label>
-					<textarea name="catatan" style="padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem; height: 100px; resize: vertical;">{{ old('catatan', $transaksiMasuk->catatan) }}</textarea>
+					<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Catatan</label>
+					<textarea name="catatan" style="padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem; height: 100px; resize: vertical;">{{ old('catatan', $transaksiMasuk->catatan) }}</textarea>
 				</div>
 			</div>
 		</section>
@@ -316,18 +316,18 @@
 		}
 
 		.item-card:hover {
-			border-color: rgba(251, 191, 36, 0.5);
+			border-color: rgba(59, 130, 246, 0.5);
 			background: rgba(15, 23, 42, 0.9);
 		}
 
 		#addItemBtn:hover {
-			background: rgba(251, 191, 36, 0.25);
-			border-color: #fbbf24;
+			background: rgba(59, 130, 246, 0.25);
+			border-color: #3b82f6;
 		}
 
 		.btn-remove-item:hover {
 			background: rgba(239, 68, 68, 0.3);
-			color: #fca5a5;
+			color: #dc2626;
 		}
 	</style>
 

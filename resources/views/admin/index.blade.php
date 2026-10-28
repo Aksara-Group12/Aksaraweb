@@ -10,22 +10,22 @@
     </div>
     <div class="hz-top-actions" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
         <form method="GET" action="{{ route('admin.index') }}" style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama, email, atau phone" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 10px; font-size:0.8rem; color:#e5e7eb; min-width:200px;">
-            <select name="status" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 8px; font-size:0.8rem; color:#e5e7eb;">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama, email, atau phone" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b; min-width:200px;">
+            <select name="status" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
                 <option value="">Semua Status</option>
                 <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Active</option>
                 <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Inactive</option>
             </select>
-            <select name="deleted" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 8px; font-size:0.8rem; color:#e5e7eb;">
+            <select name="deleted" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
                 <option value="">Aktif</option>
                 <option value="only" {{ request('deleted') === 'only' ? 'selected' : '' }}>Dihapus</option>
             </select>
-            <select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 8px; font-size:0.8rem; color:#e5e7eb;">
+            <select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
                 <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10</option>
                 <option value="25" {{ request('per_page', 10) == 25 ? 'selected' : '' }}>25</option>
                 <option value="50" {{ request('per_page', 10) == 50 ? 'selected' : '' }}>50</option>
             </select>
-            <button type="submit" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; color:#e5e7eb; padding:6px 10px; font-size:0.8rem; text-decoration:none; cursor:pointer;">
+            <button type="submit" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; padding:6px 10px; font-size:0.8rem; text-decoration:none; cursor:pointer;">
                 Filter
             </button>
         </form>
@@ -43,13 +43,13 @@
 </div>
 
 @if ($message = Session::get('success'))
-    <div style="margin-top: 20px; padding: 14px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; color: #86efac;">
+    <div style="margin-top: 20px; padding: 14px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; color: #16a34a;">
         {{ $message }}
     </div>
 @endif
 
 @if ($message = Session::get('error'))
-    <div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #fca5a5;">
+    <div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626;">
         {{ $message }}
     </div>
 @endif
@@ -68,7 +68,7 @@
                     @csrf
                     <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
                         <thead>
-                            <tr style="border-bottom: 1px solid rgba(251, 191, 36, 0.4); color:#9ca3af;">
+                            <tr style="border-bottom: 1px solid rgba(59, 130, 246, 0.4); color:#9ca3af;">
                                 <th style="padding:14px 10px; text-align:center; width:36px;">
                                     <input type="checkbox" id="admin-select-all" style="cursor:pointer;">
                                 </th>
@@ -88,9 +88,9 @@
                                     <td style="padding:14px 10px; text-align:center;">
                                         <input type="checkbox" name="ids[]" value="{{ $admin->id }}" class="admin-row-checkbox" style="cursor:pointer;">
                                     </td>
-                                    <td style="padding:14px 10px; color: #e5e7eb;">{{ $admin->name }}</td>
-                                    <td style="padding:14px 10px; color: #9ca3af;">{{ $admin->email }}</td>
-                                    <td style="padding:14px 10px; color: #9ca3af;">{{ $admin->phone }}</td>
+                                    <td style="padding:14px 10px; color: #1e293b;">{{ $admin->name }}</td>
+                                    <td style="padding:14px 10px; color: #64748b;">{{ $admin->email }}</td>
+                                    <td style="padding:14px 10px; color: #64748b;">{{ $admin->phone }}</td>
                                     <td style="padding:14px 10px; text-align:center;">
                                         <span style="background:{{ $admin->status === 'active' ? 'rgba(16,185,129,0.2)' : 'rgba(107,114,128,0.2)' }}; color:{{ $admin->status === 'active' ? '#10b981' : '#9ca3af' }}; padding:4px 8px; border-radius:4px; font-size:0.8rem; font-weight:600;">
                                             {{ ucfirst($admin->status) }}
@@ -112,7 +112,7 @@
                                             <button type="button" class="hz-more-btn" style="background: transparent; border:none; color:#9ca3af; cursor:pointer; padding:4px 8px; border-radius:999px;">
                                                 &#8942;
                                             </button>
-                                            <div class="hz-more-menu actions-dropdown" style="display:none; position:absolute; right:10px; top:32px; background:#020617; border:1px solid rgba(148,163,184,0.4); border-radius:8px; min-width:160px; z-index:10;">
+                                            <div class="hz-more-menu actions-dropdown" style="display:none; position:absolute; right:10px; top:32px; background:rgba(255,255,255,0.9); border:1px solid rgba(148,163,184,0.4); border-radius:8px; min-width:160px; z-index:10;">
                                                 <a href="{{ route('admin.edit', $admin->id) }}" class="actions-dropdown-item edit">
                                                     <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
@@ -139,7 +139,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" style="padding: 40px 10px; text-align: center; color: #9ca3af;">
+                                    <td colspan="6" style="padding: 40px 10px; text-align: center; color: #64748b;">
                                         Belum ada admin.
                                     </td>
                                 </tr>
@@ -158,7 +158,7 @@
                     </div>
                 @endif
             @else
-                <div style="padding: 40px; text-align: center; color: #9ca3af;">
+                <div style="padding: 40px; text-align: center; color: #64748b;">
                     <p style="margin-bottom: 12px;">Belum ada admin.</p>
                     <a href="{{ route('admin.create') }}" class="hz-btn-primary" style="display: inline-block; text-decoration: none; padding: 10px 16px; border-radius: 10px;">
                         Tambah Admin
@@ -171,11 +171,11 @@
 
 <!-- Modal konfirmasi bulk delete admin -->
 <div id="admin-bulk-modal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.8); z-index:50; align-items:center; justify-content:center;">
-    <div style="background:#020617; border-radius:16px; padding:20px 22px; width:100%; max-width:360px; border:1px solid rgba(148,163,184,0.5); box-shadow:0 18px 45px rgba(15,23,42,0.9);">
-        <h3 style="font-size:1rem; font-weight:600; color:#e5e7eb; margin-bottom:4px;">Hapus admin terpilih?</h3>
+    <div style="background:rgba(255,255,255,0.9); border-radius:16px; padding:20px 22px; width:100%; max-width:360px; border:1px solid rgba(59,130,246,0.3); box-shadow:0 18px 45px rgba(15,23,42,0.9);">
+        <h3 style="font-size:1rem; font-weight:600; color:#1e293b; margin-bottom:4px;">Hapus admin terpilih?</h3>
         <p style="font-size:0.85rem; color:#9ca3af; margin-bottom:16px;">Tindakan ini tidak dapat dibatalkan. Pastikan admin yang dipilih sudah benar.</p>
         <div style="display:flex; justify-content:flex-end; gap:8px;">
-            <button type="button" id="admin-bulk-cancel" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:transparent; color:#e5e7eb; padding:6px 14px; font-size:0.8rem; cursor:pointer;">Batal</button>
+            <button type="button" id="admin-bulk-cancel" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:transparent; color:#1e293b; padding:6px 14px; font-size:0.8rem; cursor:pointer;">Batal</button>
             <button type="button" id="admin-bulk-confirm" style="border-radius:999px; border:none; background:#b91c1c; color:#fee2e2; padding:6px 14px; font-size:0.8rem; font-weight:600; cursor:pointer;">Ya, hapus</button>
         </div>
     </div>
@@ -279,7 +279,7 @@
 </script>
 <style>
 	.hz-btn-primary {
-		background: #fbbf24;
+		background: #3b82f6;
 		color: #020617;
 		border: none;
 		border-radius: 10px;
@@ -288,11 +288,11 @@
 	}
 
 	.hz-btn-primary:hover {
-		background: #f59e0b;
+		background: #2563eb;
 	}
 
 	.actions-dropdown {
-		background: #020617;
+		background: #ffffff;
 		border-radius: 8px;
 		padding: 4px 0;
 		box-shadow: 0 10px 25px rgba(15,23,42,0.7);
@@ -308,7 +308,7 @@
 		text-decoration: none;
 		border: none;
 		background: transparent;
-		color: #e5e7eb;
+		color: #1e293b;
 		cursor: pointer;
 	}
 
@@ -322,11 +322,11 @@
 	}
 
 	.actions-dropdown-item.edit {
-		color: #e5e7eb;
+		color: #1e293b;
 	}
 
 	.actions-dropdown-item.delete {
-		color: #fca5a5;
+		color: #dc2626;
 	}
 </style>
 

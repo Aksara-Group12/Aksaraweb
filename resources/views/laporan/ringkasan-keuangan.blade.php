@@ -11,7 +11,7 @@
 		<div style="display: flex; gap: 10px; align-items: center;">
 			<!-- Filter Periode -->
 			<form action="{{ route('laporan.keuangan') }}" method="GET" style="display: flex; align-items: center; gap: 8px;">
-				<select name="period" id="rk-period-select" style="border-radius:999px; background:rgba(15,23,42,0.9); border:1px solid rgba(51,65,85,0.9); color:#e5e7eb; font-size:0.75rem; padding:6px 10px; outline:none;">
+				<select name="period" id="rk-period-select" style="border-radius:999px; background:rgba(15,23,42,0.9); border:1px solid rgba(59,130,246,0.3); color:#1e293b; font-size:0.75rem; padding:6px 10px; outline:none;">
 					<option value="today" {{ $period === 'today' ? 'selected' : '' }}>Hari ini</option>
 					<option value="week" {{ $period === 'week' ? 'selected' : '' }}>Minggu ini</option>
 					<option value="month" {{ $period === 'month' ? 'selected' : '' }}>Bulan ini</option>
@@ -21,12 +21,12 @@
 				</select>
 
 				<div id="rk-custom-range" style="display: {{ $period === 'custom' ? 'flex' : 'none' }}; align-items: center; gap: 6px;">
-					<input type="date" name="start_date" value="{{ $startDate }}" style="background:rgba(15,23,42,0.9); border-radius:999px; border:1px solid rgba(51,65,85,0.9); color:#e5e7eb; font-size:0.75rem; padding:6px 10px;">
+					<input type="date" name="start_date" value="{{ $startDate }}" style="background:rgba(15,23,42,0.9); border-radius:999px; border:1px solid rgba(59,130,246,0.3); color:#1e293b; font-size:0.75rem; padding:6px 10px;">
 					<span style="font-size:0.75rem; color:#9ca3af;">s/d</span>
-					<input type="date" name="end_date" value="{{ $endDate }}" style="background:rgba(15,23,42,0.9); border-radius:999px; border:1px solid rgba(51,65,85,0.9); color:#e5e7eb; font-size:0.75rem; padding:6px 10px;">
+					<input type="date" name="end_date" value="{{ $endDate }}" style="background:rgba(15,23,42,0.9); border-radius:999px; border:1px solid rgba(59,130,246,0.3); color:#1e293b; font-size:0.75rem; padding:6px 10px;">
 				</div>
 
-				<button type="submit" style="border-radius:999px; border:none; background:linear-gradient(135deg,#f59e0b,#d97706); color:#111827; padding:6px 12px; font-size:0.75rem; font-weight:600; cursor:pointer;">Terapkan</button>
+				<button type="submit" style="border-radius:999px; border:none; background:linear-gradient(135deg,#2563eb,#d97706); color:#111827; padding:6px 12px; font-size:0.75rem; font-weight:600; cursor:pointer;">Terapkan</button>
 			</form>
 
 			<!-- Export Tracking Produk Button -->
@@ -128,7 +128,7 @@
 					@if(count($expensesByType))
 						@foreach($expensesByType as $type => $amount)
 							<div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(148,163,184,0.25); font-size:0.85rem;">
-								<span style="color:#e5e7eb;">{{ $type ?: 'Lainnya' }}</span>
+								<span style="color:#1e293b;">{{ $type ?: 'Lainnya' }}</span>
 								<span style="font-weight:600; color:#f97316;">Rp {{ number_format($amount, 0, ',', '.') }}</span>
 							</div>
 						@endforeach
@@ -142,7 +142,7 @@
 						@foreach($expenses as $expense)
 							<div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(148,163,184,0.25); font-size:0.85rem;">
 								<div>
-									<p style="color:#e5e7eb;">{{ $expense->keterangan ?: ($expense->kategori ?: 'Expense') }}</p>
+									<p style="color:#1e293b;">{{ $expense->keterangan ?: ($expense->kategori ?: 'Expense') }}</p>
 									<p style="font-size:0.75rem; color:#9ca3af;">{{ optional($expense->tanggal ?: $expense->created_at)->format('d M Y') }}</p>
 								</div>
 								<span style="font-weight:600; color:#f97316;">Rp {{ number_format($expense->nominal, 0, ',', '.') }}</span>

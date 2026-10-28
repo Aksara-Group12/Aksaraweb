@@ -13,12 +13,12 @@
 		* { font-family: 'Plus Jakarta Sans', sans-serif; }
 
 		:root {
-			--gold-500: #d9a441;
-			--gold-600: #b8872f;
-			--metal-900: #0b0f1f;
-			--metal-800: #121831;
-			--metal-700: #1b2343;
-			--ink-100: #f8fafc;
+			--blue-500: #3b82f6;
+			--blue-600: #2563eb;
+			--cream-900: #f8f4e8;
+			--cream-800: #f0ead6;
+			--cream-700: #e8e0c8;
+			--ink-100: #1e293b;
 		}
 
 		@keyframes aurora {
@@ -49,12 +49,12 @@
 
 		.hover-lift:hover {
 			transform: translateY(-8px);
-			box-shadow: 0 18px 50px rgba(217, 164, 65, 0.25);
+			box-shadow: 0 18px 50px rgba(59, 130, 246, 0.25);
 		}
 
 		.metal-grid {
-			background-image: linear-gradient(rgba(217, 164, 65, 0.12) 1px, transparent 1px),
-				linear-gradient(90deg, rgba(217, 164, 65, 0.12) 1px, transparent 1px);
+			background-image: linear-gradient(rgba(59, 130, 246, 0.12) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(59, 130, 246, 0.12) 1px, transparent 1px);
 			background-size: 60px 60px;
 		}
 
@@ -108,31 +108,31 @@
 		}
 	</style>
 </head>
-<body class="bg-[var(--metal-900)] text-[var(--ink-100)] overflow-x-hidden">
+<body class="bg-[var(--cream-900)] text-[var(--ink-100)] overflow-x-hidden">
 	<div class="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-		<div class="absolute -top-40 -left-40 w-[700px] h-[700px] bg-gradient-to-br from-[#f6d365]/40 to-[#fda085]/20 rounded-full blur-3xl animate-[aurora_18s_ease-in-out_infinite]"></div>
-		<div class="absolute top-1/3 right-[-200px] w-[600px] h-[600px] bg-gradient-to-br from-[#9ca3af]/25 to-[#1f2937]/10 rounded-full blur-3xl animate-[aurora_22s_ease-in-out_infinite]"></div>
+		<div class="absolute -top-40 -left-40 w-[700px] h-[700px] bg-gradient-to-br from-[#3b82f6]/40 to-[#60a5fa]/20 rounded-full blur-3xl animate-[aurora_18s_ease-in-out_infinite]"></div>
+		<div class="absolute top-1/3 right-[-200px] w-[600px] h-[600px] bg-gradient-to-br from-[#93c5fd]/25 to-[#bfdbfe]/10 rounded-full blur-3xl animate-[aurora_22s_ease-in-out_infinite]"></div>
 		<div class="absolute inset-0 metal-grid opacity-30"></div>
 	</div>
 
 	<nav class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-6xl">
-		<div class="glass bg-white/5 border border-white/10 rounded-3xl shadow-2xl shadow-black/20">
+		<div class="glass bg-blue-50/5 border border-blue-200/10 rounded-3xl shadow-2xl shadow-black/20">
 			<div class="flex items-center justify-between h-auto px-6 py-3">
 				<div class="flex items-center gap-4">
 					<img src="{{ asset('assets/images/IdoTech x GolDay.png') }}" alt="Aksara Logo" class="h-16 w-auto">
-					<div class="hidden sm:block pl-2 border-l border-white/20">
-						<h2 class="text-white font-bold text-base leading-tight"><span class="text-[#d9a441]">Aksara</span></h2>
+					<div class="hidden sm:block pl-2 border-l border-blue-200/20">
+						<h2 class="text-blue-900 font-bold text-base leading-tight"><span class="text-[#3b82f6]">Aksara</span></h2>
 					</div>
 				</div>
 				<div class="hidden md:flex items-center gap-8 text-sm">
-					<a href="#fitur" class="text-white/80 hover:text-[#d9a441] transition">Fitur</a>
-					<a href="#alur" class="text-white/80 hover:text-[#d9a441] transition">Alur</a>
-					<a href="#harga" class="text-white/80 hover:text-[#d9a441] transition">Harga</a>
-					<a href="#kontak" class="text-white/80 hover:text-[#d9a441] transition">Kontak</a>
+					<a href="#fitur" class="text-blue-900/80 hover:text-[#3b82f6] transition">Fitur</a>
+					<a href="#alur" class="text-blue-900/80 hover:text-[#3b82f6] transition">Alur</a>
+					<a href="#harga" class="text-blue-900/80 hover:text-[#3b82f6] transition">Harga</a>
+					<a href="#kontak" class="text-blue-900/80 hover:text-[#3b82f6] transition">Kontak</a>
 				</div>
 				<div class="flex items-center gap-3">
-					<a href="{{ route('login') }}" class="border border-white/40 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-white hover:text-black transition">Login</a>
-					<a href="{{ route('register') }}" class="bg-[#d9a441] text-black px-5 py-2.5 rounded-full text-sm font-bold hover:bg-[#f2c66b] transition">Coba Gratis</a>
+					<a href="{{ route('login') }}" class="border border-blue-900/40 text-blue-900 px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-900 hover:text-white transition">Login</a>
+					<a href="{{ route('register') }}" class="bg-[#3b82f6] text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-[#2563eb] transition">Coba Gratis</a>
 				</div>
 			</div>
 		</div>
@@ -141,77 +141,77 @@
 	<section class="relative min-h-screen flex items-center px-6 lg:px-8 pt-32">
 		<div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
 			<div class="space-y-6">
-				<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass bg-white/5 border border-white/10 text-xs tracking-wide">
-					<span class="w-2 h-2 bg-[#7dd3fc] rounded-full"></span>
+				<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass bg-blue-50/5 border border-blue-200/10 text-xs tracking-wide">
+					<span class="w-2 h-2 bg-[#3b82f6] rounded-full"></span>
 					Sistem kasir, stok, CRM & keuangan terpadu UMKM
 				</div>
 				<h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
-					Kelola <span class="text-[#f6d365]">bisnis UMKM</span> dengan kasir, stok, CRM, dan keuangan terpadu.
+					Kelola <span class="text-[#3b82f6]">bisnis UMKM</span> dengan kasir, stok, CRM, dan keuangan terpadu.
 				</h1>
-				<p class="text-white/70 text-lg">
+				<p class="text-blue-900/70 text-lg">
 					Aksara membantu Retail, F&B, dan Jasa mencatat transaksi harian, kontrol stok, pencatatan piutang, dan laporan laba rugi otomatis dengan mudah.
 				</p>
 				<div class="flex flex-col sm:flex-row gap-4">
-				<a href="{{ route('register') }}" class="bg-[#d9a441] text-black px-8 py-4 rounded-2xl font-bold text-base hover:bg-[#f2c66b] transition">Mulai Gratis 7 Hari</a>
-					<a href="#harga" class="glass bg-white/5 border border-white/10 text-white px-8 py-4 rounded-2xl font-semibold text-base hover:bg-white/10 transition">Lihat Paket</a>
+				<a href="{{ route('register') }}" class="bg-[#3b82f6] text-white px-8 py-4 rounded-2xl font-bold text-base hover:bg-[#2563eb] transition">Mulai Gratis 7 Hari</a>
+					<a href="#harga" class="glass bg-blue-50/5 border border-blue-200/10 text-blue-900 px-8 py-4 rounded-2xl font-semibold text-base hover:bg-blue-50/10 transition">Lihat Paket</a>
 				</div>
 				<div class="grid grid-cols-3 gap-4 pt-6">
-					<div class="glass bg-white/5 border border-white/10 rounded-2xl p-4 hover-lift">
-						<div class="text-2xl font-bold text-[#f6d365]">{{ $stats['users'] }}</div>
-						<div class="text-xs text-white/60">Toko Aktif</div>
+					<div class="glass bg-blue-50/5 border border-blue-200/10 rounded-2xl p-4 hover-lift">
+						<div class="text-2xl font-bold text-[#3b82f6]">{{ $stats['users'] }}</div>
+						<div class="text-xs text-blue-900/60">Toko Aktif</div>
 					</div>
-					<!-- <div class="glass bg-white/5 border border-white/10 rounded-2xl p-4 hover-lift">
-						<div class="text-2xl font-bold text-[#f6d365]">{{ 200 + $stats['subscriptions'] }}</div>
-						<div class="text-xs text-white/60">Langganan</div>
+					<!-- <div class="glass bg-blue-50/5 border border-blue-200/10 rounded-2xl p-4 hover-lift">
+						<div class="text-2xl font-bold text-[#3b82f6]">{{ 200 + $stats['subscriptions'] }}</div>
+						<div class="text-xs text-blue-900/60">Langganan</div>
 					</div> -->
-					<div class="glass bg-white/5 border border-white/10 rounded-2xl p-4 hover-lift">
-						<div class="text-2xl font-bold text-[#f6d365]">{{$stats['packages'] }}</div>
-						<div class="text-xs text-white/60">Paket Tersedia</div>
+					<div class="glass bg-blue-50/5 border border-blue-200/10 rounded-2xl p-4 hover-lift">
+						<div class="text-2xl font-bold text-[#3b82f6]">{{$stats['packages'] }}</div>
+						<div class="text-xs text-blue-900/60">Paket Tersedia</div>
 					</div>
 				</div>
 			</div>
 			<div class="relative">
-				<div class="glass bg-white/5 border border-white/10 rounded-3xl p-8 space-y-8 shadow-2xl">
+				<div class="glass bg-blue-50/5 border border-blue-200/10 rounded-3xl p-8 space-y-8 shadow-2xl">
 					<div>
-						<h3 class="text-2xl font-bold text-[#f6d365] mb-4">Visi</h3>
-						<p class="text-white/80 leading-relaxed">Transformasi UMKM Indonesia dari pencatatan manual menuju tata kelola bisnis berbasis digital yang transparan dan efisien.</p>
+						<h3 class="text-2xl font-bold text-[#3b82f6] mb-4">Visi</h3>
+						<p class="text-blue-900/80 leading-relaxed">Transformasi UMKM Indonesia dari pencatatan manual menuju tata kelola bisnis berbasis digital yang transparan dan efisien.</p>
 					</div>
-					<div class="border-t border-white/10"></div>
+					<div class="border-t border-blue-200/10"></div>
 					<div>
-						<h3 class="text-2xl font-bold text-[#f6d365] mb-6">Misi</h3>
+						<h3 class="text-2xl font-bold text-[#3b82f6] mb-6">Misi</h3>
 						<ul class="space-y-4">
 							<li class="flex gap-3">
-								<span class="text-[#f6d365] font-bold mt-1">•</span>
+								<span class="text-[#3b82f6] font-bold mt-1">•</span>
 								<div>
-									<p class="font-semibold text-white mb-1">Kasir POS serbaguna</p>
-									<p class="text-white/70 text-sm">Transaksi cepat tunai/non-tunai/tempo dengan pencatatan yang akurat dan cetak nota instan.</p>
+									<p class="font-semibold text-blue-900 mb-1">Kasir POS serbaguna</p>
+									<p class="text-blue-900/70 text-sm">Transaksi cepat tunai/non-tunai/tempo dengan pencatatan yang akurat dan cetak nota instan.</p>
 								</div>
 							</li>
 							<li class="flex gap-3">
-								<span class="text-[#f6d365] font-bold mt-1">•</span>
+								<span class="text-[#3b82f6] font-bold mt-1">•</span>
 								<div>
-									<p class="font-semibold text-white mb-1">Kontrol stok & opname presisi</p>
-									<p class="text-white/70 text-sm">Alert stok menipis, tracking pergerakan stok, dan penyesuaian selisih stok fisik vs sistem.</p>
+									<p class="font-semibold text-blue-900 mb-1">Kontrol stok & opname presisi</p>
+									<p class="text-blue-900/70 text-sm">Alert stok menipis, tracking pergerakan stok, dan penyesuaian selisih stok fisik vs sistem.</p>
 								</div>
 							</li>
 							<li class="flex gap-3">
-								<span class="text-[#f6d365] font-bold mt-1">•</span>
+								<span class="text-[#3b82f6] font-bold mt-1">•</span>
 								<div>
-									<p class="font-semibold text-white mb-1">Pengelolaan piutang pelanggan & pengeluaran operasional</p>
-									<p class="text-white/70 text-sm">Master pelanggan, pencatatan cicilan invoice, dan kontrol biaya operasional dengan rapi.</p>
+									<p class="font-semibold text-blue-900 mb-1">Pengelolaan piutang pelanggan & pengeluaran operasional</p>
+									<p class="text-blue-900/70 text-sm">Master pelanggan, pencatatan cicilan invoice, dan kontrol biaya operasional dengan rapi.</p>
 								</div>
 							</li>
 							<li class="flex gap-3">
-								<span class="text-[#f6d365] font-bold mt-1">•</span>
+								<span class="text-[#3b82f6] font-bold mt-1">•</span>
 								<div>
-									<p class="font-semibold text-white mb-1">Laporan laba rugi otomatis</p>
-									<p class="text-white/70 text-sm">Kalkulasi HPP, margin bersih, dan breakdown pendapatan vs beban operasional secara real-time.</p>
+									<p class="font-semibold text-blue-900 mb-1">Laporan laba rugi otomatis</p>
+									<p class="text-blue-900/70 text-sm">Kalkulasi HPP, margin bersih, dan breakdown pendapatan vs beban operasional secara real-time.</p>
 								</div>
 							</li>
 						</ul>
 					</div>
 				</div>
-				<div class="absolute -bottom-10 -right-8 w-28 h-28 bg-gradient-to-br from-[#f6d365] to-[#d9a441] rounded-full blur-2xl opacity-70 animate-[floaty_5s_ease-in-out_infinite]"></div>
+				<div class="absolute -bottom-10 -right-8 w-28 h-28 bg-gradient-to-br from-[#3b82f6] to-[#2563eb] rounded-full blur-2xl opacity-70 animate-[floaty_5s_ease-in-out_infinite]"></div>
 			</div>
 		</div>
 	</section>
@@ -219,67 +219,67 @@
 	<section id="fitur" class="relative py-24 px-6 lg:px-8">
 		<div class="max-w-6xl mx-auto">
 			<div class="text-center mb-14">
-				<h2 class="text-4xl md:text-5xl font-bold">Fitur Inti Aksara</h2>
-				<p class="text-white/60 mt-4 max-w-2xl mx-auto">Dirancang khusus untuk UMKM Retail, F&B, dan Jasa: kasir, stok, CRM, dan keuangan terpadu.</p>
+				<h2 class="text-4xl md:text-5xl font-bold text-blue-900">Fitur Inti Aksara</h2>
+				<p class="text-blue-900/60 mt-4 max-w-2xl mx-auto">Dirancang khusus untuk UMKM Retail, F&B, dan Jasa: kasir, stok, CRM, dan keuangan terpadu.</p>
 			</div>
 			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-				<div class="glass bg-white/5 border border-white/10 rounded-3xl p-6 hover-lift">
-					<h3 class="text-xl font-semibold mb-3">POS Kasir Cepat</h3>
-					<p class="text-white/60">Transaksi instan, cetak nota, dan dukungan pembayaran tempo (Invoice/AR).</p>
+				<div class="glass bg-blue-50/5 border border-blue-200/10 rounded-3xl p-6 hover-lift">
+					<h3 class="text-xl font-semibold mb-3 text-blue-900">POS Kasir Cepat</h3>
+					<p class="text-blue-900/60">Transaksi instan, cetak nota, dan dukungan pembayaran tempo (Invoice/AR).</p>
 				</div>
-				<div class="glass bg-white/5 border border-white/10 rounded-3xl p-6 hover-lift">
-					<h3 class="text-xl font-semibold mb-3">Manajemen Stok & Opname</h3>
-					<p class="text-white/60">Alert stok menipis dan penyesuaian selisih stok fisik vs sistem dengan nilai kerugian.</p>
+				<div class="glass bg-blue-50/5 border border-blue-200/10 rounded-3xl p-6 hover-lift">
+					<h3 class="text-xl font-semibold mb-3 text-blue-900">Manajemen Stok & Opname</h3>
+					<p class="text-blue-900/60">Alert stok menipis dan penyesuaian selisih stok fisik vs sistem dengan nilai kerugian.</p>
 				</div>
-				<div class="glass bg-white/5 border border-white/10 rounded-3xl p-6 hover-lift">
-					<h3 class="text-xl font-semibold mb-3">CRM & Invoice Piutang</h3>
-					<p class="text-white/60">Master pelanggan dan pencatatan cicilan tagihan (Account Receivable).</p>
+				<div class="glass bg-blue-50/5 border border-blue-200/10 rounded-3xl p-6 hover-lift">
+					<h3 class="text-xl font-semibold mb-3 text-blue-900">CRM & Invoice Piutang</h3>
+					<p class="text-blue-900/60">Master pelanggan dan pencatatan cicilan tagihan (Account Receivable).</p>
 				</div>
-				<div class="glass bg-white/5 border border-white/10 rounded-3xl p-6 hover-lift">
-					<h3 class="text-xl font-semibold mb-3">Pembelian & Supplier</h3>
-					<p class="text-white/60">Transaksi masuk dengan update stok otomatis dan master supplier.</p>
+				<div class="glass bg-blue-50/5 border border-blue-200/10 rounded-3xl p-6 hover-lift">
+					<h3 class="text-xl font-semibold mb-3 text-blue-900">Pembelian & Supplier</h3>
+					<p class="text-blue-900/60">Transaksi masuk dengan update stok otomatis dan master supplier.</p>
 				</div>
-				<div class="glass bg-white/5 border border-white/10 rounded-3xl p-6 hover-lift">
-					<h3 class="text-xl font-semibold mb-3">Shift Kasir & Rekonsiliasi</h3>
-					<p class="text-white/60">Pengendalian kas dengan modal awal/akhir dan rekonsiliasi kas harian.</p>
+				<div class="glass bg-blue-50/5 border border-blue-200/10 rounded-3xl p-6 hover-lift">
+					<h3 class="text-xl font-semibold mb-3 text-blue-900">Shift Kasir & Rekonsiliasi</h3>
+					<p class="text-blue-900/60">Pengendalian kas dengan modal awal/akhir dan rekonsiliasi kas harian.</p>
 				</div>
-				<div class="glass bg-white/5 border border-white/10 rounded-3xl p-6 hover-lift">
-					<h3 class="text-xl font-semibold mb-3">Laporan Keuangan & Laba Rugi</h3>
-					<p class="text-white/60">Kalkulasi HPP, beban operasional, dan laba bersih secara otomatis.</p>
+				<div class="glass bg-blue-50/5 border border-blue-200/10 rounded-3xl p-6 hover-lift">
+					<h3 class="text-xl font-semibold mb-3 text-blue-900">Laporan Keuangan & Laba Rugi</h3>
+					<p class="text-blue-900/60">Kalkulasi HPP, beban operasional, dan laba bersih secara otomatis.</p>
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<section id="alur" class="relative py-24 px-6 lg:px-8 bg-[var(--metal-800)]">
+	<section id="alur" class="relative py-24 px-6 lg:px-8 bg-[var(--cream-800)]">
 		<div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
 			<div>
-				<h2 class="text-4xl md:text-5xl font-bold mb-6">Alur Kerja Harian</h2>
-				<p class="text-white/60 mb-8">Satu dashboard untuk kasir, stok, CRM, dan laporan keuangan UMKM.</p>
+				<h2 class="text-4xl md:text-5xl font-bold mb-6 text-blue-900">Alur Kerja Harian</h2>
+				<p class="text-blue-900/60 mb-8">Satu dashboard untuk kasir, stok, CRM, dan laporan keuangan UMKM.</p>
 				<ol class="space-y-4">
-					<li class="glass bg-white/5 border border-white/10 rounded-2xl p-4">1. Buka shift kasir dan catat transaksi penjualan (cash/tempo).</li>
-					<li class="glass bg-white/5 border border-white/10 rounded-2xl p-4">2. Stok otomatis berkurang/bertambah dan piutang tercatat jika tempo.</li>
-					<li class="glass bg-white/5 border border-white/10 rounded-2xl p-4">3. Laporan laba rugi langsung terbentuk dengan HPP dan margin.</li>
+					<li class="glass bg-blue-50/5 border border-blue-200/10 rounded-2xl p-4 text-blue-900">1. Buka shift kasir dan catat transaksi penjualan (cash/tempo).</li>
+					<li class="glass bg-blue-50/5 border border-blue-200/10 rounded-2xl p-4 text-blue-900">2. Stok otomatis berkurang/bertambah dan piutang tercatat jika tempo.</li>
+					<li class="glass bg-blue-50/5 border border-blue-200/10 rounded-2xl p-4 text-blue-900">3. Laporan laba rugi langsung terbentuk dengan HPP dan margin.</li>
 				</ol>
 			</div>
-			<div class="glass bg-white/5 border border-white/10 rounded-3xl p-6">
-				<div class="text-sm text-white/60 mb-2">Dashboard Snapshot</div>
+			<div class="glass bg-blue-50/5 border border-blue-200/10 rounded-3xl p-6">
+				<div class="text-sm text-blue-900/60 mb-2">Dashboard Snapshot</div>
 				<div class="grid grid-cols-2 gap-4">
-					<div class="bg-[var(--metal-700)] rounded-2xl p-4">
-						<p class="text-xs text-white/50">Omset Penjualan</p>
-						<p class="text-xl font-bold">Rp 145Jt</p>
+					<div class="bg-[var(--cream-700)] rounded-2xl p-4">
+						<p class="text-xs text-blue-900/50">Omset Penjualan</p>
+						<p class="text-xl font-bold text-blue-900">Rp 145Jt</p>
 					</div>
-					<div class="bg-[var(--metal-700)] rounded-2xl p-4">
-						<p class="text-xs text-white/50">Total Produk/SKU</p>
-						<p class="text-xl font-bold">284</p>
+					<div class="bg-[var(--cream-700)] rounded-2xl p-4">
+						<p class="text-xs text-blue-900/50">Total Produk/SKU</p>
+						<p class="text-xl font-bold text-blue-900">284</p>
 					</div>
-					<div class="bg-[var(--metal-700)] rounded-2xl p-4">
-						<p class="text-xs text-white/50">Piutang/Invoice</p>
-						<p class="text-xl font-bold">Rp 32Jt</p>
+					<div class="bg-[var(--cream-700)] rounded-2xl p-4">
+						<p class="text-xs text-blue-900/50">Piutang/Invoice</p>
+						<p class="text-xl font-bold text-blue-900">Rp 32Jt</p>
 					</div>
-					<div class="bg-[var(--metal-700)] rounded-2xl p-4">
-						<p class="text-xs text-white/50">Laba Bersih</p>
-						<p class="text-xl font-bold">Rp 18Jt</p>
+					<div class="bg-[var(--cream-700)] rounded-2xl p-4">
+						<p class="text-xs text-blue-900/50">Laba Bersih</p>
+						<p class="text-xl font-bold text-blue-900">Rp 18Jt</p>
 					</div>
 				</div>
 			</div>
@@ -289,47 +289,47 @@
 	<section id="harga" class="relative py-24 px-6 lg:px-8">
 		<div class="max-w-6xl mx-auto">
 			<div class="text-center mb-14">
-				<h2 class="text-4xl md:text-5xl font-bold">Paket Berlangganan</h2>
-				<p class="text-white/60 mt-4">Harga otomatis mengikuti paket di sistem Anda.</p>
+				<h2 class="text-4xl md:text-5xl font-bold text-blue-900">Paket Berlangganan</h2>
+				<p class="text-blue-900/60 mt-4">Harga otomatis mengikuti paket di sistem Anda.</p>
 			</div>
 			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 				@forelse($packages as $paket)
-					<div class="glass bg-white/5 border border-white/10 rounded-3xl p-6 hover-lift">
-						<h3 class="text-xl font-bold mb-2">{{ $paket->nama_paket }}</h3>
-						<p class="text-white/60 text-sm mb-4">{{ $paket->deskripsi }}</p>
+					<div class="glass bg-blue-50/5 border border-blue-200/10 rounded-3xl p-6 hover-lift">
+						<h3 class="text-xl font-bold mb-2 text-blue-900">{{ $paket->nama_paket }}</h3>
+						<p class="text-blue-900/60 text-sm mb-4">{{ $paket->deskripsi }}</p>
 						@if ($paket->harga_diskon)
 							<div class="flex items-center gap-3 mb-2">
-								<div class="text-sm text-white/50 line-through">Rp {{ number_format($paket->harga, 0, ',', '.') }}</div>
+								<div class="text-sm text-blue-900/50 line-through">Rp {{ number_format($paket->harga, 0, ',', '.') }}</div>
 								<div class="text-3xl font-bold text-[#22c55e]">Rp {{ number_format($paket->harga_diskon, 0, ',', '.') }}</div>
 							</div>
 							<div class="text-xs text-[#22c55e] font-semibold mb-6">✓ Harga Spesial / Promo</div>
 						@else
-							<div class="text-3xl font-bold text-[#f6d365] mb-2">Rp {{ number_format($paket->harga, 0, ',', '.') }}</div>
+							<div class="text-3xl font-bold text-[#3b82f6] mb-2">Rp {{ number_format($paket->harga, 0, ',', '.') }}</div>
 						@endif
-						<div class="text-xs text-white/50 mb-6">Per {{ $paket->durasi_bulan }} bulan</div>
-						<a href="{{ route('register') }}" class="block text-center bg-[#d9a441] text-black py-3 rounded-2xl font-semibold hover:bg-[#f2c66b] transition">Pilih Paket</a>
+						<div class="text-xs text-blue-900/50 mb-6">Per {{ $paket->durasi_bulan }} bulan</div>
+						<a href="{{ route('register') }}" class="block text-center bg-[#3b82f6] text-white py-3 rounded-2xl font-semibold hover:bg-[#2563eb] transition">Pilih Paket</a>
 					</div>
 				@empty
-					<div class="col-span-full text-center text-white/60">Belum ada paket aktif.</div>
+					<div class="col-span-full text-center text-blue-900/60">Belum ada paket aktif.</div>
 				@endforelse
 			</div>
 		</div>
 	</section>
 
-	<section id="kontak" class="relative py-20 px-6 lg:px-8 bg-[var(--metal-800)]">
+	<section id="kontak" class="relative py-20 px-6 lg:px-8 bg-[var(--cream-800)]">
 		<div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
 			<div>
-				<h2 class="text-3xl md:text-4xl font-bold mb-4">Siap Naik Level?</h2>
-				<p class="text-white/60">Konsultasi gratis untuk setup sistem kasir UMKM Anda.</p>
+				<h2 class="text-3xl md:text-4xl font-bold mb-4 text-blue-900">Siap Naik Level?</h2>
+				<p class="text-blue-900/60">Konsultasi gratis untuk setup sistem kasir UMKM Anda.</p>
 			</div>
 			<div class="flex flex-col sm:flex-row gap-4">
-				<a href="{{ route('register') }}" class="bg-[#d9a441] text-black px-6 py-4 rounded-2xl font-bold text-center">Mulai Gratis 7 Hari</a>
-				<a href="{{ route('login') }}" class="glass bg-white/5 border border-white/10 text-white px-6 py-4 rounded-2xl font-semibold text-center">Masuk Dashboard</a>
+				<a href="{{ route('register') }}" class="bg-[#3b82f6] text-white px-6 py-4 rounded-2xl font-bold text-center">Mulai Gratis 7 Hari</a>
+				<a href="{{ route('login') }}" class="glass bg-blue-50/5 border border-blue-200/10 text-blue-900 px-6 py-4 rounded-2xl font-semibold text-center">Masuk Dashboard</a>
 			</div>
 		</div>
 	</section>
 
-	<footer class="py-10 text-center text-white/40 text-sm">
+	<footer class="py-10 text-center text-blue-900/40 text-sm">
 		© 2026 Aksara. Sistem kasir, stok, CRM & keuangan UMKM untuk Indonesia.
 	</footer>
 

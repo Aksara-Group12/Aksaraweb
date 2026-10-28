@@ -18,7 +18,7 @@
 				</a>
 			@else
 				<a href="{{ route('profile.create') }}" class="hz-btn-primary">
-					<span class="hz-icon-pill" style="background: rgba(251, 191, 36, 0.2);">
+					<span class="hz-icon-pill" style="background: rgba(59, 130, 246, 0.2);">
 						+
 					</span>
 					<span>Atur profil toko</span>
@@ -40,7 +40,7 @@
 			<button type="button" 
 				id="tab-berlangganan-btn" 
 				class="tab-nav-btn"
-				style="padding: 8px 0; font-weight: 500; color: #9ca3af; border-bottom: 2px solid transparent; background: none; border: none; cursor: pointer; transition: all 0.3s ease;"
+				style="padding: 8px 0; font-weight: 500; color: #64748b; border-bottom: 2px solid transparent; background: none; border: none; cursor: pointer; transition: all 0.3s ease;"
 				onclick="switchTab('berlangganan')">
 				<span style="margin-right: 6px;">💳</span>Berlangganan
 			</button>
@@ -67,7 +67,7 @@
 					<div style="display:flex; flex-wrap:wrap; gap: 20px;">
 						<div style="flex:1 1 260px;">
 							<p class="hz-card-title">Identitas Toko</p>
-							<div style="margin-top: 10px; font-size:0.85rem; color:#e5e7eb;">
+							<div style="margin-top: 10px; font-size:0.85rem; color:#1e293b;">
 								<p><strong>Nama Toko:</strong> {{ $profile->store_name }}</p>
 								<p style="margin-top:6px;"><strong>Nama Pemilik:</strong> {{ $profile->owner_name ?? '-' }}</p>
 								<p style="margin-top:6px;"><strong>Telepon / WA:</strong> {{ $profile->phone ?? '-' }}</p>

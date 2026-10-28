@@ -11,7 +11,7 @@
 </div>
 
 @if ($errors->any())
-    <div style="margin: 16px 0; padding: 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 6px; color: #ef4444;">
+    <div style="margin: 16px 0; padding: 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; color: #ef4444;">
         <ul style="margin: 0; padding-left: 20px;">
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -33,40 +33,40 @@
             @method('PUT')
 
             <div>
-                <label style="display:block; color:#fbbf24; font-size:0.9rem; margin-bottom:6px;">Nama</label>
-                <input type="text" name="name" value="{{ old('name', $user->name) }}" required style="width:100%; padding:10px; border-radius:6px; border:1px solid rgba(148,163,184,0.5); background:#020617; color:#e5e7eb; font-size:0.9rem; box-sizing:border-box;">
+                <label style="display:block; color:#3b82f6; font-size:0.9rem; margin-bottom:6px;">Nama</label>
+                <input type="text" name="name" value="{{ old('name', $user->name) }}" required style="width:100%; padding:10px; border-radius:6px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; font-size:0.9rem; box-sizing:border-box;">
                 @error('name')
                     <span style="color:#ef4444; font-size:0.85rem; margin-top:4px;">{{ $message }}</span>
                 @enderror
             </div>
 
             <div>
-                <label style="display:block; color:#fbbf24; font-size:0.9rem; margin-bottom:6px;">Email</label>
-                <input type="email" name="email" value="{{ old('email', $user->email) }}" required style="width:100%; padding:10px; border-radius:6px; border:1px solid rgba(148,163,184,0.5); background:#020617; color:#e5e7eb; font-size:0.9rem; box-sizing:border-box;">
+                <label style="display:block; color:#3b82f6; font-size:0.9rem; margin-bottom:6px;">Email</label>
+                <input type="email" name="email" value="{{ old('email', $user->email) }}" required style="width:100%; padding:10px; border-radius:6px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; font-size:0.9rem; box-sizing:border-box;">
                 @error('email')
                     <span style="color:#ef4444; font-size:0.85rem; margin-top:4px;">{{ $message }}</span>
                 @enderror
             </div>
 
             <div>
-                <label style="display:block; color:#fbbf24; font-size:0.9rem; margin-bottom:6px;">Password (Kosongkan jika tidak ingin mengubah)</label>
-                <input type="password" name="password" style="width:100%; padding:10px; border-radius:6px; border:1px solid rgba(148,163,184,0.5); background:#020617; color:#e5e7eb; font-size:0.9rem; box-sizing:border-box;">
+                <label style="display:block; color:#3b82f6; font-size:0.9rem; margin-bottom:6px;">Password (Kosongkan jika tidak ingin mengubah)</label>
+                <input type="password" name="password" style="width:100%; padding:10px; border-radius:6px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; font-size:0.9rem; box-sizing:border-box;">
                 @error('password')
                     <span style="color:#ef4444; font-size:0.85rem; margin-top:4px;">{{ $message }}</span>
                 @enderror
             </div>
 
             <div>
-                <label style="display:block; color:#fbbf24; font-size:0.9rem; margin-bottom:6px;">Konfirmasi Password</label>
-                <input type="password" name="password_confirmation" style="width:100%; padding:10px; border-radius:6px; border:1px solid rgba(148,163,184,0.5); background:#020617; color:#e5e7eb; font-size:0.9rem; box-sizing:border-box;">
+                <label style="display:block; color:#3b82f6; font-size:0.9rem; margin-bottom:6px;">Konfirmasi Password</label>
+                <input type="password" name="password_confirmation" style="width:100%; padding:10px; border-radius:6px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; font-size:0.9rem; box-sizing:border-box;">
                 @error('password_confirmation')
                     <span style="color:#ef4444; font-size:0.85rem; margin-top:4px;">{{ $message }}</span>
                 @enderror
             </div>
 
             <div>
-                <label style="display:block; color:#fbbf24; font-size:0.9rem; margin-bottom:6px;">Status Akun</label>
-                <select name="status" style="width:100%; padding:10px; border-radius:6px; border:1px solid rgba(148,163,184,0.5); background:#020617; color:#e5e7eb; font-size:0.9rem; box-sizing:border-box; cursor:pointer;">
+                <label style="display:block; color:#3b82f6; font-size:0.9rem; margin-bottom:6px;">Status Akun</label>
+                <select name="status" style="width:100%; padding:10px; border-radius:6px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; font-size:0.9rem; box-sizing:border-box; cursor:pointer;">
                     <option value="">-- Jangan Ubah Status --</option>
                     <option value="aktif">✓ Aktif</option>
                     <option value="trial">◎ Trial</option>
@@ -81,10 +81,10 @@
             </div>
 
             <div style="display: flex; gap: 8px; margin-top: 20px;">
-                <button type="submit" style="flex:1; background:rgba(251,191,36,0.2); color:#fbbf24; border:1px solid rgba(251,191,36,0.5); padding:10px; border-radius:6px; cursor:pointer; font-size:0.9rem; font-weight:500;">
+                <button type="submit" style="flex:1; background:rgba(251,191,36,0.2); color:#3b82f6; border:1px solid rgba(251,191,36,0.5); padding:10px; border-radius:6px; cursor:pointer; font-size:0.9rem; font-weight:500;">
                     Simpan Perubahan
                 </button>
-                <a href="{{ route('manajemen-user.index') }}" style="flex:1; display:flex; align-items:center; justify-content:center; background:rgba(148,163,184,0.2); color:#e5e7eb; border:1px solid rgba(148,163,184,0.5); padding:10px; border-radius:6px; text-decoration:none; font-size:0.9rem;">
+                <a href="{{ route('manajemen-user.index') }}" style="flex:1; display:flex; align-items:center; justify-content:center; background:rgba(148,163,184,0.2); color:#1e293b; border:1px solid rgba(59,130,246,0.3); padding:10px; border-radius:6px; text-decoration:none; font-size:0.9rem;">
                     Batal
                 </a>
             </div>

@@ -22,13 +22,13 @@
 				<span>Tambah Paket</span>
 			</a>
 			<form method="GET" action="{{ route('paket.index') }}" style="display:flex; align-items:center; gap:6px;">
-				<input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama paket" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 10px; font-size:0.8rem; color:#e5e7eb; min-width:220px;">
-				<select name="status" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 8px; font-size:0.8rem; color:#e5e7eb;">
+				<input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama paket" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b; min-width:220px;">
+				<select name="status" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
 					<option value="">Semua Status</option>
 					<option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Aktif</option>
 					<option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Nonaktif</option>
 				</select>
-				<select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 8px; font-size:0.8rem; color:#e5e7eb;">
+				<select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
 					<option value="10" {{ request('per_page', 20) == 10 ? 'selected' : '' }}>10</option>
 					<option value="20" {{ request('per_page', 20) == 20 ? 'selected' : '' }}>20</option>
 					<option value="50" {{ request('per_page', 20) == 50 ? 'selected' : '' }}>50</option>
@@ -38,13 +38,13 @@
 	</div>
 
 	@if ($message = Session::get('success'))
-		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; color: #86efac;">
+		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; color: #16a34a;">
 			{{ $message }}
 		</div>
 	@endif
 
 	@if ($message = Session::get('error'))
-		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #fca5a5;">
+		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626;">
 			{{ $message }}
 		</div>
 	@endif
@@ -97,7 +97,7 @@
 						<button class="paket-cta {{ $isFeatured ? 'paket-cta-dark' : '' }}">Aktifkan Paket</button>
 					</div>
 				@empty
-					<div style="padding: 30px 10px; text-align: center; color: #9ca3af;">
+					<div style="padding: 30px 10px; text-align: center; color: #64748b;">
 						Belum ada paket untuk ditampilkan.
 					</div>
 				@endforelse
@@ -116,7 +116,7 @@
 			<div style="margin-top: 8px; overflow-x: auto;">
 				<table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
 					<thead>
-						<tr style="border-bottom: 1px solid rgba(251, 191, 36, 0.4); color:#9ca3af;">
+						<tr style="border-bottom: 1px solid rgba(59, 130, 246, 0.4); color:#9ca3af;">
 							<th style="text-align:left; padding:14px 10px;">Nama Paket</th>
 							<th style="text-align:left; padding:14px 10px;">Deskripsi</th>
 							<th style="text-align:right; padding:14px 10px;">Harga / Bulan</th>
@@ -129,13 +129,13 @@
 					<tbody>
 						@forelse ($pakets as $paket)
 							<tr style="border-bottom: 1px solid rgba(15,23,42,0.8);">
-								<td style="padding:14px 10px; font-weight: 600; color: #fbbf24;">
+								<td style="padding:14px 10px; font-weight: 600; color: #3b82f6;">
 									{{ $paket->nama_paket ?? $paket->name ?? '-' }}
 								</td>
 								<td style="padding:14px 10px; color: #cbd5e1;">
 									{{ $paket->deskripsi ?? $paket->description ?? 'Paket berlangganan standar.' }}
 								</td>
-								<td style="padding:14px 10px; text-align:right; font-weight: 600; color: #fbbf24;">
+								<td style="padding:14px 10px; text-align:right; font-weight: 600; color: #3b82f6;">
 									{{ isset($paket->harga) ? 'Rp ' . number_format($paket->harga, 0, ',', '.') : '-' }}
 								</td>
 								<td style="padding:14px 10px; text-align:right;">
@@ -143,12 +143,12 @@
 										<div style="color: #22c55e; font-weight: 600;">
 											Rp {{ number_format($paket->harga_diskon, 0, ',', '.') }}
 										</div>
-										<div style="color: #9ca3af; font-size: 0.8rem; text-decoration: line-through;">
+										<div style="color: #64748b; font-size: 0.8rem; text-decoration: line-through;">
 											Rp {{ number_format($paket->harga, 0, ',', '.') }}
 										</div>
 										<span style="background:rgba(34, 197, 94, 0.2); color:#86efac; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; display: inline-block; margin-top: 4px;">PROMO</span>
 									@else
-										<span style="color: #9ca3af;">-</span>
+										<span style="color: #64748b;">-</span>
 									@endif
 								</td>
 								<td style="padding:14px 10px; text-align:center; color: #cbd5e1;">
@@ -181,7 +181,7 @@
 							</tr>
 						@empty
 							<tr>
-								<td colspan="6" style="padding: 40px 10px; text-align: center; color: #9ca3af;">
+								<td colspan="6" style="padding: 40px 10px; text-align: center; color: #64748b;">
 									Belum ada paket. Tambahkan paket pertama agar bisa ditampilkan di halaman ini.
 								</td>
 							</tr>
@@ -228,9 +228,9 @@
 		}
 
 		.paket-card-highlight {
-			background: linear-gradient(135deg, rgba(251, 191, 36, 0.95), rgba(245, 158, 11, 0.85));
+			background: linear-gradient(135deg, rgba(59, 130, 246, 0.95), rgba(245, 158, 11, 0.85));
 			color: #020617;
-			border-color: rgba(251, 191, 36, 0.6);
+			border-color: rgba(59, 130, 246, 0.6);
 		}
 
 		.paket-highlight-tag {
@@ -238,7 +238,7 @@
 			top: 16px;
 			right: 16px;
 			background: rgba(2, 6, 23, 0.9);
-			color: #fbbf24;
+			color: #3b82f6;
 			font-size: 0.65rem;
 			padding: 4px 10px;
 			border-radius: 999px;
@@ -270,7 +270,7 @@
 
 		.paket-card-highlight .paket-badge {
 			background: rgba(2, 6, 23, 0.9);
-			color: #fbbf24;
+			color: #3b82f6;
 		}
 
 		.paket-price {
@@ -286,7 +286,7 @@
 
 		.paket-caption {
 			font-size: 0.85rem;
-			color: #9ca3af;
+			color: #64748b;
 		}
 
 		.paket-card-highlight .paket-caption {
@@ -315,7 +315,7 @@
 
 		.paket-feature-list li::before {
 			content: '•';
-			color: #fbbf24;
+			color: #3b82f6;
 			font-size: 1rem;
 		}
 
@@ -324,7 +324,7 @@
 			border-radius: 999px;
 			border: 1px solid rgba(148, 163, 184, 0.5);
 			background: rgba(15, 23, 42, 0.9);
-			color: #e5e7eb;
+			color: #1e293b;
 			padding: 10px 14px;
 			font-size: 0.8rem;
 			font-weight: 600;
@@ -338,8 +338,8 @@
 		}
 
 		.paket-cta-dark {
-			background: #020617;
-			color: #fbbf24;
+			background: #ffffff;
+			color: #3b82f6;
 			border-color: rgba(2, 6, 23, 0.75);
 		}
 	</style>

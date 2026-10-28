@@ -13,8 +13,8 @@
             ➕ Tambah Bank
         </a>
         <form method="GET" action="{{ route('bank.index') }}" style="display:flex; align-items:center; gap:6px;">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama bank atau nomor rekening" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 10px; font-size:0.8rem; color:#e5e7eb; min-width:300px;">
-            <select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 8px; font-size:0.8rem; color:#e5e7eb;">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama bank atau nomor rekening" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b; min-width:300px;">
+            <select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
                 <option value="10" {{ request('per_page', 20) == 10 ? 'selected' : '' }}>10</option>
                 <option value="20" {{ request('per_page', 20) == 20 ? 'selected' : '' }}>20</option>
                 <option value="50" {{ request('per_page', 20) == 50 ? 'selected' : '' }}>50</option>
@@ -24,7 +24,7 @@
 </div>
 
 @if ($errors->any())
-    <div style="margin: 16px 0; padding: 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 6px; color: #ef4444;">
+    <div style="margin: 16px 0; padding: 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; color: #ef4444;">
         <ul style="margin: 0; padding-left: 20px;">
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -40,7 +40,7 @@
 @endif
 
 @if (session('error'))
-    <div style="margin: 16px 0; padding: 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 6px; color: #ef4444;">
+    <div style="margin: 16px 0; padding: 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; color: #ef4444;">
         {{ session('error') }}
     </div>
 @endif
@@ -57,10 +57,10 @@
             <form id="bulkForm" method="POST" action="{{ route('bank.bulk-destroy') }}" style="display: inline;">
                 @csrf
                 <div style="margin-bottom: 12px; display: flex; gap: 8px;">
-                    <button type="button" onclick="toggleSelectAll()" style="background: rgba(148,163,184,0.2); color:#e5e7eb; border:1px solid rgba(148,163,184,0.5); padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.9rem;">
+                    <button type="button" onclick="toggleSelectAll()" style="background: rgba(148,163,184,0.2); color:#1e293b; border:1px solid rgba(59,130,246,0.3); padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.9rem;">
                         Pilih Semua
                     </button>
-                    <button type="button" onclick="clearSelect()" style="background: rgba(148,163,184,0.2); color:#e5e7eb; border:1px solid rgba(148,163,184,0.5); padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.9rem;">
+                    <button type="button" onclick="clearSelect()" style="background: rgba(148,163,184,0.2); color:#1e293b; border:1px solid rgba(59,130,246,0.3); padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.9rem;">
                         Batal Pilih
                     </button>
                     <button type="submit" onclick="return confirm('Yakin hapus bank terpilih?')" style="background: rgba(239,68,68,0.2); color:#ef4444; border:1px solid rgba(239,68,68,0.5); padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.9rem;">
@@ -70,7 +70,7 @@
 
                 <table style="width: 100%; border-collapse: collapse; font-size: 1rem;">
                     <thead>
-                        <tr style="border-bottom: 1px solid rgba(251, 191, 36, 0.4); color:#9ca3af;">
+                        <tr style="border-bottom: 1px solid rgba(59, 130, 246, 0.4); color:#9ca3af;">
                             <th style="text-align:center; padding:14px 10px; width:50px;">
                                 <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll()" style="cursor:pointer;">
                             </th>
@@ -87,7 +87,7 @@
                                     <input type="checkbox" name="ids[]" value="{{ $bank->id }}" class="bank-checkbox" style="cursor:pointer;">
                                 </td>
                                 <td style="padding:14px 10px;">
-                                    <span style="color:#e5e7eb; font-weight:500;">{{ $bank->bank_name }}</span>
+                                    <span style="color:#1e293b; font-weight:500;">{{ $bank->bank_name }}</span>
                                 </td>
                                 <td style="padding:14px 10px;">
                                     <span style="color:#9ca3af;">{{ $bank->account_holder }}</span>

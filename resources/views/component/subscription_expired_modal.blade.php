@@ -31,7 +31,7 @@
 	.subscription-expired-overlay {
 		position: fixed;
 		inset: 0;
-		background: rgba(2, 6, 23, 0.8);
+		background: rgba(30, 58, 138, 0.5);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -51,10 +51,10 @@
 
 	.subscription-expired-modal {
 		width: min(420px, 92vw);
-		background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(15, 23, 42, 0.95) 100%);
+		background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.95) 100%);
 		border-radius: 24px;
-		border: 2px solid rgba(251, 146, 60, 0.4);
-		box-shadow: 0 24px 60px rgba(15, 23, 42, 0.85), 0 0 80px rgba(251, 146, 60, 0.15);
+		border: 2px solid rgba(59, 130, 246, 0.4);
+		box-shadow: 0 24px 60px rgba(59, 130, 246, 0.15), 0 0 80px rgba(59, 130, 246, 0.1);
 		padding: 32px 24px;
 		text-align: center;
 		animation: slideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -79,9 +79,9 @@
 		height: 80px;
 		margin: 0 auto 20px;
 		border-radius: 50%;
-		background: linear-gradient(135deg, rgba(251, 146, 60, 0.2) 0%, rgba(245, 158, 11, 0.1) 100%);
-		color: #fb923c;
-		border: 2px solid rgba(251, 146, 60, 0.3);
+		background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.1) 100%);
+		color: #3b82f6;
+		border: 2px solid rgba(59, 130, 246, 0.3);
 	}
 
 	.modal-icon-wrapper svg {
@@ -97,21 +97,21 @@
 	.modal-title {
 		font-size: 1.4rem;
 		font-weight: 700;
-		color: #fbbf24;
+		color: #1e3a8a;
 		margin: 0 0 6px 0;
 		letter-spacing: -0.5px;
 	}
 
 	.modal-subtitle {
 		font-size: 0.85rem;
-		color: #fb923c;
+		color: #3b82f6;
 		margin: 0 0 16px 0;
 		font-weight: 500;
 	}
 
 	.modal-description {
 		font-size: 0.85rem;
-		color: #cbd5f5;
+		color: #64748b;
 		line-height: 1.6;
 		margin: 0;
 	}
@@ -129,22 +129,22 @@
 		justify-content: center;
 		padding: 12px 22px;
 		border-radius: 999px;
-		background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-		color: #020617;
+		background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+		color: #ffffff;
 		font-size: 0.85rem;
 		font-weight: 700;
 		border: none;
 		cursor: pointer;
 		text-decoration: none;
 		transition: all 0.3s ease;
-		box-shadow: 0 12px 40px rgba(251, 191, 36, 0.4);
+		box-shadow: 0 12px 40px rgba(59, 130, 246, 0.3);
 		letter-spacing: 0.3px;
 	}
 
 	.btn-subscribe:hover {
 		transform: translateY(-2px);
-		box-shadow: 0 16px 50px rgba(251, 191, 36, 0.5);
-		background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+		box-shadow: 0 16px 50px rgba(59, 130, 246, 0.4);
+		background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
 	}
 
 	.btn-subscribe:active {
@@ -157,11 +157,11 @@
 		justify-content: center;
 		padding: 11px 20px;
 		border-radius: 999px;
-		background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
-		color: #93c5fd;
+		background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+		color: #3b82f6;
 		font-size: 0.83rem;
 		font-weight: 600;
-		border: 1.5px solid rgba(59, 130, 246, 0.5);
+		border: 1.5px solid rgba(59, 130, 246, 0.4);
 		cursor: pointer;
 		text-decoration: none;
 		transition: all 0.3s ease;
@@ -169,9 +169,9 @@
 	}
 
 	.btn-dashboard:hover {
-		background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0.2) 100%);
-		border-color: rgba(59, 130, 246, 0.7);
-		color: #bfdbfe;
+		background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.1) 100%);
+		border-color: rgba(59, 130, 246, 0.6);
+		color: #2563eb;
 		transform: translateY(-1px);
 	}
 
@@ -182,19 +182,19 @@
 	.btn-dismiss {
 		padding: 10px 20px;
 		border-radius: 999px;
-		background: rgba(51, 65, 85, 0.3);
-		color: #cbd5f5;
+		background: rgba(148, 163, 184, 0.2);
+		color: #64748b;
 		font-size: 0.8rem;
 		font-weight: 500;
-		border: 1px solid rgba(51, 65, 85, 0.5);
+		border: 1px solid rgba(148, 163, 184, 0.4);
 		cursor: pointer;
 		transition: all 0.3s ease;
 	}
 
 	.btn-dismiss:hover {
-		background: rgba(51, 65, 85, 0.5);
-		border-color: rgba(51, 65, 85, 0.7);
-		color: #e5e7eb;
+		background: rgba(148, 163, 184, 0.3);
+		border-color: rgba(148, 163, 184, 0.6);
+		color: #475569;
 	}
 
 	.btn-dismiss:active {

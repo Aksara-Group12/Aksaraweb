@@ -20,14 +20,14 @@
 				@csrf
 				<div style="display: flex; flex-direction: column; gap: 16px;">
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Modal Awal (Rp)</label>
-						<input type="number" name="modal_awal" required min="0" step="0.01" placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
-						<p style="color: #9ca3af; font-size: 0.8rem;">Jumlah uang kas saat mulai shift.</p>
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e3a8a;">Modal Awal (Rp)</label>
+						<input type="number" name="modal_awal" required min="0" step="0.01" placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.9); color: #1e293b; font-size: 0.9rem;">
+						<p style="color: #64748b; font-size: 0.8rem;">Jumlah uang kas saat mulai shift.</p>
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Catatan (Opsional)</label>
-						<textarea name="catatan" rows="3" placeholder="Catatan tambahan..." style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem; resize: vertical;"></textarea>
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e3a8a;">Catatan (Opsional)</label>
+						<textarea name="catatan" rows="3" placeholder="Catatan tambahan..." style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.9); color: #1e293b; font-size: 0.9rem; resize: vertical;"></textarea>
 					</div>
 
 					<div style="display: flex; gap: 8px; margin-top: 8px;">

@@ -10,17 +10,17 @@
 		</div>
 		<div class="hz-top-actions" style="display:flex; align-items:center; gap:10px;">
 			<form method="GET" action="{{ route('transaksi.masuk') }}" style="display:flex; align-items:center; gap:6px;">
-				<input type="text" name="search" value="{{ request('search') }}" placeholder="Cari referensi / supplier / kota" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 10px; font-size:0.8rem; color:#e5e7eb; min-width:220px;">
-				<select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 8px; font-size:0.8rem; color:#e5e7eb;">
+				<input type="text" name="search" value="{{ request('search') }}" placeholder="Cari referensi / supplier / kota" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b; min-width:220px;">
+				<select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
 					<option value="10" {{ request('per_page', 20) == 10 ? 'selected' : '' }}>10</option>
 					<option value="20" {{ request('per_page', 20) == 20 ? 'selected' : '' }}>20</option>
 					<option value="50" {{ request('per_page', 20) == 50 ? 'selected' : '' }}>50</option>
 				</select>
 			</form>
-			<a href="{{ route('transaksi.masuk.export.excel', request()->only('search')) }}" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; color:#e5e7eb; padding:6px 10px; font-size:0.8rem; text-decoration:none;">
+			<a href="{{ route('transaksi.masuk.export.excel', request()->only('search')) }}" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; padding:6px 10px; font-size:0.8rem; text-decoration:none;">
 				Export Excel
 			</a>
-			<a href="{{ route('transaksi.masuk.export.pdf', request()->only('search')) }}" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; color:#e5e7eb; padding:6px 10px; font-size:0.8rem; text-decoration:none;">
+			<a href="{{ route('transaksi.masuk.export.pdf', request()->only('search')) }}" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; padding:6px 10px; font-size:0.8rem; text-decoration:none;">
 				Export PDF
 			</a>
 			<form id="masuk-bulk-delete-form" onsubmit="return false;">
@@ -39,13 +39,13 @@
 	</div>
 
 	@if ($message = Session::get('success'))
-		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; color: #86efac;">
+		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; color: #16a34a;">
 			{{ $message }}
 		</div>
 	@endif
 
 	@if ($message = Session::get('error'))
-		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #fca5a5;">
+		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626;">
 			{{ $message }}
 		</div>
 	@endif
@@ -65,7 +65,7 @@
 						<input type="hidden" name="ids" id="masukBulkIds">
 						<table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
 						<thead>
-							<tr style="border-bottom: 1px solid rgba(251, 191, 36, 0.4); color:#9ca3af;">
+							<tr style="border-bottom: 1px solid rgba(59, 130, 246, 0.4); color:#9ca3af;">
 									<th style="padding:14px 10px; text-align:center; width:36px;">
 										<input type="checkbox" id="masuk-select-all" style="cursor:pointer;">
 									</th>
@@ -84,16 +84,16 @@
 									<td style="padding:14px 10px; text-align:center;" onclick="event.stopPropagation();">
 										<input type="checkbox" value="{{ $t->id }}" class="masuk-row-checkbox" style="cursor:pointer;">
 									</td>
-									<td style="padding:14px 10px; color: #e5e7eb;">{{ $t->created_at->format('d/m/Y') }}</td>
-									<td style="padding:14px 10px; font-weight: 500; color: #fbbf24;">{{ $t->reference_no }}</td>
+									<td style="padding:14px 10px; color: #1e293b;">{{ $t->created_at->format('d/m/Y') }}</td>
+									<td style="padding:14px 10px; font-weight: 500; color: #3b82f6;">{{ $t->reference_no }}</td>
 									<td style="padding:14px 10px; color: #cbd5e1;">{{ $t->supplier_name }}</td>
 									<td style="padding:14px 10px; color: #cbd5e1;">{{ $t->lokasi ?? '-' }}</td>
-									<td style="padding:14px 10px; text-align:right; font-weight: 600; color: #fbbf24;">Rp {{ number_format($t->total_harga, 0, ',', '.') }}</td>
+									<td style="padding:14px 10px; text-align:right; font-weight: 600; color: #3b82f6;">Rp {{ number_format($t->total_harga, 0, ',', '.') }}</td>
 									<td style="padding:14px 10px; text-align:center;">
 										@if ($t->status === 'complete')
 											<span style="background:rgba(34, 197, 94, 0.2); color:#86efac; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">Selesai</span>
 										@elseif ($t->status === 'pending')
-											<span style="background:rgba(251,191,36,0.2); color:#fbbf24; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">Pending</span>
+											<span style="background:rgba(251,191,36,0.2); color:#3b82f6; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">Pending</span>
 										@elseif ($t->status === 'reopened')
 											<span style="background:rgba(148,163,184,0.2); color:#cbd5e1; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">Reopened</span>
 										@else
@@ -104,7 +104,7 @@
 										<button type="button" class="hz-more-btn" style="background: transparent; border:none; color:#9ca3af; cursor:pointer; padding:4px 8px; border-radius:999px;">
 											&#8942;
 										</button>
-										<div class="hz-more-menu actions-dropdown" style="display:none; position:absolute; right:10px; top:32px; background:#020617; border:1px solid rgba(148,163,184,0.4); border-radius:8px; min-width:160px; z-index:10;">
+										<div class="hz-more-menu actions-dropdown" style="display:none; position:absolute; right:10px; top:32px; background:rgba(255,255,255,0.9); border:1px solid rgba(148,163,184,0.4); border-radius:8px; min-width:160px; z-index:10;">
 											<a href="{{ route('transaksi.masuk.print', $t->id) }}" class="actions-dropdown-item print">
 												<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
 													<path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
@@ -122,8 +122,8 @@
 								</tr>
 							@empty
 								<tr>
-									<td colspan="7" style="padding: 40px 10px; text-align: center; color: #9ca3af;">
-										Belum ada transaksi masuk. <a href="{{ route('transaksi.masuk.create') }}" style="color: #fbbf24; text-decoration: underline;">Buat transaksi pertama</a>
+									<td colspan="7" style="padding: 40px 10px; text-align: center; color: #64748b;">
+										Belum ada transaksi masuk. <a href="{{ route('transaksi.masuk.create') }}" style="color: #3b82f6; text-decoration: underline;">Buat transaksi pertama</a>
 									</td>
 								</tr>
 							@endforelse
@@ -141,7 +141,7 @@
 						</div>
 					@endif
 				@else
-					<div style="padding: 40px; text-align: center; color: #9ca3af;">
+					<div style="padding: 40px; text-align: center; color: #64748b;">
 						<p style="margin-bottom: 12px;">Belum ada transaksi masuk.</p>
 						<a href="{{ route('transaksi.masuk.create') }}" class="hz-btn-primary" style="display: inline-block; text-decoration: none; padding: 10px 16px; border-radius: 10px;">
 							Buat Transaksi Pertama
@@ -154,7 +154,7 @@
 
 	<style>
 		.hz-btn-primary {
-			background: #fbbf24;
+			background: #3b82f6;
 			color: #020617;
 			border: none;
 			border-radius: 10px;
@@ -163,11 +163,11 @@
 		}
 
 		.hz-btn-primary:hover {
-			background: #f59e0b;
+			background: #2563eb;
 		}
 
 		.actions-dropdown {
-			background: #020617;
+			background: #ffffff;
 			border-radius: 8px;
 			padding: 4px 0;
 			box-shadow: 0 10px 25px rgba(15,23,42,0.7);
@@ -183,7 +183,7 @@
 			text-decoration: none;
 			border: none;
 			background: transparent;
-			color: #e5e7eb;
+			color: #1e293b;
 			cursor: pointer;
 		}
 
@@ -197,25 +197,25 @@
 		}
 
 		.actions-dropdown-item.edit {
-			color: #e5e7eb;
+			color: #1e293b;
 		}
 
 		.actions-dropdown-item.print {
-			color: #fbbf24;
+			color: #3b82f6;
 		}
 
 		.actions-dropdown-item.delete {
-			color: #fca5a5;
+			color: #dc2626;
 		}
 	</style>
 
 	<!-- Modal konfirmasi bulk delete transaksi masuk -->
 	<div id="masuk-bulk-modal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.8); z-index:50; align-items:center; justify-content:center;">
-		<div style="background:#020617; border-radius:16px; padding:20px 22px; width:100%; max-width:360px; border:1px solid rgba(148,163,184,0.5); box-shadow:0 18px 45px rgba(15,23,42,0.9);">
-			<h3 style="font-size:1rem; font-weight:600; color:#e5e7eb; margin-bottom:4px;">Hapus transaksi masuk terpilih?</h3>
+		<div style="background:rgba(255,255,255,0.9); border-radius:16px; padding:20px 22px; width:100%; max-width:360px; border:1px solid rgba(59,130,246,0.3); box-shadow:0 18px 45px rgba(15,23,42,0.9);">
+			<h3 style="font-size:1rem; font-weight:600; color:#1e293b; margin-bottom:4px;">Hapus transaksi masuk terpilih?</h3>
 			<p style="font-size:0.85rem; color:#9ca3af; margin-bottom:16px;">Semua data dan nomor seri terkait transaksi ini akan ikut terhapus.</p>
 			<div style="display:flex; justify-content:flex-end; gap:8px;">
-				<button type="button" id="masuk-bulk-cancel" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:transparent; color:#e5e7eb; padding:6px 14px; font-size:0.8rem; cursor:pointer;">Batal</button>
+				<button type="button" id="masuk-bulk-cancel" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:transparent; color:#1e293b; padding:6px 14px; font-size:0.8rem; cursor:pointer;">Batal</button>
 				<button type="button" id="masuk-bulk-confirm" style="border-radius:999px; border:none; background:#b91c1c; color:#fee2e2; padding:6px 14px; font-size:0.8rem; font-weight:600; cursor:pointer;">Ya, hapus</button>
 			</div>
 		</div>

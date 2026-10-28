@@ -10,8 +10,8 @@
     </div>
     <div class="hz-top-actions" style="display:flex; align-items:center; gap:10px;">
         <form method="GET" action="{{ route('manajemen-user.index') }}" style="display:flex; align-items:center; gap:6px;">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau email" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 10px; font-size:0.8rem; color:#e5e7eb; min-width:250px;">
-            <select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 8px; font-size:0.8rem; color:#e5e7eb;">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau email" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b; min-width:250px;">
+            <select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
                 <option value="10" {{ request('per_page', 20) == 10 ? 'selected' : '' }}>10</option>
                 <option value="20" {{ request('per_page', 20) == 20 ? 'selected' : '' }}>20</option>
                 <option value="50" {{ request('per_page', 20) == 50 ? 'selected' : '' }}>50</option>
@@ -54,7 +54,7 @@
 @endif
 
 @if ($errors->any())
-    <div style="margin: 16px 0; padding: 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 6px; color: #ef4444;">
+    <div style="margin: 16px 0; padding: 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; color: #ef4444;">
         <ul style="margin: 0; padding-left: 20px;">
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -70,7 +70,7 @@
 @endif
 
 @if (session('error'))
-    <div style="margin: 16px 0; padding: 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 6px; color: #ef4444;">
+    <div style="margin: 16px 0; padding: 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; color: #ef4444;">
         {{ session('error') }}
     </div>
 @endif
@@ -87,10 +87,10 @@
             <form id="bulkForm" method="POST" action="{{ route('manajemen-user.bulk-destroy') }}" style="display: inline;">
                 @csrf
                 <div style="margin-bottom: 12px; display: flex; gap: 8px;">
-                    <button type="button" onclick="toggleSelectAll()" style="background: rgba(148,163,184,0.2); color:#e5e7eb; border:1px solid rgba(148,163,184,0.5); padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.9rem;">
+                    <button type="button" onclick="toggleSelectAll()" style="background: rgba(148,163,184,0.2); color:#1e293b; border:1px solid rgba(59,130,246,0.3); padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.9rem;">
                         Pilih Semua
                     </button>
-                    <button type="button" onclick="clearSelect()" style="background: rgba(148,163,184,0.2); color:#e5e7eb; border:1px solid rgba(148,163,184,0.5); padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.9rem;">
+                    <button type="button" onclick="clearSelect()" style="background: rgba(148,163,184,0.2); color:#1e293b; border:1px solid rgba(59,130,246,0.3); padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.9rem;">
                         Batal Pilih
                     </button>
                     <button type="submit" onclick="return confirm('Yakin hapus user terpilih?')" style="background: rgba(239,68,68,0.2); color:#ef4444; border:1px solid rgba(239,68,68,0.5); padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.9rem;">
@@ -100,7 +100,7 @@
 
                 <table style="width: 100%; border-collapse: collapse; font-size: 1rem; table-layout: auto;">
                     <thead>
-                        <tr style="border-bottom: 1px solid rgba(251, 191, 36, 0.4); color:#9ca3af;">
+                        <tr style="border-bottom: 1px solid rgba(59, 130, 246, 0.4); color:#9ca3af;">
                             <th style="text-align:center; padding:14px 10px; width:50px;">
                                 <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll()" style="cursor:pointer;">
                             </th>
@@ -123,7 +123,7 @@
                                     <input type="checkbox" name="ids[]" value="{{ $user->id }}" class="user-checkbox" style="cursor:pointer;">
                                 </td>
                                 <td style="padding:14px 10px;">
-                                    <span style="color:#e5e7eb;">{{ $user->name }}</span>
+                                    <span style="color:#1e293b;">{{ $user->name }}</span>
                                 </td>
                                 <td style="padding:14px 10px;">
                                     <span style="color:#9ca3af; font-size:0.9rem;">{{ $user->email }}</span>
@@ -137,7 +137,7 @@
                                         if ($activeSub) {
                                             if ($activeSub->is_trial) {
                                                 $statusLabel = 'Trial';
-                                                $statusStyle = 'background: rgba(234,179,8,0.2); color:#f59e0b; border:1px solid rgba(234,179,8,0.5);';
+                                                $statusStyle = 'background: rgba(234,179,8,0.2); color:#2563eb; border:1px solid rgba(234,179,8,0.5);';
                                             } else {
                                                 $statusLabel = 'Aktif';
                                                 $statusStyle = 'background: rgba(16,185,129,0.2); color:#10b981; border:1px solid rgba(16,185,129,0.5);';
@@ -287,9 +287,9 @@
                             <div style="border: 1px solid rgba(148,163,184,0.3); border-radius:6px; padding:12px; margin-bottom:10px;">
                                 <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:8px;">
                                     <div>
-                                        <p style="color:#e5e7eb; font-weight:600; margin:0;">Paket: ${sub.paket_name}</p>
+                                        <p style="color:#1e293b; font-weight:600; margin:0;">Paket: ${sub.paket_name}</p>
                                         <p style="color:#9ca3af; font-size:0.9rem; margin:4px 0;">Nominal: Rp${parseInt(sub.price).toLocaleString('id-ID')}</p>
-                                        <p style="color:#9ca3af; font-size:0.9rem; margin:0;">Status: <span style="${sub.is_trial && sub.status === 'active' ? 'color:#f59e0b' : sub.status === 'active' ? 'color:#10b981' : 'color:#f59e0b'}">${sub.is_trial && sub.status === 'active' ? 'trial' : sub.status}</span></p>
+                                        <p style="color:#9ca3af; font-size:0.9rem; margin:0;">Status: <span style="${sub.is_trial && sub.status === 'active' ? 'color:#2563eb' : sub.status === 'active' ? 'color:#10b981' : 'color:#2563eb'}">${sub.is_trial && sub.status === 'active' ? 'trial' : sub.status}</span></p>
                                     </div>
                                     <div style="text-align:right;">
                                         <span style="background:${sub.approval_status === 'approved' ? 'rgba(16,185,129,0.2)' : sub.approval_status === 'rejected' ? 'rgba(239,68,68,0.2)' : 'rgba(59,130,246,0.2)'}; color:${sub.approval_status === 'approved' ? '#10b981' : sub.approval_status === 'rejected' ? '#ef4444' : '#3b82f6'}; padding:4px 8px; border-radius:4px; font-size:0.8rem; font-weight:600;">
@@ -366,10 +366,10 @@
 </script>
 <div id="subscriptionBackdrop" onclick="closeSubscriptionModal()" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:999;"></div>
 
-<div id="subscriptionModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#0f172a; border:1px solid rgba(148,163,184,0.3); border-radius:8px; width:90%; max-width:600px; max-height:80vh; overflow-y:auto; z-index:1000; padding:0;">
-    <div style="padding:20px; border-bottom:1px solid rgba(148,163,184,0.3); display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; background:#0f172a;">
+<div id="subscriptionModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:rgba(255,255,255,0.9); border:1px solid rgba(148,163,184,0.3); border-radius:8px; width:90%; max-width:600px; max-height:80vh; overflow-y:auto; z-index:1000; padding:0;">
+    <div style="padding:20px; border-bottom:1px solid rgba(148,163,184,0.3); display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; background:rgba(255,255,255,0.9);">
         <div>
-            <p style="margin:0; color:#e5e7eb; font-weight:600;">Subscription Details</p>
+            <p style="margin:0; color:#1e293b; font-weight:600;">Subscription Details</p>
             <p style="margin:4px 0; color:#9ca3af; font-size:0.9rem;">
                 <span id="modalUserName"></span> - <span id="modalUserEmail"></span>
             </p>

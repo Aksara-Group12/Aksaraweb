@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>Login - {{ config('app.name', 'Golday') }}</title>
+		<title>Login - {{ config('app.name', 'Aksara') }}</title>
 
 		<link rel="preconnect" href="https://fonts.bunny.net">
 		<link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
@@ -15,8 +15,8 @@
 			body {
 				min-height: 100vh;
 				font-family: 'Instrument Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-				background: radial-gradient(circle at top, #4f46e5 0, #020617 55%, #000000 100%);
-				color: #e5e7eb;
+				background: radial-gradient(circle at top, #3b82f6 0, #e0e7ff 55%, #f8f4e8 100%);
+				color: #1e293b;
 				display: flex;
 				align-items: center;
 				justify-content: center;
@@ -29,10 +29,10 @@
 			}
 
 			.auth-card {
-				background: rgba(15, 23, 42, 0.96);
+				background: rgba(255, 255, 255, 0.95);
 				border-radius: 20px;
-				border: 1px solid rgba(30, 64, 175, 0.5);
-				box-shadow: 0 24px 60px rgba(15, 23, 42, 0.85);
+				border: 1px solid rgba(59, 130, 246, 0.3);
+				box-shadow: 0 24px 60px rgba(59, 130, 246, 0.15);
 				padding: 22px 22px 24px;
 			}
 
@@ -70,7 +70,7 @@
 			.logo-text-sub {
 				margin-top: 2px;
 				font-size: 0.7rem;
-				color: #9ca3af;
+				color: #64748b;
 			}
 
 			.auth-title {
@@ -82,7 +82,7 @@
 			.auth-sub {
 				margin-top: 4px;
 				font-size: 0.8rem;
-				color: #9ca3af;
+				color: #64748b;
 			}
 
 			.auth-form {
@@ -94,7 +94,7 @@
 
 			.label {
 				font-size: 0.75rem;
-				color: #cbd5f5;
+				color: #94a3b8;
 				margin-bottom: 4px;
 			}
 
@@ -102,17 +102,17 @@
 				width: 100%;
 				border-radius: 12px;
 				border: 1px solid rgba(51, 65, 85, 0.9);
-				background: #020617;
+				background: #ffffff;
 				padding: 9px 11px;
-				color: #e5e7eb;
+				color: #1e293b;
 				font-size: 0.8rem;
 				outline: none;
 				transition: border-color 0.15s ease, box-shadow 0.15s ease;
 			}
 
 			.input:focus {
-				border-color: #fbbf24;
-				box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.7);
+				border-color: #3b82f6;
+				box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.3);
 			}
 
 			.input-error {
@@ -122,7 +122,7 @@
 			.error-text {
 				margin-top: 4px;
 				font-size: 0.7rem;
-				color: #fca5a5;
+				color: #dc2626;
 			}
 
 			.alert-error {
@@ -130,16 +130,16 @@
 				margin-bottom: 6px;
 				padding: 8px 10px;
 				border-radius: 10px;
-				border: 1px solid rgba(239, 68, 68, 0.5);
-				background: rgba(15, 23, 42, 0.9);
+				border: 1px solid rgba(239, 68, 68, 0.3);
+				background: rgba(254, 226, 226, 0.9);
 				font-size: 0.75rem;
-				color: #fecaca;
+				color: #991b1b;
 			}
 
 			.success-overlay {
 				position: fixed;
 				inset: 0;
-				background: rgba(2, 6, 23, 0.7);
+				background: rgba(30, 58, 138, 0.5);
 				display: flex;
 				align-items: center;
 				justify-content: center;
@@ -151,7 +151,7 @@
 				width: min(360px, 92vw);
 				background: rgba(15, 23, 42, 0.98);
 				border-radius: 16px;
-				border: 1px solid rgba(251, 146, 60, 0.4);
+				border: 1px solid rgba(59, 130, 246, 0.4);
 				box-shadow: 0 24px 60px rgba(15, 23, 42, 0.85);
 				padding: 18px;
 				text-align: center;
@@ -173,7 +173,7 @@
 				margin-top: 14px;
 				border: none;
 				border-radius: 999px;
-				background: rgba(251, 146, 60, 0.15);
+				background: rgba(59, 130, 246, 0.15);
 				color: #fdba74;
 				font-size: 0.75rem;
 				font-weight: 600;
@@ -194,7 +194,7 @@
 			.success-title {
 				font-size: 0.95rem;
 				font-weight: 600;
-				color: #86efac;
+				color: #16a34a;
 			}
 
 			.success-text {
@@ -208,7 +208,7 @@
 				border: none;
 				border-radius: 999px;
 				background: rgba(34, 197, 94, 0.15);
-				color: #86efac;
+				color: #16a34a;
 				font-size: 0.75rem;
 				font-weight: 600;
 				padding: 8px 16px;
@@ -226,35 +226,35 @@
 			.btn-primary {
 				border: none;
 				border-radius: 999px;
-				background: #fbbf24;
+				background: #3b82f6;
 				color: #020617;
 				font-size: 0.8rem;
 				font-weight: 600;
 				padding: 9px 18px;
 				cursor: pointer;
-				box-shadow: 0 18px 40px rgba(251, 191, 36, 0.45);
+				box-shadow: 0 18px 40px rgba(59, 130, 246, 0.45);
 				transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 			}
 
 			.btn-primary:hover {
-				background: #f59e0b;
+				background: #2563eb;
 				transform: translateY(-1px);
-				box-shadow: 0 20px 48px rgba(251, 191, 36, 0.6);
+				box-shadow: 0 20px 48px rgba(59, 130, 246, 0.6);
 			}
 
 			.helper-link {
 				font-size: 0.75rem;
-				color: #9ca3af;
+				color: #64748b;
 			}
 
 			.helper-link a {
-				color: #fbbf24;
+				color: #3b82f6;
 				text-decoration: none;
 				font-weight: 500;
 			}
 
 			.helper-link a:hover {
-				color: #f59e0b;
+				color: #2563eb;
 			}
 
 			.remember-row {
@@ -263,7 +263,7 @@
 				align-items: center;
 				gap: 6px;
 				font-size: 0.75rem;
-				color: #cbd5f5;
+				color: #94a3b8;
 			}
 
 			.checkbox {
@@ -271,7 +271,7 @@
 				height: 14px;
 				border-radius: 4px;
 				border: 1px solid rgba(51, 65, 85, 0.9);
-				background: #020617;
+				background: #ffffff;
 			}
 
 			.password-input-wrapper {
@@ -285,7 +285,7 @@
 				right: 10px;
 				background: none;
 				border: none;
-				color: #9ca3af;
+				color: #64748b;
 				cursor: pointer;
 				padding: 4px;
 				display: flex;
@@ -295,7 +295,7 @@
 			}
 
 			.password-toggle:hover {
-				color: #cbd5f5;
+				color: #94a3b8;
 			}
 
 			.password-input-wrapper .input {

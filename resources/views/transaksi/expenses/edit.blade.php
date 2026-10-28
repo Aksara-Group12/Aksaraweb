@@ -11,7 +11,7 @@
 	</div>
 
 	@if ($errors->any())
-		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #fca5a5;">
+		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626;">
 			<p style="font-weight: 600; margin-bottom: 8px;">❌ Terjadi kesalahan validasi:</p>
 			<ul style="margin: 0; padding-left: 20px;">
 				@foreach ($errors->all() as $error)
@@ -22,7 +22,7 @@
 	@endif
 
 	@if ($message = Session::get('error'))
-		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #fca5a5;">
+		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626;">
 			{{ $message }}
 		</div>
 	@endif
@@ -39,24 +39,24 @@
 
 				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Tanggal <span style="color: #fbbf24;">*</span></label>
-						<input type="date" name="tanggal" value="{{ old('tanggal', optional($expense->tanggal)->format('Y-m-d')) }}" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Tanggal <span style="color: #3b82f6;">*</span></label>
+						<input type="date" name="tanggal" value="{{ old('tanggal', optional($expense->tanggal)->format('Y-m-d')) }}" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Kategori</label>
-						<input type="text" name="kategori" value="{{ old('kategori', $expense->kategori) }}" placeholder="Listrik, sewa, gaji, dll" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Kategori</label>
+						<input type="text" name="kategori" value="{{ old('kategori', $expense->kategori) }}" placeholder="Listrik, sewa, gaji, dll" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Nominal (Rp) <span style="color: #fbbf24;">*</span></label>
-						<input type="number" name="nominal" value="{{ old('nominal', $expense->nominal) }}" min="0" step="0.01" placeholder="0" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Nominal (Rp) <span style="color: #3b82f6;">*</span></label>
+						<input type="number" name="nominal" value="{{ old('nominal', $expense->nominal) }}" min="0" step="0.01" placeholder="0" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Metode Pembayaran <span style="color: #fbbf24;">*</span></label>
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Metode Pembayaran <span style="color: #3b82f6;">*</span></label>
 						@php($metode = old('metode_pembayaran', $expense->metode_pembayaran))
-						<select name="metode_pembayaran" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<select name="metode_pembayaran" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 							<option value="">-- Pilih --</option>
 							<option value="cash" {{ $metode === 'cash' ? 'selected' : '' }}>Cash</option>
 							<option value="non-cash" {{ $metode === 'non-cash' ? 'selected' : '' }}>Non-Cash</option>
@@ -72,8 +72,8 @@
 					<p class="hz-card-title">Keterangan</p>
 				</div>
 				<div style="display: flex; flex-direction: column; gap: 6px;">
-					<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Catatan / Keterangan</label>
-					<textarea name="keterangan" placeholder="Contoh: Bayar listrik bulan Maret, sewa toko, dll" style="padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem; height: 100px; resize: vertical;">{{ old('keterangan', $expense->keterangan) }}</textarea>
+					<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Catatan / Keterangan</label>
+					<textarea name="keterangan" placeholder="Contoh: Bayar listrik bulan Maret, sewa toko, dll" style="padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem; height: 100px; resize: vertical;">{{ old('keterangan', $expense->keterangan) }}</textarea>
 				</div>
 			</div>
 		</section>

@@ -20,24 +20,24 @@
 				</div>
 				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Nama <span style="color: #fbbf24;">*</span></label>
-						<input type="text" name="nama" value="{{ $pelanggan->nama }}" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Nama <span style="color: #3b82f6;">*</span></label>
+						<input type="text" name="nama" value="{{ $pelanggan->nama }}" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Kontak</label>
-						<input type="text" name="kontak" value="{{ $pelanggan->kontak }}" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Kontak</label>
+						<input type="text" name="kontak" value="{{ $pelanggan->kontak }}" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Email</label>
-						<input type="email" name="email" value="{{ $pelanggan->email }}" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Email</label>
+						<input type="email" name="email" value="{{ $pelanggan->email }}" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 					<div style="display: flex; flex-direction: column; gap: 6px; grid-column: 1 / -1;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Alamat</label>
-						<textarea name="alamat" rows="3" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem; resize: vertical;">{{ $pelanggan->alamat }}</textarea>
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Alamat</label>
+						<textarea name="alamat" rows="3" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem; resize: vertical;">{{ $pelanggan->alamat }}</textarea>
 					</div>
 					<div style="display: flex; flex-direction: column; gap: 6px; grid-column: 1 / -1;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Catatan</label>
-						<textarea name="catatan" rows="2" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem; resize: vertical;">{{ $pelanggan->catatan }}</textarea>
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Catatan</label>
+						<textarea name="catatan" rows="2" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem; resize: vertical;">{{ $pelanggan->catatan }}</textarea>
 					</div>
 				</div>
 			</div>

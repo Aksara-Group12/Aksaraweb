@@ -10,8 +10,8 @@
     </div>
     <div class="hz-top-actions" style="display:flex; align-items:center; gap:10px;">
         <form method="GET" action="{{ route('produkstok.index') }}" style="display:flex; align-items:center; gap:6px;">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama / kode / SKU" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 10px; font-size:0.8rem; color:#e5e7eb; min-width:200px;">
-            <select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 8px; font-size:0.8rem; color:#e5e7eb;">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama / kode / SKU" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b; min-width:200px;">
+            <select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
                 <option value="10" {{ request('per_page', 20) == 10 ? 'selected' : '' }}>10</option>
                 <option value="20" {{ request('per_page', 20) == 20 ? 'selected' : '' }}>20</option>
                 <option value="50" {{ request('per_page', 20) == 50 ? 'selected' : '' }}>50</option>
@@ -32,7 +32,7 @@
             @if ($products->count() > 0)
                 <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
                     <thead>
-                        <tr style="border-bottom: 1px solid rgba(251, 191, 36, 0.4); color:#9ca3af;">
+                        <tr style="border-bottom: 1px solid rgba(59, 130, 246, 0.4); color:#9ca3af;">
                             <th style="text-align:left; padding:14px 10px;">Kode</th>
                             <th style="text-align:left; padding:14px 10px;">Nama Produk</th>
                             <th style="text-align:left; padding:14px 10px;">Kategori</th>
@@ -46,16 +46,16 @@
                     <tbody>
                         @forelse ($products as $product)
                             <tr style="border-bottom: 1px solid rgba(15,23,42,0.8);">
-                                <td style="padding:14px 10px; font-weight: 500; color: #fbbf24;">{{ $product->code }}</td>
-                                <td style="padding:14px 10px; color: #e5e7eb;">
+                                <td style="padding:14px 10px; font-weight: 500; color: #3b82f6;">{{ $product->code }}</td>
+                                <td style="padding:14px 10px; color: #1e293b;">
                                     {{ $product->nama_produk }}
                                     @if($product->brand)
-                                        <br><small style="color: #9ca3af;">{{ $product->brand }}</small>
+                                        <br><small style="color: #64748b;">{{ $product->brand }}</small>
                                     @endif
                                 </td>
                                 <td style="padding:14px 10px; color: #cbd5e1;">{{ $product->kategori ?? '-' }}</td>
                                 <td style="padding:14px 10px; text-align:center; color: #cbd5e1;">{{ $product->unit }}</td>
-                                <td style="padding:14px 10px; text-align:right; font-weight: 600; color: #fbbf24;">
+                                <td style="padding:14px 10px; text-align:right; font-weight: 600; color: #3b82f6;">
                                     {{ $product->stock }}
                                 </td>
                                 <td style="padding:14px 10px; text-align:right; color: #cbd5e1;">
@@ -63,11 +63,11 @@
                                 </td>
                                 <td style="padding:14px 10px; text-align:center;">
                                     @if($product->status_stok === 'Habis')
-                                        <span style="background: rgba(239,68,68,0.2); padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; color: #fca5a5;">Habis</span>
+                                        <span style="background: rgba(239,68,68,0.2); padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; color: #dc2626;">Habis</span>
                                     @elseif($product->status_stok === 'Menipis')
-                                        <span style="background: rgba(251,191,36,0.2); padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; color: #fbbf24;">Menipis</span>
+                                        <span style="background: rgba(251,191,36,0.2); padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; color: #3b82f6;">Menipis</span>
                                     @else
-                                        <span style="background: rgba(34,197,94,0.2); padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; color: #86efac;">Aman</span>
+                                        <span style="background: rgba(34,197,94,0.2); padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; color: #16a34a;">Aman</span>
                                     @endif
                                 </td>
                                 <td style="padding:14px 10px; text-align:right;">
@@ -84,7 +84,7 @@
                     </tbody>
                 </table>
             @else
-                <div style="padding: 40px; text-align: center; color: #9ca3af;">
+                <div style="padding: 40px; text-align: center; color: #64748b;">
                     <p style="margin-bottom: 16px;">Belum ada produk dalam katalog.</p>
                     <a href="{{ route('produk.create') }}" class="hz-btn hz-btn-primary">
                         + Tambah Produk

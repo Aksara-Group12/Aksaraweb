@@ -11,7 +11,7 @@
 	</div>
 
 	@if ($errors->any())
-		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #fca5a5;">
+		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626;">
 			<p style="font-weight: 600; margin-bottom: 8px;">❌ Terjadi kesalahan validasi:</p>
 			<ul style="margin: 0; padding-left: 20px;">
 				@foreach ($errors->all() as $error)
@@ -22,13 +22,13 @@
 	@endif
 
 	@if ($message = Session::get('error'))
-		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #fca5a5;">
+		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626;">
 			{{ $message }}
 		</div>
 	@endif
 
 	@if ($message = Session::get('success'))
-		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; color: #86efac;">
+		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; color: #16a34a;">
 			{{ $message }}
 		</div>
 	@endif
@@ -46,8 +46,8 @@
 
 				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Tanggal Transaksi <span style="color: #fbbf24;">*</span></label>
-						<input type="date" name="tanggal_transaksi" value="{{ date('Y-m-d') }}" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Tanggal Transaksi <span style="color: #3b82f6;">*</span></label>
+						<input type="date" name="tanggal_transaksi" value="{{ date('Y-m-d') }}" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 				</div>
 			</div>
@@ -62,18 +62,18 @@
 
 				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Nama Pelanggan <span style="color: #fbbf24;">*</span></label>
-						<input type="text" name="customer_name" placeholder="Nama pelanggan..." required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Nama Pelanggan <span style="color: #3b82f6;">*</span></label>
+						<input type="text" name="customer_name" placeholder="Nama pelanggan..." required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Kontak</label>
-						<input type="text" name="customer_contact" placeholder="No. HP atau email..." style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Kontak</label>
+						<input type="text" name="customer_contact" placeholder="No. HP atau email..." style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Lokasi</label>
-						<input type="text" name="lokasi" placeholder="Kota atau kabupaten..." style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Lokasi</label>
+						<input type="text" name="lokasi" placeholder="Kota atau kabupaten..." style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 				</div>
 			</div>
@@ -87,16 +87,16 @@
 				</div>
 
 				<div id="itemsContainer" style="display: flex; flex-direction: column; gap: 16px;">
-					<div class="item-card" style="border: 1px solid rgba(251,191,36,0.3); border-radius: 14px; padding: 18px; background: rgba(15,23,42,0.7);">
+					<div class="item-card" style="border: 1px solid rgba(59,130,246,0.3); border-radius: 14px; padding: 18px; background: rgba(255,255,255,0.95);">
 						<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-							<p style="font-size: 0.9rem; font-weight: 600; color: #fbbf24;">Item #1</p>
-							<button type="button" class="remove-item-btn" style="display: none; padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(239,68,68,0.4); background: rgba(239,68,68,0.1); color: #fca5a5; font-size: 0.8rem; cursor: pointer;">Hapus</button>
+							<p style="font-size: 0.9rem; font-weight: 600; color: #3b82f6;">Item #1</p>
+							<button type="button" class="remove-item-btn" style="display: none; padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(239,68,68,0.4); background: rgba(239,68,68,0.1); color: #dc2626; font-size: 0.8rem; cursor: pointer;">Hapus</button>
 						</div>
 
 						<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
 							<div style="display: flex; flex-direction: column; gap: 6px;">
-								<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Produk <span style="color: #fbbf24;">*</span></label>
-								<select class="product-select" name="product_id" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+								<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Produk <span style="color: #3b82f6;">*</span></label>
+								<select class="product-select" name="product_id" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 									<option value="">-- Pilih Produk --</option>
 									@foreach ($products as $prod)
 										<option value="{{ $prod->id }}" data-unit="{{ $prod->unit }}" data-stok="{{ $prod->stock }}" data-harga="{{ $prod->harga_jual ?? 0 }}">
@@ -107,29 +107,29 @@
 							</div>
 
 							<div style="display: flex; flex-direction: column; gap: 6px;">
-								<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Jumlah <span style="color: #fbbf24;">*</span></label>
-								<input type="number" class="qty-input" name="qty_keluar" min="0.01" step="0.01" required placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+								<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Jumlah <span style="color: #3b82f6;">*</span></label>
+								<input type="number" class="qty-input" name="qty_keluar" min="0.01" step="0.01" required placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 							</div>
 
 							<div style="display: flex; flex-direction: column; gap: 6px;">
-								<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Harga Jual <span style="color: #fbbf24;">*</span></label>
-								<input type="number" class="harga-jual-input" name="harga_jual" min="0" step="0.01" required placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+								<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Harga Jual <span style="color: #3b82f6;">*</span></label>
+								<input type="number" class="harga-jual-input" name="harga_jual" min="0" step="0.01" required placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 							</div>
 
 							<div style="display: flex; flex-direction: column; gap: 6px;">
-								<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Diskon</label>
-								<input type="number" class="diskon-input" name="diskon" min="0" step="0.01" value="0" placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+								<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Diskon</label>
+								<input type="number" class="diskon-input" name="diskon" min="0" step="0.01" value="0" placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 							</div>
 
 							<div style="display: flex; flex-direction: column; gap: 6px;">
-								<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Subtotal</label>
-								<div class="subtotal-display" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(148,163,184,0.4); background: rgba(15,23,42,0.6); color: #fbbf24; font-size: 0.9rem; font-weight: 600;">Rp 0</div>
+								<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Subtotal</label>
+								<div class="subtotal-display" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(148,163,184,0.4); background: rgba(255,255,255,0.95); color: #3b82f6; font-size: 0.9rem; font-weight: 600;">Rp 0</div>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<button type="button" id="addItemBtn" style="margin-top: 16px; padding: 10px 16px; border-radius: 10px; border: 1px solid rgba(34,197,94,0.4); background: rgba(34,197,94,0.1); color: #86efac; font-size: 0.9rem; cursor: pointer;">+ Tambah Barang</button>
+				<button type="button" id="addItemBtn" style="margin-top: 16px; padding: 10px 16px; border-radius: 10px; border: 1px solid rgba(34,197,94,0.4); background: rgba(34,197,94,0.1); color: #16a34a; font-size: 0.9rem; cursor: pointer;">+ Tambah Barang</button>
 			</div>
 		</section>
 
@@ -142,21 +142,21 @@
 
 				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Metode Pembayaran <span style="color: #fbbf24;">*</span></label>
-						<select name="metode_pembayaran" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Metode Pembayaran <span style="color: #3b82f6;">*</span></label>
+						<select name="metode_pembayaran" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 							<option value="cash">Tunai</option>
 							<option value="non-cash">Non-Tunai (Transfer/Kredit)</option>
 						</select>
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Jumlah Dibayar</label>
-						<input type="number" name="nominal_bayar" min="0" step="0.01" placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Jumlah Dibayar</label>
+						<input type="number" name="nominal_bayar" min="0" step="0.01" placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Kembalian</label>
-						<input type="number" name="kembalian" min="0" step="0.01" placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Kembalian</label>
+						<input type="number" name="kembalian" min="0" step="0.01" placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 				</div>
 			</div>
@@ -171,13 +171,13 @@
 
 				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Total Harga</label>
-						<div id="totalHargaDisplay" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #fbbf24; font-size: 1.1rem; font-weight: 600;">Rp 0</div>
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Total Harga</label>
+						<div id="totalHargaDisplay" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #3b82f6; font-size: 1.1rem; font-weight: 600;">Rp 0</div>
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px; grid-column: 1 / -1;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Catatan</label>
-						<textarea name="catatan" rows="3" placeholder="Catatan tambahan..." style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem; resize: vertical;"></textarea>
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Catatan</label>
+						<textarea name="catatan" rows="3" placeholder="Catatan tambahan..." style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem; resize: vertical;"></textarea>
 					</div>
 				</div>
 			</div>

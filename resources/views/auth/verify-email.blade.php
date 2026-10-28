@@ -16,7 +16,7 @@
 				min-height: 100vh;
 				font-family: 'Instrument Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 				background: radial-gradient(circle at top, #4f46e5 0, #020617 55%, #000000 100%);
-				color: #e5e7eb;
+				color: #1e293b;
 				display: flex;
 				align-items: center;
 				justify-content: center;
@@ -45,23 +45,23 @@
 			h1 {
 				font-size: 1.75rem;
 				margin-bottom: 12px;
-				color: #fbbf24;
+				color: #3b82f6;
 			}
 
 			.subtitle {
 				font-size: 0.95rem;
-				color: #9ca3af;
+				color: #64748b;
 				margin-bottom: 24px;
 				line-height: 1.6;
 			}
 
 			.message-box {
-				background: rgba(251, 191, 36, 0.1);
-				border: 1px solid rgba(251, 191, 36, 0.3);
+				background: rgba(59, 130, 246, 0.1);
+				border: 1px solid rgba(59, 130, 246, 0.3);
 				border-radius: 10px;
 				padding: 16px;
 				margin-bottom: 24px;
-				color: #fbbf24;
+				color: #3b82f6;
 				font-size: 0.9rem;
 			}
 
@@ -72,7 +72,7 @@
 			label {
 				display: block;
 				font-size: 0.85rem;
-				color: #9ca3af;
+				color: #64748b;
 				margin-bottom: 6px;
 				text-align: left;
 			}
@@ -82,16 +82,16 @@
 				padding: 10px 12px;
 				border-radius: 8px;
 				border: 1px solid rgba(51, 65, 85, 0.9);
-				background: #020617;
-				color: #e5e7eb;
+				background: #ffffff;
+				color: #1e293b;
 				font-size: 0.9rem;
 				transition: border-color 0.15s ease;
 			}
 
 			input:focus {
 				outline: none;
-				border-color: #fbbf24;
-				box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.7);
+				border-color: #3b82f6;
+				box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.7);
 			}
 
 			.btn-group {
@@ -112,20 +112,20 @@
 			}
 
 			.btn-primary {
-				background: #fbbf24;
+				background: #3b82f6;
 				color: #020617;
-				box-shadow: 0 18px 40px rgba(251, 191, 36, 0.45);
+				box-shadow: 0 18px 40px rgba(59, 130, 246, 0.45);
 			}
 
 			.btn-primary:hover {
-				background: #f59e0b;
+				background: #2563eb;
 				transform: translateY(-1px);
-				box-shadow: 0 20px 48px rgba(251, 191, 36, 0.6);
+				box-shadow: 0 20px 48px rgba(59, 130, 246, 0.6);
 			}
 
 			.btn-link {
 				background: rgba(148,163,184,0.1);
-				color: #9ca3af;
+				color: #64748b;
 				text-decoration: none;
 				display: inline-flex;
 				align-items: center;
@@ -145,12 +145,12 @@
 			}
 
 			a {
-				color: #fbbf24;
+				color: #3b82f6;
 				text-decoration: none;
 			}
 
 			a:hover {
-				color: #f59e0b;
+				color: #2563eb;
 			}
 		</style>
 	</head>
@@ -177,7 +177,7 @@
 
 				<div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 10px; padding: 20px; margin-bottom: 24px; text-align: left;">
 					<p style="margin-bottom: 12px; color: #cbd5e1;"><strong>📧 Apa yang perlu Anda lakukan:</strong></p>
-					<ol style="color: #9ca3af; padding-left: 20px;">
+					<ol style="color: #64748b; padding-left: 20px;">
 						<li style="margin-bottom: 8px;">Cek email Anda (termasuk folder Spam/Junk)</li>
 						<li style="margin-bottom: 8px;">Klik link "Verifikasi Email" di email dari kami</li>
 						<li>Kembali ke halaman login dan masuk dengan akun Anda</li>

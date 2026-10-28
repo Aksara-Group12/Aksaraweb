@@ -10,8 +10,8 @@
 	</div>
 	<div class="hz-top-actions" style="display:flex; align-items:center; gap:10px;">
 		<form method="GET" action="{{ route('produk.index') }}" style="display:flex; align-items:center; gap:6px;">
-			<input type="text" name="search" value="{{ request('search') }}" placeholder="Cari kode / nama / brand" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 10px; font-size:0.8rem; color:#e5e7eb; min-width:200px;">
-			<select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 8px; font-size:0.8rem; color:#e5e7eb;">
+			<input type="text" name="search" value="{{ request('search') }}" placeholder="Cari kode / nama / brand" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b; min-width:200px;">
+			<select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
 				<option value="10" {{ request('per_page', 20) == 10 ? 'selected' : '' }}>10</option>
 				<option value="20" {{ request('per_page', 20) == 20 ? 'selected' : '' }}>20</option>
 				<option value="50" {{ request('per_page', 20) == 50 ? 'selected' : '' }}>50</option>
@@ -24,13 +24,13 @@
 </div>
 
 @if ($message = Session::get('success'))
-	<div style="margin-top: 20px; padding: 14px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; color: #86efac;">
+	<div style="margin-top: 20px; padding: 14px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; color: #16a34a;">
 		{{ $message }}
 	</div>
 @endif
 
 @if ($message = Session::get('error'))
-	<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #fca5a5;">
+	<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626;">
 		{{ $message }}
 	</div>
 @endif
@@ -47,7 +47,7 @@
 			@if ($products->count() > 0)
 				<table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
 					<thead>
-						<tr style="border-bottom: 1px solid rgba(251, 191, 36, 0.4); color:#9ca3af;">
+						<tr style="border-bottom: 1px solid rgba(59, 130, 246, 0.4); color:#9ca3af;">
 							<th style="text-align:left; padding:14px 10px;">Kode</th>
 							<th style="text-align:left; padding:14px 10px;">Nama Produk</th>
 							<th style="text-align:left; padding:14px 10px;">Kategori</th>
@@ -61,16 +61,16 @@
 					<tbody>
 						@forelse ($products as $product)
 							<tr style="border-bottom: 1px solid rgba(15,23,42,0.8);">
-								<td style="padding:14px 10px; font-weight: 500; color: #fbbf24;">{{ $product->code }}</td>
-								<td style="padding:14px 10px; color: #e5e7eb;">
+								<td style="padding:14px 10px; font-weight: 500; color: #3b82f6;">{{ $product->code }}</td>
+								<td style="padding:14px 10px; color: #1e293b;">
 									{{ $product->nama_produk }}
 									@if($product->brand)
-										<br><small style="color: #9ca3af;">{{ $product->brand }}</small>
+										<br><small style="color: #64748b;">{{ $product->brand }}</small>
 									@endif
 								</td>
 								<td style="padding:14px 10px; color: #cbd5e1;">{{ $product->kategori ?? '-' }}</td>
 								<td style="padding:14px 10px; text-align:center; color: #cbd5e1;">{{ $product->unit }}</td>
-								<td style="padding:14px 10px; text-align:right; font-weight: 600; color: #fbbf24;">
+								<td style="padding:14px 10px; text-align:right; font-weight: 600; color: #3b82f6;">
 									Rp {{ number_format($product->harga_jual, 0) }}
 								</td>
 								<td style="padding:14px 10px; text-align:center;">
@@ -80,17 +80,17 @@
 								</td>
 								<td style="padding:14px 10px; text-align:center;">
 									@if($product->is_active)
-										<span style="background: rgba(34,197,94,0.2); padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; color: #86efac;">Aktif</span>
+										<span style="background: rgba(34,197,94,0.2); padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; color: #16a34a;">Aktif</span>
 									@else
-										<span style="background: rgba(148,163,184,0.2); padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; color: #9ca3af;">Non-aktif</span>
+										<span style="background: rgba(148,163,184,0.2); padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; color: #64748b;">Non-aktif</span>
 									@endif
 								</td>
 								<td style="padding:14px 10px; text-align:right; position: relative;">
 									<button type="button" class="hz-more-btn" style="background: transparent; border:none; color:#9ca3af; cursor:pointer; padding:4px 8px; border-radius:999px;" onclick="toggleDropdown('dropdown-{{ $product->id }}')">
 										⋮
 									</button>
-									<div id="dropdown-{{ $product->id }}" class="hz-dropdown" style="display:none; position:absolute; right:0; top:100%; background:#020617; border:1px solid rgba(148,163,184,0.5); border-radius:8px; min-width:150px; z-index:10; box-shadow:0 4px 12px rgba(0,0,0,0.5);">
-										<a href="{{ route('produk.edit', $product->id) }}" style="display:block; padding:10px 16px; color:#e5e7eb; text-decoration:none; font-size:0.9rem;">Edit</a>
+									<div id="dropdown-{{ $product->id }}" class="hz-dropdown" style="display:none; position:absolute; right:0; top:100%; background:rgba(255,255,255,0.9); border:1px solid rgba(59,130,246,0.3); border-radius:8px; min-width:150px; z-index:10; box-shadow:0 4px 12px rgba(0,0,0,0.5);">
+										<a href="{{ route('produk.edit', $product->id) }}" style="display:block; padding:10px 16px; color:#1e293b; text-decoration:none; font-size:0.9rem;">Edit</a>
 										<form action="{{ route('produk.destroy', $product->id) }}" method="POST" style="display:block;">
 											@csrf
 											@method('DELETE')
@@ -109,7 +109,7 @@
 					</tbody>
 				</table>
 			@else
-				<div style="padding: 40px; text-align: center; color: #9ca3af;">
+				<div style="padding: 40px; text-align: center; color: #64748b;">
 					<p style="margin-bottom: 16px;">Belum ada produk dalam katalog.</p>
 					<a href="{{ route('produk.create') }}" class="hz-btn hz-btn-primary">
 						+ Tambah Produk Pertama

@@ -17,7 +17,7 @@
 			font-size: 2rem;
 			font-weight: 800;
 			margin: 0 0 8px 0;
-			background: linear-gradient(135deg, #e5e7eb 0%, #9ca3af 100%);
+			background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
 			-webkit-background-clip: text;
 			-webkit-text-fill-color: transparent;
 			background-clip: text;
@@ -25,7 +25,7 @@
 
 		.header-title-block p {
 			font-size: 0.95rem;
-			color: #a1a5b4;
+			color: #64748b;
 			margin: 0;
 		}
 
@@ -44,9 +44,9 @@
 
 		.period-select {
 			border-radius: 12px;
-			background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.8) 100%);
-			border: 1.5px solid rgba(51, 65, 85, 0.6);
-			color: #f1f5f9;
+			background: rgba(255, 255, 255, 0.95);
+			border: 1.5px solid rgba(59, 130, 246, 0.3);
+			color: #1e293b;
 			font-size: 0.85rem;
 			padding: 10px 14px;
 			outline: none;
@@ -62,12 +62,12 @@
 
 		.period-select:focus {
 			border-color: #3b82f6;
-			background: linear-gradient(135deg, rgba(15, 23, 42, 1) 0%, rgba(15, 23, 42, 0.95) 100%);
+			background: rgba(255, 255, 255, 1);
 		}
 
 		.period-select option {
-			background: #0f172a;
-			color: #f1f5f9;
+			background: #ffffff;
+			color: #1e293b;
 			font-weight: 600;
 		}
 
@@ -82,10 +82,10 @@
 		}
 
 		.date-input {
-			background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.8) 100%);
+			background: rgba(255, 255, 255, 0.95);
 			border-radius: 12px;
-			border: 1.5px solid rgba(51, 65, 85, 0.6);
-			color: #f1f5f9;
+			border: 1.5px solid rgba(59, 130, 246, 0.3);
+			color: #1e293b;
 			font-size: 0.85rem;
 			padding: 10px 12px;
 			outline: none;
@@ -107,7 +107,7 @@
 		.apply-btn {
 			border-radius: 12px;
 			border: none;
-			background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+			background: linear-gradient(135deg, #2563eb 0%, #d97706 100%);
 			color: #0f172a;
 			padding: 10px 18px;
 			font-size: 0.85rem;
@@ -266,12 +266,12 @@
 		}
 
 		.kpi-card-green::before { background: #22c55e; }
-		.kpi-card-green .kpi-card-title { color: #86efac; }
+		.kpi-card-green .kpi-card-title { color: #16a34a; }
 		.kpi-card-green .kpi-card-value { color: #22c55e; text-shadow: 0 0 40px rgba(34, 197, 94, 0.35); }
 		.kpi-card-green .kpi-card-meta { border-top-color: rgba(34, 197, 94, 0.25); }
 		.kpi-card-green .kpi-meta-label { color: #a1a5b4; }
 		.kpi-card-green .kpi-meta-value { color: #22c55e; }
-		.kpi-card-green .kpi-status-badge { background: rgba(34, 197, 94, 0.2); color: #86efac; }
+		.kpi-card-green .kpi-status-badge { background: rgba(34, 197, 94, 0.2); color: #16a34a; }
 		.kpi-card-green .kpi-card-header-icon { color: #22c55e; }
 
 		.kpi-card-blue {
@@ -288,17 +288,17 @@
 		.kpi-card-blue .kpi-card-header-icon { color: #3b82f6; }
 
 		.kpi-card-amber {
-			background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(251, 191, 36, 0.02) 100%);
-			border-color: rgba(251, 191, 36, 0.4);
+			background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.02) 100%);
+			border-color: rgba(59, 130, 246, 0.4);
 		}
 
-		.kpi-card-amber::before { background: #fbbf24; }
+		.kpi-card-amber::before { background: #3b82f6; }
 		.kpi-card-amber .kpi-card-title { color: #fcd34d; }
-		.kpi-card-amber .kpi-card-value { color: #fbbf24; text-shadow: 0 0 40px rgba(251, 191, 36, 0.35); }
-		.kpi-card-amber .kpi-card-meta { border-top-color: rgba(251, 191, 36, 0.25); }
+		.kpi-card-amber .kpi-card-value { color: #3b82f6; text-shadow: 0 0 40px rgba(59, 130, 246, 0.35); }
+		.kpi-card-amber .kpi-card-meta { border-top-color: rgba(59, 130, 246, 0.25); }
 		.kpi-card-amber .kpi-meta-label { color: #a1a5b4; }
-		.kpi-card-amber .kpi-meta-value { color: #fbbf24; }
-		.kpi-card-amber .kpi-card-header-icon { color: #fbbf24; }
+		.kpi-card-amber .kpi-meta-value { color: #3b82f6; }
+		.kpi-card-amber .kpi-card-header-icon { color: #3b82f6; }
 
 		.kpi-card-purple {
 			background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(168, 85, 247, 0.02) 100%);
@@ -326,7 +326,7 @@
 			border-radius: 24px;
 			padding: 28px;
 			background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
-			border: 1.5px solid rgba(51, 65, 85, 0.4);
+			border: 1.5px solid rgba(59, 130, 246, 0.4);
 			backdrop-filter: blur(15px);
 			overflow: hidden;
 			box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
@@ -370,7 +370,7 @@
 		.card-title {
 			font-size: 1rem;
 			font-weight: 700;
-			color: #e5e7eb;
+			color: #1e293b;
 			margin: 0;
 			letter-spacing: 0.5px;
 		}
@@ -382,14 +382,14 @@
 		}
 
 		.card-badge {
-			background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(251, 191, 36, 0.1) 100%);
+			background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.1) 100%);
 			color: #fcd34d;
 			padding: 6px 12px;
 			border-radius: 999px;
 			font-size: 0.7rem;
 			font-weight: 600;
 			text-transform: uppercase;
-			border: 1px solid rgba(251, 191, 36, 0.3);
+			border: 1px solid rgba(59, 130, 246, 0.3);
 			letter-spacing: 0.5px;
 		}
 
@@ -458,7 +458,7 @@
 		.customer-name {
 			font-size: 0.85rem;
 			font-weight: 600;
-			color: #e5e7eb;
+			color: #1e293b;
 			margin: 0;
 			white-space: nowrap;
 			overflow: hidden;
@@ -485,7 +485,7 @@
 		.customer-amount {
 			font-size: 0.9rem;
 			font-weight: 700;
-			color: #86efac;
+			color: #16a34a;
 			margin: 0;
 		}
 
@@ -503,7 +503,7 @@
 		.empty-state-title {
 			font-size: 0.95rem;
 			font-weight: 600;
-			color: #e5e7eb;
+			color: #1e293b;
 			margin: 0 0 8px 0;
 		}
 
@@ -900,10 +900,10 @@ document.addEventListener('DOMContentLoaded', function() {
 			datasets: [{
 				label: 'Penjualan',
 				data: {!! json_encode($revenueChartValues) !!},
-				borderColor: '#fbbf24',
-				backgroundColor: 'rgba(251, 191, 36, 0.08)',
+				borderColor: '#3b82f6',
+				backgroundColor: 'rgba(59, 130, 246, 0.08)',
 				borderWidth: 3,
-				pointBackgroundColor: '#fbbf24',
+				pointBackgroundColor: '#3b82f6',
 				pointBorderColor: '#020617',
 				pointBorderWidth: 2.5,
 				pointRadius: 5,
@@ -953,9 +953,9 @@ document.addEventListener('DOMContentLoaded', function() {
 			},
 			tooltips: {
 				backgroundColor: 'rgba(2, 6, 23, 0.95)',
-				titleFontColor: '#fbbf24',
+				titleFontColor: '#3b82f6',
 				bodyFontColor: '#e5e7eb',
-				borderColor: '#fbbf24',
+				borderColor: '#3b82f6',
 				borderWidth: 1.5,
 				cornerRadius: 10,
 				displayColors: false,

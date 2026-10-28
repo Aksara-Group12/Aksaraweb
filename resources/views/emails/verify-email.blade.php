@@ -18,7 +18,7 @@
             overflow: hidden;
         }
         .header {
-            background: linear-gradient(135deg, #d9a441 0%, #b8872f 100%);
+            background: linear-gradient(135deg, #3b82f6 0%, #b8872f 100%);
             color: white;
             padding: 30px;
             text-align: center;
@@ -35,7 +35,7 @@
         }
         .verification-btn {
             display: inline-block;
-            background-color: #d9a441;
+            background-color: #3b82f6;
             color: black;
             padding: 12px 28px;
             border-radius: 6px;
@@ -100,7 +100,7 @@
         
         <div class="footer">
             <p>© {{ date('Y') }} Golday - Sistem Kasir & Stok Logam Mulia. Semua hak dilindungi.</p>
-            <p><a href="https://idotech.my.id" style="color: #d9a441; text-decoration: none;">idotech.my.id</a></p>
+            <p><a href="https://idotech.my.id" style="color: #3b82f6; text-decoration: none;">idotech.my.id</a></p>
         </div>
     </div>
 </body>

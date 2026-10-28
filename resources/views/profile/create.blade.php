@@ -46,14 +46,14 @@
 										<div style="position: relative; display: inline-block; width: 100%;">
 											<input type="file" name="logo" accept=".png,image/png" class="hz-file-input @error('logo') hz-input-error @enderror" id="logoInput" style="cursor: pointer;">
 										</div>
-										<p style="font-size: 0.75rem; color: #9ca3af; margin-top: 4px;">📁 Format: PNG | Max: 5MB | Disarankan ukuran 512x512px</p>
+										<p style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">📁 Format: PNG | Max: 5MB | Disarankan ukuran 512x512px</p>
 									</div>
 									<div style="width: 100px; flex-shrink: 0;">
 										<div id="logoPreview" style="width: 100px; height: 100px; border-radius: 50%; background: rgba(148,163,184,0.2); border: 2px solid rgba(148,163,184,0.4); display: flex; align-items: center; justify-content: center; overflow: hidden;">
 											@if($profile && $profile->logo_path)
 												<img src="{{ asset('storage/' . $profile->logo_path) }}" alt="Logo" style="width: 100%; height: 100%; object-fit: cover;">
 											@else
-												<p style="font-size: 0.7rem; color: #9ca3af; text-align: center;">Belum ada logo</p>
+												<p style="font-size: 0.7rem; color: #64748b; text-align: center;">Belum ada logo</p>
 											@endif
 										</div>
 									</div>
@@ -126,23 +126,23 @@
 		}
 		.hz-form-label {
 			font-size: 0.8rem;
-			color: #cbd5f5;
+			color: #94a3b8;
 		display: flex;
 			flex-direction: column;
 			gap: 4px;
 		}
 		.hz-input {
 			border-radius: 10px;
-			border: 1px solid rgba(51,65,85,0.9);
-			background: #020617;
+			border: 1px solid rgba(148,163,184,0.9);
+			background: #ffffff;
 			padding: 8px 10px;
-			color: #e5e7eb;
+			color: #1e293b;
 			font-size: 0.8rem;
 			outline: none;
 			resize: vertical;
 		}
 		.hz-input:focus {
-			border-color: #fbbf24;
+			border-color: #3b82f6;
 			box-shadow: 0 0 0 1px rgba(251,191,36,0.6);
 		}
 		.hz-input-error {
@@ -150,20 +150,20 @@
 		}
 		.hz-error-text {
 			font-size: 0.7rem;
-			color: #fecaca;
+			color: #991b1b;
 		}
 		.hz-file-input {
 			border-radius: 10px;
 			border: 1px dashed rgba(51,65,85,0.9);
-			background: rgba(15,23,42,0.8);
+			background: rgba(255,255,255,0.95);
 			padding: 10px;
-			color: #e5e7eb;
+			color: #1e293b;
 			font-size: 0.8rem;
 			outline: none;
 			cursor: pointer;
 		}
 		.hz-file-input:hover {
-			border-color: #fbbf24;
+			border-color: #3b82f6;
 		}
 	</style>
 

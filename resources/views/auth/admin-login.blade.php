@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>Login Admin - {{ config('app.name', 'Golday') }}</title>
+		<title>Login Admin - {{ config('app.name', 'Aksara') }}</title>
 
 		<link rel="preconnect" href="https://fonts.bunny.net">
 		<link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
@@ -15,8 +15,8 @@
 			body {
 				min-height: 100vh;
 				font-family: 'Instrument Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-				background: radial-gradient(circle at top, #4f46e5 0, #020617 55%, #000000 100%);
-				color: #e5e7eb;
+				background: radial-gradient(circle at top, #3b82f6 0, #e0e7ff 55%, #f8f4e8 100%);
+				color: #1e293b;
 				display: flex;
 				align-items: center;
 				justify-content: center;
@@ -29,10 +29,10 @@
 			}
 
 			.auth-card {
-				background: rgba(15, 23, 42, 0.96);
+				background: rgba(255, 255, 255, 0.95);
 				border-radius: 20px;
-				border: 1px solid rgba(30, 64, 175, 0.5);
-				box-shadow: 0 24px 60px rgba(15, 23, 42, 0.85);
+				border: 1px solid rgba(59, 130, 246, 0.3);
+				box-shadow: 0 24px 60px rgba(59, 130, 246, 0.15);
 				padding: 22px 22px 24px;
 			}
 
@@ -70,7 +70,7 @@
 			.logo-text-sub {
 				margin-top: 2px;
 				font-size: 0.7rem;
-				color: #9ca3af;
+				color: #64748b;
 			}
 
 			.auth-title {
@@ -82,7 +82,7 @@
 			.auth-sub {
 				margin-top: 4px;
 				font-size: 0.8rem;
-				color: #9ca3af;
+				color: #64748b;
 			}
 
 			.auth-form {
@@ -94,7 +94,7 @@
 
 			.label {
 				font-size: 0.75rem;
-				color: #cbd5f5;
+				color: #94a3b8;
 				margin-bottom: 4px;
 			}
 
@@ -102,17 +102,17 @@
 				width: 100%;
 				border-radius: 12px;
 				border: 1px solid rgba(51, 65, 85, 0.9);
-				background: #020617;
+				background: #ffffff;
 				padding: 9px 11px;
-				color: #e5e7eb;
+				color: #1e293b;
 				font-size: 0.8rem;
 				outline: none;
 				transition: border-color 0.15s ease, box-shadow 0.15s ease;
 			}
 
 			.input:focus {
-				border-color: #fbbf24;
-				box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.7);
+				border-color: #3b82f6;
+				box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.7);
 			}
 
 			.input-error {
@@ -122,7 +122,7 @@
 			.error-text {
 				margin-top: 4px;
 				font-size: 0.7rem;
-				color: #fca5a5;
+				color: #dc2626;
 			}
 
 			.alert-error {
@@ -130,10 +130,10 @@
 				margin-bottom: 6px;
 				padding: 8px 10px;
 				border-radius: 10px;
-				border: 1px solid rgba(239, 68, 68, 0.5);
+				border: 1px solid rgba(239, 68, 68, 0.3);
 				background: rgba(15, 23, 42, 0.9);
 				font-size: 0.75rem;
-				color: #fecaca;
+				color: #991b1b;
 			}
 
 			.auth-actions {
@@ -148,7 +148,7 @@
 				width: 100%;
 				border-radius: 12px;
 				border: none;
-				background: linear-gradient(135deg, #fbbf24, #f59e0b);
+				background: linear-gradient(135deg, #3b82f6, #2563eb);
 				color: #020617;
 				font-weight: 600;
 				padding: 10px 14px;

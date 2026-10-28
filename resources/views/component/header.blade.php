@@ -19,9 +19,9 @@
 				<path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 			</svg>
 		</div>
-		<div id="hz-user-menu" style="display:none; position:absolute; right:0; top:48px; background: rgba(15,23,42,0.98); border-radius: 14px; border:1px solid rgba(30,64,175,0.6); box-shadow: 0 18px 40px rgba(15,23,42,0.85); min-width: 180px; padding: 6px; font-size:0.8rem; z-index:20;">
-			<a href="{{ route('profile.index') }}" style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:10px; color:#e5e7eb; text-decoration:none;">
-				<span class="hz-nav-icon" style="width:22px; height:22px; border-radius:9px; background: rgba(15,23,42,0.95); font-size:0.75rem;">P</span>
+		<div id="hz-user-menu" style="display:none; position:absolute; right:0; top:48px; background: rgba(255,255,255,0.98); border-radius: 14px; border:1px solid rgba(30,64,175,0.6); box-shadow: 0 18px 40px rgba(15,23,42,0.85); min-width: 180px; padding: 6px; font-size:0.8rem; z-index:20;">
+			<a href="{{ route('profile.index') }}" style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:10px; color:#1e293b; text-decoration:none;">
+				<span class="hz-nav-icon" style="width:22px; height:22px; border-radius:9px; background: rgba(255,255,255,0.95); font-size:0.75rem;">P</span>
 				<span>Profil Toko</span>
 			</a>
 			<form method="POST" action="{{ route('logout') }}">

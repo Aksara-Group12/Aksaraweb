@@ -13,11 +13,11 @@
 	<!-- Shift Status Header -->
 	<div style="margin-top: 16px; padding: 12px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
 		<div style="display: flex; align-items: center; gap: 8px;">
-			<span style="color: #86efac; font-weight: 600; font-size: 0.9rem;">Shift Aktif:</span>
-			<span style="color: #e5e7eb; font-size: 0.9rem;">{{ auth()->user()->name }}</span>
-			<span style="color: #9ca3af; font-size: 0.85rem;">|</span>
-			<span style="color: #86efac; font-weight: 600; font-size: 0.9rem;">Modal Awal:</span>
-			<span style="color: #e5e7eb; font-size: 0.9rem;">Rp {{ number_format(session('modal_awal', 0), 0, ',', '.') }}</span>
+			<span style="color: #16a34a; font-weight: 600; font-size: 0.9rem;">Shift Aktif:</span>
+			<span style="color: #1e293b; font-size: 0.9rem;">{{ auth()->user()->name }}</span>
+			<span style="color: #64748b; font-size: 0.85rem;">|</span>
+			<span style="color: #16a34a; font-weight: 600; font-size: 0.9rem;">Modal Awal:</span>
+			<span style="color: #1e293b; font-size: 0.9rem;">Rp {{ number_format(session('modal_awal', 0), 0, ',', '.') }}</span>
 		</div>
 		@if (session('active_shift_id'))
 			<a href="{{ route('shift.close', session('active_shift_id')) }}" class="hz-btn hz-btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;">Tutup Shift</a>
@@ -27,7 +27,7 @@
 	</div>
 
 	@if ($errors->any())
-		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #fca5a5;">
+		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626;">
 			<p style="font-weight: 600; margin-bottom: 8px;">❌ Terjadi kesalahan validasi:</p>
 			<ul style="margin: 0; padding-left: 20px;">
 				@foreach ($errors->all() as $error)
@@ -38,13 +38,13 @@
 	@endif
 
 	@if ($message = Session::get('error'))
-		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #fca5a5;">
+		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626;">
 			{{ $message }}
 		</div>
 	@endif
 
 	@if ($message = Session::get('success'))
-		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; color: #86efac;">
+		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; color: #16a34a;">
 			{{ $message }}
 		</div>
 	@endif
@@ -64,8 +64,8 @@
 
 				<!-- Search & Filter -->
 				<div style="display: grid; grid-template-columns: 1fr auto; gap: 12px; margin-bottom: 16px;">
-					<input type="text" id="searchProduct" placeholder="Cari nama produk atau SKU..." style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
-					<select id="filterCategory" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+					<input type="text" id="searchProduct" placeholder="Cari nama produk atau SKU..." style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
+					<select id="filterCategory" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 						<option value="">Semua Kategori</option>
 					</select>
 				</div>
@@ -73,10 +73,10 @@
 				<!-- Product Grid -->
 				<div id="productGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; max-height: 500px; overflow-y: auto;">
 					@foreach ($products as $product)
-						<div class="product-card" data-id="{{ $product->id }}" data-name="{{ $product->nama_produk }}" data-sku="{{ $product->code ?? '' }}" data-unit="{{ $product->unit }}" data-stock="{{ $product->stock }}" data-price="{{ $product->harga_jual ?? 0 }}" style="border: 1px solid rgba(251,191,36,0.3); border-radius: 12px; padding: 12px; background: rgba(15,23,42,0.7); cursor: pointer; transition: all 0.2s;" onclick="addToCart({{ $product->id }})">
-							<div style="font-weight: 600; color: #e5e7eb; font-size: 0.9rem; margin-bottom: 4px;">{{ $product->nama_produk }}</div>
-							<div style="color: #9ca3af; font-size: 0.8rem; margin-bottom: 4px;">{{ $product->code ?? '-' }} | {{ $product->unit }}</div>
-							<div style="color: #fbbf24; font-weight: 600; font-size: 0.95rem;">Rp {{ number_format($product->harga_jual ?? 0, 0, ',', '.') }}</div>
+						<div class="product-card" data-id="{{ $product->id }}" data-name="{{ $product->nama_produk }}" data-sku="{{ $product->code ?? '' }}" data-unit="{{ $product->unit }}" data-stock="{{ $product->stock }}" data-price="{{ $product->harga_jual ?? 0 }}" style="border: 1px solid rgba(59,130,246,0.3); border-radius: 12px; padding: 12px; background: rgba(255,255,255,0.95); cursor: pointer; transition: all 0.2s;" onclick="addToCart({{ $product->id }})">
+							<div style="font-weight: 600; color: #1e293b; font-size: 0.9rem; margin-bottom: 4px;">{{ $product->nama_produk }}</div>
+							<div style="color: #64748b; font-size: 0.8rem; margin-bottom: 4px;">{{ $product->code ?? '-' }} | {{ $product->unit }}</div>
+							<div style="color: #3b82f6; font-weight: 600; font-size: 0.95rem;">Rp {{ number_format($product->harga_jual ?? 0, 0, ',', '.') }}</div>
 							<div style="color: {{ $product->stock > 0 ? '#86efac' : '#fca5a5' }}; font-size: 0.8rem; margin-top: 4px;">Stok: {{ $product->stock }}</div>
 						</div>
 					@endforeach
@@ -92,8 +92,8 @@
 						<p class="hz-card-title">Pelanggan</p>
 					</div>
 					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Pilih Pelanggan</label>
-						<select name="customer_name" id="customerSelect" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Pilih Pelanggan</label>
+						<select name="customer_name" id="customerSelect" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 							<option value="">Pelanggan Umum</option>
 							@foreach ($pelanggan as $pel)
 								<option value="{{ $pel->nama }}">{{ $pel->nama }} ({{ $pel->kontak ?? '-' }})</option>
@@ -109,26 +109,26 @@
 					</div>
 					
 					<div id="cartItems" style="max-height: 300px; overflow-y: auto; margin-bottom: 12px;">
-						<div style="text-align: center; color: #9ca3af; padding: 20px;">Keranjang kosong</div>
+						<div style="text-align: center; color: #64748b; padding: 20px;">Keranjang kosong</div>
 					</div>
 
 					<!-- Summary -->
-					<div style="border-top: 1px solid rgba(251,191,36,0.3); padding-top: 12px;">
+					<div style="border-top: 1px solid rgba(59,130,246,0.3); padding-top: 12px;">
 						<div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-							<span style="color: #9ca3af; font-size: 0.9rem;">Subtotal</span>
-							<span id="subtotalDisplay" style="color: #e5e7eb; font-weight: 600;">Rp 0</span>
+							<span style="color: #64748b; font-size: 0.9rem;">Subtotal</span>
+							<span id="subtotalDisplay" style="color: #1e293b; font-weight: 600;">Rp 0</span>
 						</div>
 						<div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-							<span style="color: #9ca3af; font-size: 0.9rem;">Diskon</span>
-							<span id="diskonDisplay" style="color: #e5e7eb; font-weight: 600;">Rp 0</span>
+							<span style="color: #64748b; font-size: 0.9rem;">Diskon</span>
+							<span id="diskonDisplay" style="color: #1e293b; font-weight: 600;">Rp 0</span>
 						</div>
 						<div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-							<span style="color: #9ca3af; font-size: 0.9rem;">PPN (11%)</span>
-							<span id="ppnDisplay" style="color: #e5e7eb; font-weight: 600;">Rp 0</span>
+							<span style="color: #64748b; font-size: 0.9rem;">PPN (11%)</span>
+							<span id="ppnDisplay" style="color: #1e293b; font-weight: 600;">Rp 0</span>
 						</div>
-						<div style="display: flex; justify-content: space-between; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(251,191,36,0.3);">
-							<span style="color: #fbbf24; font-weight: 600; font-size: 1rem;">Total</span>
-							<span id="totalDisplay" style="color: #fbbf24; font-weight: 700; font-size: 1.2rem;">Rp 0</span>
+						<div style="display: flex; justify-content: space-between; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(59,130,246,0.3);">
+							<span style="color: #3b82f6; font-weight: 600; font-size: 1rem;">Total</span>
+							<span id="totalDisplay" style="color: #3b82f6; font-weight: 700; font-size: 1.2rem;">Rp 0</span>
 						</div>
 					</div>
 				</div>
@@ -140,23 +140,23 @@
 					</div>
 					<div style="display: flex; flex-direction: column; gap: 12px;">
 						<div style="display: flex; flex-direction: column; gap: 6px;">
-							<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Metode Pembayaran</label>
-							<select name="metode_pembayaran" id="paymentMethod" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+							<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Metode Pembayaran</label>
+							<select name="metode_pembayaran" id="paymentMethod" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 								<option value="cash">Cash</option>
 								<option value="non-cash">Non-Cash (Transfer/QRIS)</option>
 							</select>
 						</div>
 						<div style="display: flex; align-items: center; gap: 8px; padding: 8px 0;">
 							<input type="checkbox" name="is_invoice" id="isInvoice" style="width: 16px; height: 16px; cursor: pointer;">
-							<label for="isInvoice" style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb; cursor: pointer;">Bayar Nanti / Invoice</label>
+							<label for="isInvoice" style="font-size: 0.85rem; font-weight: 500; color: #1e293b; cursor: pointer;">Bayar Nanti / Invoice</label>
 						</div>
 						<div style="display: flex; flex-direction: column; gap: 6px;">
-							<label style="font-size: 0.85rem; font-weight: 500; color: #e5e7eb;">Jumlah Bayar</label>
-							<input type="number" name="nominal_bayar" id="nominalBayar" placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.9rem;">
+							<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Jumlah Bayar</label>
+							<input type="number" name="nominal_bayar" id="nominalBayar" placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 						</div>
 						<div style="display: flex; justify-content: space-between;">
-							<span style="color: #9ca3af; font-size: 0.9rem;">Kembalian</span>
-							<span id="kembalianDisplay" style="color: #86efac; font-weight: 600;">Rp 0</span>
+							<span style="color: #64748b; font-size: 0.9rem;">Kembalian</span>
+							<span id="kembalianDisplay" style="color: #16a34a; font-weight: 600;">Rp 0</span>
 						</div>
 					</div>
 				</div>
@@ -231,24 +231,24 @@
 		const cartContainer = document.getElementById('cartItems');
 		
 		if (cart.length === 0) {
-			cartContainer.innerHTML = '<div style="text-align: center; color: #9ca3af; padding: 20px;">Keranjang kosong</div>';
+			cartContainer.innerHTML = '<div style="text-align: center; color: #64748b; padding: 20px;">Keranjang kosong</div>';
 		} else {
 			let html = '';
 			cart.forEach(item => {
 				const subtotal = (item.qty * item.price) - item.diskon;
 				html += `
-					<div style="border-bottom: 1px solid rgba(251,191,36,0.2); padding: 10px 0;">
+					<div style="border-bottom: 1px solid rgba(59,130,246,0.2); padding: 10px 0;">
 						<div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
-							<span style="color: #e5e7eb; font-weight: 500; font-size: 0.9rem;">${item.name}</span>
-							<button type="button" onclick="removeFromCart(${item.id})" style="color: #fca5a5; background: none; border: none; cursor: pointer; font-size: 0.8rem;">×</button>
+							<span style="color: #1e293b; font-weight: 500; font-size: 0.9rem;">${item.name}</span>
+							<button type="button" onclick="removeFromCart(${item.id})" style="color: #dc2626; background: none; border: none; cursor: pointer; font-size: 0.8rem;">×</button>
 						</div>
 						<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px;">
-							<input type="number" value="${item.qty}" min="1" max="${item.stock}" onchange="updateQty(${item.id}, this.value)" style="width: 60px; padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.85rem;">
-							<span style="color: #9ca3af; font-size: 0.8rem;">× Rp ${item.price.toLocaleString('id-ID')}</span>
-							<span style="color: #fbbf24; font-weight: 600; font-size: 0.9rem;">Rp ${subtotal.toLocaleString('id-ID')}</span>
+							<input type="number" value="${item.qty}" min="1" max="${item.stock}" onchange="updateQty(${item.id}, this.value)" style="width: 60px; padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
+							<span style="color: #64748b; font-size: 0.8rem;">× Rp ${item.price.toLocaleString('id-ID')}</span>
+							<span style="color: #3b82f6; font-weight: 600; font-size: 0.9rem;">Rp ${subtotal.toLocaleString('id-ID')}</span>
 						</div>
 						<div style="margin-top: 4px;">
-							<input type="number" value="${item.diskon}" placeholder="Diskon" onchange="updateDiskon(${item.id}, this.value)" style="width: 100%; padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(251,191,36,0.4); background: rgba(15,23,42,0.6); color: #e5e7eb; font-size: 0.8rem;">
+							<input type="number" value="${item.diskon}" placeholder="Diskon" onchange="updateDiskon(${item.id}, this.value)" style="width: 100%; padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.8rem;">
 						</div>
 					</div>
 				`;

@@ -10,9 +10,9 @@
 		</div>
 		<div class="hz-top-actions" style="display:flex; align-items:center; gap:10px;">
 			<form method="GET" action="{{ route('transaksi.keluar') }}" style="display:flex; align-items:center; gap:6px;">
-				<input type="text" name="search" value="{{ request('search') }}" placeholder="Cari invoice / pelanggan / kota" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 10px; font-size:0.8rem; color:#e5e7eb; min-width:220px;">
+				<input type="text" name="search" value="{{ request('search') }}" placeholder="Cari invoice / pelanggan / kota" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b; min-width:220px;">
 				@if(!session()->has('admin_id'))
-					<select name="admin_id" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 8px; font-size:0.8rem; color:#e5e7eb;">
+					<select name="admin_id" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
 						<option value="">Semua Penjual</option>
 						<option value="owner" {{ request('admin_id') === 'owner' ? 'selected' : '' }}>Owner</option>
 						@if(!empty($admins))
@@ -24,16 +24,16 @@
 						@endif
 					</select>
 				@endif
-				<select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; padding:6px 8px; font-size:0.8rem; color:#e5e7eb;">
+				<select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
 					<option value="10" {{ request('per_page', 20) == 10 ? 'selected' : '' }}>10</option>
 					<option value="20" {{ request('per_page', 20) == 20 ? 'selected' : '' }}>20</option>
 					<option value="50" {{ request('per_page', 20) == 50 ? 'selected' : '' }}>50</option>
 				</select>
 			</form>
-			<a href="{{ route('transaksi.keluar.export.excel', request()->only('search', 'admin_id')) }}" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; color:#e5e7eb; padding:6px 10px; font-size:0.8rem; text-decoration:none;">
+			<a href="{{ route('transaksi.keluar.export.excel', request()->only('search', 'admin_id')) }}" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; padding:6px 10px; font-size:0.8rem; text-decoration:none;">
 				Export Excel
 			</a>
-			<a href="{{ route('transaksi.keluar.export.pdf', request()->only('search', 'admin_id')) }}" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:#020617; color:#e5e7eb; padding:6px 10px; font-size:0.8rem; text-decoration:none;">
+			<a href="{{ route('transaksi.keluar.export.pdf', request()->only('search', 'admin_id')) }}" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; padding:6px 10px; font-size:0.8rem; text-decoration:none;">
 				Export PDF
 			</a>
 			<form id="keluar-bulk-delete-form" onsubmit="return false;">
@@ -42,7 +42,7 @@
 				</button>
 			</form>
 			<a href="{{ route('transaksi.keluar.create') }}" class="hz-btn-primary" style="text-decoration: none; display: inline-flex;">
-				<span class="hz-icon-pill" style="background: rgba(251, 191, 36, 0.2);">
+				<span class="hz-icon-pill" style="background: rgba(59, 130, 246, 0.2);">
 					<svg width="12" height="12" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M10 4.5V15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
 						<path d="M4.5 10H15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -67,7 +67,7 @@
 					<input type="hidden" name="ids" id="keluarBulkIds">
 					<table style="width: 100%; border-collapse: collapse; font-size: 1rem;">
 						<thead>
-							<tr style="border-bottom: 1px solid rgba(251, 191, 36, 0.4); color:#9ca3af;">
+							<tr style="border-bottom: 1px solid rgba(59, 130, 246, 0.4); color:#9ca3af;">
 								<th style="padding:14px 10px; text-align:center; width:36px;">
 									<input type="checkbox" id="keluar-select-all" style="cursor:pointer;">
 								</th>
@@ -113,13 +113,13 @@
 												$badgeLabel = 'Void';
 											}
 										@endphp
-										<span class="{{ $badgeClass }}" style="background:rgba(251,191,36,0.2); color:#fbbf24;">{{ $badgeLabel }}</span>
+										<span class="{{ $badgeClass }}" style="background:rgba(59,130,246,0.2); color:#3b82f6;">{{ $badgeLabel }}</span>
 									</td>
 									<td style="padding:14px 10px; text-align:right; position: relative;">
 									<button type="button" class="hz-more-btn" style="background: transparent; border:none; color:#9ca3af; cursor:pointer; padding:4px 8px; border-radius:999px;">
 										&#8942;
 									</button>
-									<div class="hz-more-menu actions-dropdown" style="display:none; position:absolute; right:10px; top:32px; background:#020617; border:1px solid rgba(148,163,184,0.4); border-radius:8px; min-width:160px; z-index:10;">
+									<div class="hz-more-menu actions-dropdown" style="display:none; position:absolute; right:10px; top:32px; background:rgba(255,255,255,0.9); border:1px solid rgba(148,163,184,0.4); border-radius:8px; min-width:160px; z-index:10;">
 										<!-- <a href="{{ route('transaksi.keluar.edit', $t->id) }}" class="actions-dropdown-item edit">
 											<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
 												<path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
@@ -173,7 +173,7 @@
 
 	<style>
 		.actions-dropdown {
-			background: #020617;
+			background: #ffffff;
 			border-radius: 8px;
 			padding: 4px 0;
 			box-shadow: 0 10px 25px rgba(15,23,42,0.7);
@@ -189,7 +189,7 @@
 			text-decoration: none;
 			border: none;
 			background: transparent;
-			color: #e5e7eb;
+			color: #1e293b;
 			cursor: pointer;
 		}
 
@@ -203,15 +203,15 @@
 		}
 
 		.actions-dropdown-item.edit {
-			color: #e5e7eb;
+			color: #1e293b;
 		}
 
 		.actions-dropdown-item.print {
-			color: #fbbf24;
+			color: #3b82f6;
 		}
 
 		.actions-dropdown-item.delete {
-			color: #fca5a5;
+			color: #dc2626;
 		}
 
 		.actions-dropdown-item.void {
@@ -221,11 +221,11 @@
 
 	<!-- Modal konfirmasi bulk delete transaksi keluar -->
 	<div id="keluar-bulk-modal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.8); z-index:50; align-items:center; justify-content:center;">
-		<div style="background:#020617; border-radius:16px; padding:20px 22px; width:100%; max-width:360px; border:1px solid rgba(148,163,184,0.5); box-shadow:0 18px 45px rgba(15,23,42,0.9);">
-			<h3 style="font-size:1rem; font-weight:600; color:#e5e7eb; margin-bottom:4px;">Hapus transaksi keluar terpilih?</h3>
+		<div style="background:rgba(255,255,255,0.9); border-radius:16px; padding:20px 22px; width:100%; max-width:360px; border:1px solid rgba(59,130,246,0.3); box-shadow:0 18px 45px rgba(15,23,42,0.9);">
+			<h3 style="font-size:1rem; font-weight:600; color:#1e293b; margin-bottom:4px;">Hapus transaksi keluar terpilih?</h3>
 			<p style="font-size:0.85rem; color:#9ca3af; margin-bottom:16px;">Transaksi yang sudah dihapus tidak dapat dikembalikan dan akan mempengaruhi stok.</p>
 			<div style="display:flex; justify-content:flex-end; gap:8px;">
-				<button type="button" id="keluar-bulk-cancel" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:transparent; color:#e5e7eb; padding:6px 14px; font-size:0.8rem; cursor:pointer;">Batal</button>
+				<button type="button" id="keluar-bulk-cancel" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:transparent; color:#1e293b; padding:6px 14px; font-size:0.8rem; cursor:pointer;">Batal</button>
 				<button type="button" id="keluar-bulk-confirm" style="border-radius:999px; border:none; background:#b91c1c; color:#fee2e2; padding:6px 14px; font-size:0.8rem; font-weight:600; cursor:pointer;">Ya, hapus</button>
 			</div>
 		</div>
@@ -233,17 +233,17 @@
 
 	<!-- Modal Void Transaksi -->
 	<div id="void-modal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.8); z-index:50; align-items:center; justify-content:center;">
-		<div style="background:#020617; border-radius:16px; padding:20px 22px; width:100%; max-width:400px; border:1px solid rgba(148,163,184,0.5); box-shadow:0 18px 45px rgba(15,23,42,0.9);">
-			<h3 style="font-size:1rem; font-weight:600; color:#e5e7eb; margin-bottom:4px;">Void / Batalkan Transaksi</h3>
+		<div style="background:rgba(255,255,255,0.9); border-radius:16px; padding:20px 22px; width:100%; max-width:400px; border:1px solid rgba(59,130,246,0.3); box-shadow:0 18px 45px rgba(15,23,42,0.9);">
+			<h3 style="font-size:1rem; font-weight:600; color:#1e293b; margin-bottom:4px;">Void / Batalkan Transaksi</h3>
 			<p style="font-size:0.85rem; color:#9ca3af; margin-bottom:16px;">Stok akan dikembalikan ke produk. Transaksi akan ditandai sebagai void.</p>
 			<form id="void-form" method="POST" action="{{ route('transaksi.keluar.void', ':id') }}">
 				@csrf
 				<div style="margin-bottom:16px;">
-					<label style="display:block; font-size:0.85rem; font-weight:500; color:#e5e7eb; margin-bottom:6px;">Alasan Void</label>
-					<textarea name="void_reason" required rows="3" placeholder="Masukkan alasan pembatalan..." style="width:100%; padding:10px 12px; border-radius:10px; border:1px solid rgba(251,191,36,0.4); background:rgba(15,23,42,0.6); color:#e5e7eb; font-size:0.9rem; resize:vertical;"></textarea>
+					<label style="display:block; font-size:0.85rem; font-weight:500; color:#1e293b; margin-bottom:6px;">Alasan Void</label>
+					<textarea name="void_reason" required rows="3" placeholder="Masukkan alasan pembatalan..." style="width:100%; padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(15,23,42,0.6); color:#1e293b; font-size:0.9rem; resize:vertical;"></textarea>
 				</div>
 				<div style="display:flex; justify-content:flex-end; gap:8px;">
-					<button type="button" id="void-cancel" style="border-radius:999px; border:1px solid rgba(148,163,184,0.5); background:transparent; color:#e5e7eb; padding:6px 14px; font-size:0.8rem; cursor:pointer;">Batal</button>
+					<button type="button" id="void-cancel" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:transparent; color:#1e293b; padding:6px 14px; font-size:0.8rem; cursor:pointer;">Batal</button>
 					<button type="submit" style="border-radius:999px; border:none; background:#b91c1c; color:#fee2e2; padding:6px 14px; font-size:0.8rem; font-weight:600; cursor:pointer;">Ya, Void</button>
 				</div>
 			</form>

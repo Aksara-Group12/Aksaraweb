@@ -14,16 +14,16 @@
 	</div>
 
 	@if($auditLogs->isEmpty())
-		<div style="margin-top: 24px; padding: 40px; text-align: center; background: rgba(15,23,42,0.7); border-radius: 12px; border: 1px solid rgba(148,163,184,0.2);">
-			<p style="color: #9ca3af; font-size: 0.95rem;">Tidak ada riwayat perubahan untuk transaksi ini.</p>
+		<div style="margin-top: 24px; padding: 40px; text-align: center; background: rgba(255,255,255,0.95); border-radius: 12px; border: 1px solid rgba(148,163,184,0.2);">
+			<p style="color: #64748b; font-size: 0.95rem;">Tidak ada riwayat perubahan untuk transaksi ini.</p>
 		</div>
 	@else
 		<div style="margin-top: 24px; display: flex; flex-direction: column; gap: 16px;">
 			@foreach($auditLogs as $log)
-				<div style="background: rgba(15,23,42,0.7); border: 1px solid rgba(148,163,184,0.2); border-radius: 12px; padding: 20px; transition: all 0.2s;">
+				<div style="background: rgba(255,255,255,0.95); border: 1px solid rgba(148,163,184,0.2); border-radius: 12px; padding: 20px; transition: all 0.2s;">
 					<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
 						<div>
-							<p style="font-size: 0.9rem; font-weight: 600; color: #fbbf24; margin-bottom: 4px;">
+							<p style="font-size: 0.9rem; font-weight: 600; color: #3b82f6; margin-bottom: 4px;">
 								@switch($log->action_type)
 									@case('items_rebuilt')
 										📦 Item Diubah
@@ -44,7 +44,7 @@
 							<p style="font-size: 0.8rem; color: #cbd5e1;">{{ $log->description }}</p>
 						</div>
 						<div style="text-align: right;">
-							<p style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 4px;">
+							<p style="font-size: 0.75rem; color: #64748b; margin-bottom: 4px;">
 								{{ $log->created_at->diffForHumans() }}
 							</p>
 							<p style="font-size: 0.75rem; color: #64748b;">
@@ -55,14 +55,14 @@
 
 					<!-- Detail perubahan -->
 					@if($log->action_type === 'status_changed' && $log->old_data && $log->new_data)
-						<div style="margin-top: 12px; padding: 12px; background: rgba(15,23,42,0.4); border-radius: 8px; border-left: 3px solid #fbbf24;">
+						<div style="margin-top: 12px; padding: 12px; background: rgba(255,255,255,0.4); border-radius: 8px; border-left: 3px solid #3b82f6;">
 							<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.85rem;">
 								<div>
-									<p style="color: #9ca3af; margin-bottom: 4px;">Dari:</p>
-									<p style="color: #fca5a5; font-weight: 600;">{{ ucfirst($log->old_data['status'] ?? '-') }}</p>
+									<p style="color: #64748b; margin-bottom: 4px;">Dari:</p>
+									<p style="color: #dc2626; font-weight: 600;">{{ ucfirst($log->old_data['status'] ?? '-') }}</p>
 								</div>
 								<div>
-									<p style="color: #9ca3af; margin-bottom: 4px;">Menjadi:</p>
+									<p style="color: #64748b; margin-bottom: 4px;">Menjadi:</p>
 									<p style="color: #10b981; font-weight: 600;">{{ ucfirst($log->new_data['status'] ?? '-') }}</p>
 								</div>
 							</div>
@@ -70,7 +70,7 @@
 					@endif
 
 					@if($log->action_type === 'header_updated' && $log->old_data && $log->new_data)
-						<div style="margin-top: 12px; padding: 12px; background: rgba(15,23,42,0.4); border-radius: 8px; border-left: 3px solid #fbbf24;">
+						<div style="margin-top: 12px; padding: 12px; background: rgba(255,255,255,0.4); border-radius: 8px; border-left: 3px solid #3b82f6;">
 							@php
 								$oldData = $log->old_data;
 								$newData = $log->new_data;
@@ -82,12 +82,12 @@
 								@foreach($fieldsToShow as $field)
 									@if(($oldData[$field] ?? null) !== ($newData[$field] ?? null))
 										<div style="display: grid; grid-template-columns: 120px 1fr; gap: 12px; font-size: 0.8rem; padding: 8px; background: rgba(0,0,0,0.2); border-radius: 6px;">
-											<div style="color: #9ca3af; word-break: break-word;">
+											<div style="color: #64748b; word-break: break-word;">
 												<strong>{{ str_replace('_', ' ', ucfirst($field)) }}</strong>
 											</div>
 											<div style="display: flex; gap: 8px; align-items: center;">
-												<span style="color: #fca5a5; text-decoration: line-through;">{{ $oldData[$field] ?? '-' }}</span>
-												<span style="color: #9ca3af;">→</span>
+												<span style="color: #dc2626; text-decoration: line-through;">{{ $oldData[$field] ?? '-' }}</span>
+												<span style="color: #64748b;">→</span>
 												<span style="color: #10b981; font-weight: 600;">{{ $newData[$field] ?? '-' }}</span>
 											</div>
 										</div>
@@ -100,19 +100,19 @@
 					@if($log->action_type === 'items_rebuilt' && $log->old_data && $log->new_data)
 						<div style="margin-top: 12px;">
 							<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-								<div style="padding: 12px; background: rgba(15,23,42,0.4); border-radius: 8px; border-left: 3px solid #fca5a5;">
-									<p style="font-size: 0.8rem; color: #fca5a5; margin-bottom: 6px; font-weight: 600;">Sebelumnya ({{ $log->old_data['item_count'] ?? 0 }} item)</p>
+								<div style="padding: 12px; background: rgba(255,255,255,0.4); border-radius: 8px; border-left: 3px solid #fca5a5;">
+									<p style="font-size: 0.8rem; color: #dc2626; margin-bottom: 6px; font-weight: 600;">Sebelumnya ({{ $log->old_data['item_count'] ?? 0 }} item)</p>
 									<ul style="font-size: 0.8rem; color: #cbd5e1; list-style: none; padding: 0; margin: 0;">
 										@forelse($log->old_data['items'] ?? [] as $item)
 											<li style="padding: 4px 0; border-bottom: 1px solid rgba(148,163,184,0.1);">
 												{{ $item['product']['brand'] ?? '-' }} | {{ $item['product']['nama_produk'] ?? '-' }}
 											</li>
 										@empty
-											<li style="color: #9ca3af;">Tidak ada item</li>
+											<li style="color: #64748b;">Tidak ada item</li>
 										@endforelse
 									</ul>
 								</div>
-								<div style="padding: 12px; background: rgba(15,23,42,0.4); border-radius: 8px; border-left: 3px solid #10b981;">
+								<div style="padding: 12px; background: rgba(255,255,255,0.4); border-radius: 8px; border-left: 3px solid #10b981;">
 									<p style="font-size: 0.8rem; color: #10b981; margin-bottom: 6px; font-weight: 600;">Sekarang ({{ $log->new_data['item_count'] ?? 0 }} item)</p>
 									<ul style="font-size: 0.8rem; color: #cbd5e1; list-style: none; padding: 0; margin: 0;">
 										@forelse($log->new_data['items'] ?? [] as $item)
@@ -120,7 +120,7 @@
 												{{ $item['product']['brand'] ?? '-' }} | {{ $item['product']['nama_produk'] ?? '-' }}
 											</li>
 										@empty
-											<li style="color: #9ca3af;">Tidak ada item</li>
+											<li style="color: #64748b;">Tidak ada item</li>
 										@endforelse
 									</ul>
 								</div>
@@ -137,11 +137,11 @@
 			transition: all 0.2s;
 		}
 
-		[style*="background: rgba(15,23,42,0.7)"] {
+		[style*="background: rgba(255,255,255,0.95)"] {
 			transition: all 0.2s;
 		}
 
-		[style*="background: rgba(15,23,42,0.7)"]:hover {
+		[style*="background: rgba(255,255,255,0.95)"]:hover {
 			border-color: rgba(148,163,184,0.4);
 		}
 	</style>

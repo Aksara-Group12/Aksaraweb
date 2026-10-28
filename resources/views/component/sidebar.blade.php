@@ -35,7 +35,7 @@
 			<p class="hz-nav-group-title">Menu</p>
 			@if(auth()->user() && auth()->user()->role === 'superadmin')
 				<a href="{{ route('dashboard-superadmin') }}" class="hz-nav-item hz-nav-item-active">
-					<span class="hz-nav-icon" style="background: rgba(251, 191, 36, 0.95); color:#111827;">
+					<span class="hz-nav-icon" style="background: rgba(59, 130, 246, 0.95); color:#ffffff;">
 						<svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M4 9.25L10 3.5L16 9.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 							<path d="M5.75 8.75V14.5C5.75 15.33 6.42 16 7.25 16H12.75C13.58 16 14.25 15.33 14.25 14.5V8.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -48,7 +48,7 @@
 				</a>
 			@elseif(auth()->user() && auth()->user()->role === 'owner')
 				<a href="{{ route('dashboard') }}" class="hz-nav-item hz-nav-item-active">
-					<span class="hz-nav-icon" style="background: rgba(79, 70, 229, 0.95); color:#ffffff;">
+					<span class="hz-nav-icon" style="background: rgba(59, 130, 246, 0.95); color:#ffffff;">
 						<svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<path d="M4 9.25L10 3.5L16 9.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
 							<path d="M5.75 8.75V14.5C5.75 15.33 6.42 16 7.25 16H12.75C13.58 16 14.25 15.33 14.25 14.5V8.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />

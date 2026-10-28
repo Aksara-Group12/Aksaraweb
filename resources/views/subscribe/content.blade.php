@@ -9,25 +9,25 @@
         @if ($activeSubscription)
             <div style="space: 16px;">
                 <div style="background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
-                    <p style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 4px;">Paket Aktif</p>
+                    <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 4px;">Paket Aktif</p>
                     <p style="font-size: 1.5rem; font-weight: 700; color: #22c55e;">{{ $activeSubscription->paket_name }}</p>
-                    <p style="font-size: 0.75rem; color: {{ $activeSubscription->is_trial ? '#f59e0b' : '#22c55e' }}; margin-top: 4px; font-weight: 600;">
+                    <p style="font-size: 0.75rem; color: {{ $activeSubscription->is_trial ? '#2563eb' : '#22c55e' }}; margin-top: 4px; font-weight: 600;">
                         Status: {{ $activeSubscription->is_trial ? 'Trial' : 'Berlangganan' }}
                     </p>
                 </div>
 
                 <div style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
-                    <p style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 4px;">Tanggal Mulai</p>
+                    <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 4px;">Tanggal Mulai</p>
                     <p style="font-weight: 600; color: #e0e7ff;">{{ $activeSubscription->start_date->format('d M Y') }}</p>
                 </div>
 
                 <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
-                    <p style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 4px;">Tanggal Berakhir</p>
-                    <p style="font-weight: 600; color: #fca5a5;">{{ $activeSubscription->end_date->format('d M Y') }}</p>
+                    <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 4px;">Tanggal Berakhir</p>
+                    <p style="font-weight: 600; color: #dc2626;">{{ $activeSubscription->end_date->format('d M Y') }}</p>
                 </div>
 
                 <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
-                    <p style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 4px;">Sisa Hari</p>
+                    <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 4px;">Sisa Hari</p>
                     <p style="font-size: 1.5rem; font-weight: 700; color: #d8b4fe;">
                         {{ $activeSubscription->getDaysRemaining() }}
                         <span style="font-size: 0.75rem;">hari</span>
@@ -42,8 +42,8 @@
             </div>
         @else
             <div style="background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 12px; text-align: center;">
-                <p style="color: #f59e0b; font-size: 0.9rem; margin-bottom: 8px;">⚠️ Belum ada paket berlangganan aktif</p>
-                <p style="color: #9ca3af; font-size: 0.8rem;">Pilih salah satu paket di bawah untuk memulai berlangganan</p>
+                <p style="color: #2563eb; font-size: 0.9rem; margin-bottom: 8px;">⚠️ Belum ada paket berlangganan aktif</p>
+                <p style="color: #64748b; font-size: 0.8rem;">Pilih salah satu paket di bawah untuk memulai berlangganan</p>
             </div>
         @endif
     </div>
@@ -67,10 +67,10 @@
                     <div style="padding: 16px;">
                         <!-- Harga -->
                         <div style="border-bottom: 1px solid rgba(148, 163, 184, 0.2); padding-bottom: 12px; margin-bottom: 12px;">
-                            <p style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 4px;">Harga</p>
+                            <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 4px;">Harga</p>
                         @if ($package->harga_diskon)
                             <div style="display: flex; align-items: center; gap: 12px;">
-                                <p style="font-size: 1.25rem; font-weight: 400; color: #9ca3af; text-decoration: line-through;">Rp {{ number_format($package->harga, 0, ',', '.') }}</p>
+                                <p style="font-size: 1.25rem; font-weight: 400; color: #64748b; text-decoration: line-through;">Rp {{ number_format($package->harga, 0, ',', '.') }}</p>
                                 <p style="font-size: 1.75rem; font-weight: 700; color: #22c55e;">Rp {{ number_format($package->harga_diskon, 0, ',', '.') }}</p>
                             </div>
                             <p style="font-size: 0.7rem; color: #22c55e; margin-top: 4px; font-weight: 600;">✓ Harga Spesial / Promo</p>
@@ -103,7 +103,7 @@
                 </div>
             @empty
                 <div style="grid-column: 1/-1; text-align: center; padding: 40px 20px; background: rgba(30, 41, 59, 0.5); border-radius: 12px;">
-                    <p style="color: #9ca3af;">Belum ada paket tersedia</p>
+                    <p style="color: #64748b;">Belum ada paket tersedia</p>
                 </div>
             @endforelse
         </div>
@@ -123,15 +123,15 @@
             <!-- Ringkasan Paket -->
             <div style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 16px; margin-bottom: 20px;">
                 <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(148, 163, 184, 0.2);">
-                    <p style="font-size: 0.75rem; color: #9ca3af;">Paket Dipilih</p>
+                    <p style="font-size: 0.75rem; color: #64748b;">Paket Dipilih</p>
                     <p style="font-size: 1.125rem; font-weight: 700; color: white;" id="modalPackageName"></p>
                 </div>
                 <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(148, 163, 184, 0.2);">
-                    <p style="font-size: 0.75rem; color: #9ca3af;">Harga</p>
+                    <p style="font-size: 0.75rem; color: #64748b;">Harga</p>
                     <p style="font-size: 1.5rem; font-weight: 700; color: #60a5fa;" id="modalPrice"></p>
                 </div>
                 <div>
-                    <p style="font-size: 0.75rem; color: #9ca3af;">Durasi</p>
+                    <p style="font-size: 0.75rem; color: #64748b;">Durasi</p>
                     <p style="font-weight: 600; color: white;" id="modalDuration"></p>
                 </div>
             </div>
@@ -153,9 +153,9 @@
 
             <!-- Info Rekening -->
             <div id="bankInfo" style="display: none; background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 16px;">
-                <p style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 4px;">Atas Nama</p>
+                <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 4px;">Atas Nama</p>
                 <p style="font-weight: 600; color: white; margin-bottom: 12px;" id="accountHolder"></p>
-                <p style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 4px;">Nomor Rekening</p>
+                <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 4px;">Nomor Rekening</p>
                 <p style="font-family: monospace; font-size: 1.125rem; font-weight: 700; color: #22c55e; margin-bottom: 12px;" id="accountNumber"></p>
                 <button type="button" 
                     style="font-size: 0.8rem; background: #22c55e; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer;"
@@ -173,8 +173,8 @@
                     onmouseover="this.style.borderColor='#60a5fa'; this.style.background='rgba(96, 165, 250, 0.1)';"
                     onmouseout="this.style.borderColor='rgba(148, 163, 184, 0.3)'; this.style.background='transparent';">
                     <p style="font-size: 2rem; margin-bottom: 8px;">☁️</p>
-                    <p style="color: #e5e7eb; font-weight: 500; margin-bottom: 4px;">Klik atau drag file kesini</p>
-                    <p style="font-size: 0.8rem; color: #9ca3af;">JPG, PNG, atau PDF maksimal 5MB</p>
+                    <p style="color: #1e293b; font-weight: 500; margin-bottom: 4px;">Klik atau drag file kesini</p>
+                    <p style="font-size: 0.8rem; color: #64748b;">JPG, PNG, atau PDF maksimal 5MB</p>
                     <input type="file" 
                         name="bukti_transaksi" 
                         id="buktiTransaksi" 
@@ -182,7 +182,7 @@
                         accept="image/jpeg,image/png,application/pdf"
                         required>
                 </div>
-                <p id="fileInfo" style="font-size: 0.8rem; color: #9ca3af; margin-top: 8px;"></p>
+                <p id="fileInfo" style="font-size: 0.8rem; color: #64748b; margin-top: 8px;"></p>
             </div>
 
             <!-- Preview Gambar -->

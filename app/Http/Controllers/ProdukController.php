@@ -75,6 +75,8 @@ class ProdukController extends BaseController
 			'code' => 'nullable|string|max:50|unique:products,code,' . $product->id,
 			'sku' => 'nullable|string|max:50',
 			'unit' => 'required|string|max:50',
+			'tipe' => 'required|in:Barang,Menu,Jasa',
+			'lacak_stok' => 'nullable',
 			'harga_beli' => 'nullable|numeric|min:0',
 			'harga_jual' => 'required|numeric|min:0',
 			'stock' => 'nullable|integer|min:0',
@@ -84,9 +86,15 @@ class ProdukController extends BaseController
 			'lokasi' => 'nullable|string',
 			'description' => 'nullable|string',
 			'barcode' => 'nullable|string|max:50',
-			'is_active' => 'required|boolean',
+			'is_active' => 'required',
 			'brand' => 'nullable|string|max:100',
 		]);
+
+		// Handle lacak_stok checkbox (flexible - user choice)
+		$validated['lacak_stok'] = isset($validated['lacak_stok']) ? true : false;
+
+		// Handle is_active (convert string to boolean)
+		$validated['is_active'] = $validated['is_active'] == '1' ? true : false;
 
 		$product->update($validated);
 
@@ -158,7 +166,7 @@ class ProdukController extends BaseController
 				'sku' => 'nullable|string|max:50',
 				'unit' => 'required|string|max:50',
 				'tipe' => 'required|in:Barang,Menu,Jasa',
-				'lacak_stok' => 'nullable|boolean',
+				'lacak_stok' => 'nullable',
 				'harga_beli' => 'nullable|numeric|min:0',
 				'harga_jual' => 'required|numeric|min:0',
 				'stock' => 'nullable|integer|min:0',
@@ -168,7 +176,7 @@ class ProdukController extends BaseController
 				'lokasi' => 'nullable|string',
 				'description' => 'nullable|string',
 				'barcode' => 'nullable|string|max:50',
-				'is_active' => 'required|boolean',
+				'is_active' => 'required',
 				'brand' => 'nullable|string|max:100',
 			]);
 
@@ -179,13 +187,11 @@ class ProdukController extends BaseController
 
 			$validated['user_id'] = auth()->user()->id;
 
-			// Handle lacak_stok checkbox
+			// Handle lacak_stok checkbox (flexible - user choice)
 			$validated['lacak_stok'] = isset($validated['lacak_stok']) ? true : false;
 
-			// Menu dan Jasa otomatis lacak_stok = false
-			if (in_array($validated['tipe'], ['Menu', 'Jasa'])) {
-				$validated['lacak_stok'] = false;
-			}
+			// Handle is_active (convert string to boolean)
+			$validated['is_active'] = $validated['is_active'] == '1' ? true : false;
 
 			// Membuat produk TIDAK otomatis menambah stok
 			$product = Product::create($validated);

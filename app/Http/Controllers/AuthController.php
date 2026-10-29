@@ -31,14 +31,16 @@ class AuthController extends Controller
 		$user = User::where('email', $credentials['email'])->first();
 
 		if ($user) {
-			// Check if email verified (superadmin skip)
+			// Check if email verified (superadmin skip, owner auto-verify for testing lokal)
 			if ($user->role !== 'superadmin' && !$user->hasVerifiedEmail()) {
-				return back()
-					->with('login_warning', 'Email Anda belum terverifikasi. Silakan cek email untuk link verifikasi.')
-					->withErrors([
-						'email' => 'Email belum terverifikasi. Cek email Anda untuk link verifikasi.',
-					])
-					->onlyInput('email');
+				// Disabled untuk testing lokal - auto-verify jika belum diverifikasi
+				$user->markEmailAsVerified();
+				// return back()
+				// 	->with('login_warning', 'Email Anda belum terverifikasi. Silakan cek email untuk link verifikasi.')
+				// 	->withErrors([
+				// 		'email' => 'Email belum terverifikasi. Cek email Anda untuk link verifikasi.',
+				// 	])
+				// 	->onlyInput('email');
 			}
 
 			if (Auth::attempt($credentials, $remember)) {

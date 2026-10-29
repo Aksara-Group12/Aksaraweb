@@ -67,7 +67,7 @@
 					<i data-lucide="credit-card" class="hz-nav-lucide"></i>
 					<span class="hz-nav-label">Rekening Bank</span>
 				</a>
-			@elseif($isOwner && !session()->has('admin_id'))
+			@elseif($isOwner && !session()->has('admin_id') && $paketType >= 2)
 				<a href="{{ $ownerSubscriptionActive ? route('produk.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('produk.index') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
 					<i data-lucide="box" class="hz-nav-lucide"></i>
 					<span class="hz-nav-label">Semua Produk</span>

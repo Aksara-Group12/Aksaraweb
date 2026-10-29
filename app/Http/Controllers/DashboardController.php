@@ -17,6 +17,10 @@ class DashboardController extends BaseController
 	 */
 	public function index(Request $request)
 	{
+		if (auth()->check() && auth()->user()->role === 'superadmin') {
+			return redirect()->route('dashboard-superadmin');
+		}
+
 		$period = $request->input('period', 'month');
 		$startDate = $request->input('start_date');
 		$endDate = $request->input('end_date');

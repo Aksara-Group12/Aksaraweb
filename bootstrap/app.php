@@ -11,6 +11,16 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->redirectTo(
+            guests: '/login',
+            users: function () {
+                if (auth()->user()?->role === 'superadmin') {
+                    return route('dashboard-superadmin');
+                }
+                return route('dashboard');
+            }
+        );
+
         $middleware->alias([
             'subscription.access' => \App\Http\Middleware\EnsureSubscriptionActive::class,
             'employee.access' => \App\Http\Middleware\EnsureEmployeeAccess::class,

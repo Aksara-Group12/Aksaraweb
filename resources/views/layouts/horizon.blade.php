@@ -4,15 +4,18 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>@yield('page_title', 'Dashboard') - {{ config('app.name', 'Golday') }}</title>
+		<title>@yield('page_title', 'Dashboard') - {{ config('app.name', 'Aksara Developer') }}</title>
 		<link rel="icon" type="image/png" href="{{ asset('assets/images/aksara-logo.png') }}">
 		<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
-		<!-- Fonts -->
-		<link rel="preconnect" href="https://fonts.bunny.net">
-		<link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
+		<!-- Fonts: Newsreader & Plus Jakarta Sans (Sesuai Landing Page Aksara Developer) -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-		<!-- Simple Horizon-like CSS without Tailwind/Vite -->
+		<!-- Lucide Icons (Shadcn Standard) -->
+		<script src="https://unpkg.com/lucide@latest"></script>
+
 		<style>
 			html,
 			body {
@@ -27,10 +30,11 @@
 
 			body.hz-body {
 				height: 100vh;
-				font-family: 'Instrument Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-				background-color: #f8f4e8;
-				color: #1e293b;
+				font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+				background-color: #FAF8F5;
+				color: #0F223D;
 				overflow: hidden;
+				-webkit-font-smoothing: antialiased;
 			}
 
 			a {
@@ -40,37 +44,42 @@
 
 			.hz-bg {
 				height: 100%;
-				background: radial-gradient(circle at top, #3b82f6 0, #e0e7ff 55%, #f8f4e8 100%);
+				background-color: #FAF8F5;
+				background-image: 
+					radial-gradient(circle at 50% 0%, rgba(197, 160, 89, 0.08) 0%, transparent 40%),
+					radial-gradient(rgba(15, 34, 61, 0.04) 1px, transparent 1px);
+				background-size: 100% 100%, 24px 24px;
 			}
 
 			.hz-layout {
 				display: flex;
 				height: 100%;
-				background: rgba(248, 244, 232, 0.95);
+				background: transparent;
 			}
 
-			/* Sidebar */
+			/* Sidebar Deep Navy (Aksara Luxury Theme) */
 			.hz-sidebar {
-				width: 250px;
-				padding: 20px 18px 18px;
-				border-right: 1px solid rgba(59, 130, 246, 0.3);
-				background: linear-gradient(180deg, #1e3a8a 0, #3b82f6 100%);
-				box-shadow: 10px 0 40px rgba(59, 130, 246, 0.25);
+				width: 260px;
+				padding: 22px 16px 20px;
+				border-right: 1px solid rgba(255, 255, 255, 0.08);
+				background: #0F223D;
+				background-image: linear-gradient(180deg, #0F223D 0%, #162C50 100%);
+				box-shadow: 4px 0 24px rgba(15, 34, 61, 0.12);
 				display: flex;
 				flex-direction: column;
-				gap: 18px;
+				gap: 20px;
 				position: relative;
 				height: 100vh;
 				max-height: 100vh;
 				overflow-y: auto;
 				overflow-x: hidden;
 				z-index: 15;
-				transition: transform 0.2s ease;
+				transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 			}
 
 			/* Custom scrollbar for sidebar */
 			.hz-sidebar::-webkit-scrollbar {
-				width: 6px;
+				width: 5px;
 			}
 
 			.hz-sidebar::-webkit-scrollbar-track {
@@ -78,12 +87,12 @@
 			}
 
 			.hz-sidebar::-webkit-scrollbar-thumb {
-				background: rgba(255, 255, 255, 0.3);
-				border-radius: 3px;
+				background: rgba(255, 255, 255, 0.15);
+				border-radius: 999px;
 			}
 
 			.hz-sidebar::-webkit-scrollbar-thumb:hover {
-				background: rgba(255, 255, 255, 0.5);
+				background: rgba(255, 255, 255, 0.25);
 			}
 
 			@media (max-width: 768px) {
@@ -93,8 +102,8 @@
 					top: 0;
 					height: 100vh;
 					transform: translateX(-100%);
-					width: 260px;
-					z-index: 16;
+					width: 270px;
+					z-index: 50;
 				}
 
 				.hz-sidebar.hz-sidebar-open {
@@ -104,10 +113,10 @@
 				.hz-sidebar-backdrop {
 					position: fixed;
 					inset: 0;
-					background: rgba(30, 58, 138, 0.5);
+					background: rgba(15, 34, 61, 0.6);
 					backdrop-filter: blur(4px);
 					display: none;
-					z-index: 14;
+					z-index: 45;
 				}
 
 				.hz-sidebar-backdrop.active {
@@ -118,34 +127,57 @@
 			.hz-sidebar-header {
 				display: flex;
 				align-items: center;
-				gap: 10px;
-				padding: 0 6px;
-				margin-bottom: 10px;
+				gap: 12px;
+				padding: 0 4px 16px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 			}
 
 			.hz-logo-badge {
-				width: 36px;
-				height: 36px;
-				border-radius: 16px;
-				background: linear-gradient(135deg, #60a5fa, #3b82f6, #2563eb);
-				color: #ffffff;
-				font-weight: 700;
-				font-size: 1rem;
+				width: 38px;
+				height: 38px;
+				border-radius: 10px;
+				background: rgba(255, 255, 255, 0.06);
+				border: 1px solid rgba(255, 255, 255, 0.12);
 				display: flex;
 				align-items: center;
 				justify-content: center;
+				flex-shrink: 0;
+				padding: 4px;
+			}
+
+			.hz-logo-badge img {
+				width: 100%;
+				height: 100%;
+				object-fit: contain;
+			}
+
+			.hz-logo-text {
+				display: flex;
+				flex-direction: column;
+				min-width: 0;
 			}
 
 			.hz-logo-title {
-				font-size: 0.9rem;
-				font-weight: 600;
-				letter-spacing: 0.04em;
+				font-size: 0.95rem;
+				font-weight: 700;
+				color: #FFFFFF;
+				letter-spacing: -0.01em;
+				line-height: 1.2;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			.hz-logo-title span {
+				color: #C5A059;
 			}
 
 			.hz-logo-sub {
 				margin-top: 2px;
-				font-size: 0.7rem;
-				color: #bfdbfe;
+				font-size: 0.68rem;
+				font-weight: 500;
+				color: #94A3B8;
+				letter-spacing: 0.02em;
 			}
 
 			.hz-nav {
@@ -153,76 +185,86 @@
 				display: flex;
 				flex-direction: column;
 				gap: 18px;
-				font-size: 0.8rem;
+				font-size: 0.825rem;
 				min-height: 0;
 			}
 
 			.hz-nav-group {
 				display: flex;
 				flex-direction: column;
-				gap: 6px;
+				gap: 3px;
 			}
 
 			.hz-nav-group-title {
-				padding: 0 8px;
+				padding: 0 10px;
 				font-size: 0.65rem;
 				text-transform: uppercase;
-				letter-spacing: 0.16em;
-				color: #bfdbfe;
+				letter-spacing: 0.12em;
+				font-weight: 700;
+				color: #64748B;
 				margin-bottom: 4px;
 			}
 
+			/* Shadcn UI Aligned Navigation Items */
 			.hz-nav-item {
 				display: flex;
 				align-items: center;
-				gap: 10px;
-				padding: 8px 10px;
-				border-radius: 14px;
-				color: #e0e7ff;
-				transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
-			}
-
-			.hz-nav-subitem {
-				padding-left: 28px;
+				gap: 12px;
+				padding: 9px 12px;
 				border-radius: 10px;
-				font-size: 0.75rem;
-				color: #c7d2fe;
+				color: #94A3B8;
+				font-size: 0.825rem;
+				font-weight: 500;
+				border: 1px solid transparent;
+				transition: all 0.15s ease;
+				text-decoration: none;
 			}
 
 			.hz-nav-item:hover {
-				background: rgba(255, 255, 255, 0.15);
-				color: #ffffff;
-				transform: translateY(-1px);
+				background: rgba(255, 255, 255, 0.06);
+				color: #FFFFFF;
+				border-color: rgba(255, 255, 255, 0.08);
+			}
+
+			.hz-nav-item:hover .hz-nav-lucide {
+				color: #C5A059;
 			}
 
 			.hz-nav-item-active {
-				background: rgba(255, 255, 255, 0.25);
-				color: #ffffff;
-				box-shadow: 0 22px 40px rgba(59, 130, 246, 0.4);
-				border: 1px solid rgba(255, 255, 255, 0.3);
+				background: rgba(197, 160, 89, 0.15) !important;
+				color: #FFFFFF !important;
+				border-color: rgba(197, 160, 89, 0.35) !important;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+				font-weight: 600;
 			}
 
-			.hz-nav-icon {
-				width: 28px;
-				height: 28px;
-				border-radius: 11px;
-				background: rgba(255, 255, 255, 0.15);
+			.hz-nav-item-active .hz-nav-lucide {
+				color: #C5A059 !important;
+			}
+
+			.hz-nav-lucide {
+				width: 17px;
+				height: 17px;
+				color: #94A3B8;
+				flex-shrink: 0;
+				stroke-width: 2;
+				transition: color 0.15s ease;
+			}
+
+			.hz-nav-label {
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			/* Main Content Area */
+			.hz-main {
+				flex: 1;
 				display: flex;
-				align-items: center;
-				justify-content: center;
-				color: #ffffff;
-				font-size: 0;
-			}
-
-			.hz-nav-label-main {
-				font-size: 0.8rem;
-				font-weight: 500;
-			}
-
-			.hz-nav-label-sub {
-				margin-top: 2px;
-				font-size: 0.7rem;
-				color: #c7d2fe;
+				flex-direction: column;
+				min-width: 0;
+				height: 100vh;
+				overflow: hidden;
 			}
 
 			/* Header */
@@ -233,30 +275,44 @@
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				padding: 16px 24px 12px;
-				border-bottom: 1px solid rgba(59, 130, 246, 0.2);
-				background: rgba(255, 255, 255, 0.85);
-				backdrop-filter: blur(18px);
+				padding: 16px 32px;
+				border-bottom: 1px solid rgba(226, 232, 240, 0.85);
+				background: rgba(250, 248, 245, 0.88);
+				backdrop-filter: blur(12px);
 			}
 
 			.hz-header-left {
 				display: flex;
-				flex-direction: column;
-				gap: 2px;
+				align-items: center;
+				gap: 12px;
 			}
 
-			.hz-header-label {
-				font-size: 0.65rem;
-				text-transform: uppercase;
-				letter-spacing: 0.16em;
-				color: #64748b;
+			.hz-mobile-toggle {
+				width: 36px;
+				height: 36px;
+				border-radius: 10px;
+				border: 1px solid #CBD5E1;
+				background: #FFFFFF;
+				color: #0F223D;
+				display: none;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+				transition: all 0.15s ease;
 			}
 
-			.hz-header-title {
-				font-size: 1.35rem;
-				font-weight: 700;
-				letter-spacing: -0.02em;
-				color: #1e3a8a;
+			.hz-mobile-toggle:hover {
+				background: #F1F5F9;
+			}
+
+			@media (max-width: 768px) {
+				.hz-header {
+					padding: 14px 18px;
+				}
+
+				.hz-mobile-toggle {
+					display: inline-flex;
+				}
 			}
 
 			.hz-header-right {
@@ -265,468 +321,104 @@
 				gap: 12px;
 			}
 
-			.hz-mobile-toggle {
-				width: 38px;
-				height: 38px;
-				border-radius: 12px;
-				border: 1px solid rgba(59, 130, 246, 0.4);
-				background: rgba(59, 130, 246, 0.1);
-				color: #1e3a8a;
-				display: none;
-				align-items: center;
-				justify-content: center;
-				cursor: pointer;
-			}
-
-			@media (max-width: 768px) {
-				.hz-header {
-					padding-left: 16px;
-					padding-right: 16px;
-				}
-
-				.hz-mobile-toggle {
-					display: inline-flex;
-				}
-			}
-
-			.hz-header-search {
-				display: flex;
-				align-items: center;
-				padding: 4px 10px;
-				border-radius: 999px;
-				border: 1px solid rgba(59, 130, 246, 0.3);
-				background: rgba(255, 255, 255, 0.8);
-				max-width: 260px;
-			}
-
-			.hz-header-search-input {
-				border: none;
-				outline: none;
-				margin-left: 6px;
-				width: 170px;
-				background: transparent;
-				color: #1e3a8a;
-				font-size: 0.72rem;
-			}
-
-			@media (max-width: 768px) {
-				.hz-header-search {
-					display: none;
-				}
-			}
-
-			.hz-icon-button {
-				width: 34px;
-				height: 34px;
-				border-radius: 999px;
-				border: 1px solid rgba(59, 130, 246, 0.3);
-				background: rgba(255, 255, 255, 0.8);
-				color: #1e3a8a;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				position: relative;
-				cursor: pointer;
-			}
-
-			.hz-notification-dot {
-				position: absolute;
-				width: 8px;
-				height: 8px;
-				border-radius: 999px;
-				background: #22c55e;
-				top: 4px;
-				right: 4px;
-				box-shadow: 0 0 0 2px #ffffff;
-			}
-
 			.hz-user-chip {
 				display: flex;
 				align-items: center;
-				gap: 8px;
-				border-radius: 999px;
-				padding: 4px 10px 4px 4px;
-				border: 1px solid rgba(59, 130, 246, 0.3);
-				background: rgba(255, 255, 255, 0.8);
+				gap: 10px;
+				border-radius: 9999px;
+				padding: 5px 14px 5px 6px;
+				border: 1px solid #E2E8F0;
+				background: #FFFFFF;
+				box-shadow: 0 2px 6px rgba(15, 34, 61, 0.04);
+				transition: all 0.15s ease;
+			}
+
+			.hz-user-chip:hover {
+				border-color: rgba(197, 160, 89, 0.5);
+				box-shadow: 0 4px 12px rgba(15, 34, 61, 0.06);
 			}
 
 			.hz-avatar {
 				width: 28px;
 				height: 28px;
-				border-radius: 999px;
-				background: linear-gradient(135deg, #60a5fa, #3b82f6, #2563eb);
+				border-radius: 9999px;
+				background: #0F223D;
+				color: #C5A059;
+				font-size: 0.75rem;
+				font-weight: 700;
+				display: flex;
+				align-items: center;
+				justify-content: center;
 			}
 
 			.hz-user-text {
-				font-size: 0.72rem;
+				font-size: 0.8rem;
 				line-height: 1.2;
 			}
 
 			.hz-user-name {
-				font-weight: 500;
-				color: #1e3a8a;
-			}
-
-			.hz-user-sub {
-				font-size: 0.68rem;
-				color: #64748b;
-			}
-
-			.hz-main {
-				flex: 1;
-				display: flex;
-				flex-direction: column;
-				min-width: 0;
-				height: 100vh;
-				min-height: 0;
-				overflow: hidden;
+				font-weight: 600;
+				color: #0F223D;
 			}
 
 			.hz-main-content {
 				flex: 1;
-				padding: 24px 16px 32px;
-				margin: 0 auto;
 				overflow-y: auto;
-				min-height: 0;
-				width: 100%;
-				margin: 0;
+				padding: 32px;
 			}
 
-			@media (min-width: 1024px) {
-				.hz-main-content {
-					padding: 32px 32px 40px;
-				}
-			}
-
-			/* Top section */
+			/* Global Horizon Page Components */
 			.hz-top-row {
 				display: flex;
-				flex-direction: column;
+				justify-content: space-between;
+				align-items: flex-start;
+				margin-bottom: 24px;
 				gap: 16px;
-			}
-
-			@media (min-width: 768px) {
-				.hz-top-row {
-					flex-direction: row;
-					align-items: flex-end;
-					justify-content: space-between;
-				}
+				flex-wrap: wrap;
 			}
 
 			.hz-top-title {
-				font-size: 1.25rem;
-				font-weight: 600;
+				font-family: 'Newsreader', Georgia, serif;
+				font-size: 2.2rem;
+				font-weight: 500;
+				color: #0F223D;
+				margin: 0 0 4px 0;
+				line-height: 1.2;
 				letter-spacing: -0.01em;
 			}
 
 			.hz-top-sub {
-				margin-top: 4px;
-				font-size: 0.875rem;
-				color: #64748b;
-			}
-
-			.hz-top-actions {
-				display: flex;
-				flex-wrap: wrap;
-				align-items: center;
-				gap: 12px;
-			}
-
-			.hz-btn-outline,
-			.hz-btn-primary {
-				display: inline-flex;
-				align-items: center;
-				gap: 8px;
-				border-radius: 999px;
-				font-size: 0.75rem;
-				font-weight: 500;
-				padding: 8px 14px;
-				border: 1px solid transparent;
-				cursor: pointer;
-				background: none;
-				color: inherit;
-				transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
-			}
-
-			.hz-btn-outline {
-				border-color: rgba(59, 130, 246, 0.4);
-				background: rgba(255, 255, 255, 0.8);
-				color: #1e3a8a;
-			}
-
-			.hz-btn-outline:hover {
-				background: rgba(255, 255, 255, 1);
-			}
-
-			.hz-btn-primary {
-				background: #3b82f6;
-				border-color: #3b82f6;
-				color: #ffffff;
-				box-shadow: 0 18px 45px rgba(59, 130, 246, 0.35);
-			}
-
-			.hz-btn-primary:hover {
-				background: #2563eb;
-				border-color: #2563eb;
-				transform: translateY(-1px);
-			}
-
-			.hz-icon-pill {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				width: 20px;
-				height: 20px;
-				border-radius: 999px;
-			}
-
-			/* KPI cards */
-			.hz-kpi-grid {
-				margin-top: 24px;
-				display: grid;
-				gap: 16px;
-			}
-
-			@media (min-width: 768px) {
-				.hz-kpi-grid {
-					grid-template-columns: repeat(2, minmax(0, 1fr));
-				}
-			}
-
-			@media (min-width: 1280px) {
-				.hz-kpi-grid {
-					grid-template-columns: repeat(4, minmax(0, 1fr));
-				}
+				font-size: 0.925rem;
+				color: #64748B;
+				margin: 0;
 			}
 
 			.hz-card {
+				background: #FFFFFF;
 				border-radius: 18px;
-				border: 1px solid rgba(59, 130, 246, 0.2);
-				background: rgba(255, 255, 255, 0.9);
-				padding: 18px 20px;
-				box-shadow: 0 18px 40px rgba(59, 130, 246, 0.1);
-			}
-
-			.hz-card-muted {
-				border-color: rgba(59, 130, 246, 0.15);
-				background: rgba(255, 255, 255, 0.7);
-			}
-
-			.hz-card-primary {
-				position: relative;
-				overflow: hidden;
-				background: linear-gradient(135deg, #3b82f6, #2563eb, #1d4ed8);
-				color: #ffffff;
-				border-color: rgba(59, 130, 246, 0.4);
+				border: 1px solid rgba(226, 232, 240, 0.95);
+				padding: 22px 24px;
+				box-shadow: 0 4px 16px -2px rgba(15, 34, 61, 0.04);
 			}
 
 			.hz-card-title {
-				font-size: 0.7rem;
-				text-transform: uppercase;
-				letter-spacing: 0.16em;
-				color: #64748b;
-			}
-
-			.hz-card-value {
-				margin-top: 8px;
-				font-size: 1.6rem;
+				font-family: 'Newsreader', Georgia, serif;
+				font-size: 1.25rem;
 				font-weight: 600;
-				color: #1e3a8a;
+				color: #0F223D;
+				margin: 0;
 			}
 
 			.hz-card-sub {
-				margin-top: 4px;
-				font-size: 0.75rem;
-				color: #64748b;
+				font-size: 0.8rem;
+				color: #64748B;
+				margin: 0;
 			}
 
-			.hz-pill-success {
-				margin-top: 4px;
-				display: inline-flex;
-				align-items: center;
-				gap: 4px;
-				padding: 2px 8px;
-				border-radius: 999px;
-				background: rgba(22, 163, 74, 0.15);
-				color: #166534;
-				font-size: 0.7rem;
-			}
-
-			.hz-pill-dot {
-				width: 8px;
-				height: 8px;
-				border-radius: 999px;
-				background: #22c55e;
-			}
-
-			.hz-progress-track {
-				margin-top: 10px;
-				display: flex;
-				height: 10px;
-				border-radius: 999px;
-				background: #e0e7ff;
-				overflow: hidden;
-			}
-
-			.hz-progress-fill-1 { background: #3b82f6; flex: 3; }
-			.hz-progress-fill-2 { background: #2563eb; flex: 1; }
-			.hz-progress-fill-3 { background: #1d4ed8; flex: 1; }
-
-			/* Conversion mini bars */
-			.hz-mini-bars {
-				margin-top: 14px;
-				display: flex;
-				align-items: flex-end;
-				gap: 6px;
-				height: 70px;
-			}
-
-			.hz-mini-bar-track {
-				flex: 1;
-				border-radius: 999px;
-				background: #e0e7ff;
-				overflow: hidden;
-			}
-
-			.hz-mini-bar-fill {
-				width: 100%;
-				border-radius: 999px;
-				background: #3b82f6;
-			}
-
-			/* Timeline & list grid */
-			.hz-secondary-grid {
-				margin-top: 20px;
-				display: grid;
-				gap: 16px;
-			}
-
-			@media (min-width: 1024px) {
-				.hz-secondary-grid {
-					grid-template-columns: 2fr 1fr;
+			@media (max-width: 768px) {
+				.hz-main-content {
+					padding: 20px 16px;
 				}
-			}
-
-			.hz-card-chart,
-			.hz-card-list {
-				border-radius: 18px;
-				border: 1px solid rgba(59, 130, 246, 0.2);
-				background: rgba(255, 255, 255, 0.9);
-				padding: 20px;
-				box-shadow: 0 18px 40px rgba(59, 130, 246, 0.1);
-			}
-
-			.hz-card-header {
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-			}
-
-			.hz-chip {
-				border-radius: 999px;
-				padding: 3px 10px;
-				font-size: 0.65rem;
-				background: rgba(22, 163, 74, 0.15);
-				color: #166534;
-				font-weight: 500;
-			}
-
-			.hz-chart-shell {
-				margin-top: 16px;
-				height: 190px;
-				border-radius: 16px;
-				padding: 14px;
-				background: linear-gradient(to bottom, rgba(59, 130, 246, 0.15), #f8f4e8);
-			}
-
-			.hz-chart-bars {
-				display: flex;
-				align-items: flex-end;
-				gap: 10px;
-				height: 100%;
-			}
-
-			.hz-chart-col {
-				flex: 1;
-				text-align: center;
-				font-size: 0.68rem;
-				color: #64748b;
-			}
-
-			.hz-chart-bar-track {
-				height: 130px;
-				margin: 0 auto;
-				border-radius: 999px;
-				background: #e0e7ff;
-				overflow: hidden;
-				display: flex;
-				align-items: flex-end;
-			}
-
-			.hz-chart-bar-fill {
-				width: 100%;
-				border-radius: 999px;
-				background: linear-gradient(to top, #3b82f6, #60a5fa, #93c5fd);
-			}
-
-			.hz-chart-label {
-				margin-top: 6px;
-				color: #475569;
-			}
-
-			/* Customers list */
-			.hz-list {
-				margin-top: 16px;
-				list-style: none;
-				display: flex;
-				flex-direction: column;
-				gap: 12px;
-			}
-
-			.hz-list-item {
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				gap: 12px;
-			}
-
-			.hz-list-left {
-				display: flex;
-				align-items: center;
-				gap: 10px;
-			}
-
-			.hz-list-avatar {
-				width: 32px;
-				height: 32px;
-				border-radius: 999px;
-				background: linear-gradient(135deg, #3b82f6, #60a5fa);
-			}
-
-			.hz-list-avatar-emerald { background: linear-gradient(135deg, #22c55e, #4ade80); }
-			.hz-list-avatar-amber { background: linear-gradient(135deg, #f97316, #fb923c); }
-
-			.hz-list-title {
-				font-size: 0.85rem;
-				font-weight: 500;
-				color: #1e3a8a;
-			}
-
-			.hz-list-sub {
-				font-size: 0.7rem;
-				color: #64748b;
-			}
-
-			.hz-list-value {
-				font-size: 0.75rem;
-				font-weight: 600;
-				color: #1e3a8a;
-			}
-
-			.hz-list-change {
-				margin-top: 2px;
-				font-size: 0.7rem;
-				color: #16a34a;
 			}
 		</style>
 	</head>
@@ -752,6 +444,11 @@
 		
 		<script>
 			document.addEventListener('DOMContentLoaded', function () {
+				// Inisialisasi ikon Lucide (Shadcn Standard)
+				if (typeof lucide !== 'undefined') {
+					lucide.createIcons();
+				}
+
 				var toggle = document.getElementById('hz-sidebar-toggle');
 				var sidebar = document.getElementById('hz-sidebar');
 				var backdrop = document.getElementById('hz-sidebar-backdrop');

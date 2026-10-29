@@ -7,138 +7,133 @@ use App\Models\Paket;
 use App\Models\Subscribe;
 use App\Models\Bank;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
+	/**
+	 * Tampilkan halaman utama profil & form edit profil yang terpadu
+	 */
 	public function index()
 	{
-		$profile = Profile::where('user_id', auth()->user()->id)->first();
+		$user = auth()->user();
+		$profile = Profile::where('user_id', $user->id)->first();
 
-		// Data untuk subscription (hanya jika user adalah owner)
+		if (!$profile) {
+			$profile = Profile::create([
+				'user_id' => $user->id,
+				'store_name' => $user->role === 'superadmin' ? 'Aksara Developer' : ($user->name . ' Store'),
+				'owner_name' => $user->name,
+				'email' => $user->email,
+			]);
+		}
+
 		$packages = [];
 		$activeSubscription = null;
 		$banks = [];
 
-		if (auth()->user()->role === 'owner') {
+		if ($user->role === 'owner') {
 			$packages = Paket::where('is_active', true)->get();
-			$activeSubscription = Subscribe::getActiveSubscription(auth()->id());
+			$activeSubscription = Subscribe::getActiveSubscription($user->id);
 			$banks = Bank::all();
 		}
 
-		return view('profile.index', compact('profile', 'packages', 'activeSubscription', 'banks'));
+		return view('profile.index', compact('profile', 'user', 'packages', 'activeSubscription', 'banks'));
 	}
 
 	public function create()
 	{
-		$profile = Profile::where('user_id', auth()->user()->id)->first();
-		if ($profile) {
-			return redirect()->route('profile.edit', $profile);
-		}
-
-		return view('profile.create', ['profile' => null]);
+		return redirect()->route('profile.index');
 	}
 
 	public function store(Request $request)
 	{
-		\Log::info('Profile Store Request', [
-			'has_logo' => $request->hasFile('logo'),
-			'files' => $request->files->keys(),
-			'post_data' => $request->except(['logo']),
-		]);
-
-		$data = $this->validateData($request);
-		$data['user_id'] = auth()->user()->id;
-
-		// Handle file upload
-		if ($request->hasFile('logo')) {
-			try {
-				$fileName = 'logo_' . auth()->user()->id . '_' . time() . '.png';
-				$request->file('logo')->storeAs('logos', $fileName, 'public');
-				$data['logo_path'] = 'logos/' . $fileName;
-				\Log::info('Logo uploaded successfully', ['file' => $fileName]);
-			} catch (\Exception $e) {
-				\Log::error('Logo upload failed', ['error' => $e->getMessage()]);
-				return back()->withErrors(['logo' => 'Gagal upload logo: ' . $e->getMessage()]);
-			}
-		}
-
-		Profile::create($data);
-
-		return redirect()
-			->route('profile.index')
-			->with('success', 'Profil toko berhasil disimpan.');
+		return redirect()->route('profile.index');
 	}
 
 	public function edit(Profile $profile)
 	{
-		// Pastikan hanya edit profil miliknya sendiri - gunakan type casting untuk safety
-		if ((int) $profile->user_id !== (int) auth()->user()->id) {
-			abort(403, 'Anda tidak memiliki akses ke profil ini');
-		}
-
-		return view('profile.create', compact('profile'));
+		return redirect()->route('profile.index');
 	}
 
+	/**
+	 * Simpan pembaruan profil & data akun pengguna
+	 */
 	public function update(Request $request, Profile $profile)
 	{
-		// Pastikan hanya update profil miliknya sendiri - gunakan type casting untuk safety
-		if ((int) $profile->user_id !== (int) auth()->user()->id) {
-			abort(403, 'Anda tidak memiliki akses ke profil ini');
+		$user = auth()->user();
+
+		if ((int) $profile->user_id !== (int) $user->id) {
+			abort(403, 'Anda tidak memiliki hak akses untuk mengubah profil ini.');
 		}
 
-		\Log::info('Profile Update Request', [
-			'has_logo' => $request->hasFile('logo'),
-			'files' => $request->files->keys(),
-			'post_data' => $request->except(['logo']),
-		]);
-
-		$data = $this->validateData($request);
-
-		// Handle file upload
-		if ($request->hasFile('logo')) {
-			try {
-				// Hapus logo lama jika ada
-				if ($profile->logo_path && Storage::disk('public')->exists($profile->logo_path)) {
-					Storage::disk('public')->delete($profile->logo_path);
-					\Log::info('Old logo deleted', ['path' => $profile->logo_path]);
-				}
-				
-				$fileName = 'logo_' . auth()->user()->id . '_' . time() . '.png';
-				$request->file('logo')->storeAs('logos', $fileName, 'public');
-				$data['logo_path'] = 'logos/' . $fileName;
-				\Log::info('Logo uploaded successfully', ['file' => $fileName]);
-			} catch (\Exception $e) {
-				\Log::error('Logo upload failed', ['error' => $e->getMessage()]);
-				return back()->withErrors(['logo' => 'Gagal upload logo: ' . $e->getMessage()]);
-			}
-		}
-
-		$profile->update($data);
-
-		return redirect()
-			->route('profile.index')
-			->with('success', 'Profil toko berhasil diperbarui.');
-	}
-
-	protected function validateData(Request $request): array
-	{
-		$rules = [
+		$request->validate([
+			'name' => ['required', 'string', 'max:255'],
+			'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+			'password' => ['nullable', 'string', 'min:8', 'confirmed'],
 			'store_name' => ['required', 'string', 'max:255'],
-			'owner_name' => ['nullable', 'string', 'max:255'],
 			'phone' => ['nullable', 'string', 'max:50'],
-			'email' => ['nullable', 'email', 'max:255'],
 			'address' => ['nullable', 'string'],
 			'city' => ['nullable', 'string', 'max:255'],
 			'postal_code' => ['nullable', 'string', 'max:20'],
+			'logo' => ['nullable', 'file', 'image', 'mimes:png,jpg,jpeg', 'max:5120'],
+		], [
+			'name.required' => 'Nama lengkap wajib diisi.',
+			'email.required' => 'Alamat email wajib diisi.',
+			'email.unique' => 'Alamat email sudah digunakan oleh akun lain.',
+			'password.min' => 'Kata sandi minimal terdiri dari 8 karakter.',
+			'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.',
+			'store_name.required' => $user->role === 'superadmin' ? 'Nama Sistem / Brand wajib diisi.' : 'Nama Toko wajib diisi.',
+			'logo.image' => 'Logo harus berupa berkas gambar.',
+			'logo.max' => 'Ukuran logo maksimal adalah 5MB.',
+		]);
+
+		// 1. Update data User
+		$userData = [
+			'name' => $request->name,
+			'email' => $request->email,
 		];
 
-		// Logo validation - very lenient
-		if ($request->hasFile('logo')) {
-			$rules['logo'] = ['required', 'file', 'max:5120']; // Max 5MB
+		if ($request->filled('password')) {
+			$userData['password'] = Hash::make($request->password);
 		}
 
-		return $request->validate($rules);
+		$user->update($userData);
+
+		// 2. Handle upload logo
+		$profileData = [
+			'store_name' => $request->store_name,
+			'owner_name' => $request->name,
+			'email' => $request->email,
+			'phone' => $request->phone,
+			'address' => $request->address,
+			'city' => $request->city,
+			'postal_code' => $request->postal_code,
+		];
+
+		if ($request->hasFile('logo')) {
+			try {
+				if ($profile->logo_path && Storage::disk('public')->exists($profile->logo_path)) {
+					Storage::disk('public')->delete($profile->logo_path);
+				}
+
+				$extension = $request->file('logo')->getClientOriginalExtension();
+				$fileName = 'logo_' . $user->id . '_' . time() . '.' . $extension;
+				$request->file('logo')->storeAs('logos', $fileName, 'public');
+				$profileData['logo_path'] = 'logos/' . $fileName;
+			} catch (\Exception $e) {
+				return back()
+					->withInput()
+					->withErrors(['logo' => 'Gagal mengunggah logo: ' . $e->getMessage()]);
+			}
+		}
+
+		$profile->update($profileData);
+
+		return redirect()
+			->route('profile.index')
+			->with('success', 'Profil dan akun berhasil diperbarui.');
 	}
 }
-

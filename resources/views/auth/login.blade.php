@@ -4,144 +4,180 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>Login - {{ config('app.name', 'Aksara') }}</title>
+		<title>Masuk - {{ config('app.name', 'Aksara Developer') }}</title>
 		<link rel="icon" type="image/png" href="{{ asset('assets/images/aksara-logo.png') }}">
 		<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
-		<link rel="preconnect" href="https://fonts.bunny.net">
-		<link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
+		<!-- Fonts: Newsreader & Plus Jakarta Sans (Sesuai Landing Page) -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 		<style>
 			* { box-sizing: border-box; margin: 0; padding: 0; }
 
 			body {
 				min-height: 100vh;
-				font-family: 'Instrument Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-				background: radial-gradient(circle at top, #3b82f6 0, #e0e7ff 55%, #f8f4e8 100%);
-				color: #1e293b;
+				font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+				background-color: #FAF8F5;
+				background-image: 
+					radial-gradient(circle at 50% 0%, rgba(197, 160, 89, 0.1) 0%, transparent 50%),
+					radial-gradient(rgba(15, 34, 61, 0.05) 1px, transparent 1px);
+				background-size: 100% 100%, 24px 24px;
+				color: #0F223D;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				padding: 24px;
+				-webkit-font-smoothing: antialiased;
 			}
 
 			.auth-shell {
 				width: 100%;
-				max-width: 430px;
+				max-width: 440px;
 			}
 
 			.auth-card {
-				background: rgba(255, 255, 255, 0.95);
+				background: #FFFFFF;
 				border-radius: 20px;
-				border: 1px solid rgba(59, 130, 246, 0.3);
-				box-shadow: 0 24px 60px rgba(59, 130, 246, 0.15);
-				padding: 22px 22px 24px;
+				border: 1px solid rgba(226, 232, 240, 0.95);
+				box-shadow: 0 10px 30px -5px rgba(15, 34, 61, 0.06), 0 4px 6px -2px rgba(15, 34, 61, 0.03);
+				padding: 32px 30px 34px;
+				transition: border-color 0.2s ease;
+			}
+
+			.auth-card:hover {
+				border-color: rgba(197, 160, 89, 0.4);
 			}
 
 			.auth-header {
 				display: flex;
 				align-items: center;
+				margin-bottom: 24px;
+				padding-bottom: 20px;
+				border-bottom: 1px solid #F1F5F9;
+			}
+
+			.brand-link {
+				display: flex;
+				align-items: center;
 				gap: 12px;
-				margin-bottom: 20px;
+				text-decoration: none;
 			}
 
 			.logo-badge {
-				width: 50px;
-				height: 50px;
-				border-radius: 50%;
+				height: 38px;
+				width: auto;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				overflow: hidden;
 				flex-shrink: 0;
 			}
 
 			.logo-badge img {
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
+				height: 38px;
+				width: auto;
+				object-fit: contain;
+			}
+
+			.brand-text-wrap {
+				padding-left: 10px;
+				border-left: 1px solid #E2E8F0;
 			}
 
 			.logo-text-title {
-				font-size: 0.9rem;
-				font-weight: 600;
-				letter-spacing: 0.06em;
-				text-transform: uppercase;
+				font-size: 1rem;
+				font-weight: 700;
+				color: #0F223D;
+				line-height: 1.2;
+			}
+
+			.logo-text-title span {
+				color: #C5A059;
 			}
 
 			.logo-text-sub {
-				margin-top: 2px;
+				margin-top: 1px;
 				font-size: 0.7rem;
-				color: #64748b;
+				color: #64748B;
+				font-weight: 500;
+				letter-spacing: 0.02em;
 			}
 
 			.auth-title {
-				margin-top: 4px;
-				font-size: 1.25rem;
-				font-weight: 600;
+				font-family: 'Newsreader', Georgia, serif;
+				font-size: 1.75rem;
+				font-weight: 400;
+				color: #0F223D;
+				letter-spacing: -0.02em;
+				line-height: 1.2;
 			}
 
 			.auth-sub {
-				margin-top: 4px;
-				font-size: 0.8rem;
-				color: #64748b;
+				margin-top: 6px;
+				font-size: 0.85rem;
+				color: #64748B;
+				line-height: 1.45;
 			}
 
 			.auth-form {
-				margin-top: 16px;
+				margin-top: 22px;
 				display: flex;
 				flex-direction: column;
-				gap: 12px;
+				gap: 16px;
 			}
 
 			.label {
-				font-size: 0.75rem;
-				color: #94a3b8;
-				margin-bottom: 4px;
+				display: block;
+				font-size: 0.8rem;
+				font-weight: 600;
+				color: #334155;
+				margin-bottom: 6px;
 			}
 
 			.input {
 				width: 100%;
-				border-radius: 12px;
-				border: 1px solid rgba(51, 65, 85, 0.9);
-				background: #ffffff;
-				padding: 9px 11px;
-				color: #1e293b;
-				font-size: 0.8rem;
+				border-radius: 10px;
+				border: 1px solid #CBD5E1;
+				background: #FFFFFF;
+				padding: 11px 13px;
+				color: #0F223D;
+				font-family: 'Plus Jakarta Sans', sans-serif;
+				font-size: 0.875rem;
 				outline: none;
 				transition: border-color 0.15s ease, box-shadow 0.15s ease;
 			}
 
 			.input:focus {
-				border-color: #3b82f6;
-				box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.3);
+				border-color: #0F223D;
+				box-shadow: 0 0 0 3px rgba(15, 34, 61, 0.08);
 			}
 
 			.input-error {
-				border-color: rgba(239, 68, 68, 0.9);
+				border-color: #EF4444;
 			}
 
 			.error-text {
-				margin-top: 4px;
-				font-size: 0.7rem;
-				color: #dc2626;
+				margin-top: 5px;
+				font-size: 0.75rem;
+				color: #DC2626;
 			}
 
 			.alert-error {
-				margin-top: 4px;
-				margin-bottom: 6px;
-				padding: 8px 10px;
+				margin-bottom: 14px;
+				padding: 10px 14px;
 				border-radius: 10px;
-				border: 1px solid rgba(239, 68, 68, 0.3);
-				background: rgba(254, 226, 226, 0.9);
-				font-size: 0.75rem;
-				color: #991b1b;
+				border: 1px solid #FECACA;
+				background: #FEF2F2;
+				font-size: 0.8rem;
+				color: #991B1B;
+				line-height: 1.4;
 			}
 
 			.success-overlay {
 				position: fixed;
 				inset: 0;
-				background: rgba(30, 58, 138, 0.5);
+				background: rgba(15, 34, 61, 0.6);
 				display: flex;
 				align-items: center;
 				justify-content: center;
@@ -149,131 +185,137 @@
 				backdrop-filter: blur(4px);
 			}
 
-			.warning-modal {
-				width: min(360px, 92vw);
-				background: rgba(15, 23, 42, 0.98);
+			.warning-modal, .success-modal {
+				width: min(380px, 92vw);
+				background: #FFFFFF;
 				border-radius: 16px;
-				border: 1px solid rgba(59, 130, 246, 0.4);
-				box-shadow: 0 24px 60px rgba(15, 23, 42, 0.85);
-				padding: 18px;
+				border: 1px solid #E2E8F0;
+				box-shadow: 0 20px 40px rgba(15, 34, 61, 0.15);
+				padding: 24px;
 				text-align: center;
 			}
 
 			.warning-title {
-				font-size: 0.95rem;
-				font-weight: 600;
-				color: #fdba74;
+				font-family: 'Newsreader', Georgia, serif;
+				font-size: 1.25rem;
+				font-weight: 500;
+				color: #D97706;
 			}
 
 			.warning-text {
-				margin-top: 6px;
-				font-size: 0.75rem;
-				color: #e2e8f0;
+				margin-top: 8px;
+				font-size: 0.825rem;
+				color: #475569;
+				line-height: 1.5;
 			}
 
 			.warning-close {
-				margin-top: 14px;
+				margin-top: 18px;
 				border: none;
 				border-radius: 999px;
-				background: rgba(59, 130, 246, 0.15);
-				color: #fdba74;
-				font-size: 0.75rem;
+				background: #0F223D;
+				color: #FFFFFF;
+				font-size: 0.8rem;
 				font-weight: 600;
-				padding: 8px 16px;
+				padding: 9px 22px;
 				cursor: pointer;
+				transition: background 0.15s ease;
 			}
-
-			.success-modal {
-				width: min(360px, 92vw);
-				background: rgba(15, 23, 42, 0.98);
-				border-radius: 16px;
-				border: 1px solid rgba(34, 197, 94, 0.4);
-				box-shadow: 0 24px 60px rgba(15, 23, 42, 0.85);
-				padding: 18px;
-				text-align: center;
+			.warning-close:hover {
+				background: #162C50;
 			}
 
 			.success-title {
-				font-size: 0.95rem;
-				font-weight: 600;
-				color: #16a34a;
+				font-family: 'Newsreader', Georgia, serif;
+				font-size: 1.25rem;
+				font-weight: 500;
+				color: #059669;
 			}
 
 			.success-text {
-				margin-top: 6px;
-				font-size: 0.75rem;
-				color: #e2e8f0;
+				margin-top: 8px;
+				font-size: 0.825rem;
+				color: #475569;
+				line-height: 1.5;
 			}
 
 			.success-close {
-				margin-top: 14px;
+				margin-top: 18px;
 				border: none;
 				border-radius: 999px;
-				background: rgba(34, 197, 94, 0.15);
-				color: #16a34a;
-				font-size: 0.75rem;
+				background: #0F223D;
+				color: #FFFFFF;
+				font-size: 0.8rem;
 				font-weight: 600;
-				padding: 8px 16px;
+				padding: 9px 22px;
 				cursor: pointer;
+				transition: background 0.15s ease;
+			}
+			.success-close:hover {
+				background: #162C50;
 			}
 
 			.auth-actions {
-				margin-top: 10px;
+				margin-top: 6px;
 				display: flex;
-				align-items: center;
-				justify-content: space-between;
-				gap: 8px;
+				flex-direction: column;
+				gap: 14px;
 			}
 
 			.btn-primary {
+				width: 100%;
 				border: none;
-				border-radius: 999px;
-				background: #3b82f6;
-				color: #020617;
-				font-size: 0.8rem;
+				border-radius: 10px;
+				background: #0F223D;
+				color: #FFFFFF;
+				font-family: 'Plus Jakarta Sans', sans-serif;
+				font-size: 0.875rem;
 				font-weight: 600;
-				padding: 9px 18px;
+				padding: 12px 20px;
 				cursor: pointer;
-				box-shadow: 0 18px 40px rgba(59, 130, 246, 0.45);
-				transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+				box-shadow: 0 4px 12px rgba(15, 34, 61, 0.15);
+				transition: all 0.2s ease;
 			}
 
 			.btn-primary:hover {
-				background: #2563eb;
+				background: #162C50;
+				box-shadow: 0 6px 18px rgba(15, 34, 61, 0.2);
 				transform: translateY(-1px);
-				box-shadow: 0 20px 48px rgba(59, 130, 246, 0.6);
 			}
 
 			.helper-link {
-				font-size: 0.75rem;
-				color: #64748b;
+				font-size: 0.8rem;
+				color: #64748B;
+				text-align: center;
 			}
 
 			.helper-link a {
-				color: #3b82f6;
+				color: #C5A059;
 				text-decoration: none;
-				font-weight: 500;
+				font-weight: 600;
 			}
 
 			.helper-link a:hover {
-				color: #2563eb;
+				color: #9E7E36;
+				text-decoration: underline;
 			}
 
 			.remember-row {
-				margin-top: 4px;
 				display: flex;
 				align-items: center;
-				gap: 6px;
-				font-size: 0.75rem;
-				color: #94a3b8;
+				gap: 8px;
+				font-size: 0.8rem;
+				color: #475569;
+				cursor: pointer;
 			}
 
 			.checkbox {
-				width: 14px;
-				height: 14px;
+				width: 16px;
+				height: 16px;
 				border-radius: 4px;
-				border: 1px solid rgba(51, 65, 85, 0.9);
-				background: #ffffff;
+				border: 1px solid #CBD5E1;
+				accent-color: #0F223D;
+				cursor: pointer;
 			}
 
 			.password-input-wrapper {
@@ -284,10 +326,10 @@
 
 			.password-toggle {
 				position: absolute;
-				right: 10px;
+				right: 12px;
 				background: none;
 				border: none;
-				color: #64748b;
+				color: #64748B;
 				cursor: pointer;
 				padding: 4px;
 				display: flex;
@@ -297,11 +339,11 @@
 			}
 
 			.password-toggle:hover {
-				color: #94a3b8;
+				color: #0F223D;
 			}
 
 			.password-input-wrapper .input {
-				padding-right: 36px;
+				padding-right: 42px;
 			}
 		</style>
 	</head>
@@ -327,21 +369,21 @@
 		<div class="auth-shell">
 			<div class="auth-card">
 				<div class="auth-header">
-					<a href="{{ url('/') }}" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+					<a href="{{ url('/') }}" class="brand-link">
 						<div class="logo-badge">
-							<img src="{{ asset('assets/images/aksara-logo.png') }}" alt="Aksara Logo" style="width: 100%; height: 100%; object-fit: contain;">
+							<img src="{{ asset('assets/images/aksara-logo.png') }}" alt="Aksara Logo">
 						</div>
-						<div>
-							<p class="logo-text-title">Aksara</p>
-							<p class="logo-text-sub">Sistem Kasir & UMKM</p>
+						<div class="brand-text-wrap">
+							<p class="logo-text-title">Aksara <span>Developer</span></p>
+							<p class="logo-text-sub">Sistem Kasir & Bisnis UMKM</p>
 						</div>
 					</a>
 				</div>
-				<p class="auth-title">Masuk ke Dashboard</p>
+				<h1 class="auth-title">Masuk ke Dashboard</h1>
 				<p class="auth-sub">Gunakan akun yang sudah terdaftar untuk mengelola penjualan dan stok.</p>
 
 				@if ($errors->any())
-					<div class="alert-error">
+					<div class="alert-error" style="margin-top: 14px;">
 						Terdapat kesalahan pada data yang Anda masukkan. Periksa kembali form di bawah.
 					</div>
 				@endif
@@ -350,7 +392,7 @@
 					@csrf
 
 					<div>
-						<label class="label" for="email">Email</label>
+						<label class="label" for="email">Alamat Email</label>
 						<input
 							id="email"
 							type="email"
@@ -358,6 +400,7 @@
 							value="{{ old('email') }}"
 							required
 							autocomplete="email"
+							placeholder="nama@tokoanda.com"
 							class="input @error('email') input-error @enderror"
 						>
 						@error('email')
@@ -366,7 +409,7 @@
 					</div>
 
 					<div>
-						<label class="label" for="password">Password</label>
+						<label class="label" for="password">Kata Sandi</label>
 						<div class="password-input-wrapper">
 							<input
 								id="password"
@@ -374,10 +417,11 @@
 								name="password"
 								required
 								autocomplete="current-password"
+								placeholder="••••••••"
 								class="input @error('password') input-error @enderror"
 							>
-							<button type="button" class="password-toggle" onclick="togglePasswordVisibility('password')">
-								<svg id="password-eye" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<button type="button" class="password-toggle" onclick="togglePasswordVisibility('password')" aria-label="Tampilkan kata sandi">
+								<svg id="password-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 									<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
 									<circle cx="12" cy="12" r="3"></circle>
 								</svg>
@@ -394,9 +438,8 @@
 					</div>
 
 					<div class="auth-actions">
-						<button type="submit" class="btn-primary">Masuk</button>
+						<button type="submit" class="btn-primary">Masuk ke Akun</button>
 						<p class="helper-link">Belum punya akun? <a href="{{ route('register') }}">Daftar sekarang</a></p>
-						<!-- <p class="helper-link">Login sebagai admin? <a href="{{ url('/admin/login') }}">Masuk Admin</a></p> -->
 					</div>
 				</form>
 			</div>

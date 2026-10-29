@@ -4,215 +4,154 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>Verifikasi Email - {{ config('app.name', 'Golday') }}</title>
+		<title>Verifikasi Email - {{ config('app.name', 'Aksara Developer') }}</title>
+		<link rel="icon" type="image/png" href="{{ asset('assets/images/aksara-logo.png') }}">
+		<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
-		<link rel="preconnect" href="https://fonts.bunny.net">
-		<link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
+		<!-- Fonts: Newsreader & Plus Jakarta Sans -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 		<style>
 			* { box-sizing: border-box; margin: 0; padding: 0; }
 
 			body {
 				min-height: 100vh;
-				font-family: 'Instrument Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-				background: radial-gradient(circle at top, #4f46e5 0, #020617 55%, #000000 100%);
-				color: #1e293b;
+				font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+				background-color: #FAF8F5;
+				background-image: 
+					radial-gradient(circle at 50% 0%, rgba(197, 160, 89, 0.1) 0%, transparent 50%),
+					radial-gradient(rgba(15, 34, 61, 0.05) 1px, transparent 1px);
+				background-size: 100% 100%, 24px 24px;
+				color: #0F223D;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				padding: 24px;
+				-webkit-font-smoothing: antialiased;
 			}
 
-			.container {
+			.auth-shell {
 				width: 100%;
-				max-width: 500px;
+				max-width: 480px;
 			}
 
-			.card {
-				background: rgba(15, 23, 42, 0.96);
+			.auth-card {
+				background: #FFFFFF;
 				border-radius: 20px;
-				border: 1px solid rgba(30, 64, 175, 0.5);
-				box-shadow: 0 24px 60px rgba(15, 23, 42, 0.85);
-				padding: 40px 30px;
+				border: 1px solid rgba(226, 232, 240, 0.95);
+				box-shadow: 0 10px 30px -5px rgba(15, 34, 61, 0.06), 0 4px 6px -2px rgba(15, 34, 61, 0.03);
+				padding: 36px 32px;
 				text-align: center;
 			}
 
-			.icon {
-				font-size: 48px;
-				margin-bottom: 20px;
-			}
-
-			h1 {
-				font-size: 1.75rem;
-				margin-bottom: 12px;
-				color: #3b82f6;
-			}
-
-			.subtitle {
-				font-size: 0.95rem;
-				color: #64748b;
-				margin-bottom: 24px;
-				line-height: 1.6;
-			}
-
-			.message-box {
-				background: rgba(59, 130, 246, 0.1);
-				border: 1px solid rgba(59, 130, 246, 0.3);
-				border-radius: 10px;
-				padding: 16px;
-				margin-bottom: 24px;
-				color: #3b82f6;
-				font-size: 0.9rem;
-			}
-
-			.form-group {
-				margin-bottom: 16px;
-			}
-
-			label {
-				display: block;
-				font-size: 0.85rem;
-				color: #64748b;
-				margin-bottom: 6px;
-				text-align: left;
-			}
-
-			input {
-				width: 100%;
-				padding: 10px 12px;
-				border-radius: 8px;
-				border: 1px solid rgba(51, 65, 85, 0.9);
-				background: #ffffff;
-				color: #1e293b;
-				font-size: 0.9rem;
-				transition: border-color 0.15s ease;
-			}
-
-			input:focus {
-				outline: none;
-				border-color: #3b82f6;
-				box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.7);
-			}
-
-			.btn-group {
+			.icon-wrap {
+				width: 56px;
+				height: 56px;
+				margin: 0 auto 20px;
+				border-radius: 16px;
+				background: rgba(197, 160, 89, 0.12);
+				color: #C5A059;
 				display: flex;
-				gap: 12px;
-				margin-top: 28px;
-			}
-
-			button, .btn-link {
-				flex: 1;
-				padding: 12px 16px;
-				border-radius: 10px;
-				font-weight: 600;
-				font-size: 0.9rem;
-				border: none;
-				cursor: pointer;
-				transition: all 0.15s ease;
-			}
-
-			.btn-primary {
-				background: #3b82f6;
-				color: #020617;
-				box-shadow: 0 18px 40px rgba(59, 130, 246, 0.45);
-			}
-
-			.btn-primary:hover {
-				background: #2563eb;
-				transform: translateY(-1px);
-				box-shadow: 0 20px 48px rgba(59, 130, 246, 0.6);
-			}
-
-			.btn-link {
-				background: rgba(148,163,184,0.1);
-				color: #64748b;
-				text-decoration: none;
-				display: inline-flex;
 				align-items: center;
 				justify-content: center;
 			}
 
+			.auth-title {
+				font-family: 'Newsreader', Georgia, serif;
+				font-size: 1.75rem;
+				font-weight: 500;
+				color: #0F223D;
+				line-height: 1.25;
+			}
+
+			.auth-sub {
+				margin-top: 10px;
+				font-size: 0.875rem;
+				color: #64748B;
+				line-height: 1.6;
+			}
+
+			.status-box {
+				margin-top: 18px;
+				padding: 12px 16px;
+				border-radius: 10px;
+				background: #ECFDF5;
+				border: 1px solid #A7F3D0;
+				color: #065F46;
+				font-size: 0.85rem;
+			}
+
+			.btn-primary {
+				margin-top: 24px;
+				width: 100%;
+				border-radius: 10px;
+				border: none;
+				background: #0F223D;
+				color: #FFFFFF;
+				font-family: inherit;
+				font-weight: 600;
+				padding: 11px 18px;
+				cursor: pointer;
+				font-size: 0.875rem;
+				transition: all 0.15s ease;
+			}
+
+			.btn-primary:hover {
+				background: #162C50;
+			}
+
+			.btn-link {
+				margin-top: 14px;
+				background: none;
+				border: none;
+				color: #64748B;
+				font-family: inherit;
+				font-size: 0.825rem;
+				cursor: pointer;
+				text-decoration: underline;
+			}
+
 			.btn-link:hover {
-				background: rgba(148,163,184,0.2);
-				color: #cbd5e1;
-			}
-
-			.info-text {
-				font-size: 0.8rem;
-				color: #6b7280;
-				margin-top: 16px;
-				line-height: 1.5;
-			}
-
-			a {
-				color: #3b82f6;
-				text-decoration: none;
-			}
-
-			a:hover {
-				color: #2563eb;
+				color: #0F223D;
 			}
 		</style>
 	</head>
 	<body>
-		<div class="container">
-			<div class="card">
-				<div class="icon">✉️</div>
-				<h1>Verifikasi Email Diperlukan</h1>
-				<p class="subtitle">
-					Akun Anda sudah dibuat, namun kami perlu memverifikasi email Anda sebelum Anda dapat login.
+		<div class="auth-shell">
+			<div class="auth-card">
+				<div class="icon-wrap">
+					<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+						<polyline points="22,6 12,13 2,6"/>
+					</svg>
+				</div>
+
+				<h1 class="auth-title">Verifikasi Alamat Email</h1>
+				<p class="auth-sub">
+					Terima kasih telah mendaftar di Aksara Developer! Sebelum memulai, silakan periksa kotak masuk email Anda dan klik tautan verifikasi yang kami kirimkan.
 				</p>
 
-				@if (session('success'))
-					<div class="message-box">
-						{{ session('success') }}
+				@if (session('status') == 'verification-link-sent')
+					<div class="status-box">
+						Tautan verifikasi baru telah berhasil dikirim ke alamat email yang Anda daftarkan.
 					</div>
 				@endif
 
-				@if (session('error'))
-					<div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; padding: 16px; margin-bottom: 24px; color: #ef4444; font-size: 0.9rem;">
-						{{ session('error') }}
-					</div>
-				@endif
-
-				<div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 10px; padding: 20px; margin-bottom: 24px; text-align: left;">
-					<p style="margin-bottom: 12px; color: #cbd5e1;"><strong>📧 Apa yang perlu Anda lakukan:</strong></p>
-					<ol style="color: #64748b; padding-left: 20px;">
-						<li style="margin-bottom: 8px;">Cek email Anda (termasuk folder Spam/Junk)</li>
-						<li style="margin-bottom: 8px;">Klik link "Verifikasi Email" di email dari kami</li>
-						<li>Kembali ke halaman login dan masuk dengan akun Anda</li>
-					</ol>
-				</div>
-
-				<form method="POST" action="{{ route('verification.resend') }}" style="margin-bottom: 24px;">
+				<form method="POST" action="{{ route('verification.send') }}">
 					@csrf
-					<div class="form-group">
-						<label for="email">Email Anda:</label>
-						<input 
-							type="email" 
-							id="email" 
-							name="email" 
-							required 
-							placeholder="Masukkan email yang didaftarkan"
-							style="margin-bottom: 12px;">
-						@error('email')
-							<span style="color: #ef4444; font-size: 0.8rem;">{{ $message }}</span>
-						@enderror
-					</div>
-
-					<div class="btn-group">
-						<button type="submit" class="btn-primary">
-							Kirim Ulang Link
-						</button>
-						<a href="{{ route('login') }}" class="btn-link">
-							Kembali ke Login
-						</a>
-					</div>
+					<button type="submit" class="btn-primary">
+						Kirim Ulang Email Verifikasi
+					</button>
 				</form>
 
-				<div class="info-text">
-					💡 <strong>Tips:</strong> Jika email tidak diterima, cek folder Spam atau Junk. Atau minta kami untuk mengirim link verifikasi ulang.
-				</div>
+				<form method="POST" action="{{ route('logout') }}">
+					@csrf
+					<button type="submit" class="btn-link">
+						Keluar / Ganti Akun
+					</button>
+				</form>
 			</div>
 		</div>
 	</body>

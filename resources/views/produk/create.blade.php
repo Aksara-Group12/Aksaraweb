@@ -21,7 +21,7 @@
 					<label style="font-size:0.85rem; font-weight:500; color:#1e293b;">Kategori Produk</label>
 					<select name="kategori_produk_id" style="padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.95); color:#1e293b; font-size:0.9rem;">
 						<option value="">-- Pilih Kategori --</option>
-						@foreach($kategoriProduks as $kategori)
+						@foreach($kategoriProduk as $kategori)
 							<option value="{{ $kategori->id }}">{{ $kategori->name }}</option>
 						@endforeach
 					</select>

@@ -257,16 +257,11 @@
 			@endforeach
 		</div>
 
-		@php
-			$totalBiayaTambahan = $transaksiKeluar->biayaTambahan->sum('nominal');
-		@endphp
-
 		<div class="totals">
 			<div class="total-row">
 				<span>Subtotal:</span>
 				<span>Rp {{ number_format($transaksiKeluar->items->sum('total_harga'), 0, ',', '.') }}</span>
 			</div>
-			@if($totalBiayaTambahan > 0)
 			<div class="total-row">
 				<span>Biaya Tambahan:</span>
 				<span>Rp {{ number_format($totalBiayaTambahan, 0, ',', '.') }}</span>
@@ -301,24 +296,6 @@
 				</div>
 				<div style="margin-top: 5px;">
 					{{ $transaksiKeluar->catatan }}
-				</div>
-			</div>
-		@endif
-
-		@if($totalBiayaTambahan > 0)
-			<div class="info-section">
-				<div class="info-row">
-					<span class="info-label">Rincian Biaya Tambahan:</span>
-				</div>
-				<div style="margin-top: 5px; font-size:10px;">
-					@foreach($transaksiKeluar->biayaTambahan as $b)
-						<div class="info-row">
-							<span>
-								{{ $b->nama }}@if($b->keterangan) - {{ $b->keterangan }}@endif
-							</span>
-							<span>Rp {{ number_format($b->nominal, 0, ',', '.') }}</span>
-						</div>
-					@endforeach
 				</div>
 			</div>
 		@endif

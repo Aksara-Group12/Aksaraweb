@@ -441,7 +441,9 @@
 		@if(auth()->check() && auth()->user()->role === 'owner')
 			@include('component.subscription_expired_modal')
 		@endif
-		
+
+		@stack('scripts')
+
 		<script>
 			document.addEventListener('DOMContentLoaded', function () {
 				// Inisialisasi ikon Lucide (Shadcn Standard)

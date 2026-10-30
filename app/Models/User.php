@@ -91,4 +91,25 @@ class User extends Authenticatable
     {
         return $this->hasMany(User::class, 'owner_id');
     }
+
+    /**
+     * Get the role of this user.
+     */
+    public function userRole()
+    {
+        return $this->belongsTo(Role::class, 'role', 'name');
+    }
+
+    /**
+     * Check if user has specific permission.
+     */
+    public function hasPermission($permission)
+    {
+        $role = $this->userRole;
+        if (!$role || !$role->is_active) {
+            return false;
+        }
+
+        return in_array($permission, $role->permissions ?? []);
+    }
 }

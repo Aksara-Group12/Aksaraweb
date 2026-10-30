@@ -7,6 +7,12 @@
 		// $paketType = $isOwner ? \App\Models\Subscribe::getPackageType($user->id) : 1; // DISABLED - semua fitur terbuka
 		$profile = auth()->user()->profile ?? \App\Models\Profile::where('user_id', auth()->id())->first();
 		$storeName = $profile?->store_name ?? 'Aksara';
+
+		// Helper function untuk cek permission
+		$hasPermission = function($permission) use ($user) {
+			if ($user->role === 'owner') return true;
+			return $user->hasPermission($permission);
+		};
 	@endphp
 	<div class="hz-sidebar-header">
 		<div class="hz-logo-badge">
@@ -70,38 +76,49 @@
 			</div>
 		@endif
 
-		@if($isOwner)
+		@if($isOwner || $hasPermission('produk'))
 			<div class="hz-nav-group">
 				<p class="hz-nav-group-title">Manajemen</p>
-				<a href="{{ $ownerSubscriptionActive ? route('produk.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('produk.index') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-					<i data-lucide="box" class="hz-nav-lucide"></i>
-					<span class="hz-nav-label">Produk/Menu</span>
-				</a>
-				<a href="{{ $ownerSubscriptionActive ? route('data-master.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('data-master.index') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-					<i data-lucide="settings" class="hz-nav-lucide"></i>
-					<span class="hz-nav-label">Data Master</span>
-				</a>
+				@if($hasPermission('produk'))
+					<a href="{{ $ownerSubscriptionActive ? route('produk.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('produk.index') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
+						<i data-lucide="box" class="hz-nav-lucide"></i>
+						<span class="hz-nav-label">Produk/Menu</span>
+					</a>
+				@endif
+				@if($hasPermission('data_master'))
+					<a href="{{ $ownerSubscriptionActive ? route('data-master.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('data-master.index') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
+						<i data-lucide="settings" class="hz-nav-lucide"></i>
+						<span class="hz-nav-label">Data Master</span>
+					</a>
+				@endif
 			</div>
+		@endif
 
+		@if($isOwner || $hasPermission('pos') || $hasPermission('riwayat_penjualan') || $hasPermission('pengeluaran'))
 			<div class="hz-nav-group">
 				<p class="hz-nav-group-title">Transaksi</p>
-				<a href="{{ $ownerSubscriptionActive ? route('transaksi.pos') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('transaksi.pos') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-					<i data-lucide="shopping-cart" class="hz-nav-lucide"></i>
-					<span class="hz-nav-label">POS Kasir</span>
-				</a>
-				@if(!session()->has('admin_id'))
+				@if($hasPermission('pos'))
+					<a href="{{ $ownerSubscriptionActive ? route('transaksi.pos') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('transaksi.pos') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
+						<i data-lucide="shopping-cart" class="hz-nav-lucide"></i>
+						<span class="hz-nav-label">POS Kasir</span>
+					</a>
+				@endif
+				@if($hasPermission('riwayat_penjualan') && !session()->has('admin_id'))
 					<a href="{{ $ownerSubscriptionActive ? route('transaksi.keluar') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('transaksi.keluar') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
 						<i data-lucide="arrow-up-right" class="hz-nav-lucide"></i>
 						<span class="hz-nav-label">Riwayat Penjualan</span>
 					</a>
 				@endif
-				<a href="{{ $ownerSubscriptionActive ? route('pengeluaran.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('pengeluaran.*') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-					<i data-lucide="receipt" class="hz-nav-lucide"></i>
-					<span class="hz-nav-label">Pengeluaran</span>
-				</a>
+				@if($hasPermission('pengeluaran'))
+					<a href="{{ $ownerSubscriptionActive ? route('pengeluaran.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('pengeluaran.*') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
+						<i data-lucide="receipt" class="hz-nav-lucide"></i>
+						<span class="hz-nav-label">Pengeluaran</span>
+					</a>
+				@endif
 			</div>
+		@endif
 
-			@if(!session()->has('admin_id'))
+			@if($hasPermission('laporan') && !session()->has('admin_id'))
 				<div class="hz-nav-group">
 					<p class="hz-nav-group-title">Laporan</p>
 					<a href="{{ $ownerSubscriptionActive ? route('laporan.keuangan') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('laporan.keuangan') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>

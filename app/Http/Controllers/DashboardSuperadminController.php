@@ -60,8 +60,6 @@ class DashboardSuperadminController extends BaseController
 		// Total uang masuk (pembelian produk - transaksi masuk)
 		// TransaksiMasuk dihapus
 		$totalMasuk = 0;
-			->where('status', 'complete')
-			->sum('total_harga');
 
 		// Total uang keluar (penjualan produk - transaksi keluar)
 		$totalKeluar = (float) TransaksiKeluar::whereBetween('tanggal_transaksi', [$start, $end])

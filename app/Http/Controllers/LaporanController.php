@@ -252,31 +252,8 @@ class LaporanController extends BaseController
 			}
 		}
 
-		// Query semua transaksi masuk items dengan filter tanggal
 		// TransaksiMasuk dihapus, jadi tidak ada data masuk
 		$masukItems = collect();
-			->whereHas('transaksi', function ($query) use ($startDate, $endDate, $pemasok) {
-				$query->whereBetween('tanggal_transaksi', [$startDate, $endDate])
-					->where('status', 'complete')
-					->where('user_id', auth()->user()->id);
-				if ($pemasok) {
-					$query->where('supplier_name', 'like', '%' . $pemasok . '%');
-				}
-			})
-			->orderBy('created_at', 'asc')
-			->get();
-
-		foreach ($masukItems as $masukItem) {
-			// Dapatkan nomor_seri array dari item pembelian
-			$serials = is_array($masukItem->nomor_seri) ? $masukItem->nomor_seri : json_decode($masukItem->nomor_seri ?? '[]', true) ?? [];
-			
-			$transaksiMasuk = $masukItem->transaksi;
-			$product = $masukItem->product;
-
-			// Untuk setiap serial number dalam item, buat satu baris di excel
-			foreach ($serials as $serial) {
-				$normSerial = strtolower(trim($serial));
-				$keluarItem = $serialToKeluarItem[$normSerial] ?? null;
 
 				$tanggalJualText = null;
 				$namaCustomer = null;

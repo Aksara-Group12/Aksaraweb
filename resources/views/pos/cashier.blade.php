@@ -164,10 +164,7 @@
 		return parseInt(value.replace(/\./g, '')) || 0;
 	}
 
-	// Simple version - use inline onclick for reliability
 	function addToCart(productId) {
-		alert('Klik produk! ID: ' + productId);
-
 		const productCard = document.querySelector(`.product-card[data-id="${productId}"]`);
 		if (!productCard) {
 			alert('Product card tidak ditemukan untuk ID: ' + productId);
@@ -185,8 +182,6 @@
 			diskon: 0
 		};
 
-		alert('Produk ditambahkan: ' + product.name);
-
 		const existingItem = cart.find(item => item.id === productId);
 		if (existingItem) {
 			if (existingItem.qty < existingItem.stock) {
@@ -199,7 +194,6 @@
 			cart.push(product);
 		}
 
-		alert('Total item di keranjang: ' + cart.length);
 		renderCart();
 	}
 

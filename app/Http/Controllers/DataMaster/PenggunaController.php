@@ -10,7 +10,17 @@ class PenggunaController extends Controller
 {
 	public function index()
 	{
-		$users = User::latest()->paginate(20);
+		$ownerId = auth()->id();
+
+		$users = User::where(function($query) use ($ownerId) {
+				// Owner memiliki owner_id = null
+				$query->where('owner_id', $ownerId)
+				      ->orWhere('id', $ownerId);
+			})
+			->where('role', '!=', 'superadmin')
+			->latest()
+			->paginate(20);
+
 		return view('data-master.pengguna.index', compact('users'));
 	}
 
@@ -29,6 +39,8 @@ class PenggunaController extends Controller
 		]);
 
 		$validated['password'] = bcrypt($validated['password']);
+		$validated['owner_id'] = auth()->id();
+		$validated['is_active'] = true;
 
 		User::create($validated);
 

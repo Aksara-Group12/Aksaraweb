@@ -25,6 +25,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'owner_id',
+        'is_active',
     ];
 
     /**
@@ -72,5 +74,21 @@ class User extends Authenticatable
     public function subscriptions()
     {
         return $this->hasMany(Subscribe::class);
+    }
+
+    /**
+     * Get the owner of this user.
+     */
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    /**
+     * Get the users owned by this user (for owners).
+     */
+    public function ownedUsers()
+    {
+        return $this->hasMany(User::class, 'owner_id');
     }
 }

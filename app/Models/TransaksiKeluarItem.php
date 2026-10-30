@@ -16,7 +16,6 @@ class TransaksiKeluarItem extends Model
         'diskon', // Diskon per baris
         'ppn', // PPN per baris (dalam persen)
         'total_harga', // Subtotal = qty_keluar * harga_jual - diskon + ppn
-        'biaya_tambahan', // Opsional
         'nomor_seri', // Legacy untuk kompatibilitas
         'hpp_snapshot', // Snapshot HPP saat transaksi
     ];
@@ -46,28 +45,5 @@ class TransaksiKeluarItem extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
-    }
-
-    /**
-     * Hitung total harga otomatis (untuk produk umum)
-     */
-    public static function calculateTotal($qty, $hargaJual, $diskon = 0, $biayaTambahan = 0, $ppn = 0)
-    {
-        $subtotal = ($qty * $hargaJual) - $diskon;
-        // Hanya hitung PPN jika ppn > 0 (manual input)
-        $ppnAmount = 0;
-        if ($ppn > 0) {
-            $ppnRate = $ppn / 100;
-            $ppnAmount = $subtotal * $ppnRate;
-        }
-        return $subtotal + $biayaTambahan + $ppnAmount;
-    }
-
-    /**
-     * Hitung total harga legacy (untuk kompatibilitas logam mulia)
-     */
-    public static function calculateTotalLegacy($qty, $harga_gram, $berat, $biaya_tambahan = 0)
-    {
-        return ($qty * $harga_gram * $berat) + $biaya_tambahan;
     }
 }

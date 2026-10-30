@@ -233,7 +233,6 @@ class TransaksiController extends BaseController
 						'diskon' => $diskon,
 						'ppn' => $ppn, // Simpan persentase PPN
 						'total_harga' => $itemTotal,
-						'biaya_tambahan' => 0,
 						'hpp_snapshot' => $hppSnapshot,
 					]);
 

@@ -262,14 +262,9 @@
 				<span>Subtotal:</span>
 				<span>Rp {{ number_format($transaksiKeluar->items->sum('total_harga'), 0, ',', '.') }}</span>
 			</div>
-			<div class="total-row">
-				<span>Biaya Tambahan:</span>
-				<span>Rp {{ number_format($totalBiayaTambahan, 0, ',', '.') }}</span>
-			</div>
-			@endif
 			<div class="total-row grand">
 				<span>TOTAL:</span>
-				<span>Rp {{ number_format($transaksiKeluar->total_harga ?? ($transaksiKeluar->items->sum('total_harga') + $totalBiayaTambahan), 0, ',', '.') }}</span>
+				<span>Rp {{ number_format($transaksiKeluar->total_harga ?? $transaksiKeluar->items->sum('total_harga'), 0, ',', '.') }}</span>
 			</div>
 			@if($transaksiKeluar->nominal_bayar > 0)
 			<div class="total-row">

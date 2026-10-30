@@ -173,6 +173,9 @@ class ProdukController extends BaseController
 
 			$kategori = Kategori::find($validated['kategori_produk_id']);
 
+			// Hapus kategori_produk_id dari array sebelum create (tidak ada di fillable)
+			unset($validated['kategori_produk_id']);
+
 			// Set default values untuk field lain
 			$validated['code'] = Product::generateCode();
 			$validated['user_id'] = auth()->user()->id;
@@ -183,6 +186,7 @@ class ProdukController extends BaseController
 			$validated['harga_beli'] = 0;
 			$validated['min_stock'] = 0;
 			$validated['nama_produk'] = $kategori->name;
+			$validated['kategori'] = $kategori->name; // Simpan nama kategori ke field kategori
 
 			// Membuat produk TIDAK otomatis menambah stok
 			$product = Product::create($validated);

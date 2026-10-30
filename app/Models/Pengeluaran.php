@@ -13,7 +13,6 @@ class Pengeluaran extends Model
 		'tanggal',
 		'kategori',
 		'nominal',
-		'metode_pembayaran',
 		'keterangan',
 		'reference_no',
 	];

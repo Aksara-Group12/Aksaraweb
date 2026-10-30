@@ -23,7 +23,6 @@
 				<th>Kategori</th>
 				<th>Keterangan</th>
 				<th>Nominal</th>
-				<th>Metode</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -35,7 +34,6 @@
 				<td>{{ $expense->kategori ?? '-' }}</td>
 				<td>{{ $expense->keterangan ?? '-' }}</td>
 				<td>Rp {{ number_format($expense->nominal, 0, ',', '.') }}</td>
-				<td>{{ $expense->metode_pembayaran === 'cash' ? 'Cash' : 'Non-Cash' }}</td>
 			</tr>
 		@endforeach
 		</tbody>

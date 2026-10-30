@@ -60,7 +60,6 @@ class PengeluaranController extends BaseController
 				'tanggal' => now()->format('Y-m-d'),
 				'kategori' => $kategori->name,
 				'nominal' => $validated['nominal'],
-				'metode_pembayaran' => 'cash',
 				'keterangan' => $validated['keterangan'],
 				'reference_no' => null,
 			]);
@@ -99,7 +98,6 @@ class PengeluaranController extends BaseController
 				'tanggal' => 'required|date',
 				'kategori_pengeluaran_id' => 'nullable|exists:kategori_pengeluaran,id',
 				'nominal' => 'required|integer|min:0',
-				'metode_pembayaran' => 'required|in:cash,non-cash',
 				'keterangan' => 'nullable|string',
 			]);
 
@@ -109,7 +107,6 @@ class PengeluaranController extends BaseController
 				'tanggal' => $validated['tanggal'],
 				'kategori' => $kategori ? $kategori->name : $pengeluaran->kategori,
 				'nominal' => $validated['nominal'],
-				'metode_pembayaran' => $validated['metode_pembayaran'],
 				'keterangan' => $validated['keterangan'] ?? null,
 			]);
 
@@ -186,20 +183,18 @@ class PengeluaranController extends BaseController
 		fputs($stream, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
 		// Header kolom (tanpa aksi)
-		fputcsv($stream, ['Tanggal', 'Kategori', 'Keterangan', 'Nominal', 'Metode'], ';');
+		fputcsv($stream, ['Tanggal', 'Kategori', 'Keterangan', 'Nominal'], ';');
 
 		foreach ($pengeluaran as $expense) {
 			$tanggal = $expense->tanggal
 				? $expense->tanggal->format('d/m/Y')
 				: ($expense->created_at ? $expense->created_at->format('d/m/Y') : '');
-			$metode = $expense->metode_pembayaran === 'cash' ? 'Cash' : 'Non-Cash';
 
 			fputcsv($stream, [
 				$tanggal,
 				$expense->kategori ?? '-',
 				$expense->keterangan ?? '-',
 				$expense->nominal,
-				$metode,
 			], ';');
 		}
 

@@ -74,7 +74,6 @@
 								<th style="text-align:left; padding:14px 10px;">Kategori</th>
 								<th style="text-align:left; padding:14px 10px;">Keterangan</th>
 								<th style="text-align:right; padding:14px 10px;">Nominal</th>
-								<th style="text-align:left; padding:14px 10px;">Metode</th>
 								<th style="text-align:right; padding:14px 10px;">Aksi</th>
 							</tr>
 						</thead>
@@ -88,7 +87,6 @@
 									<td style="padding:14px 10px; color: #cbd5e1;">{{ $e->kategori ?? '-' }}</td>
 									<td style="padding:14px 10px; color: #64748b; max-width: 320px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ $e->keterangan ?? '-' }}</td>
 									<td style="padding:14px 10px; text-align:right; font-weight: 600; color: #3b82f6;">Rp {{ number_format($e->nominal, 0, ',', '.') }}</td>
-									<td style="padding:14px 10px; color: #cbd5e1;">{{ $e->metode_pembayaran === 'cash' ? 'Cash' : 'Non-Cash' }}</td>
 									<td style="padding:14px 10px; text-align:right; position: relative;">
 										<button type="button" class="hz-more-btn" style="background: transparent; border:none; color:#9ca3af; cursor:pointer; padding:4px 8px; border-radius:999px;">
 											&#8942;

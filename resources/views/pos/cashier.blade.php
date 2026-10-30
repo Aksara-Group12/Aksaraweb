@@ -57,22 +57,10 @@
 					</select>
 				</div>
 
-				<!-- Quick Add Product (Dropdown + Qty) -->
-				<div style="display: grid; grid-template-columns: 2fr 1fr auto; gap: 8px; margin-bottom: 16px; padding: 12px; background: rgba(59,130,246,0.05); border-radius: 10px; border: 1px solid rgba(59,130,246,0.2);">
-					<select id="quickAddProduct" style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;">
-						<option value="">-- Pilih Produk --</option>
-						@foreach ($products as $product)
-							<option value="{{ $product->id }}" data-price="{{ $product->harga_jual }}" data-stock="{{ $product->stock }}">{{ $product->nama_produk }} (Rp {{ number_format($product->harga_jual, 0, ',', '.') }})</option>
-						@endforeach
-					</select>
-					<input type="number" id="quickAddQty" value="1" min="1" style="padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.85rem;" placeholder="Qty">
-					<button type="button" onclick="quickAddToCart()" style="padding: 8px 16px; border-radius: 8px; border: none; background: #3b82f6; color: #fff; font-size: 0.85rem; font-weight: 600; cursor: pointer;">+ Tambah</button>
-				</div>
-
 				<!-- Product Grid -->
 				<div id="productGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; max-height: 500px; overflow-y: auto;">
 					@foreach ($products as $product)
-						<div class="product-card" data-id="{{ $product->id }}" data-name="{{ $product->nama_produk }}" data-sku="{{ $product->code ?? '' }}" data-unit="{{ $product->unit }}" data-stock="{{ $product->stock }}" data-price="{{ $product->harga_jual ?? 0 }}" style="border: 1px solid rgba(59,130,246,0.3); border-radius: 12px; padding: 12px; background: rgba(255,255,255,0.95); cursor: pointer; transition: all 0.2s;" onclick="addToCart({{ $product->id }})">
+						<div class="product-card" data-id="{{ $product->id }}" data-name="{{ $product->nama_produk }}" data-sku="{{ $product->code ?? '' }}" data-unit="{{ $product->unit }}" data-stock="{{ $product->stock }}" data-price="{{ $product->harga_jual ?? 0 }}" style="border: 1px solid rgba(59,130,246,0.3); border-radius: 12px; padding: 12px; background: rgba(255,255,255,0.95); cursor: pointer; transition: all 0.2s;">
 							<div style="font-weight: 600; color: #1e293b; font-size: 0.9rem; margin-bottom: 4px;">{{ $product->nama_produk }}</div>
 							<div style="color: #64748b; font-size: 0.8rem; margin-bottom: 4px;">{{ $product->code ?? '-' }} | {{ $product->unit }}</div>
 							<div style="color: #3b82f6; font-weight: 600; font-size: 0.95rem;">Rp {{ number_format($product->harga_jual ?? 0, 0, ',', '.') }}</div>
@@ -176,8 +164,26 @@
 		return parseInt(value.replace(/\./g, '')) || 0;
 	}
 
+	// Initialize event listeners when DOM is ready
+	document.addEventListener('DOMContentLoaded', function() {
+		console.log('DOM loaded, initializing POS...');
+
+		// Add click event listeners to all product cards
+		const productCards = document.querySelectorAll('.product-card');
+		console.log('Found product cards:', productCards.length);
+
+		productCards.forEach(card => {
+			card.addEventListener('click', function() {
+				const productId = parseInt(this.dataset.id);
+				console.log('Product card clicked, ID:', productId);
+				addToCart(productId);
+			});
+		});
+	});
+
 	function addToCart(productId) {
 		console.log('Adding product to cart:', productId);
+
 		const productCard = document.querySelector(`.product-card[data-id="${productId}"]`);
 		if (!productCard) {
 			console.error('Product card not found for ID:', productId);
@@ -210,51 +216,6 @@
 		}
 
 		console.log('Cart after add:', cart);
-		renderCart();
-	}
-
-	function quickAddToCart() {
-		const select = document.getElementById('quickAddProduct');
-		const qtyInput = document.getElementById('quickAddQty');
-		const productId = parseInt(select.value);
-		const qty = parseInt(qtyInput.value) || 1;
-
-		if (!productId) {
-			alert('Silakan pilih produk terlebih dahulu');
-			return;
-		}
-
-		const selectedOption = select.options[select.selectedIndex];
-		const product = {
-			id: productId,
-			name: selectedOption.text.split(' (Rp')[0],
-			stock: parseFloat(selectedOption.dataset.stock),
-			price: parseFloat(selectedOption.dataset.price),
-			qty: qty,
-			diskon: 0
-		};
-
-		if (qty > product.stock) {
-			alert('Stok tidak mencukupi. Stok tersedia: ' + product.stock);
-			return;
-		}
-
-		const existingItem = cart.find(item => item.id === productId);
-		if (existingItem) {
-			if (existingItem.qty + qty <= existingItem.stock) {
-				existingItem.qty += qty;
-			} else {
-				alert('Stok tidak mencukupi. Stok tersedia: ' + existingItem.stock);
-				return;
-			}
-		} else {
-			cart.push(product);
-		}
-
-		// Reset dropdown dan qty
-		select.value = '';
-		qtyInput.value = 1;
-
 		renderCart();
 	}
 

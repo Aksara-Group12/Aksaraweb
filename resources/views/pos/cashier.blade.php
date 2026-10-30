@@ -165,7 +165,13 @@
 	}
 
 	function addToCart(productId) {
+		console.log('Adding product to cart:', productId);
 		const productCard = document.querySelector(`.product-card[data-id="${productId}"]`);
+		if (!productCard) {
+			console.error('Product card not found for ID:', productId);
+			return;
+		}
+
 		const product = {
 			id: productId,
 			name: productCard.dataset.name,
@@ -176,6 +182,8 @@
 			qty: 1,
 			diskon: 0
 		};
+
+		console.log('Product data:', product);
 
 		const existingItem = cart.find(item => item.id === productId);
 		if (existingItem) {
@@ -189,6 +197,7 @@
 			cart.push(product);
 		}
 
+		console.log('Cart after add:', cart);
 		renderCart();
 	}
 

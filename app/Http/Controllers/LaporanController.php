@@ -252,60 +252,9 @@ class LaporanController extends BaseController
 			}
 		}
 
-		// TransaksiMasuk dihapus, jadi tidak ada data masuk
-		$masukItems = collect();
-
-				$tanggalJualText = null;
-				$namaCustomer = null;
-				$kontakCustomer = null;
-				$kotaKabupatenJual = null;
-
-				if ($keluarItem && $keluarItem->transaksi) {
-					$transaksiKeluar = $keluarItem->transaksi;
-					$tanggalJualText = $transaksiKeluar->tanggal_transaksi->format('m/d/y');
-					$namaCustomer = $transaksiKeluar->customer_name;
-					$kontakCustomer = $transaksiKeluar->customer_contact;
-					$kotaKabupatenJual = $transaksiKeluar->lokasi;
-				}
-
-				// Filter berdasarkan status
-				$isSold = !is_null($namaCustomer);
-				if ($status === 'sold' && !$isSold) {
-					continue; // Skip jika hanya filter sold dan belum terjual
-				}
-				if ($status === 'unsold' && $isSold) {
-					continue; // Skip jika hanya filter unsold dan sudah terjual
-				}
-
-				// Pastikan nomor telepon diekspor sebagai teks agar nol di depan tidak hilang di Excel
-				$supplierContact = $transaksiMasuk->supplier_contact;
-				if (!is_null($supplierContact) && $supplierContact !== '') {
-					$supplierContact = "'" . $supplierContact;
-				}
-
-				$customerContact = $kontakCustomer;
-				if (!is_null($customerContact) && $customerContact !== '') {
-					$customerContact = "'" . $customerContact;
-				}
-
-				// Build row
-				$row = [
-					$transaksiMasuk->tanggal_transaksi->format('m/d/y'),     // A: Tanggal Beli
-					$transaksiMasuk->supplier_name,                         // B: Pemasok
-					$supplierContact,                                       // C: Kontak Pemasok
-					$transaksiMasuk->lokasi,                               // D: Kota/Kabupaten
-					$masukItem->berat,                                      // E: Gramasi
-					$product?->jenis_logam,                                 // F: Jenis Logam
-					$masukItem->berat . '/' . $serial,                      // G: Gramasi/Seri
-					$namaCustomer,                                          // H: Nama Customer
-					$customerContact,                                       // I: Kontak Customer
-					$kotaKabupatenJual,                                     // J: Kota/Kabupaten
-					$tanggalJualText,                                       // K: Tanggal Terjual
-				];
-
-				$data[] = $row;
-			}
-		}
+		// TransaksiMasuk dihapus, fitur tracking produk tidak tersedia
+		// Return empty data
+		$data[] = [];
 
 		// Generate CSV filename
 		$fileName = 'tracking-produk_' . $startDate->format('Ymd') . '_' . $endDate->format('Ymd') . '.csv';

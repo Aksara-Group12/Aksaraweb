@@ -68,8 +68,6 @@ class DashboardSuperadminController extends BaseController
 
 		// TransaksiMasuk dihapus
 		$todayMasuk = 0;
-			->where('status', 'complete')
-			->sum('total_harga');
 
 		$todayKeluar = (float) TransaksiKeluar::whereDate('tanggal_transaksi', Carbon::today())
 			->where('status', 'complete')

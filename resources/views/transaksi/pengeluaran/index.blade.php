@@ -9,7 +9,7 @@
 			<p class="hz-top-sub">Daftar biaya dan pengeluaran operasional.</p>
 		</div>
 		<div class="hz-top-actions" style="display:flex; align-items:center; gap:10px;">
-			<form method="GET" action="{{ route('expenses.index') }}" style="display:flex; align-items:center; gap:6px;">
+			<form method="GET" action="{{ route('pengeluaran.index') }}" style="display:flex; align-items:center; gap:6px;">
 				<input type="text" name="search" value="{{ request('search') }}" placeholder="Cari kategori / keterangan" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b; min-width:200px;">
 				<select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
 					<option value="10" {{ request('per_page', 20) == 10 ? 'selected' : '' }}>10</option>
@@ -17,18 +17,18 @@
 					<option value="50" {{ request('per_page', 20) == 50 ? 'selected' : '' }}>50</option>
 				</select>
 			</form>
-			<a href="{{ route('expenses.export.excel', request()->only('search')) }}" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; padding:6px 10px; font-size:0.8rem; text-decoration:none;">
+			<a href="{{ route('pengeluaran.export.excel', request()->only('search')) }}" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; padding:6px 10px; font-size:0.8rem; text-decoration:none;">
 				Export Excel
 			</a>
-			<a href="{{ route('expenses.export.pdf', request()->only('search')) }}" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; padding:6px 10px; font-size:0.8rem; text-decoration:none;">
+			<a href="{{ route('pengeluaran.export.pdf', request()->only('search')) }}" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; padding:6px 10px; font-size:0.8rem; text-decoration:none;">
 				Export PDF
 			</a>
-			<form id="expenses-bulk-delete-form" onsubmit="return false;">
-				<button type="button" id="expenses-bulk-delete-btn" style="display:none; border-radius:999px; border:none; background:#b91c1c; color:#fee2e2; padding:6px 12px; font-size:0.8rem; font-weight:600; cursor:pointer;">
+			<form id="pengeluaran-bulk-delete-form" onsubmit="return false;">
+				<button type="button" id="pengeluaran-bulk-delete-btn" style="display:none; border-radius:999px; border:none; background:#b91c1c; color:#fee2e2; padding:6px 12px; font-size:0.8rem; font-weight:600; cursor:pointer;">
 					Delete selected
 				</button>
 			</form>
-			<a href="{{ route('expenses.create') }}" class="hz-btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; padding: 10px 16px; gap: 8px;">
+			<a href="{{ route('pengeluaran.create') }}" class="hz-btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; padding: 10px 16px; gap: 8px;">
 				<svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M10 4.5V15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
 					<path d="M4.5 10H15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -60,15 +60,15 @@
 			</div>
 
 			<div style="margin-top: 8px; overflow-x: auto;">
-				@if ($expenses->count() > 0)
-					<form id="expenses-table-form" method="POST" action="{{ route('expenses.bulk-delete.post') }}">
+				@if ($pengeluaran->count() > 0)
+					<form id="pengeluaran-table-form" method="POST" action="{{ route('pengeluaran.bulk-delete.post') }}">
 						@csrf
-						<input type="hidden" name="ids" id="expensesBulkIds">
+						<input type="hidden" name="ids" id="pengeluaranBulkIds">
 						<table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
 						<thead>
 							<tr style="border-bottom: 1px solid rgba(59, 130, 246, 0.4); color:#9ca3af;">
 									<th style="padding:14px 10px; text-align:center; width:36px;">
-										<input type="checkbox" id="expenses-select-all" style="cursor:pointer;">
+										<input type="checkbox" id="pengeluaran-select-all" style="cursor:pointer;">
 									</th>
 									<th style="text-align:left; padding:14px 10px;">Tanggal</th>
 								<th style="text-align:left; padding:14px 10px;">Kategori</th>
@@ -79,10 +79,10 @@
 							</tr>
 						</thead>
 							<tbody>
-								@foreach ($expenses as $e)
+								@foreach ($pengeluaran as $e)
 									<tr style="border-bottom: 1px solid rgba(15,23,42,0.8);">
 										<td style="padding:14px 10px; text-align:center;">
-											<input type="checkbox" value="{{ $e->id }}" class="expenses-row-checkbox" style="cursor:pointer;">
+											<input type="checkbox" value="{{ $e->id }}" class="pengeluaran-row-checkbox" style="cursor:pointer;">
 										</td>
 										<td style="padding:14px 10px; color: #1e293b;">{{ $e->tanggal ? $e->tanggal->format('d/m/Y') : ($e->created_at ? $e->created_at->format('d/m/Y') : '-') }}</td>
 									<td style="padding:14px 10px; color: #cbd5e1;">{{ $e->kategori ?? '-' }}</td>
@@ -94,13 +94,13 @@
 											&#8942;
 										</button>
 										<div class="hz-more-menu actions-dropdown" style="display:none; position:absolute; right:10px; top:32px; background:rgba(255,255,255,0.9); border:1px solid rgba(148,163,184,0.4); border-radius:8px; min-width:160px; z-index:10;">
-											<a href="{{ route('expenses.edit', $e->id) }}" class="actions-dropdown-item edit">
+											<a href="{{ route('pengeluaran.edit', $e->id) }}" class="actions-dropdown-item edit">
 												<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
 													<path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
 												</svg>
 												<span>Edit</span>
 											</a>
-											<button type="button" class="actions-dropdown-item delete js-row-delete" data-url="{{ route('expenses.destroy.post', $e->id) }}" style="width:100%; text-align:left;">
+											<button type="button" class="actions-dropdown-item delete js-row-delete" data-url="{{ route('pengeluaran.destroy.post', $e->id) }}" style="width:100%; text-align:left;">
 												<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
 													<path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
 												</svg>
@@ -113,20 +113,20 @@
 							</tbody>
 						</table>
 					</form>
-					@if (method_exists($expenses, 'links'))
+					@if (method_exists($pengeluaran, 'links'))
 						<div style="margin-top: 12px; display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; color:#9ca3af;">
 							<div>
-								Menampilkan {{ $expenses->firstItem() ?? 0 }} - {{ $expenses->lastItem() ?? 0 }} dari {{ $expenses->total() }} pengeluaran
+								Menampilkan {{ $pengeluaran->firstItem() ?? 0 }} - {{ $pengeluaran->lastItem() ?? 0 }} dari {{ $pengeluaran->total() }} pengeluaran
 							</div>
 							<div>
-								{{ $expenses->links() }}
+								{{ $pengeluaran->links() }}
 							</div>
 						</div>
 					@endif
 				@else
 					<div style="padding: 40px; text-align: center; color: #64748b;">
 						<p style="margin-bottom: 12px;">Belum ada pengeluaran tercatat.</p>
-						<a href="{{ route('expenses.create') }}" class="hz-btn-primary" style="display: inline-block; text-decoration: none; padding: 10px 16px; border-radius: 10px;">Catat Pengeluaran Pertama</a>
+						<a href="{{ route('pengeluaran.create') }}" class="hz-btn-primary" style="display: inline-block; text-decoration: none; padding: 10px 16px; border-radius: 10px;">Catat Pengeluaran Pertama</a>
 					</div>
 				@endif
 			</div>
@@ -174,27 +174,27 @@
 	</style>
 
 	<!-- Modal konfirmasi bulk delete pengeluaran -->
-	<div id="expenses-bulk-modal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.8); z-index:50; align-items:center; justify-content:center;">
+	<div id="pengeluaran-bulk-modal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.8); z-index:50; align-items:center; justify-content:center;">
 		<div style="background:rgba(255,255,255,0.9); border-radius:16px; padding:20px 22px; width:100%; max-width:360px; border:1px solid rgba(59,130,246,0.3); box-shadow:0 18px 45px rgba(15,23,42,0.9);">
 			<h3 style="font-size:1rem; font-weight:600; color:#1e293b; margin-bottom:4px;">Hapus pengeluaran terpilih?</h3>
 			<p style="font-size:0.85rem; color:#9ca3af; margin-bottom:16px;">Data pengeluaran yang dihapus tidak dapat dikembalikan.</p>
 			<div style="display:flex; justify-content:flex-end; gap:8px;">
-				<button type="button" id="expenses-bulk-cancel" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:transparent; color:#1e293b; padding:6px 14px; font-size:0.8rem; cursor:pointer;">Batal</button>
-				<button type="button" id="expenses-bulk-confirm" style="border-radius:999px; border:none; background:#b91c1c; color:#fee2e2; padding:6px 14px; font-size:0.8rem; font-weight:600; cursor:pointer;">Ya, hapus</button>
+				<button type="button" id="pengeluaran-bulk-cancel" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:transparent; color:#1e293b; padding:6px 14px; font-size:0.8rem; cursor:pointer;">Batal</button>
+				<button type="button" id="pengeluaran-bulk-confirm" style="border-radius:999px; border:none; background:#b91c1c; color:#fee2e2; padding:6px 14px; font-size:0.8rem; font-weight:600; cursor:pointer;">Ya, hapus</button>
 			</div>
 		</div>
 	</div>
 
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
-			const selectAll = document.getElementById('expenses-select-all');
-			const checkboxes = document.querySelectorAll('.expenses-row-checkbox');
-			const bulkBtn = document.getElementById('expenses-bulk-delete-btn');
-			const formTable = document.getElementById('expenses-table-form');
-			const formTop = document.getElementById('expenses-bulk-delete-form');
-			const modal = document.getElementById('expenses-bulk-modal');
-			const modalConfirm = document.getElementById('expenses-bulk-confirm');
-			const modalCancel = document.getElementById('expenses-bulk-cancel');
+			const selectAll = document.getElementById('pengeluaran-select-all');
+			const checkboxes = document.querySelectorAll('.pengeluaran-row-checkbox');
+			const bulkBtn = document.getElementById('pengeluaran-bulk-delete-btn');
+			const formTable = document.getElementById('pengeluaran-table-form');
+			const formTop = document.getElementById('pengeluaran-bulk-delete-form');
+			const modal = document.getElementById('pengeluaran-bulk-modal');
+			const modalConfirm = document.getElementById('pengeluaran-bulk-confirm');
+			const modalCancel = document.getElementById('pengeluaran-bulk-cancel');
 
 			function updateBulkButton() {
 				const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
@@ -231,12 +231,12 @@
 			}
 
 
-			function submitExpensesBulkDelete() {
+			function submitPengeluaranBulkDelete() {
 				const ids = Array.from(checkboxes)
 					.filter(cb => cb.checked)
 					.map(cb => cb.value);
 				if (!ids.length) return;
-				const idsInput = document.getElementById('expensesBulkIds');
+				const idsInput = document.getElementById('pengeluaranBulkIds');
 				if (idsInput) {
 					idsInput.value = JSON.stringify(ids);
 				}
@@ -264,7 +264,7 @@
 			if (modalConfirm && modal && formTable) {
 				modalConfirm.addEventListener('click', function () {
 					modal.style.display = 'none';
-					submitExpensesBulkDelete();
+					submitPengeluaranBulkDelete();
 				});
 			}
 		});

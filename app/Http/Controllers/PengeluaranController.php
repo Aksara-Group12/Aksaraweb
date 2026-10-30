@@ -73,21 +73,21 @@ class PengeluaranController extends BaseController
 		}
 	}
  
-	public function edit(Expenses $expense)
+	public function edit(Pengeluaran $pengeluaran)
 	{
 		// Validasi kepemilikan
-		if ((int) $expense->user_id !== (int) auth()->user()->id) {
+		if ((int) $pengeluaran->user_id !== (int) auth()->user()->id) {
 			abort(403, 'Anda tidak memiliki akses ke pengeluaran ini');
 		}
-		
+
 		$kategoriProduk = KategoriProduk::where('tipe', 'pengeluaran')->get();
-		return view('transaksi.pengeluaran.edit', compact('expense', 'kategoriProduk'));
+		return view('transaksi.pengeluaran.edit', compact('pengeluaran', 'kategoriProduk'));
 	}
 
-	public function update(Request $request, Expenses $expense)
+	public function update(Request $request, Pengeluaran $pengeluaran)
 	{
 		// Validasi kepemilikan
-		if ((int) $expense->user_id !== (int) auth()->user()->id) {
+		if ((int) $pengeluaran->user_id !== (int) auth()->user()->id) {
 			abort(403, 'Anda tidak memiliki akses ke pengeluaran ini');
 		}
 
@@ -101,7 +101,7 @@ class PengeluaranController extends BaseController
 				'keterangan' => 'nullable|string',
 			]);
 
-			$expense->update([
+			$pengeluaran->update([
 				'tanggal' => $validated['tanggal'],
 				'kategori' => $validated['kategori'] ?? null,
 				'nominal' => $validated['nominal'],
@@ -113,23 +113,23 @@ class PengeluaranController extends BaseController
 		} catch (\Illuminate\Validation\ValidationException $e) {
 			return back()->withErrors($e->errors())->withInput();
 		} catch (\Exception $e) {
-			\Log::error('Update Expenses Error: ' . $e->getMessage());
+			\Log::error('Update Pengeluaran Error: ' . $e->getMessage());
 			return back()->with('error', 'Terjadi kesalahan saat memperbarui pengeluaran');
 		}
 	}
 
-	public function destroy(Expenses $expense)
+	public function destroy(Pengeluaran $pengeluaran)
 	{
 		// Validasi kepemilikan
-		if ((int) $expense->user_id !== (int) auth()->user()->id) {
+		if ((int) $pengeluaran->user_id !== (int) auth()->user()->id) {
 			abort(403, 'Anda tidak memiliki akses ke pengeluaran ini');
 		}
 
 		try {
-			$expense->delete();
+			$pengeluaran->delete();
 			return redirect()->route('pengeluaran.index')->with('success', 'Pengeluaran berhasil dihapus');
 		} catch (\Exception $e) {
-			\Log::error('Destroy Expenses Error: ' . $e->getMessage());
+			\Log::error('Destroy Pengeluaran Error: ' . $e->getMessage());
 			return back()->with('error', 'Terjadi kesalahan saat menghapus pengeluaran');
 		}
 	}

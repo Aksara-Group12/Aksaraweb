@@ -33,7 +33,7 @@
 		</div>
 	@endif
 
-	<form action="{{ route('expenses.store') }}" method="POST" style="margin-top: 24px;">
+	<form action="{{ route('pengeluaran.store') }}" method="POST" style="margin-top: 24px;">
 		@csrf
 
 		<section class="hz-secondary-grid">

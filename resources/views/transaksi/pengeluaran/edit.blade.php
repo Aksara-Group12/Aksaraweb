@@ -27,7 +27,7 @@
 		</div>
 	@endif
 
-	<form action="{{ route('expenses.update', $expense->id) }}" method="POST" style="margin-top: 24px;">
+	<form action="{{ route('pengeluaran.update', $pengeluaran->id) }}" method="POST" style="margin-top: 24px;">
 		@csrf
 		@method('PUT')
 
@@ -40,7 +40,7 @@
 				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
 					<div style="display: flex; flex-direction: column; gap: 6px;">
 						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Tanggal <span style="color: #3b82f6;">*</span></label>
-						<input type="date" name="tanggal" value="{{ old('tanggal', optional($expense->tanggal)->format('Y-m-d')) }}" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
+						<input type="date" name="tanggal" value="{{ old('tanggal', optional($pengeluaran->tanggal)->format('Y-m-d')) }}" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
@@ -48,20 +48,20 @@
 						<select name="kategori_produk_id" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 							<option value="">-- Pilih Kategori --</option>
 							@foreach($kategoriProduk as $kat)
-								<option value="{{ $kat->id }}" {{ old('kategori_produk_id', $expense->kategori_produk_id) == $kat->id ? 'selected' : '' }}>{{ $kat->nama_kategori }}</option>
+								<option value="{{ $kat->id }}" {{ old('kategori_produk_id', $pengeluaran->kategori_produk_id) == $kat->id ? 'selected' : '' }}>{{ $kat->nama_kategori }}</option>
 							@endforeach
 						</select>
-						<input type="text" name="kategori" value="{{ old('kategori', $expense->kategori) }}" placeholder="Atau ketik kategori lain..." style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem; margin-top: 4px;">
+						<input type="text" name="kategori" value="{{ old('kategori', $pengeluaran->kategori) }}" placeholder="Atau ketik kategori lain..." style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem; margin-top: 4px;">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
 						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Nominal (Rp) <span style="color: #3b82f6;">*</span></label>
-						<input type="number" name="nominal" value="{{ old('nominal', $expense->nominal) }}" min="0" step="0.01" placeholder="0" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
+						<input type="number" name="nominal" value="{{ old('nominal', $pengeluaran->nominal) }}" min="0" step="0.01" placeholder="0" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
 						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Metode Pembayaran <span style="color: #3b82f6;">*</span></label>
-						@php($metode = old('metode_pembayaran', $expense->metode_pembayaran))
+						@php($metode = old('metode_pembayaran', $pengeluaran->metode_pembayaran))
 						<select name="metode_pembayaran" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 							<option value="">-- Pilih --</option>
 							<option value="cash" {{ $metode === 'cash' ? 'selected' : '' }}>Cash</option>
@@ -79,7 +79,7 @@
 				</div>
 				<div style="display: flex; flex-direction: column; gap: 6px;">
 					<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Catatan / Keterangan</label>
-					<textarea name="keterangan" placeholder="Contoh: Bayar listrik bulan Maret, sewa toko, dll" style="padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem; height: 100px; resize: vertical;">{{ old('keterangan', $expense->keterangan) }}</textarea>
+					<textarea name="keterangan" placeholder="Contoh: Bayar listrik bulan Maret, sewa toko, dll" style="padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem; height: 100px; resize: vertical;">{{ old('keterangan', $pengeluaran->keterangan) }}</textarea>
 				</div>
 			</div>
 		</section>

@@ -117,6 +117,7 @@ class TransaksiController extends BaseController
 	 */
 	public function createKeluar()
 	{
+		// Shift dihapus, tidak perlu validasi shift aktif
 		$products = Product::where('user_id', auth()->user()->id)
 			->where('is_active', true)
 			->orderBy('nama_produk')
@@ -199,6 +200,7 @@ class TransaksiController extends BaseController
 					'kembalian' => $validated['kembalian'] ?? 0,
 					'catatan' => $validated['catatan'] ?? null,
 					'is_invoice' => $isInvoice,
+					// shift_id dihapus karena fitur shift dihapus
 				]);
 
 				$totalHarga = 0;

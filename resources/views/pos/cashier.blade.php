@@ -10,21 +10,7 @@
 		</div>
 	</div>
 
-	<!-- Shift Status Header -->
-	<div style="margin-top: 16px; padding: 12px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; display: flex; justify-content: space-between; align-items: center;">
-		<div style="display: flex; align-items: center; gap: 8px;">
-			<span style="color: #16a34a; font-weight: 600; font-size: 0.9rem;">Shift Aktif:</span>
-			<span style="color: #1e293b; font-size: 0.9rem;">{{ session('admin_name', auth()->user()->name) }}</span>
-			<span style="color: #64748b; font-size: 0.85rem;">|</span>
-			<span style="color: #16a34a; font-weight: 600; font-size: 0.9rem;">Modal Awal:</span>
-			<span style="color: #1e293b; font-size: 0.9rem;">Rp {{ number_format(session('modal_awal', 0), 0, ',', '.') }}</span>
-		</div>
-		@if (session('active_shift_id'))
-			<a href="{{ route('shift.close', session('active_shift_id')) }}" class="hz-btn hz-btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;">Tutup Shift</a>
-		@else
-			<a href="{{ route('shift.create') }}" class="hz-btn hz-btn-primary" style="padding: 6px 12px; font-size: 0.8rem;">Buka Shift</a>
-		@endif
-	</div>
+	<!-- Shift header dihapus karena fitur shift sudah dihapus -->
 
 	@if ($errors->any())
 		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626;">

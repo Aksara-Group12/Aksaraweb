@@ -88,8 +88,6 @@ class DashboardSuperadminController extends BaseController
 				->sum('total_harga');
 			// TransaksiMasuk dihapus
 			$masuk = 0;
-				->where('status', 'complete')
-				->sum('total_harga');
 
 			$last7Days->push([
 				'label' => $date->format('d M'),

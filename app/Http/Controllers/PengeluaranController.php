@@ -46,21 +46,18 @@ class PengeluaranController extends BaseController
 	{
 		try {
 			$validated = $request->validate([
-				'tanggal' => 'required|date',
-				'kategori' => 'nullable|string|max:100',
-				'kategori_produk_id' => 'nullable|exists:kategori_produk,id',
+				'keterangan' => 'required|string|max:255',
+				'kategori' => 'required|string|max:100',
 				'nominal' => 'required|numeric|min:0',
-				'metode_pembayaran' => 'required|in:cash,non-cash',
-				'keterangan' => 'nullable|string',
 			]);
 
 			Pengeluaran::create([
 				'user_id' => auth()->user()->id,
-				'tanggal' => $validated['tanggal'],
-				'kategori' => $validated['kategori'] ?? null,
+				'tanggal' => now()->format('Y-m-d'),
+				'kategori' => $validated['kategori'],
 				'nominal' => $validated['nominal'],
-				'metode_pembayaran' => $validated['metode_pembayaran'],
-				'keterangan' => $validated['keterangan'] ?? null,
+				'metode_pembayaran' => 'cash',
+				'keterangan' => $validated['keterangan'],
 				'reference_no' => null,
 			]);
 
@@ -68,7 +65,7 @@ class PengeluaranController extends BaseController
 		} catch (\Illuminate\Validation\ValidationException $e) {
 			return back()->withErrors($e->errors())->withInput();
 		} catch (\Exception $e) {
-			\Log::error('Store Expenses Error: ' . $e->getMessage());
+			\Log::error('Store Pengeluaran Error: ' . $e->getMessage());
 			return back()->with('error', 'Terjadi kesalahan saat menyimpan pengeluaran');
 		}
 	}

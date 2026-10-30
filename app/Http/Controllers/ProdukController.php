@@ -161,36 +161,19 @@ class ProdukController extends BaseController
 		try {
 			$validated = $request->validate([
 				'nama_produk' => 'required|string|max:255',
-				'code' => 'nullable|string|max:50|unique:products,code',
-				'sku' => 'nullable|string|max:50',
-				'unit' => 'required|string|max:50',
-				'tipe' => 'required|in:Barang,Menu,Jasa',
-				'lacak_stok' => 'nullable',
-				'harga_beli' => 'nullable|numeric|min:0',
 				'harga_jual' => 'required|numeric|min:0',
-				'stock' => 'nullable|integer|min:0',
-				'min_stock' => 'nullable|integer|min:0',
-				'kategori' => 'nullable|string',
-				'kategori_produk_id' => 'nullable|exists:kategori_produk,id',
-				'lokasi' => 'nullable|string',
-				'description' => 'nullable|string',
-				'barcode' => 'nullable|string|max:50',
-				'is_active' => 'required',
-				'brand' => 'nullable|string|max:100',
+				'stock' => 'required|integer|min:0',
 			]);
 
-			// Generate code jika tidak ada
-			if (empty($validated['code'])) {
-				$validated['code'] = Product::generateCode();
-			}
-
+			// Set default values untuk field lain
+			$validated['code'] = Product::generateCode();
 			$validated['user_id'] = auth()->user()->id;
-
-			// Handle lacak_stok checkbox (flexible - user choice)
-			$validated['lacak_stok'] = isset($validated['lacak_stok']) ? true : false;
-
-			// Handle is_active (convert string to boolean)
-			$validated['is_active'] = $validated['is_active'] == '1' ? true : false;
+			$validated['unit'] = 'pcs';
+			$validated['tipe'] = 'Barang';
+			$validated['lacak_stok'] = true;
+			$validated['is_active'] = true;
+			$validated['harga_beli'] = 0;
+			$validated['min_stock'] = 0;
 
 			// Membuat produk TIDAK otomatis menambah stok
 			$product = Product::create($validated);

@@ -28,13 +28,13 @@
 					Delete selected
 				</button>
 			</form>
-			<a href="{{ route('pengeluaran.create') }}" class="hz-btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; padding: 10px 16px; gap: 8px;">
+			<button type="button" onclick="document.getElementById('pengeluaranModal').style.display='flex'" class="hz-btn-primary" style="display: inline-flex; align-items: center; padding: 10px 16px; gap: 8px;">
 				<svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M10 4.5V15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
 					<path d="M4.5 10H15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
 				</svg>
 				<span>Catat Pengeluaran</span>
-			</a>
+			</button>
 		</div>
 	</div>
 
@@ -315,5 +315,33 @@
 			}
 		});
 	</script>
+
+<!-- Modal Catat Pengeluaran -->
+<div id="pengeluaranModal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.8); z-index:50; align-items:center; justify-content:center;">
+	<div style="background:rgba(255,255,255,0.95); border-radius:16px; padding:24px; width:100%; max-width:400px; border:1px solid rgba(59,130,246,0.3); box-shadow:0 18px 45px rgba(15,23,42,0.9);">
+		<h3 style="font-size:1.1rem; font-weight:600; color:#1e293b; margin-bottom:16px;">Catat Pengeluaran</h3>
+		<form action="{{ route('pengeluaran.store') }}" method="POST">
+			@csrf
+			<div style="display:flex; flex-direction:column; gap:16px;">
+				<div style="display:flex; flex-direction:column; gap:6px;">
+					<label style="font-size:0.85rem; font-weight:500; color:#1e293b;">Nama Pengeluaran <span style="color:#3b82f6;">*</span></label>
+					<input type="text" name="keterangan" required placeholder="Contoh: Bayar listrik, sewa toko" style="padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.95); color:#1e293b; font-size:0.9rem;">
+				</div>
+				<div style="display:flex; flex-direction:column; gap:6px;">
+					<label style="font-size:0.85rem; font-weight:500; color:#1e293b;">Kategori Pengeluaran <span style="color:#3b82f6;">*</span></label>
+					<input type="text" name="kategori" required placeholder="Contoh: Listrik, Sewa, Gaji" style="padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.95); color:#1e293b; font-size:0.9rem;">
+				</div>
+				<div style="display:flex; flex-direction:column; gap:6px;">
+					<label style="font-size:0.85rem; font-weight:500; color:#1e293b;">Nominal (Rp) <span style="color:#3b82f6;">*</span></label>
+					<input type="number" name="nominal" required min="0" placeholder="0" style="padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.95); color:#1e293b; font-size:0.9rem;">
+				</div>
+				<div style="display:flex; gap:8px; justify-content:flex-end; margin-top:8px;">
+					<button type="button" onclick="document.getElementById('pengeluaranModal').style.display='none'" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:transparent; color:#1e293b; padding:8px 16px; font-size:0.85rem; cursor:pointer;">Batal</button>
+					<button type="submit" style="border-radius:999px; border:none; background:#3b82f6; color:#fff; padding:8px 16px; font-size:0.85rem; font-weight:600; cursor:pointer;">Simpan</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
 @endsection
 

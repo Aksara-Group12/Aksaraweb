@@ -17,9 +17,9 @@
 				<option value="50" {{ request('per_page', 20) == 50 ? 'selected' : '' }}>50</option>
 			</select>
 		</form>
-		<a href="{{ route('produk.create') }}" class="hz-btn hz-btn-primary">
+		<button type="button" onclick="document.getElementById('produkModal').style.display='flex'" class="hz-btn hz-btn-primary">
 			+ Tambah Produk
-		</a>
+		</button>
 	</div>
 </div>
 
@@ -155,4 +155,32 @@
 		}
 	});
 </script>
+
+<!-- Modal Tambah Produk -->
+<div id="produkModal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.8); z-index:50; align-items:center; justify-content:center;">
+	<div style="background:rgba(255,255,255,0.95); border-radius:16px; padding:24px; width:100%; max-width:400px; border:1px solid rgba(59,130,246,0.3); box-shadow:0 18px 45px rgba(15,23,42,0.9);">
+		<h3 style="font-size:1.1rem; font-weight:600; color:#1e293b; margin-bottom:16px;">Tambah Produk</h3>
+		<form action="{{ route('produk.store') }}" method="POST">
+			@csrf
+			<div style="display:flex; flex-direction:column; gap:16px;">
+				<div style="display:flex; flex-direction:column; gap:6px;">
+					<label style="font-size:0.85rem; font-weight:500; color:#1e293b;">Nama Produk <span style="color:#3b82f6;">*</span></label>
+					<input type="text" name="nama_produk" required style="padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.95); color:#1e293b; font-size:0.9rem;">
+				</div>
+				<div style="display:flex; flex-direction:column; gap:6px;">
+					<label style="font-size:0.85rem; font-weight:500; color:#1e293b;">Harga Jual (Rp) <span style="color:#3b82f6;">*</span></label>
+					<input type="number" name="harga_jual" required min="0" style="padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.95); color:#1e293b; font-size:0.9rem;">
+				</div>
+				<div style="display:flex; flex-direction:column; gap:6px;">
+					<label style="font-size:0.85rem; font-weight:500; color:#1e293b;">Stok/Qty <span style="color:#3b82f6;">*</span></label>
+					<input type="number" name="stock" required min="0" style="padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.95); color:#1e293b; font-size:0.9rem;">
+				</div>
+				<div style="display:flex; gap:8px; justify-content:flex-end; margin-top:8px;">
+					<button type="button" onclick="document.getElementById('produkModal').style.display='none'" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:transparent; color:#1e293b; padding:8px 16px; font-size:0.85rem; cursor:pointer;">Batal</button>
+					<button type="submit" style="border-radius:999px; border:none; background:#3b82f6; color:#fff; padding:8px 16px; font-size:0.85rem; font-weight:600; cursor:pointer;">Simpan</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
 @endsection

@@ -75,7 +75,7 @@
 				<p class="hz-nav-group-title">Manajemen</p>
 				<a href="{{ $ownerSubscriptionActive ? route('produk.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('produk.index') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
 					<i data-lucide="box" class="hz-nav-lucide"></i>
-					<span class="hz-nav-label">Semua Produk</span>
+					<span class="hz-nav-label">Produk/Menu</span>
 				</a>
 			</div>
 

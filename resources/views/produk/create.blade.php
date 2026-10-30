@@ -18,10 +18,6 @@
 			@endif
 			<div style="display:flex; flex-direction:column; gap:16px;">
 				<div style="display:flex; flex-direction:column; gap:6px;">
-					<label style="font-size:0.85rem; font-weight:500; color:#1e293b;">Nama Produk <span style="color:#3b82f6;">*</span></label>
-					<input type="text" name="nama_produk" value="{{ old('nama_produk') }}" required style="padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.95); color:#1e293b; font-size:0.9rem;" placeholder="Contoh: Bakso Spesial">
-				</div>
-				<div style="display:flex; flex-direction:column; gap:6px;">
 					<label style="font-size:0.85rem; font-weight:500; color:#1e293b;">Kategori Produk</label>
 					<select name="kategori_produk_id" style="padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.95); color:#1e293b; font-size:0.9rem;">
 						<option value="">-- Pilih Kategori --</option>

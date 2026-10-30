@@ -77,6 +77,12 @@
 					<i data-lucide="box" class="hz-nav-lucide"></i>
 					<span class="hz-nav-label">Produk/Menu</span>
 				</a>
+				@if(!session()->has('admin_id'))
+					<a href="{{ $ownerSubscriptionActive ? route('data-master.pengguna.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('data-master.*') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
+						<i data-lucide="settings" class="hz-nav-lucide"></i>
+						<span class="hz-nav-label">Data Master</span>
+					</a>
+				@endif
 			</div>
 
 			<div class="hz-nav-group">

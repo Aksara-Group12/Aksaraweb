@@ -133,6 +133,41 @@ Route::middleware(['auth', 'subscription.access', 'employee.access'])->group(fun
         Route::post('/hapus-massal', [PengeluaranController::class, 'bulkDestroy'])->name('bulk-delete.post');
     });
 
+    // Data Master Routes
+    Route::get('/data-master', function () {
+        return view('data-master.index');
+    })->name('data-master.index');
+    
+    Route::prefix('data-master')->name('data-master.')->group(function () {
+        Route::get('/pengguna', [DataMaster\PenggunaController::class, 'index'])->name('pengguna.index');
+        Route::get('/pengguna/create', [DataMaster\PenggunaController::class, 'create'])->name('pengguna.create');
+        Route::post('/pengguna', [DataMaster\PenggunaController::class, 'store'])->name('pengguna.store');
+        Route::get('/pengguna/{pengguna}/edit', [DataMaster\PenggunaController::class, 'edit'])->name('pengguna.edit');
+        Route::put('/pengguna/{pengguna}', [DataMaster\PenggunaController::class, 'update'])->name('pengguna.update');
+        Route::delete('/pengguna/{pengguna}', [DataMaster\PenggunaController::class, 'destroy'])->name('pengguna.destroy');
+
+        Route::get('/kategori-pengeluaran', [DataMaster\KategoriPengeluaranController::class, 'index'])->name('kategori-pengeluaran.index');
+        Route::get('/kategori-pengeluaran/create', [DataMaster\KategoriPengeluaranController::class, 'create'])->name('kategori-pengeluaran.create');
+        Route::post('/kategori-pengeluaran', [DataMaster\KategoriPengeluaranController::class, 'store'])->name('kategori-pengeluaran.store');
+        Route::get('/kategori-pengeluaran/{kategori}/edit', [DataMaster\KategoriPengeluaranController::class, 'edit'])->name('kategori-pengeluaran.edit');
+        Route::put('/kategori-pengeluaran/{kategori}', [DataMaster\KategoriPengeluaranController::class, 'update'])->name('kategori-pengeluaran.update');
+        Route::delete('/kategori-pengeluaran/{kategori}', [DataMaster\KategoriPengeluaranController::class, 'destroy'])->name('kategori-pengeluaran.destroy');
+
+        Route::get('/kategori-produk', [DataMaster\KategoriProdukController::class, 'index'])->name('kategori-produk.index');
+        Route::get('/kategori-produk/create', [DataMaster\KategoriProdukController::class, 'create'])->name('kategori-produk.create');
+        Route::post('/kategori-produk', [DataMaster\KategoriProdukController::class, 'store'])->name('kategori-produk.store');
+        Route::get('/kategori-produk/{kategori}/edit', [DataMaster\KategoriProdukController::class, 'edit'])->name('kategori-produk.edit');
+        Route::put('/kategori-produk/{kategori}', [DataMaster\KategoriProdukController::class, 'update'])->name('kategori-produk.update');
+        Route::delete('/kategori-produk/{kategori}', [DataMaster\KategoriProdukController::class, 'destroy'])->name('kategori-produk.destroy');
+
+        Route::get('/rbac', [DataMaster\RbacController::class, 'index'])->name('rbac.index');
+        Route::get('/rbac/create', [DataMaster\RbacController::class, 'create'])->name('rbac.create');
+        Route::post('/rbac', [DataMaster\RbacController::class, 'store'])->name('rbac.store');
+        Route::get('/rbac/{role}/edit', [DataMaster\RbacController::class, 'edit'])->name('rbac.edit');
+        Route::put('/rbac/{role}', [DataMaster\RbacController::class, 'update'])->name('rbac.update');
+        Route::delete('/rbac/{role}', [DataMaster\RbacController::class, 'destroy'])->name('rbac.destroy');
+    });
+
     Route::prefix('manajemen-user')->name('manajemen-user.')->group(function () {
         Route::get('/', [ManajemenUserController::class, 'index'])->name('index');
         Route::post('/bulk-destroy', [ManajemenUserController::class, 'bulkDestroy'])->name('bulk-destroy');

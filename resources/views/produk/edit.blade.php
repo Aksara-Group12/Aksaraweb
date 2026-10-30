@@ -54,7 +54,7 @@
 					<select name="kategori_produk_id" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(148,163,184,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
 						<option value="">-- Pilih Kategori --</option>
 						@foreach($kategoriProduk as $kat)
-							<option value="{{ $kat->id }}" {{ old('kategori_produk_id', $product->kategori_produk_id) == $kat->id ? 'selected' : '' }}>{{ $kat->nama_kategori }}</option>
+							<option value="{{ $kat->id }}" {{ old('kategori_produk_id', $product->kategori_produk_id) == $kat->id ? 'selected' : '' }}>{{ $kat->name }}</option>
 						@endforeach
 					</select>
 					<small style="color: #64748b; font-size: 0.8rem;">Opsional - data master kategori</small>

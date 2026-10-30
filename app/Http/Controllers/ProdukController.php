@@ -73,36 +73,18 @@ class ProdukController extends BaseController
 		}
 
 		$validated = $request->validate([
-			'nama_produk' => 'required|string|max:255',
-			'code' => 'nullable|string|max:50|unique:products,code,' . $product->id,
-			'sku' => 'nullable|string|max:50',
-			'unit' => 'required|string|max:50',
-			'tipe' => 'required|in:Barang,Menu,Jasa',
-			'lacak_stok' => 'nullable',
-			'harga_beli' => 'nullable|numeric|min:0',
 			'harga_jual' => 'required|numeric|min:0',
-			'stock' => 'nullable|integer|min:0',
-			'min_stock' => 'nullable|integer|min:0',
-			'kategori' => 'nullable|string',
-			'kategori_produk_id' => 'nullable|exists:kategoris,id',
-			'lokasi' => 'nullable|string',
-			'description' => 'nullable|string',
-			'barcode' => 'nullable|string|max:50',
-			'is_active' => 'required',
-			'brand' => 'nullable|string|max:100',
+			'stock' => 'required|integer|min:0',
 		]);
 
-		// Handle lacak_stok checkbox (flexible - user choice)
-		$validated['lacak_stok'] = isset($validated['lacak_stok']) ? true : false;
-
-		// Handle is_active (convert string to boolean)
-		$validated['is_active'] = $validated['is_active'] == '1' ? true : false;
-
-		$product->update($validated);
+		// Tambah stok dan update harga
+		$product->stock += $validated['stock'];
+		$product->harga_jual = $validated['harga_jual'];
+		$product->save();
 
 		return redirect()
 			->route('produk.index')
-			->with('success', 'Produk berhasil diperbarui.');
+			->with('success', 'Produk ' . $product->nama_produk . ' berhasil diperbarui. Stok sekarang: ' . $product->stock);
 	}
 
 	/**

@@ -3,6 +3,10 @@
 @section('page_title', 'Dashboard')
 
 @section('content')
+	@php
+		$salesPerHourData = json_encode($salesPerHour->pluck('amount')->all());
+		$salesPerHourLabels = json_encode($salesPerHour->pluck('hour')->all());
+	@endphp
 	<style>
 		/* Header Section */
 		.dashboard-header {
@@ -679,12 +683,13 @@
 						<svg class="kpi-card-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
 							<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
 						</svg>
-						<p class="kpi-card-title">Total Penjualan</p>
+						<p class="kpi-card-title">Total Pendapatan</p>
 					</div>
 				</div>
 				
 				<div class="kpi-card-value-section">
 					<p class="kpi-card-value">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</p>
+					<p class="kpi-card-value-sub">Periode: {{ $period === 'today' ? 'Hari Ini' : ($period === 'week' ? 'Minggu Ini' : ($period === 'month' ? 'Bulan Ini' : ($period === 'year' ? 'Tahun Ini' : 'Custom'))) }}</p>
 				</div>
 
 				<div class="kpi-card-meta">
@@ -702,93 +707,83 @@
 			</div>
 		</div>
 
-		<!-- Card Transaksi Hari Ini -->
-		<div class="kpi-card kpi-card-blue">
-			<div class="kpi-card-inner">
-				<div class="kpi-card-header-section">
-					<div class="kpi-card-title-section">
-						<svg class="kpi-card-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-							<circle cx="9" cy="21" r="1"></circle>
-							<circle cx="20" cy="21" r="1"></circle>
-							<path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-						</svg>
-						<p class="kpi-card-title">Transaksi Hari Ini</p>
-					</div>
-				</div>
-
-				<div class="kpi-card-value-section">
-					<p class="kpi-card-value">{{ $todayTransactions }}</p>
-					<p class="kpi-card-value-sub">Total penjualan tercatat</p>
-				</div>
-
-				<div class="kpi-card-meta">
-					<div class="kpi-meta-item" style="grid-column: 1 / -1;">
-						<p class="kpi-meta-label">Performa</p>
-						<p class="kpi-meta-value">{{ $todayTransactions }} Transaksi</p>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Card Total Transaksi -->
-		<div class="kpi-card kpi-card-amber">
-			<div class="kpi-card-inner">
-				<div class="kpi-card-header-section">
-					<div class="kpi-card-title-section">
-						<svg class="kpi-card-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-							<path d="M9 11H3v2h6zm0-4H3v2h6zm6 0v2m6-2v2m0-6v2M9 7H3v2h6z"></path>
-							<rect x="3" y="5" width="18" height="14" rx="2" ry="2"></rect>
-						</svg>
-						<p class="kpi-card-title">Total Transaksi</p>
-					</div>
-				</div>
-
-				<div class="kpi-card-value-section">
-					<p class="kpi-card-value">{{ $totalTransactions }}</p>
-				</div>
-
-				<div class="kpi-card-meta">
-					<div class="kpi-meta-item">
-						<div style="display: flex; align-items: center; gap: 6px;">
-							<span style="width: 3px; height: 3px; border-radius: 50%; background: #22c55e;"></span>
-							<p class="kpi-meta-label" style="margin: 0;">Penjualan</p>
-						</div>
-						<p class="kpi-meta-value">{{ $totalSalesTransactions }}</p>
-					</div>
-					<div class="kpi-meta-item">
-						<div style="display: flex; align-items: center; gap: 6px;">
-							<span style="width: 3px; height: 3px; border-radius: 50%; background: #ef4444;"></span>
-							<p class="kpi-meta-label" style="margin: 0;">Pembelian</p>
-						</div>
-						<p class="kpi-meta-value" style="color: #ef4444;">{{ $totalTransactions - $totalSalesTransactions }}</p>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Card Total Stok -->
+		<!-- Card Estimasi Profit -->
 		<div class="kpi-card kpi-card-purple">
 			<div class="kpi-card-inner">
 				<div class="kpi-card-header-section">
 					<div class="kpi-card-title-section">
 						<svg class="kpi-card-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-							<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-							<polyline points="3.27 6.5 12 12.5 20.73 6.5"></polyline>
-							<polyline points="12 22.5 12 12.5"></polyline>
+							<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
 						</svg>
-						<p class="kpi-card-title">Total Stok</p>
+						<p class="kpi-card-title">Estimasi Profit</p>
 					</div>
 				</div>
 
 				<div class="kpi-card-value-section">
-					<p class="kpi-card-value">{{ $totalStockUnits }}</p>
-					<p class="kpi-card-value-sub">Unit di semua jenis logam</p>
+					<p class="kpi-card-value">Rp {{ number_format($estimatedProfit, 0, ',', '.') }}</p>
+					<p class="kpi-card-value-sub">Penjualan - HPP - Pengeluaran</p>
 				</div>
 
 				<div class="kpi-card-meta">
 					<div class="kpi-meta-item" style="grid-column: 1 / -1;">
-						<p class="kpi-meta-label">Inventaris</p>
-						<p class="kpi-meta-value">{{ $totalStockUnits }} Unit</p>
+						<p class="kpi-meta-label">Profit Margin</p>
+						<p class="kpi-meta-value">{{ $totalRevenue > 0 ? round(($estimatedProfit / $totalRevenue) * 100, 1) : 0 }}%</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Card Total Pengeluaran -->
+		<div class="kpi-card kpi-card-amber">
+			<div class="kpi-card-inner">
+				<div class="kpi-card-header-section">
+					<div class="kpi-card-title-section">
+						<svg class="kpi-card-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M18 6L6 18M6 6l12 12"></path>
+						</svg>
+						<p class="kpi-card-title">Total Pengeluaran</p>
+					</div>
+				</div>
+
+				<div class="kpi-card-value-section">
+					<p class="kpi-card-value">Rp {{ number_format($expensesByCategory->sum('total'), 0, ',', '.') }}</p>
+					<p class="kpi-card-value-sub">{{ $expensesByCategory->count() }} kategori</p>
+				</div>
+
+				<div class="kpi-card-meta">
+					<div class="kpi-meta-item" style="grid-column: 1 / -1;">
+						<p class="kpi-meta-label">Kategori Tertinggi</p>
+						<p class="kpi-meta-value">{{ $expensesByCategory->first()->kategori ?? '-' }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Card Stok Menipis -->
+		<div class="kpi-card kpi-card-blue">
+			<div class="kpi-card-inner">
+				<div class="kpi-card-header-section">
+					<div class="kpi-card-title-section">
+						<svg class="kpi-card-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+							<path d="M12 9v4"></path>
+							<path d="M12 17h.01"></path>
+						</svg>
+						<p class="kpi-card-title">Stok Menipis</p>
+					</div>
+				</div>
+
+				<div class="kpi-card-value-section">
+					<p class="kpi-card-value">{{ $lowStockProducts->count() }}</p>
+					<p class="kpi-card-value-sub">Produk perlu restock</p>
+				</div>
+
+				<div class="kpi-card-meta">
+					<div class="kpi-meta-item" style="grid-column: 1 / -1;">
+						<p class="kpi-meta-label">Status</p>
+						<span class="kpi-status-badge" style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">
+							{{ $lowStockProducts->count() > 0 ? '⚠ Perhatian' : '✓ Aman' }}
+						</span>
 					</div>
 				</div>
 			</div>
@@ -796,17 +791,66 @@
 	</section>
 
 	<section class="secondary-grid">
-		<!-- Chart Card -->
+		<!-- Chart Card - Roda Penjualan Per Jam -->
 		<div class="secondary-card">
 			<div class="card-header">
 				<div class="card-header-title">
-					<p class="card-title">Penjualan 7 Hari Terakhir</p>
-					<p class="card-subtitle">Total penjualan per hari</p>
+					<p class="card-title">Roda Penjualan Per Jam</p>
+					<p class="card-subtitle">Penjualan per jam hari ini</p>
 				</div>
 			</div>
 			<div class="chart-container">
-				<canvas id="revenueChart"></canvas>
+				<canvas id="hourlySalesChart"></canvas>
 			</div>
+		</div>
+
+		<!-- Ringkasan Metode Pembayaran -->
+		<div class="secondary-card">
+			<div class="card-header">
+				<div class="card-header-title">
+					<p class="card-title">Ringkasan Metode Pembayaran</p>
+					<p class="card-subtitle">Berdasarkan periode terpilih</p>
+				</div>
+			</div>
+			<ul style="list-style: none; padding: 0; margin: 0;">
+				@forelse ($paymentMethods as $method)
+					<li style="display: flex; justify-content: space-between; align-items: center; padding: 14px; border-radius: 14px; background: rgba(51, 65, 85, 0.2); border: 1px solid rgba(51, 65, 85, 0.3); margin-bottom: 8px;">
+						<div>
+							<p style="font-size: 0.9rem; font-weight: 600; color: #1e293b; margin: 0;">{{ ucfirst(str_replace('-', ' ', $method->metode_pembayaran)) }}</p>
+							<p style="font-size: 0.75rem; color: #94a3af; margin: 4px 0 0 0;">{{ $method->count }} transaksi</p>
+						</div>
+						<div style="text-align: right;">
+							<p style="font-size: 0.9rem; font-weight: 700; color: #3b82f6; margin: 0;">Rp {{ number_format($method->total, 0, ',', '.') }}</p>
+						</div>
+					</li>
+				@empty
+					<li style="padding: 20px; text-align: center; color: #64748b;">Belum ada data pembayaran</li>
+				@endforelse
+			</ul>
+		</div>
+
+		<!-- Total Pengeluaran Per Kategori -->
+		<div class="secondary-card">
+			<div class="card-header">
+				<div class="card-header-title">
+					<p class="card-title">Total Pengeluaran Per Kategori</p>
+					<p class="card-subtitle">Berdasarkan periode terpilih</p>
+				</div>
+			</div>
+			<ul style="list-style: none; padding: 0; margin: 0; max-height: 320px; overflow-y: auto;">
+				@forelse ($expensesByCategory as $expense)
+					<li style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: 12px; background: rgba(51, 65, 85, 0.2); border: 1px solid rgba(51, 65, 85, 0.3); margin-bottom: 6px;">
+						<div>
+							<p style="font-size: 0.85rem; font-weight: 600; color: #1e293b; margin: 0;">{{ $expense->kategori }}</p>
+						</div>
+						<div style="text-align: right;">
+							<p style="font-size: 0.85rem; font-weight: 700; color: #ef4444; margin: 0;">Rp {{ number_format($expense->total, 0, ',', '.') }}</p>
+						</div>
+					</li>
+				@empty
+					<li style="padding: 20px; text-align: center; color: #64748b;">Belum ada pengeluaran</li>
+				@endforelse
+			</ul>
 		</div>
 
 		<!-- Customer Card -->
@@ -871,6 +915,53 @@
 				@endforelse
 			</ul>
 		</div>
+
+		<!-- Produk Stok Menipis -->
+		<div class="hz-card" style="grid-column: 1 / -1; padding: 20px;">
+			<div class="hz-card-header" style="margin-bottom: 16px;">
+				<p class="hz-card-title">Produk Stok Menipis</p>
+				<p class="hz-card-sub" style="font-size: 0.85rem; color: #64748b;">Produk dengan stok di bawah minimum</p>
+			</div>
+			<ul style="list-style: none; padding: 0; margin: 0;">
+				@forelse ($lowStockProducts as $product)
+					<li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(239,68,68,0.2);">
+						<div>
+							<p style="font-size: 0.9rem; font-weight: 600; color: #1e293b; margin: 0;">{{ $product->nama_produk }}</p>
+							<p style="font-size: 0.8rem; color: #64748b; margin: 4px 0 0 0;">Kategori: {{ $product->kategori }}</p>
+						</div>
+						<div style="text-align: right;">
+							<p style="font-size: 0.9rem; font-weight: 700; color: #ef4444; margin: 0;">Stok: {{ $product->stock }}</p>
+							<p style="font-size: 0.75rem; color: #64748b; margin: 4px 0 0 0;">Min: {{ $product->min_stock }}</p>
+						</div>
+					</li>
+				@empty
+					<li style="padding: 20px; text-align: center; color: #64748b;">Semua stok aman</li>
+				@endforelse
+			</ul>
+		</div>
+
+		<!-- Rincian Pengeluaran Terbaru -->
+		<div class="hz-card" style="grid-column: 1 / -1; padding: 20px;">
+			<div class="hz-card-header" style="margin-bottom: 16px;">
+				<p class="hz-card-title">Rincian Pengeluaran Terbaru</p>
+				<p class="hz-card-sub" style="font-size: 0.85rem; color: #64748b;">5 pengeluaran terakhir</p>
+			</div>
+			<ul style="list-style: none; padding: 0; margin: 0;">
+				@forelse ($recentExpenses as $expense)
+					<li style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid rgba(59,130,246,0.2);">
+						<div>
+							<p style="font-size: 0.9rem; font-weight: 600; color: #1e293b; margin: 0;">{{ $expense->keterangan }}</p>
+							<p style="font-size: 0.8rem; color: #64748b; margin: 4px 0 0 0;">{{ $expense->kategori }} • {{ $expense->tanggal ? $expense->tanggal->format('d/m/Y') : '-' }}</p>
+						</div>
+						<div style="text-align: right;">
+							<p style="font-size: 0.9rem; font-weight: 700; color: #ef4444; margin: 0;">Rp {{ number_format($expense->nominal, 0, ',', '.') }}</p>
+						</div>
+					</li>
+				@empty
+					<li style="padding: 20px; text-align: center; color: #64748b;">Belum ada pengeluaran</li>
+				@endforelse
+			</ul>
+		</div>
 	</section>
 @endsection
 
@@ -915,6 +1006,86 @@ document.addEventListener('DOMContentLoaded', function() {
 	if (!canvas) return;
 
 	var ctx = canvas.getContext('2d');
+
+	@php
+		$revenueChartLabelsJson = json_encode($revenueChartLabels);
+		$revenueChartValuesJson = json_encode($revenueChartValues);
+	@endphp
+
+	var chart = new Chart(ctx, {
+		type: 'bar',
+		data: {
+			labels: {{ $revenueChartLabelsJson }},
+			datasets: [{
+				label: 'Penjualan',
+				data: {{ $revenueChartValuesJson }},
+				backgroundColor: 'rgba(59, 130, 246, 0.6)',
+				borderColor: 'rgba(59, 130, 246, 1)',
+				borderWidth: 2,
+				borderRadius: 8,
+			}]
+		},
+		options: {
+			responsive: true,
+			maintainAspectRatio: false,
+			scales: {
+				y: {
+					beginAtZero: true,
+					ticks: {
+						callback: function(value) {
+							return 'Rp ' + value.toLocaleString('id-ID');
+						}
+					}
+				}
+			},
+			plugins: {
+				legend: {
+					display: false
+				}
+			}
+		}
+	});
+
+	// Hourly Sales Chart
+	var hourlyCanvas = document.getElementById('hourlySalesChart');
+	if (hourlyCanvas) {
+		var hourlyCtx = hourlyCanvas.getContext('2d');
+		new Chart(hourlyCtx, {
+			type: 'line',
+			data: {
+				labels: {{ $salesPerHourLabels }},
+				datasets: [{
+					label: 'Penjualan',
+					data: {{ $salesPerHourData }},
+					backgroundColor: 'rgba(34, 197, 94, 0.2)',
+					borderColor: 'rgba(34, 197, 94, 1)',
+					borderWidth: 2,
+					fill: true,
+					tension: 0.4,
+				}]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				scales: {
+					y: {
+						beginAtZero: true,
+						ticks: {
+							callback: function(value) {
+								return 'Rp ' + value.toLocaleString('id-ID');
+							}
+						}
+					}
+				},
+				plugins: {
+					legend: {
+						display: false
+					}
+				}
+			}
+		});
+	}
+});
 
 	new Chart(ctx, {
 		type: 'line',

@@ -60,7 +60,7 @@
 				<!-- Product Grid -->
 				<div id="productGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; max-height: 500px; overflow-y: auto;">
 					@foreach ($products as $product)
-						<div class="product-card" data-id="{{ $product->id }}" data-name="{{ $product->nama_produk }}" data-sku="{{ $product->code ?? '' }}" data-unit="{{ $product->unit }}" data-stock="{{ $product->stock }}" data-price="{{ $product->harga_jual ?? 0 }}" style="border: 1px solid rgba(59,130,246,0.3); border-radius: 12px; padding: 12px; background: rgba(255,255,255,0.95); cursor: pointer; transition: all 0.2s;">
+						<div class="product-card" data-id="{{ $product->id }}" data-name="{{ $product->nama_produk }}" data-sku="{{ $product->code ?? '' }}" data-unit="{{ $product->unit }}" data-stock="{{ $product->stock }}" data-price="{{ $product->harga_jual ?? 0 }}" style="border: 1px solid rgba(59,130,246,0.3); border-radius: 12px; padding: 12px; background: rgba(255,255,255,0.95); cursor: pointer; transition: all 0.2s;" onclick="addToCart({{ $product->id }})">
 							<div style="font-weight: 600; color: #1e293b; font-size: 0.9rem; margin-bottom: 4px;">{{ $product->nama_produk }}</div>
 							<div style="color: #64748b; font-size: 0.8rem; margin-bottom: 4px;">{{ $product->code ?? '-' }} | {{ $product->unit }}</div>
 							<div style="color: #3b82f6; font-weight: 600; font-size: 0.95rem;">Rp {{ number_format($product->harga_jual ?? 0, 0, ',', '.') }}</div>
@@ -164,29 +164,13 @@
 		return parseInt(value.replace(/\./g, '')) || 0;
 	}
 
-	// Initialize event listeners when DOM is ready
-	document.addEventListener('DOMContentLoaded', function() {
-		console.log('DOM loaded, initializing POS...');
-
-		// Add click event listeners to all product cards
-		const productCards = document.querySelectorAll('.product-card');
-		console.log('Found product cards:', productCards.length);
-
-		productCards.forEach(card => {
-			card.addEventListener('click', function() {
-				const productId = parseInt(this.dataset.id);
-				console.log('Product card clicked, ID:', productId);
-				addToCart(productId);
-			});
-		});
-	});
-
+	// Simple version - use inline onclick for reliability
 	function addToCart(productId) {
-		console.log('Adding product to cart:', productId);
+		alert('Klik produk! ID: ' + productId);
 
 		const productCard = document.querySelector(`.product-card[data-id="${productId}"]`);
 		if (!productCard) {
-			console.error('Product card not found for ID:', productId);
+			alert('Product card tidak ditemukan untuk ID: ' + productId);
 			return;
 		}
 
@@ -201,7 +185,7 @@
 			diskon: 0
 		};
 
-		console.log('Product data:', product);
+		alert('Produk ditambahkan: ' + product.name);
 
 		const existingItem = cart.find(item => item.id === productId);
 		if (existingItem) {
@@ -215,7 +199,7 @@
 			cart.push(product);
 		}
 
-		console.log('Cart after add:', cart);
+		alert('Total item di keranjang: ' + cart.length);
 		renderCart();
 	}
 

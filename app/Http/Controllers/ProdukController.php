@@ -183,12 +183,6 @@ class ProdukController extends BaseController
 				$validated['nama_produk'] = $kategori->name;
 				$validated['kategori'] = $kategori->name; // Simpan nama kategori ke field kategori
 
-				// Default values untuk field legacy (dari database DESCRIBE)
-				$validated['jenis_logam'] = null; // Bisa null di database
-				$validated['brand'] = null; // Bisa null di database
-				$validated['berat_standar'] = null; // Bisa null di database
-				$validated['stock_minimum'] = 0; // Sudah ada default 0 di database
-
 				// Membuat produk baru
 				$product = Product::create($validated);
 

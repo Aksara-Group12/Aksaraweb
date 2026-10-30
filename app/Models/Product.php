@@ -10,7 +10,6 @@ class Product extends Model
     protected $table = 'products';
     protected $fillable = [
         'user_id',
-        'business_id',
         'code',
         'sku',
         'nama_produk',
@@ -26,30 +25,15 @@ class Product extends Model
         'description', // Deskripsi produk
         'barcode', // Barcode untuk scan
         'lokasi', // Lokasi penyimpanan
-        'brand', // Merek produk umum
-        // Field legacy dipertahankan untuk kompatibilitas fitur lain (Transaksi, dll)
-        'category_id',
-        'unit_id',
-        'jenis_logam',
-        'berat_standar',
-        'weight',
-        'purity',
-        'kadar',
-        'cost_price',
-        'stock_minimum',
     ];
 
     protected $casts = [
-        'berat_standar' => 'decimal:2',
-        'weight' => 'decimal:2',
-        'purity' => 'decimal:1',
         'harga_beli' => 'decimal:2',
         'harga_jual' => 'decimal:2',
-        'cost_price' => 'decimal:2',
         'stock' => 'integer',
         'min_stock' => 'integer',
-        'stock_minimum' => 'decimal:2',
         'is_active' => 'boolean',
+        'lacak_stok' => 'boolean',
     ];
 
     /**

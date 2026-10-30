@@ -173,7 +173,7 @@ class ProdukController extends BaseController
 
 				// Default values untuk field lain
 				$validated['code'] = Product::generateCode();
-				$validated['user_id'] = auth()->user()->id();
+				$validated['user_id'] = auth()->id();
 				$validated['unit'] = 'pcs';
 				$validated['tipe'] = 'Barang';
 				$validated['lacak_stok'] = true;

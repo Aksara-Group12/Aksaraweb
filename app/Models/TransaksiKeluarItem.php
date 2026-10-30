@@ -14,7 +14,8 @@ class TransaksiKeluarItem extends Model
         'qty_keluar', // Jumlah yang dijual
         'harga_jual', // Harga jual per satuan
         'diskon', // Diskon per baris
-        'total_harga', // Subtotal = qty_keluar * harga_jual - diskon
+        'ppn', // PPN per baris (dalam persen)
+        'total_harga', // Subtotal = qty_keluar * harga_jual - diskon + ppn
         'biaya_tambahan', // Opsional
         'nomor_seri', // Legacy untuk kompatibilitas
         'hpp_snapshot', // Snapshot HPP saat transaksi
@@ -24,6 +25,7 @@ class TransaksiKeluarItem extends Model
         'qty_keluar' => 'decimal:2',
         'harga_jual' => 'decimal:2',
         'diskon' => 'decimal:2',
+        'ppn' => 'decimal:2',
         'total_harga' => 'decimal:2',
         'biaya_tambahan' => 'decimal:2',
         'nomor_seri' => 'array',
@@ -49,10 +51,13 @@ class TransaksiKeluarItem extends Model
     /**
      * Hitung total harga otomatis (untuk produk umum)
      */
-    public static function calculateTotal($qty, $hargaJual, $diskon = 0, $biayaTambahan = 0)
+    public static function calculateTotal($qty, $hargaJual, $diskon = 0, $biayaTambahan = 0, $ppn = 0)
     {
         $subtotal = ($qty * $hargaJual) - $diskon;
-        return $subtotal + $biayaTambahan;
+        // Jika ppn > 0, gunakan persentase manual, jika 0, gunakan default 11%
+        $ppnRate = $ppn > 0 ? ($ppn / 100) : 0.11;
+        $ppnAmount = $subtotal * $ppnRate;
+        return $subtotal + $biayaTambahan + $ppnAmount;
     }
 
     /**

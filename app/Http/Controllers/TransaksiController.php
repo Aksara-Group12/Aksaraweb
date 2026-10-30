@@ -205,12 +205,20 @@ class TransaksiController extends BaseController
 					$qty = floatval($itemData['qty_keluar']);
 					$hargaJual = floatval($itemData['harga_jual'] ?? $product->harga_jual ?? 0);
 					$diskon = floatval($itemData['diskon'] ?? 0);
+					$ppn = floatval($itemData['ppn'] ?? 0); // PPN manual per item (dalam persen)
 
 					// Capture HPP snapshot dari product (gunakan harga_beli atau 0 jika null)
 					$hppSnapshot = floatval($product->harga_beli ?? 0);
 
-					// Hitung subtotal
-					$itemTotal = TransaksiKeluarItem::calculateTotal($qty, $hargaJual, $diskon);
+					// Hitung subtotal sebelum PPN
+					$itemSubtotal = TransaksiKeluarItem::calculateTotal($qty, $hargaJual, $diskon);
+
+					// Hitung PPN (jika ppn > 0, gunakan persentase manual, jika 0, gunakan default 11%)
+					$ppnRate = $ppn > 0 ? ($ppn / 100) : 0.11;
+					$ppnAmount = $itemSubtotal * $ppnRate;
+
+					// Total harga termasuk PPN
+					$itemTotal = $itemSubtotal + $ppnAmount;
 
 					// Create transaction item record
 					TransaksiKeluarItem::create([
@@ -220,6 +228,7 @@ class TransaksiController extends BaseController
 						'qty_keluar' => $qty,
 						'harga_jual' => $hargaJual,
 						'diskon' => $diskon,
+						'ppn' => $ppn, // Simpan persentase PPN
 						'total_harga' => $itemTotal,
 						'biaya_tambahan' => 0,
 						'hpp_snapshot' => $hppSnapshot,

@@ -179,7 +179,8 @@
 			stock: parseFloat(productCard.dataset.stock),
 			price: parseFloat(productCard.dataset.price),
 			qty: 1,
-			diskon: 0
+			diskon: 0,
+			ppn: 0
 		};
 
 		const existingItem = cart.find(item => item.id === productId);
@@ -220,6 +221,14 @@
 		renderCart();
 	}
 
+	function updatePpn(productId, newPpn) {
+		const item = cart.find(item => item.id === productId);
+		if (item) {
+			item.ppn = parseFloat(newPpn) || 0;
+		}
+		renderCart();
+	}
+
 	function renderCart() {
 		const cartContainer = document.getElementById('cartItems');
 
@@ -240,8 +249,15 @@
 							<span style="color: #64748b; font-size: 0.8rem;">× Rp ${item.price.toLocaleString('id-ID')}</span>
 							<span style="color: #3b82f6; font-weight: 600; font-size: 0.9rem;">Rp ${subtotal.toLocaleString('id-ID')}</span>
 						</div>
-						<div style="margin-top: 4px;">
-							<input type="number" value="${item.diskon}" placeholder="Diskon" onchange="updateDiskon(${item.id}, this.value)" style="width: 100%; padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.8rem;">
+						<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px;">
+							<div style="display: flex; flex-direction: column; gap: 2px;">
+								<label style="font-size: 0.75rem; color: #64748b;">Diskon (Rp)</label>
+								<input type="number" value="${item.diskon}" placeholder="0" onchange="updateDiskon(${item.id}, this.value)" style="width: 100%; padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.8rem;">
+							</div>
+							<div style="display: flex; flex-direction: column; gap: 2px;">
+								<label style="font-size: 0.75rem; color: #64748b;">PPN (%)</label>
+								<input type="number" value="${item.ppn}" placeholder="0" onchange="updatePpn(${item.id}, this.value)" style="width: 100%; padding: 4px 8px; border-radius: 6px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.8rem;">
+							</div>
 						</div>
 					</div>
 				`;
@@ -255,19 +271,25 @@
 	function calculateTotals() {
 		let subtotal = 0;
 		let totalDiskon = 0;
+		let totalPpn = 0;
 
 		cart.forEach(item => {
-			subtotal += item.qty * item.price;
+			const itemSubtotal = item.qty * item.price;
+			subtotal += itemSubtotal;
 			totalDiskon += item.diskon;
+
+			// Hitung PPN per item (jika ada input manual, pakai itu. Jika 0, pakai default 11%)
+			const itemPpnRate = item.ppn > 0 ? (item.ppn / 100) : ppnRate;
+			const itemPpn = (itemSubtotal - item.diskon) * itemPpnRate;
+			totalPpn += itemPpn;
 		});
 
 		const subtotalAfterDiskon = subtotal - totalDiskon;
-		const ppn = subtotalAfterDiskon * ppnRate;
-		const total = subtotalAfterDiskon + ppn;
+		const total = subtotalAfterDiskon + totalPpn;
 
 		document.getElementById('subtotalDisplay').textContent = 'Rp ' + subtotal.toLocaleString('id-ID');
 		document.getElementById('diskonDisplay').textContent = 'Rp ' + totalDiskon.toLocaleString('id-ID');
-		document.getElementById('ppnDisplay').textContent = 'Rp ' + ppn.toLocaleString('id-ID');
+		document.getElementById('ppnDisplay').textContent = 'Rp ' + totalPpn.toLocaleString('id-ID');
 		document.getElementById('totalDisplay').textContent = 'Rp ' + total.toLocaleString('id-ID');
 
 		// Calculate kembalian
@@ -330,7 +352,8 @@
 			product_id: item.id,
 			qty_keluar: item.qty,
 			harga_jual: item.price,
-			diskon: item.diskon
+			diskon: item.diskon,
+			ppn: item.ppn
 		}));
 
 		document.getElementById('itemsInput').value = JSON.stringify(items);

@@ -136,6 +136,7 @@
 							<span style="color: #64748b; font-size: 0.9rem;">Kembalian</span>
 							<span id="kembalianDisplay" style="color: #16a34a; font-weight: 600;">Rp 0</span>
 						</div>
+						<input type="hidden" name="kembalian" id="kembalian" value="0">
 					</div>
 				</div>
 
@@ -298,6 +299,7 @@
 		const nominalBayar = parseFloat(document.getElementById('nominalBayar').value) || 0;
 		const kembalian = nominalBayar - total;
 		document.getElementById('kembalianDisplay').textContent = 'Rp ' + kembalian.toLocaleString('id-ID');
+		document.getElementById('kembalian').value = kembalian;
 	}
 
 	// Nominal Bayar input formatting

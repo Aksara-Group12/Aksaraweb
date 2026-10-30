@@ -131,6 +131,5 @@
 					</a>
 				</div>
 			@endif
-		@endif
 	</nav>
 </aside>

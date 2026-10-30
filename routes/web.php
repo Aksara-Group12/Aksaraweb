@@ -19,6 +19,7 @@ use App\Http\Controllers\DataMaster\PenggunaController;
 use App\Http\Controllers\DataMaster\KategoriPengeluaranController;
 use App\Http\Controllers\DataMaster\KategoriProdukController;
 use App\Http\Controllers\DataMaster\RbacController;
+use App\Http\Controllers\DataMaster\RoleController;
 
 // TEMP: Clear cache (hapus setelah berhasil)
 Route::get('/clear-cache', function () {
@@ -170,6 +171,13 @@ Route::middleware(['auth', 'subscription.access', 'employee.access'])->group(fun
         Route::get('/rbac/{role}/edit', [RbacController::class, 'edit'])->name('rbac.edit');
         Route::put('/rbac/{role}', [RbacController::class, 'update'])->name('rbac.update');
         Route::delete('/rbac/{role}', [RbacController::class, 'destroy'])->name('rbac.destroy');
+
+        Route::get('/role', [RoleController::class, 'index'])->name('role.index');
+        Route::get('/role/create', [RoleController::class, 'create'])->name('role.create');
+        Route::post('/role', [RoleController::class, 'store'])->name('role.store');
+        Route::get('/role/{role}/edit', [RoleController::class, 'edit'])->name('role.edit');
+        Route::put('/role/{role}', [RoleController::class, 'update'])->name('role.update');
+        Route::delete('/role/{role}', [RoleController::class, 'destroy'])->name('role.destroy');
     });
 
     Route::prefix('manajemen-user')->name('manajemen-user.')->group(function () {

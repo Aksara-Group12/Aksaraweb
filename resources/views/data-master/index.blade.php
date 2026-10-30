@@ -33,8 +33,13 @@
 			</a>
 			<a href="{{ route('data-master.rbac.index') }}" style="display: flex; flex-direction: column; gap: 8px; padding: 20px; border-radius: 12px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); text-decoration: none; color: #1e293b;">
 				<i data-lucide="shield" style="width: 32px; height: 32px; color: #3b82f6;"></i>
+				<span style="font-weight: 600; font-size: 0.95rem;">RBAC</span>
+				<span style="font-size: 0.8rem; color: #64748b;">Role Based Access Control</span>
+			</a>
+			<a href="{{ route('data-master.role.index') }}" style="display: flex; flex-direction: column; gap: 8px; padding: 20px; border-radius: 12px; border: 1px solid rgba(59,130,246,0.3); background: rgba(255,255,255,0.95); text-decoration: none; color: #1e293b;">
+				<i data-lucide="shield-check" style="width: 32px; height: 32px; color: #3b82f6;"></i>
 				<span style="font-weight: 600; font-size: 0.95rem;">Role</span>
-				<span style="font-size: 0.8rem; color: #64748b;">Kelola role & permissions (owner, admin, kasir)</span>
+				<span style="font-size: 0.8rem; color: #64748b;">Kelola role (owner, admin, kasir)</span>
 			</a>
 		</div>
 	</div>

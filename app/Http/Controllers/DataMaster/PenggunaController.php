@@ -10,7 +10,7 @@ class PenggunaController extends Controller
 {
 	public function index()
 	{
-		$users = User::where('user_id', auth()->user()->id)->latest()->paginate(20);
+		$users = User::latest()->paginate(20);
 		return view('data-master.pengguna.index', compact('users'));
 	}
 
@@ -29,8 +29,6 @@ class PenggunaController extends Controller
 		]);
 
 		$validated['password'] = bcrypt($validated['password']);
-		$validated['user_id'] = auth()->user()->id;
-		$validated['is_active'] = true;
 
 		User::create($validated);
 

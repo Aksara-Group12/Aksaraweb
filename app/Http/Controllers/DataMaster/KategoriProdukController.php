@@ -10,7 +10,7 @@ class KategoriProdukController extends Controller
 {
 	public function index()
 	{
-		$kategoris = Kategori::where('user_id', auth()->user()->id)
+		$kategoris = Kategori::where('user_id', auth()->id())
 			->where('tipe', 'produk')
 			->latest()
 			->paginate(20);
@@ -29,7 +29,7 @@ class KategoriProdukController extends Controller
 		]);
 
 		$validated['tipe'] = 'produk';
-		$validated['user_id'] = auth()->user()->id;
+		$validated['user_id'] = auth()->id();
 		$validated['is_active'] = true;
 
 		Kategori::create($validated);

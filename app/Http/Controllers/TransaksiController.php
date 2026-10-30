@@ -213,9 +213,12 @@ class TransaksiController extends BaseController
 					// Hitung subtotal sebelum PPN
 					$itemSubtotal = TransaksiKeluarItem::calculateTotal($qty, $hargaJual, $diskon);
 
-					// Hitung PPN (jika ppn > 0, gunakan persentase manual, jika 0, gunakan default 11%)
-					$ppnRate = $ppn > 0 ? ($ppn / 100) : 0.11;
-					$ppnAmount = $itemSubtotal * $ppnRate;
+					// Hitung PPN (hanya jika ppn > 0, jika 0 atau kosong, PPN = 0)
+					$ppnAmount = 0;
+					if ($ppn > 0) {
+						$ppnRate = $ppn / 100;
+						$ppnAmount = $itemSubtotal * $ppnRate;
+					}
 
 					// Total harga termasuk PPN
 					$itemTotal = $itemSubtotal + $ppnAmount;

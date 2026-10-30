@@ -54,9 +54,12 @@ class TransaksiKeluarItem extends Model
     public static function calculateTotal($qty, $hargaJual, $diskon = 0, $biayaTambahan = 0, $ppn = 0)
     {
         $subtotal = ($qty * $hargaJual) - $diskon;
-        // Jika ppn > 0, gunakan persentase manual, jika 0, gunakan default 11%
-        $ppnRate = $ppn > 0 ? ($ppn / 100) : 0.11;
-        $ppnAmount = $subtotal * $ppnRate;
+        // Hanya hitung PPN jika ppn > 0 (manual input)
+        $ppnAmount = 0;
+        if ($ppn > 0) {
+            $ppnRate = $ppn / 100;
+            $ppnAmount = $subtotal * $ppnRate;
+        }
         return $subtotal + $biayaTambahan + $ppnAmount;
     }
 

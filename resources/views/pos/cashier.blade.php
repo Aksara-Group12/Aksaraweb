@@ -104,7 +104,7 @@
 							<span id="diskonDisplay" style="color: #1e293b; font-weight: 600;">Rp 0</span>
 						</div>
 						<div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
-							<span style="color: #64748b; font-size: 0.9rem;">PPN (11%)</span>
+							<span style="color: #64748b; font-size: 0.9rem;">PPN</span>
 							<span id="ppnDisplay" style="color: #1e293b; font-weight: 600;">Rp 0</span>
 						</div>
 						<div style="display: flex; justify-content: space-between; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(59,130,246,0.3);">
@@ -278,10 +278,12 @@
 			subtotal += itemSubtotal;
 			totalDiskon += item.diskon;
 
-			// Hitung PPN per item (jika ada input manual, pakai itu. Jika 0, pakai default 11%)
-			const itemPpnRate = item.ppn > 0 ? (item.ppn / 100) : ppnRate;
-			const itemPpn = (itemSubtotal - item.diskon) * itemPpnRate;
-			totalPpn += itemPpn;
+			// Hitung PPN per item (hanya jika input manual > 0, jika 0 atau kosong, PPN = 0)
+			if (item.ppn > 0) {
+				const itemPpnRate = item.ppn / 100;
+				const itemPpn = (itemSubtotal - item.diskon) * itemPpnRate;
+				totalPpn += itemPpn;
+			}
 		});
 
 		const subtotalAfterDiskon = subtotal - totalDiskon;

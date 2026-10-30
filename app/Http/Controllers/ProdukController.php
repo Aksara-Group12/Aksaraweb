@@ -203,6 +203,12 @@ class ProdukController extends BaseController
 				$validated['nama_produk'] = $kategori->name;
 				$validated['kategori'] = $kategori->name; // Simpan nama kategori ke field kategori
 
+				// Default values untuk field legacy yang NOT NULL
+				$validated['jenis_logam'] = 'emas'; // Field legacy enum, default 'emas'
+				$validated['brand'] = 'UMKM'; // Field legacy, default 'UMKM'
+				$validated['berat_standar'] = 0; // Field legacy, default 0
+				$validated['stock_minimum'] = 0; // Field legacy, default 0
+
 				// Membuat produk baru
 				$product = Product::create($validated);
 

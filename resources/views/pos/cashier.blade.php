@@ -125,7 +125,8 @@
 						</div>
 						<div style="display: flex; flex-direction: column; gap: 6px;">
 							<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Jumlah Bayar</label>
-							<input type="number" name="nominal_bayar" id="nominalBayar" placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
+							<input type="text" name="nominal_bayar_display" id="nominalBayarDisplay" placeholder="0" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
+							<input type="hidden" name="nominal_bayar" id="nominalBayar" value="0">
 						</div>
 						<div style="display: flex; justify-content: space-between;">
 							<span style="color: #64748b; font-size: 0.9rem;">Kembalian</span>
@@ -148,6 +149,16 @@
 <script>
 	let cart = [];
 	let ppnRate = 0.11;
+
+	// Format number with dots as thousand separators
+	function formatNumber(value) {
+		return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+	}
+
+	// Remove dots and convert to number
+	function parseNumber(value) {
+		return parseInt(value.replace(/\./g, '')) || 0;
+	}
 
 	function addToCart(productId) {
 		const productCard = document.querySelector(`.product-card[data-id="${productId}"]`);
@@ -202,7 +213,7 @@
 
 	function renderCart() {
 		const cartContainer = document.getElementById('cartItems');
-		
+
 		if (cart.length === 0) {
 			cartContainer.innerHTML = '<div style="text-align: center; color: #64748b; padding: 20px;">Keranjang kosong</div>';
 		} else {
@@ -256,7 +267,34 @@
 		document.getElementById('kembalianDisplay').textContent = 'Rp ' + kembalian.toLocaleString('id-ID');
 	}
 
-	document.getElementById('nominalBayar').addEventListener('input', calculateTotals);
+	// Nominal Bayar input formatting
+	const nominalBayarDisplay = document.getElementById('nominalBayarDisplay');
+	const nominalBayarHidden = document.getElementById('nominalBayar');
+
+	if (nominalBayarDisplay) {
+		nominalBayarDisplay.addEventListener('input', function(e) {
+			// Remove non-numeric characters
+			let value = e.target.value.replace(/[^0-9]/g, '');
+			// Format with dots
+			e.target.value = formatNumber(value);
+			// Update hidden field
+			nominalBayarHidden.value = parseNumber(value);
+			// Recalculate totals
+			calculateTotals();
+		});
+
+		nominalBayarDisplay.addEventListener('blur', function(e) {
+			let value = e.target.value.replace(/[^0-9]/g, '');
+			if (value) {
+				e.target.value = formatNumber(value);
+				nominalBayarHidden.value = parseNumber(value);
+			} else {
+				e.target.value = '';
+				nominalBayarHidden.value = 0;
+			}
+			calculateTotals();
+		});
+	}
 
 	// Search filter
 	document.getElementById('searchProduct').addEventListener('input', function(e) {

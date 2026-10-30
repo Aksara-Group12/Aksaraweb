@@ -7,7 +7,7 @@
 <div id="produkModal" style="display:flex; position:fixed; inset:0; background:rgba(15,23,42,0.8); z-index:50; align-items:center; justify-content:center;">
 	<div style="background:rgba(255,255,255,0.95); border-radius:16px; padding:24px; width:100%; max-width:400px; border:1px solid rgba(59,130,246,0.3); box-shadow:0 18px 45px rgba(15,23,42,0.9);">
 		<h3 style="font-size:1.1rem; font-weight:600; color:#1e293b; margin-bottom:16px;">Tambah Produk</h3>
-		<form action="{{ route('produk.store') }}" method="POST">
+		<form action="{{ route('produk.store') }}" method="POST" id="produkForm">
 			@csrf
 			@if ($errors->any())
 				<div style="margin-bottom: 16px; padding: 12px 14px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626; font-size: 0.85rem;">
@@ -28,7 +28,8 @@
 				</div>
 				<div style="display:flex; flex-direction:column; gap:6px;">
 					<label style="font-size:0.85rem; font-weight:500; color:#1e293b;">Harga Jual (Rp) <span style="color:#3b82f6;">*</span></label>
-					<input type="number" name="harga_jual" value="{{ old('harga_jual') }}" required min="0" style="padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.95); color:#1e293b; font-size:0.9rem;">
+					<input type="text" name="harga_jual_display" id="harga_jual_display" value="{{ old('harga_jual') ? number_format(old('harga_jual'), 0, '', '.') : '' }}" required min="0" style="padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.95); color:#1e293b; font-size:0.9rem;" placeholder="0">
+					<input type="hidden" name="harga_jual" id="harga_jual" value="{{ old('harga_jual') }}">
 				</div>
 				<div style="display:flex; flex-direction:column; gap:6px;">
 					<label style="font-size:0.85rem; font-weight:500; color:#1e293b;">Stok/Qty <span style="color:#3b82f6;">*</span></label>
@@ -42,4 +43,42 @@
 		</form>
 	</div>
 </div>
+
+<script>
+// Format number with dots as thousand separators
+function formatNumber(value) {
+	return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+// Remove dots and convert to number
+function parseNumber(value) {
+	return parseInt(value.replace(/\./g, '')) || 0;
+}
+
+// Harga Jual input
+const hargaJualDisplay = document.getElementById('harga_jual_display');
+const hargaJualHidden = document.getElementById('harga_jual');
+
+if (hargaJualDisplay) {
+	hargaJualDisplay.addEventListener('input', function(e) {
+		// Remove non-numeric characters
+		let value = e.target.value.replace(/[^0-9]/g, '');
+		// Format with dots
+		e.target.value = formatNumber(value);
+		// Update hidden field
+		hargaJualHidden.value = parseNumber(value);
+	});
+
+	hargaJualDisplay.addEventListener('blur', function(e) {
+		let value = e.target.value.replace(/[^0-9]/g, '');
+		if (value) {
+			e.target.value = formatNumber(value);
+			hargaJualHidden.value = parseNumber(value);
+		} else {
+			e.target.value = '';
+			hargaJualHidden.value = 0;
+		}
+	});
+}
+</script>
 @endsection

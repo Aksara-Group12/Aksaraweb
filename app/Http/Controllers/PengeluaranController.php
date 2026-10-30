@@ -50,7 +50,7 @@ class PengeluaranController extends BaseController
 			$validated = $request->validate([
 				'kategori_pengeluaran_id' => 'required|exists:kategori_pengeluaran,id',
 				'keterangan' => 'required|string|max:255',
-				'nominal' => 'required|numeric|min:0',
+				'nominal' => 'required|integer|min:0',
 			]);
 
 			$kategori = KategoriPengeluaran::find($validated['kategori_pengeluaran_id']);
@@ -98,7 +98,7 @@ class PengeluaranController extends BaseController
 			$validated = $request->validate([
 				'tanggal' => 'required|date',
 				'kategori_pengeluaran_id' => 'nullable|exists:kategori_pengeluaran,id',
-				'nominal' => 'required|numeric|min:0',
+				'nominal' => 'required|integer|min:0',
 				'metode_pembayaran' => 'required|in:cash,non-cash',
 				'keterangan' => 'nullable|string',
 			]);

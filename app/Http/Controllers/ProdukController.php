@@ -72,7 +72,7 @@ class ProdukController extends BaseController
 		}
 
 		$validated = $request->validate([
-			'harga_jual' => 'required|numeric|min:0',
+			'harga_jual' => 'required|integer|min:0',
 			'stock' => 'required|integer|min:0',
 		]);
 
@@ -147,7 +147,7 @@ class ProdukController extends BaseController
 		try {
 			$validated = $request->validate([
 				'kategori_produk_id' => 'required|exists:kategori_produk,id',
-				'harga_jual' => 'required|numeric|min:0',
+				'harga_jual' => 'required|integer|min:0',
 				'stock' => 'required|integer|min:0',
 			]);
 

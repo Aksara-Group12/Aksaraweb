@@ -55,7 +55,8 @@
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
 						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Nominal (Rp) <span style="color: #3b82f6;">*</span></label>
-						<input type="number" name="nominal" value="{{ old('nominal', $pengeluaran->nominal) }}" min="0" step="0.01" placeholder="0" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
+						<input type="text" name="nominal_display" id="nominal_display" value="{{ old('nominal') ? number_format(old('nominal'), 0, '', '.') : number_format($pengeluaran->nominal, 0, '', '.') }}" min="0" step="0.01" placeholder="0" required style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
+						<input type="hidden" name="nominal" id="nominal" value="{{ old('nominal', $pengeluaran->nominal) }}">
 					</div>
 
 					<div style="display: flex; flex-direction: column; gap: 6px;">
@@ -94,4 +95,42 @@
 			</div>
 		</section>
 	</form>
+
+<script>
+// Format number with dots as thousand separators
+function formatNumber(value) {
+	return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+// Remove dots and convert to number
+function parseNumber(value) {
+	return parseInt(value.replace(/\./g, '')) || 0;
+}
+
+// Nominal input
+const nominalDisplay = document.getElementById('nominal_display');
+const nominalHidden = document.getElementById('nominal');
+
+if (nominalDisplay) {
+	nominalDisplay.addEventListener('input', function(e) {
+		// Remove non-numeric characters
+		let value = e.target.value.replace(/[^0-9]/g, '');
+		// Format with dots
+		e.target.value = formatNumber(value);
+		// Update hidden field
+		nominalHidden.value = parseNumber(value);
+	});
+
+	nominalDisplay.addEventListener('blur', function(e) {
+		let value = e.target.value.replace(/[^0-9]/g, '');
+		if (value) {
+			e.target.value = formatNumber(value);
+			nominalHidden.value = parseNumber(value);
+		} else {
+			e.target.value = '';
+			nominalHidden.value = 0;
+		}
+	});
+}
+</script>
 @endsection

@@ -173,26 +173,42 @@ class ProdukController extends BaseController
 
 			$kategori = Kategori::find($validated['kategori_produk_id']);
 
-			// Hapus kategori_produk_id dari array sebelum create (tidak ada di fillable)
-			unset($validated['kategori_produk_id']);
+			// Cek apakah sudah ada produk dengan kategori yang sama
+			$existingProduct = Product::where('user_id', auth()->user()->id)
+				->where('kategori', $kategori->name)
+				->first();
 
-			// Set default values untuk field lain
-			$validated['code'] = Product::generateCode();
-			$validated['user_id'] = auth()->user()->id;
-			$validated['unit'] = 'pcs';
-			$validated['tipe'] = 'Barang';
-			$validated['lacak_stok'] = true;
-			$validated['is_active'] = true;
-			$validated['harga_beli'] = 0;
-			$validated['min_stock'] = 0;
-			$validated['nama_produk'] = $kategori->name;
-			$validated['kategori'] = $kategori->name; // Simpan nama kategori ke field kategori
+			if ($existingProduct) {
+				// Jika produk sudah ada, tambahkan stoknya saja
+				$existingProduct->stock += $validated['stock'];
+				$existingProduct->harga_jual = $validated['harga_jual']; // Update harga jika berubah
+				$existingProduct->save();
 
-			// Membuat produk TIDAK otomatis menambah stok
-			$product = Product::create($validated);
+				return redirect()->route('produk.index')
+					->with('success', 'Stok produk ' . $existingProduct->nama_produk . ' berhasil ditambahkan. Stok sekarang: ' . $existingProduct->stock);
+			} else {
+				// Jika belum ada, buat produk baru
+				// Hapus kategori_produk_id dari array sebelum create (tidak ada di fillable)
+				unset($validated['kategori_produk_id']);
 
-			return redirect()->route('produk.index')
-				->with('success', 'Produk ' . $product->nama_produk . ' berhasil ditambahkan');
+				// Set default values untuk field lain
+				$validated['code'] = Product::generateCode();
+				$validated['user_id'] = auth()->user()->id;
+				$validated['unit'] = 'pcs';
+				$validated['tipe'] = 'Barang';
+				$validated['lacak_stok'] = true;
+				$validated['is_active'] = true;
+				$validated['harga_beli'] = 0;
+				$validated['min_stock'] = 0;
+				$validated['nama_produk'] = $kategori->name;
+				$validated['kategori'] = $kategori->name; // Simpan nama kategori ke field kategori
+
+				// Membuat produk baru
+				$product = Product::create($validated);
+
+				return redirect()->route('produk.index')
+					->with('success', 'Produk ' . $product->nama_produk . ' berhasil ditambahkan');
+			}
 
 		} catch (\Exception $e) {
 			return back()

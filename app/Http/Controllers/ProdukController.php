@@ -173,9 +173,9 @@ class ProdukController extends BaseController
 				// Hapus kategori_produk_id dari array sebelum create (tidak ada di fillable)
 				unset($validated['kategori_produk_id']);
 
-				// Set default values untuk field lain
+				// Default values untuk field lain
 				$validated['code'] = Product::generateCode();
-				$validated['user_id'] = auth()->user()->id;
+				$validated['user_id'] = auth()->user()->id();
 				$validated['unit'] = 'pcs';
 				$validated['tipe'] = 'Barang';
 				$validated['lacak_stok'] = true;
@@ -185,11 +185,11 @@ class ProdukController extends BaseController
 				$validated['nama_produk'] = $kategori->name;
 				$validated['kategori'] = $kategori->name; // Simpan nama kategori ke field kategori
 
-				// Default values untuk field legacy yang NOT NULL
-				$validated['jenis_logam'] = 'emas'; // Field legacy enum, default 'emas'
-				$validated['brand'] = 'UMKM'; // Field legacy, default 'UMKM'
-				$validated['berat_standar'] = 0; // Field legacy, default 0
-				$validated['stock_minimum'] = 0; // Field legacy, default 0
+				// Default values untuk field legacy (dari database DESCRIBE)
+				$validated['jenis_logam'] = null; // Bisa null di database
+				$validated['brand'] = null; // Bisa null di database
+				$validated['berat_standar'] = null; // Bisa null di database
+				$validated['stock_minimum'] = 0; // Sudah ada default 0 di database
 
 				// Membuat produk baru
 				$product = Product::create($validated);

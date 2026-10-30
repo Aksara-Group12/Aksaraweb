@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengeluaran;
-use App\Models\KategoriProduk;
+use App\Models\Kategori;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -38,23 +38,28 @@ class PengeluaranController extends BaseController
 
 	public function create()
 	{
-		$kategoriProduk = KategoriProduk::where('tipe', 'pengeluaran')->get();
-		return view('transaksi.pengeluaran.create', compact('kategoriProduk'));
+		$kategoriPengeluarans = Kategori::where('user_id', auth()->id())
+			->where('tipe', 'pengeluaran')
+			->where('is_active', true)
+			->get();
+		return view('transaksi.pengeluaran.create', compact('kategoriPengeluarans'));
 	}
 
 	public function store(Request $request)
 	{
 		try {
 			$validated = $request->validate([
+				'kategori_pengeluaran_id' => 'required|exists:kategoris,id',
 				'keterangan' => 'required|string|max:255',
-				'kategori' => 'required|string|max:100',
 				'nominal' => 'required|numeric|min:0',
 			]);
+
+			$kategori = Kategori::find($validated['kategori_pengeluaran_id']);
 
 			Pengeluaran::create([
 				'user_id' => auth()->user()->id,
 				'tanggal' => now()->format('Y-m-d'),
-				'kategori' => $validated['kategori'],
+				'kategori' => $kategori->name,
 				'nominal' => $validated['nominal'],
 				'metode_pembayaran' => 'cash',
 				'keterangan' => $validated['keterangan'],
@@ -77,8 +82,11 @@ class PengeluaranController extends BaseController
 			abort(403, 'Anda tidak memiliki akses ke pengeluaran ini');
 		}
 
-		$kategoriProduk = KategoriProduk::where('tipe', 'pengeluaran')->get();
-		return view('transaksi.pengeluaran.edit', compact('pengeluaran', 'kategoriProduk'));
+		$kategoriPengeluarans = Kategori::where('user_id', auth()->id())
+			->where('tipe', 'pengeluaran')
+			->where('is_active', true)
+			->get();
+		return view('transaksi.pengeluaran.edit', compact('pengeluaran', 'kategoriPengeluarans'));
 	}
 
 	public function update(Request $request, Pengeluaran $pengeluaran)
@@ -91,16 +99,17 @@ class PengeluaranController extends BaseController
 		try {
 			$validated = $request->validate([
 				'tanggal' => 'required|date',
-				'kategori' => 'nullable|string|max:100',
-				'kategori_produk_id' => 'nullable|exists:kategori_produk,id',
+				'kategori_pengeluaran_id' => 'nullable|exists:kategoris,id',
 				'nominal' => 'required|numeric|min:0',
 				'metode_pembayaran' => 'required|in:cash,non-cash',
 				'keterangan' => 'nullable|string',
 			]);
 
+			$kategori = isset($validated['kategori_pengeluaran_id']) ? Kategori::find($validated['kategori_pengeluaran_id']) : null;
+
 			$pengeluaran->update([
 				'tanggal' => $validated['tanggal'],
-				'kategori' => $validated['kategori'] ?? null,
+				'kategori' => $kategori ? $kategori->name : $pengeluaran->kategori,
 				'nominal' => $validated['nominal'],
 				'metode_pembayaran' => $validated['metode_pembayaran'],
 				'keterangan' => $validated['keterangan'] ?? null,

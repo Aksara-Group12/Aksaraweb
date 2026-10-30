@@ -18,12 +18,17 @@
 			@endif
 			<div style="display:flex; flex-direction:column; gap:16px;">
 				<div style="display:flex; flex-direction:column; gap:6px;">
-					<label style="font-size:0.85rem; font-weight:500; color:#1e293b;">Nama Pengeluaran <span style="color:#3b82f6;">*</span></label>
-					<input type="text" name="keterangan" value="{{ old('keterangan') }}" required placeholder="Contoh: Bayar listrik, sewa toko" style="padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.95); color:#1e293b; font-size:0.9rem;">
+					<label style="font-size:0.85rem; font-weight:500; color:#1e293b;">Kategori Pengeluaran <span style="color:#3b82f6;">*</span></label>
+					<select name="kategori_pengeluaran_id" required style="padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.95); color:#1e293b; font-size:0.9rem;">
+						<option value="">-- Pilih Kategori --</option>
+						@foreach($kategoriPengeluarans as $kategori)
+							<option value="{{ $kategori->id }}">{{ $kategori->name }}</option>
+						@endforeach
+					</select>
 				</div>
 				<div style="display:flex; flex-direction:column; gap:6px;">
-					<label style="font-size:0.85rem; font-weight:500; color:#1e293b;">Kategori Pengeluaran <span style="color:#3b82f6;">*</span></label>
-					<input type="text" name="kategori" value="{{ old('kategori') }}" required placeholder="Contoh: Listrik, Sewa, Gaji" style="padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.95); color:#1e293b; font-size:0.9rem;">
+					<label style="font-size:0.85rem; font-weight:500; color:#1e293b;">Nama Pengeluaran <span style="color:#3b82f6;">*</span></label>
+					<input type="text" name="keterangan" value="{{ old('keterangan') }}" required placeholder="Contoh: Bayar listrik, sewa toko" style="padding:10px 12px; border-radius:10px; border:1px solid rgba(59,130,246,0.4); background:rgba(255,255,255,0.95); color:#1e293b; font-size:0.9rem;">
 				</div>
 				<div style="display:flex; flex-direction:column; gap:6px;">
 					<label style="font-size:0.85rem; font-weight:500; color:#1e293b;">Nominal (Rp) <span style="color:#3b82f6;">*</span></label>

@@ -11,9 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('stock_adjustment_items', function (Blueprint $table) {
-            $table->decimal('total_nilai_selisih', 15, 2)->nullable();
-        });
+        Schema::rename('expenses', 'pengeluaran');
     }
 
     /**
@@ -21,8 +19,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('stock_adjustment_items', function (Blueprint $table) {
-            $table->dropColumn('total_nilai_selisih');
-        });
+        Schema::rename('pengeluaran', 'expenses');
     }
 };

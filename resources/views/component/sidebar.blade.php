@@ -52,9 +52,9 @@
 			@endif
 		</div>
 
-		<div class="hz-nav-group">
-			<p class="hz-nav-group-title">Manajemen</p>
-			@if($isSuperadmin)
+		@if($isSuperadmin)
+			<div class="hz-nav-group">
+				<p class="hz-nav-group-title">Superadmin</p>
 				<a href="{{ route('manajemen-user.index') }}" class="hz-nav-item {{ request()->routeIs('manajemen-user.*') ? 'hz-nav-item-active' : '' }}">
 					<i data-lucide="users" class="hz-nav-lucide"></i>
 					<span class="hz-nav-label">Manajemen User</span>
@@ -67,54 +67,23 @@
 					<i data-lucide="credit-card" class="hz-nav-lucide"></i>
 					<span class="hz-nav-label">Rekening Bank</span>
 				</a>
-			@elseif($isOwner && !session()->has('admin_id'))
+			</div>
+		@endif
+
+		@if($isOwner)
+			<div class="hz-nav-group">
+				<p class="hz-nav-group-title">Manajemen</p>
 				<a href="{{ $ownerSubscriptionActive ? route('produk.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('produk.index') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
 					<i data-lucide="box" class="hz-nav-lucide"></i>
 					<span class="hz-nav-label">Semua Produk</span>
 				</a>
-				<a href="{{ $ownerSubscriptionActive ? route('produkstok.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('produkstok.*') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-					<i data-lucide="boxes" class="hz-nav-lucide"></i>
-					<span class="hz-nav-label">Manajemen Stok</span>
-				</a>
-				<a href="{{ $ownerSubscriptionActive ? route('stock-adjustment.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('stock-adjustment.*') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-					<i data-lucide="clipboard-pen-line" class="hz-nav-lucide"></i>
-					<span class="hz-nav-label">Stock Adjustment</span>
-				</a>
-				<a href="{{ $ownerSubscriptionActive ? route('produk.log') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('produk.log') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-					<i data-lucide="history" class="hz-nav-lucide"></i>
-					<span class="hz-nav-label">Log Produk</span>
-				</a>
-				<a href="{{ $ownerSubscriptionActive ? route('pelanggan.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('pelanggan.*') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-					<i data-lucide="user-check" class="hz-nav-lucide"></i>
-					<span class="hz-nav-label">Data Pelanggan</span>
-				</a>
-				<a href="{{ $ownerSubscriptionActive ? route('supplier.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('supplier.*') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-					<i data-lucide="truck" class="hz-nav-lucide"></i>
-					<span class="hz-nav-label">Data Supplier</span>
-				</a>
-				<a href="{{ $ownerSubscriptionActive ? route('admin.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('admin.*') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-					<i data-lucide="shield-check" class="hz-nav-lucide"></i>
-					<span class="hz-nav-label">Manajemen Admin</span>
-				</a>
-			@endif
-		</div>
+			</div>
 
-		@if($isOwner)
 			<div class="hz-nav-group">
 				<p class="hz-nav-group-title">Transaksi</p>
-				@if(!session()->has('admin_id'))
-					<a href="{{ $ownerSubscriptionActive ? route('transaksi.masuk') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('transaksi.masuk') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-						<i data-lucide="arrow-down-left" class="hz-nav-lucide"></i>
-						<span class="hz-nav-label">Transaksi Masuk</span>
-					</a>
-				@endif
 				<a href="{{ $ownerSubscriptionActive ? route('transaksi.pos') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('transaksi.pos') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
 					<i data-lucide="shopping-cart" class="hz-nav-lucide"></i>
 					<span class="hz-nav-label">POS Kasir</span>
-				</a>
-				<a href="{{ $ownerSubscriptionActive ? route('shift.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('shift.*') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-					<i data-lucide="clock" class="hz-nav-lucide"></i>
-					<span class="hz-nav-label">Shift Kasir</span>
 				</a>
 				@if(!session()->has('admin_id'))
 					<a href="{{ $ownerSubscriptionActive ? route('transaksi.keluar') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('transaksi.keluar') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
@@ -122,36 +91,22 @@
 						<span class="hz-nav-label">Riwayat Penjualan</span>
 					</a>
 				@endif
-				<a href="{{ $ownerSubscriptionActive ? route('expenses.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('expenses.*') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
+				<a href="{{ $ownerSubscriptionActive ? route('pengeluaran.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('pengeluaran.*') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
 					<i data-lucide="receipt" class="hz-nav-lucide"></i>
-					<span class="hz-nav-label">Expenses</span>
+					<span class="hz-nav-label">Pengeluaran</span>
 				</a>
-				@if(!session()->has('admin_id'))
-					<a href="{{ $ownerSubscriptionActive ? route('transaksi.log') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('transaksi.log') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-						<i data-lucide="file-text" class="hz-nav-lucide"></i>
-						<span class="hz-nav-label">Log Transaksi</span>
-					</a>
-				@endif
 			</div>
 
 			@if(!session()->has('admin_id'))
 				<div class="hz-nav-group">
-					<p class="hz-nav-group-title">Ringkasan Keuangan</p>
-					<a href="{{ $ownerSubscriptionActive ? route('journal.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('journal.*') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-						<i data-lucide="book-open" class="hz-nav-lucide"></i>
-						<span class="hz-nav-label">Jurnal Finance</span>
-					</a>
-					<a href="{{ $ownerSubscriptionActive ? route('invoice.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('invoice.*') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-						<i data-lucide="file-spreadsheet" class="hz-nav-lucide"></i>
-						<span class="hz-nav-label">Invoice / AR</span>
-					</a>
-					<a href="{{ $ownerSubscriptionActive ? route('laporan.laba-rugi') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('laporan.laba-rugi') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-						<i data-lucide="trending-up" class="hz-nav-lucide"></i>
-						<span class="hz-nav-label">Laba Rugi</span>
-					</a>
+					<p class="hz-nav-group-title">Laporan</p>
 					<a href="{{ $ownerSubscriptionActive ? route('laporan.keuangan') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('laporan.keuangan') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
 						<i data-lucide="pie-chart" class="hz-nav-lucide"></i>
 						<span class="hz-nav-label">Ringkasan Keuangan</span>
+					</a>
+					<a href="{{ $ownerSubscriptionActive ? route('laporan.produk-terlaris') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('laporan.produk-terlaris') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
+						<i data-lucide="trending-up" class="hz-nav-lucide"></i>
+						<span class="hz-nav-label">Produk Terlaris</span>
 					</a>
 				</div>
 			@endif

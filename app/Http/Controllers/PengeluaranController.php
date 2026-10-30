@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Expenses;
+use App\Models\Pengeluaran;
 use App\Models\KategoriProduk;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
-class ExpensesController extends BaseController
+class PengeluaranController extends BaseController
 {
 	public function index(Request $request)
 	{
-		$query = Expenses::where('user_id', auth()->user()->id);
+		$query = Pengeluaran::where('user_id', auth()->user()->id);
 
 		if ($search = $request->input('search')) {
 			$query->where(function ($q) use ($search) {
@@ -27,19 +27,19 @@ class ExpensesController extends BaseController
 		}
 
 		$summaryTotal = (clone $query)->sum('nominal');
-		$expenses = $query
+		$pengeluaran = $query
 			->orderBy('tanggal', 'desc')
 			->orderBy('created_at', 'desc')
 			->paginate($perPage)
 			->appends($request->only('search', 'per_page'));
 
-		return view('transaksi.expenses.index', compact('expenses', 'summaryTotal'));
+		return view('transaksi.pengeluaran.index', compact('pengeluaran', 'summaryTotal'));
 	}
 
 	public function create()
 	{
-		$kategoriProduk = KategoriProduk::where('tipe', 'expenses')->get();
-		return view('transaksi.expenses.create', compact('kategoriProduk'));
+		$kategoriProduk = KategoriProduk::where('tipe', 'pengeluaran')->get();
+		return view('transaksi.pengeluaran.create', compact('kategoriProduk'));
 	}
 
 	public function store(Request $request)
@@ -54,7 +54,7 @@ class ExpensesController extends BaseController
 				'keterangan' => 'nullable|string',
 			]);
 
-			Expenses::create([
+			Pengeluaran::create([
 				'user_id' => auth()->user()->id,
 				'tanggal' => $validated['tanggal'],
 				'kategori' => $validated['kategori'] ?? null,
@@ -64,7 +64,7 @@ class ExpensesController extends BaseController
 				'reference_no' => null,
 			]);
 
-			return redirect()->route('expenses.index')->with('success', 'Pengeluaran berhasil dicatat');
+			return redirect()->route('pengeluaran.index')->with('success', 'Pengeluaran berhasil dicatat');
 		} catch (\Illuminate\Validation\ValidationException $e) {
 			return back()->withErrors($e->errors())->withInput();
 		} catch (\Exception $e) {
@@ -80,8 +80,8 @@ class ExpensesController extends BaseController
 			abort(403, 'Anda tidak memiliki akses ke pengeluaran ini');
 		}
 		
-		$kategoriProduk = KategoriProduk::where('tipe', 'expenses')->get();
-		return view('transaksi.expenses.edit', compact('expense', 'kategoriProduk'));
+		$kategoriProduk = KategoriProduk::where('tipe', 'pengeluaran')->get();
+		return view('transaksi.pengeluaran.edit', compact('expense', 'kategoriProduk'));
 	}
 
 	public function update(Request $request, Expenses $expense)
@@ -109,7 +109,7 @@ class ExpensesController extends BaseController
 				'keterangan' => $validated['keterangan'] ?? null,
 			]);
 
-			return redirect()->route('expenses.index')->with('success', 'Pengeluaran berhasil diperbarui');
+			return redirect()->route('pengeluaran.index')->with('success', 'Pengeluaran berhasil diperbarui');
 		} catch (\Illuminate\Validation\ValidationException $e) {
 			return back()->withErrors($e->errors())->withInput();
 		} catch (\Exception $e) {
@@ -127,7 +127,7 @@ class ExpensesController extends BaseController
 
 		try {
 			$expense->delete();
-			return redirect()->route('expenses.index')->with('success', 'Pengeluaran berhasil dihapus');
+			return redirect()->route('pengeluaran.index')->with('success', 'Pengeluaran berhasil dihapus');
 		} catch (\Exception $e) {
 			\Log::error('Destroy Expenses Error: ' . $e->getMessage());
 			return back()->with('error', 'Terjadi kesalahan saat menghapus pengeluaran');
@@ -150,20 +150,20 @@ class ExpensesController extends BaseController
 		}
 
 		if (empty($ids) || !is_array($ids)) {
-			return redirect()->route('expenses.index')->with('error', 'Tidak ada pengeluaran yang dipilih.');
+			return redirect()->route('pengeluaran.index')->with('error', 'Tidak ada pengeluaran yang dipilih.');
 		}
 
 		// Validasi kepemilikan - hanya hapus yang milik user
-		$deleted = Expenses::where('user_id', auth()->user()->id)
+		$deleted = Pengeluaran::where('user_id', auth()->user()->id)
 			->whereIn('id', $ids)
 			->delete();
 
-		return redirect()->route('expenses.index')->with('success', "{$deleted} pengeluaran berhasil dihapus");
+		return redirect()->route('pengeluaran.index')->with('success', "{$deleted} pengeluaran berhasil dihapus");
 	}
 
 	public function exportExcel(Request $request)
 	{
-		$query = Expenses::query();
+		$query = Pengeluaran::query();
 
 		if ($search = $request->input('search')) {
 			$query->where(function ($q) use ($search) {
@@ -172,7 +172,7 @@ class ExpensesController extends BaseController
 			});
 		}
 
-		$expenses = $query
+		$pengeluaran = $query
 			->orderBy('tanggal', 'desc')
 			->orderBy('created_at', 'desc')
 			->get();
@@ -184,7 +184,7 @@ class ExpensesController extends BaseController
 		// Header kolom (tanpa aksi)
 		fputcsv($stream, ['Tanggal', 'Kategori', 'Keterangan', 'Nominal', 'Metode'], ';');
 
-		foreach ($expenses as $expense) {
+		foreach ($pengeluaran as $expense) {
 			$tanggal = $expense->tanggal
 				? $expense->tanggal->format('d/m/Y')
 				: ($expense->created_at ? $expense->created_at->format('d/m/Y') : '');
@@ -213,7 +213,7 @@ class ExpensesController extends BaseController
 
 	public function exportPdf(Request $request)
 	{
-		$query = Expenses::query();
+		$query = Pengeluaran::query();
 
 		if ($search = $request->input('search')) {
 			$query->where(function ($q) use ($search) {
@@ -222,13 +222,13 @@ class ExpensesController extends BaseController
 			});
 		}
 
-		$expenses = $query
+		$pengeluaran = $query
 			->orderBy('tanggal', 'desc')
 			->orderBy('created_at', 'desc')
 			->get();
 
-		$pdf = Pdf::loadView('transaksi.expenses.export-pdf', [
-			'expenses' => $expenses,
+		$pdf = Pdf::loadView('transaksi.pengeluaran.export-pdf', [
+			'pengeluaran' => $pengeluaran,
 		]);
 
 		$fileName = 'pengeluaran_' . now()->format('Ymd_His') . '.pdf';

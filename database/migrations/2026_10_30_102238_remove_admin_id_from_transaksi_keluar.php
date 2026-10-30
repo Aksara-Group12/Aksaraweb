@@ -12,11 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('transaksi_keluar', function (Blueprint $table) {
-            $table->foreignId('admin_id')
-                ->nullable()
-                ->after('user_id')
-                ->constrained('admins')
-                ->nullOnDelete();
+            $table->dropForeign(['admin_id']);
+            $table->dropColumn('admin_id');
         });
     }
 
@@ -26,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('transaksi_keluar', function (Blueprint $table) {
-            $table->dropConstrainedForeignId('admin_id');
+            $table->unsignedBigInteger('admin_id')->nullable()->after('user_id');
+            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('set null');
         });
     }
 };

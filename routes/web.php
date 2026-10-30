@@ -15,6 +15,10 @@ use App\Http\Controllers\PaketController;
 use App\Http\Controllers\SubscribeController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\DataMaster\PenggunaController;
+use App\Http\Controllers\DataMaster\KategoriPengeluaranController;
+use App\Http\Controllers\DataMaster\KategoriProdukController;
+use App\Http\Controllers\DataMaster\RbacController;
 
 // TEMP: Clear cache (hapus setelah berhasil)
 Route::get('/clear-cache', function () {
@@ -139,33 +143,33 @@ Route::middleware(['auth', 'subscription.access', 'employee.access'])->group(fun
     })->name('data-master.index');
     
     Route::prefix('data-master')->name('data-master.')->group(function () {
-        Route::get('/pengguna', [DataMaster\PenggunaController::class, 'index'])->name('pengguna.index');
-        Route::get('/pengguna/create', [DataMaster\PenggunaController::class, 'create'])->name('pengguna.create');
-        Route::post('/pengguna', [DataMaster\PenggunaController::class, 'store'])->name('pengguna.store');
-        Route::get('/pengguna/{pengguna}/edit', [DataMaster\PenggunaController::class, 'edit'])->name('pengguna.edit');
-        Route::put('/pengguna/{pengguna}', [DataMaster\PenggunaController::class, 'update'])->name('pengguna.update');
-        Route::delete('/pengguna/{pengguna}', [DataMaster\PenggunaController::class, 'destroy'])->name('pengguna.destroy');
+        Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
+        Route::get('/pengguna/create', [PenggunaController::class, 'create'])->name('pengguna.create');
+        Route::post('/pengguna', [PenggunaController::class, 'store'])->name('pengguna.store');
+        Route::get('/pengguna/{pengguna}/edit', [PenggunaController::class, 'edit'])->name('pengguna.edit');
+        Route::put('/pengguna/{pengguna}', [PenggunaController::class, 'update'])->name('pengguna.update');
+        Route::delete('/pengguna/{pengguna}', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');
 
-        Route::get('/kategori-pengeluaran', [DataMaster\KategoriPengeluaranController::class, 'index'])->name('kategori-pengeluaran.index');
-        Route::get('/kategori-pengeluaran/create', [DataMaster\KategoriPengeluaranController::class, 'create'])->name('kategori-pengeluaran.create');
-        Route::post('/kategori-pengeluaran', [DataMaster\KategoriPengeluaranController::class, 'store'])->name('kategori-pengeluaran.store');
-        Route::get('/kategori-pengeluaran/{kategori}/edit', [DataMaster\KategoriPengeluaranController::class, 'edit'])->name('kategori-pengeluaran.edit');
-        Route::put('/kategori-pengeluaran/{kategori}', [DataMaster\KategoriPengeluaranController::class, 'update'])->name('kategori-pengeluaran.update');
-        Route::delete('/kategori-pengeluaran/{kategori}', [DataMaster\KategoriPengeluaranController::class, 'destroy'])->name('kategori-pengeluaran.destroy');
+        Route::get('/kategori-pengeluaran', [KategoriPengeluaranController::class, 'index'])->name('kategori-pengeluaran.index');
+        Route::get('/kategori-pengeluaran/create', [KategoriPengeluaranController::class, 'create'])->name('kategori-pengeluaran.create');
+        Route::post('/kategori-pengeluaran', [KategoriPengeluaranController::class, 'store'])->name('kategori-pengeluaran.store');
+        Route::get('/kategori-pengeluaran/{kategori}/edit', [KategoriPengeluaranController::class, 'edit'])->name('kategori-pengeluaran.edit');
+        Route::put('/kategori-pengeluaran/{kategori}', [KategoriPengeluaranController::class, 'update'])->name('kategori-pengeluaran.update');
+        Route::delete('/kategori-pengeluaran/{kategori}', [KategoriPengeluaranController::class, 'destroy'])->name('kategori-pengeluaran.destroy');
 
-        Route::get('/kategori-produk', [DataMaster\KategoriProdukController::class, 'index'])->name('kategori-produk.index');
-        Route::get('/kategori-produk/create', [DataMaster\KategoriProdukController::class, 'create'])->name('kategori-produk.create');
-        Route::post('/kategori-produk', [DataMaster\KategoriProdukController::class, 'store'])->name('kategori-produk.store');
-        Route::get('/kategori-produk/{kategori}/edit', [DataMaster\KategoriProdukController::class, 'edit'])->name('kategori-produk.edit');
-        Route::put('/kategori-produk/{kategori}', [DataMaster\KategoriProdukController::class, 'update'])->name('kategori-produk.update');
-        Route::delete('/kategori-produk/{kategori}', [DataMaster\KategoriProdukController::class, 'destroy'])->name('kategori-produk.destroy');
+        Route::get('/kategori-produk', [KategoriProdukController::class, 'index'])->name('kategori-produk.index');
+        Route::get('/kategori-produk/create', [KategoriProdukController::class, 'create'])->name('kategori-produk.create');
+        Route::post('/kategori-produk', [KategoriProdukController::class, 'store'])->name('kategori-produk.store');
+        Route::get('/kategori-produk/{kategori}/edit', [KategoriProdukController::class, 'edit'])->name('kategori-produk.edit');
+        Route::put('/kategori-produk/{kategori}', [KategoriProdukController::class, 'update'])->name('kategori-produk.update');
+        Route::delete('/kategori-produk/{kategori}', [KategoriProdukController::class, 'destroy'])->name('kategori-produk.destroy');
 
-        Route::get('/rbac', [DataMaster\RbacController::class, 'index'])->name('rbac.index');
-        Route::get('/rbac/create', [DataMaster\RbacController::class, 'create'])->name('rbac.create');
-        Route::post('/rbac', [DataMaster\RbacController::class, 'store'])->name('rbac.store');
-        Route::get('/rbac/{role}/edit', [DataMaster\RbacController::class, 'edit'])->name('rbac.edit');
-        Route::put('/rbac/{role}', [DataMaster\RbacController::class, 'update'])->name('rbac.update');
-        Route::delete('/rbac/{role}', [DataMaster\RbacController::class, 'destroy'])->name('rbac.destroy');
+        Route::get('/rbac', [RbacController::class, 'index'])->name('rbac.index');
+        Route::get('/rbac/create', [RbacController::class, 'create'])->name('rbac.create');
+        Route::post('/rbac', [RbacController::class, 'store'])->name('rbac.store');
+        Route::get('/rbac/{role}/edit', [RbacController::class, 'edit'])->name('rbac.edit');
+        Route::put('/rbac/{role}', [RbacController::class, 'update'])->name('rbac.update');
+        Route::delete('/rbac/{role}', [RbacController::class, 'destroy'])->name('rbac.destroy');
     });
 
     Route::prefix('manajemen-user')->name('manajemen-user.')->group(function () {

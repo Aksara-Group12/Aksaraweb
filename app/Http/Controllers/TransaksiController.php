@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\TransaksiKeluar;
 use App\Models\TransaksiKeluarItem;
-use App\Models\TransaksiBiayaTambahan;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -134,13 +133,10 @@ class TransaksiController extends BaseController
 		try {
 			// Validate basic transaction data
 			$validated = $request->validate([
-				'customer_name' => 'required|string|max:100',
-				'customer_contact' => 'nullable|string|max:100',
 				'tanggal_transaksi' => 'required|date',
 				'metode_pembayaran' => 'required|in:cash,non-cash',
-				'lokasi' => 'nullable|string|max:100',
-				'nominal_bayar' => 'nullable|numeric',
-				'kembalian' => 'nullable|numeric|min:0',
+				'nominal_bayar' => 'nullable|integer',
+				'kembalian' => 'nullable|integer|min:0',
 				'catatan' => 'nullable|string',
 				'items' => 'required|json',
 			]);
@@ -183,23 +179,16 @@ class TransaksiController extends BaseController
 			}
 
 			DB::transaction(function () use ($request, $validated, $itemsData, &$transaksiKeluarRef) {
-				// Tentukan apakah ini invoice (bayar nanti) atau cash
-				$isInvoice = $request->has('is_invoice') || $validated['metode_pembayaran'] === 'non-cash';
-
 				// 1. Create Transaksi Keluar header
 				$transaksiKeluar = TransaksiKeluar::create([
 					'user_id' => auth()->user()->id,
 					'invoice_no' => TransaksiKeluar::generateNumber(),
-					'customer_name' => $validated['customer_name'],
-					'customer_contact' => $validated['customer_contact'] ?? null,
 					'tanggal_transaksi' => $validated['tanggal_transaksi'],
 					'status' => 'complete',
-					'lokasi' => $validated['lokasi'] ?? null,
 					'metode_pembayaran' => $validated['metode_pembayaran'],
 					'nominal_bayar' => $validated['nominal_bayar'] ?? 0,
 					'kembalian' => $validated['kembalian'] ?? 0,
 					'catatan' => $validated['catatan'] ?? null,
-					'is_invoice' => $isInvoice,
 					// shift_id dihapus karena fitur shift dihapus
 				]);
 

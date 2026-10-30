@@ -38,6 +38,7 @@
 	<form id="posForm" action="{{ route('transaksi.keluar.store') }}" method="POST" style="margin-top: 24px;">
 		@csrf
 		<input type="hidden" name="items" id="itemsInput">
+		<input type="hidden" name="tanggal_transaksi" value="{{ now()->format('Y-m-d') }}">
 
 		<!-- POS LAYOUT: Panel Kiri Katalog, Panel Kanan Keranjang -->
 		<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
@@ -118,10 +119,6 @@
 								<option value="cash">Cash</option>
 								<option value="non-cash">Non-Cash (Transfer/QRIS)</option>
 							</select>
-						</div>
-						<div style="display: flex; align-items: center; gap: 8px; padding: 8px 0;">
-							<input type="checkbox" name="is_invoice" id="isInvoice" style="width: 16px; height: 16px; cursor: pointer;">
-							<label for="isInvoice" style="font-size: 0.85rem; font-weight: 500; color: #1e293b; cursor: pointer;">Bayar Nanti / Invoice</label>
 						</div>
 						<div style="display: flex; flex-direction: column; gap: 6px;">
 							<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Jumlah Bayar</label>

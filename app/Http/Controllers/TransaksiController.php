@@ -399,7 +399,8 @@ class TransaksiController extends BaseController
 	{
 		$transaksiKeluar->load('items.product', 'biayaTambahan');
 		$user = auth()->user();
-		$profile = \App\Models\Profile::where('user_id', $user->id)->first();
-		return view('transaksi.keluar.nota', compact('transaksiKeluar', 'profile', 'user'));
+		// Table profiles sudah dihapus, gunakan data dari user
+		$storeName = 'Aksara';
+		return view('transaksi.keluar.nota', compact('transaksiKeluar', 'storeName', 'user'));
 	}
 }

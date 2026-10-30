@@ -203,7 +203,7 @@
 <body>
 	<div class="receipt">
 		<div class="header">
-			<h1>{{ $profile->store_name ?? config('app.name', 'TOKO') }}</h1>
+			<h1>{{ $storeName ?? config('app.name', 'TOKO') }}</h1>
 			<div class="type-badge">PENJUALAN</div>
 		</div>
 
@@ -327,7 +327,7 @@
 		@endif
 
 		<div class="footer">
-			<p>{{ $profile->store_name ?? config('app.name', 'TOKO') }}</p>
+			<p>{{ $storeName ?? config('app.name', 'TOKO') }}</p>
 			<p>*** TERIMA KASIH ***</p>
 			<p>Nota Penjualan / Sales Receipt</p>
 			<p>Diinput oleh: {{ $user->name ?? '-' }}</p>

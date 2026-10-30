@@ -61,14 +61,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the profile associated with this user.
-     */
-    public function profile()
-    {
-        return $this->hasOne(Profile::class);
-    }
-
-    /**
      * Get the subscriptions for this user.
      */
     public function subscriptions()

@@ -5,8 +5,8 @@
 		$isOwner = $user && $user->role === 'owner';
 		$ownerSubscriptionActive = $isOwner ? (bool) \App\Models\Subscribe::getActiveSubscription($user->id) : true;
 		// $paketType = $isOwner ? \App\Models\Subscribe::getPackageType($user->id) : 1; // DISABLED - semua fitur terbuka
-		$profile = auth()->user()->profile ?? \App\Models\Profile::where('user_id', auth()->id())->first();
-		$storeName = $profile?->store_name ?? 'Aksara';
+		// Table profiles sudah dihapus, gunakan default store name
+		$storeName = 'Aksara';
 
 		// Helper function untuk cek permission
 		$hasPermission = function($permission) use ($user) {
@@ -16,14 +16,10 @@
 	@endphp
 	<div class="hz-sidebar-header">
 		<div class="hz-logo-badge">
-			@if(!$isSuperadmin && $profile && $profile->logo_path)
-				@php
-					$logoPath = asset('storage/' . $profile->logo_path);
-				@endphp
+			@if(!$isSuperadmin)
 				<img 
-					src="{{ $logoPath }}" 
+					src="{{ asset('assets/images/aksara-logo.png') }}" 
 					alt="{{ $storeName }}" 
-					onerror="this.src='{{ asset('assets/images/aksara-logo.png') }}';"
 				>
 			@else
 				<img 

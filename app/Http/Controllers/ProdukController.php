@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\ProductSerialNumber;
 use App\Models\TransaksiKeluarItem;
-use App\Models\Kategori;
+use App\Models\KategoriProduk;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -54,9 +54,8 @@ class ProdukController extends BaseController
 			abort(403, 'Anda tidak memiliki akses ke produk ini');
 		}
 
-		$kategoriProduk = Kategori::where('user_id', auth()->id())
-			->where('tipe', 'produk')
-			->where('is_active', true)
+		$kategoriProduk = KategoriProduk::where('user_id', auth()->id())
+			->active()
 			->get();
 
 		return view('produk.edit', compact('product', 'kategoriProduk'));
@@ -133,9 +132,8 @@ class ProdukController extends BaseController
 	 */
 	public function create()
 	{
-		$kategoriProduk = Kategori::where('user_id', auth()->id())
-			->where('tipe', 'produk')
-			->where('is_active', true)
+		$kategoriProduk = KategoriProduk::where('user_id', auth()->id())
+			->active()
 			->get();
 
 		return view('produk.create', compact('kategoriProduk'));
@@ -148,12 +146,12 @@ class ProdukController extends BaseController
 	{
 		try {
 			$validated = $request->validate([
-				'kategori_produk_id' => 'required|exists:kategoris,id',
+				'kategori_produk_id' => 'required|exists:kategori_produk,id',
 				'harga_jual' => 'required|numeric|min:0',
 				'stock' => 'required|integer|min:0',
 			]);
 
-			$kategori = Kategori::find($validated['kategori_produk_id']);
+			$kategori = KategoriProduk::find($validated['kategori_produk_id']);
 
 			// Cek apakah sudah ada produk dengan kategori yang sama
 			$existingProduct = Product::where('user_id', auth()->user()->id)

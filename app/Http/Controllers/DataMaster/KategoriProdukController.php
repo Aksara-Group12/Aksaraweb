@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\DataMaster;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kategori;
+use App\Models\KategoriProduk;
 use Illuminate\Http\Request;
 
 class KategoriProdukController extends Controller
 {
 	public function index()
 	{
-		$kategoris = Kategori::where('user_id', auth()->id())
-			->where('tipe', 'produk')
+		$kategoris = KategoriProduk::where('user_id', auth()->id())
+			->active()
 			->latest()
 			->paginate(20);
 		return view('data-master.kategori-produk.index', compact('kategoris'));
@@ -28,21 +28,20 @@ class KategoriProdukController extends Controller
 			'name' => 'required|string|max:255',
 		]);
 
-		$validated['tipe'] = 'produk';
 		$validated['user_id'] = auth()->id();
 		$validated['is_active'] = true;
 
-		Kategori::create($validated);
+		KategoriProduk::create($validated);
 
-		return redirect()->route('data-master.kategori-produk.index')->with('success', 'Kategori berhasil ditambahkan');
+		return redirect()->route('data-master.kategori-produk.index')->with('success', 'Kategori Produk berhasil ditambahkan');
 	}
 
-	public function edit(Kategori $kategori)
+	public function edit(KategoriProduk $kategori)
 	{
 		return view('data-master.kategori-produk.edit', compact('kategori'));
 	}
 
-	public function update(Request $request, Kategori $kategori)
+	public function update(Request $request, KategoriProduk $kategori)
 	{
 		$validated = $request->validate([
 			'name' => 'required|string|max:255',
@@ -51,12 +50,12 @@ class KategoriProdukController extends Controller
 
 		$kategori->update($validated);
 
-		return redirect()->route('data-master.kategori-produk.index')->with('success', 'Kategori berhasil diperbarui');
+		return redirect()->route('data-master.kategori-produk.index')->with('success', 'Kategori Produk berhasil diperbarui');
 	}
 
-	public function destroy(Kategori $kategori)
+	public function destroy(KategoriProduk $kategori)
 	{
 		$kategori->delete();
-		return redirect()->route('data-master.kategori-produk.index')->with('success', 'Kategori berhasil dihapus');
+		return redirect()->route('data-master.kategori-produk.index')->with('success', 'Kategori Produk berhasil dihapus');
 	}
 }

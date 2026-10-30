@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\DataMaster;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kategori;
+use App\Models\KategoriPengeluaran;
 use Illuminate\Http\Request;
 
 class KategoriPengeluaranController extends Controller
 {
 	public function index()
 	{
-		$kategoris = Kategori::where('user_id', auth()->id())
-			->where('tipe', 'pengeluaran')
+		$kategoris = KategoriPengeluaran::where('user_id', auth()->id())
+			->active()
 			->latest()
 			->paginate(20);
 		return view('data-master.kategori-pengeluaran.index', compact('kategoris'));
@@ -28,21 +28,20 @@ class KategoriPengeluaranController extends Controller
 			'name' => 'required|string|max:255',
 		]);
 
-		$validated['tipe'] = 'pengeluaran';
 		$validated['user_id'] = auth()->id();
 		$validated['is_active'] = true;
 
-		Kategori::create($validated);
+		KategoriPengeluaran::create($validated);
 
-		return redirect()->route('data-master.kategori-pengeluaran.index')->with('success', 'Kategori berhasil ditambahkan');
+		return redirect()->route('data-master.kategori-pengeluaran.index')->with('success', 'Kategori Pengeluaran berhasil ditambahkan');
 	}
 
-	public function edit(Kategori $kategori)
+	public function edit(KategoriPengeluaran $kategori)
 	{
 		return view('data-master.kategori-pengeluaran.edit', compact('kategori'));
 	}
 
-	public function update(Request $request, Kategori $kategori)
+	public function update(Request $request, KategoriPengeluaran $kategori)
 	{
 		$validated = $request->validate([
 			'name' => 'required|string|max:255',
@@ -51,12 +50,12 @@ class KategoriPengeluaranController extends Controller
 
 		$kategori->update($validated);
 
-		return redirect()->route('data-master.kategori-pengeluaran.index')->with('success', 'Kategori berhasil diperbarui');
+		return redirect()->route('data-master.kategori-pengeluaran.index')->with('success', 'Kategori Pengeluaran berhasil diperbarui');
 	}
 
-	public function destroy(Kategori $kategori)
+	public function destroy(KategoriPengeluaran $kategori)
 	{
 		$kategori->delete();
-		return redirect()->route('data-master.kategori-pengeluaran.index')->with('success', 'Kategori berhasil dihapus');
+		return redirect()->route('data-master.kategori-pengeluaran.index')->with('success', 'Kategori Pengeluaran berhasil dihapus');
 	}
 }

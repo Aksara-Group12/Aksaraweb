@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengeluaran;
-use App\Models\Kategori;
+use App\Models\KategoriPengeluaran;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -38,9 +38,8 @@ class PengeluaranController extends BaseController
 
 	public function create()
 	{
-		$kategoriPengeluarans = Kategori::where('user_id', auth()->id())
-			->where('tipe', 'pengeluaran')
-			->where('is_active', true)
+		$kategoriPengeluarans = KategoriPengeluaran::where('user_id', auth()->id())
+			->active()
 			->get();
 		return view('transaksi.pengeluaran.create', compact('kategoriPengeluarans'));
 	}
@@ -49,12 +48,12 @@ class PengeluaranController extends BaseController
 	{
 		try {
 			$validated = $request->validate([
-				'kategori_pengeluaran_id' => 'required|exists:kategoris,id',
+				'kategori_pengeluaran_id' => 'required|exists:kategori_pengeluaran,id',
 				'keterangan' => 'required|string|max:255',
 				'nominal' => 'required|numeric|min:0',
 			]);
 
-			$kategori = Kategori::find($validated['kategori_pengeluaran_id']);
+			$kategori = KategoriPengeluaran::find($validated['kategori_pengeluaran_id']);
 
 			Pengeluaran::create([
 				'user_id' => auth()->user()->id,
@@ -82,9 +81,8 @@ class PengeluaranController extends BaseController
 			abort(403, 'Anda tidak memiliki akses ke pengeluaran ini');
 		}
 
-		$kategoriPengeluarans = Kategori::where('user_id', auth()->id())
-			->where('tipe', 'pengeluaran')
-			->where('is_active', true)
+		$kategoriPengeluarans = KategoriPengeluaran::where('user_id', auth()->id())
+			->active()
 			->get();
 		return view('transaksi.pengeluaran.edit', compact('pengeluaran', 'kategoriPengeluarans'));
 	}
@@ -99,13 +97,13 @@ class PengeluaranController extends BaseController
 		try {
 			$validated = $request->validate([
 				'tanggal' => 'required|date',
-				'kategori_pengeluaran_id' => 'nullable|exists:kategoris,id',
+				'kategori_pengeluaran_id' => 'nullable|exists:kategori_pengeluaran,id',
 				'nominal' => 'required|numeric|min:0',
 				'metode_pembayaran' => 'required|in:cash,non-cash',
 				'keterangan' => 'nullable|string',
 			]);
 
-			$kategori = isset($validated['kategori_pengeluaran_id']) ? Kategori::find($validated['kategori_pengeluaran_id']) : null;
+			$kategori = isset($validated['kategori_pengeluaran_id']) ? KategoriPengeluaran::find($validated['kategori_pengeluaran_id']) : null;
 
 			$pengeluaran->update([
 				'tanggal' => $validated['tanggal'],

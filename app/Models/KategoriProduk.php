@@ -9,28 +9,28 @@ class KategoriProduk extends Model
     protected $table = 'kategori_produk';
 
     protected $fillable = [
-        'nama_kategori',
-        'tipe',
-        'is_default',
+        'name',
+        'user_id',
+        'is_active',
     ];
 
     protected $casts = [
-        'is_default' => 'boolean',
+        'is_active' => 'boolean',
     ];
 
     /**
-     * Scope untuk kategori produk
+     * Relationship ke user
      */
-    public function scopeProduk($query)
+    public function user()
     {
-        return $query->where('tipe', 'produk');
+        return $this->belongsTo(User::class);
     }
 
     /**
-     * Scope untuk kategori expenses
+     * Scope untuk kategori aktif
      */
-    public function scopeExpenses($query)
+    public function scopeActive($query)
     {
-        return $query->where('tipe', 'expenses');
+        return $query->where('is_active', true);
     }
 }

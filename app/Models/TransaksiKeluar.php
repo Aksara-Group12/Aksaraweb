@@ -21,7 +21,6 @@ class TransaksiKeluar extends Model
 		'nominal_bayar',
 		'kembalian',
 		'catatan',
-		'is_invoice',
 		'is_void',
 		'void_reason',
 		'voided_at',

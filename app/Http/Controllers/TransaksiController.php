@@ -211,7 +211,7 @@ class TransaksiController extends BaseController
 					$hppSnapshot = floatval($product->harga_beli ?? 0);
 
 					// Hitung subtotal sebelum PPN
-					$itemSubtotal = TransaksiKeluarItem::calculateTotal($qty, $hargaJual, $diskon);
+					$itemSubtotal = ($qty * $hargaJual) - $diskon;
 
 					// Hitung PPN (hanya jika ppn > 0, jika 0 atau kosong, PPN = 0)
 					$ppnAmount = 0;

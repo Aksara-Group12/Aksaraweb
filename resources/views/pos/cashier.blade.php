@@ -72,9 +72,16 @@
 
 			<!-- PANEL KANAN: KERANJANG & PEMBAYARAN -->
 			<div style="display: flex; flex-direction: column; gap: 16px;">
-				
-				<!-- Info Pelanggan -->
-				<!-- Pelanggan dropdown dihapus karena fitur pelanggan sudah dihapus -->
+
+				<!-- Info Pelanggan (Opsional) -->
+				<div class="hz-card">
+					<div class="hz-card-header" style="margin-bottom: 12px;">
+						<p class="hz-card-title">Nama Pelanggan (Opsional)</p>
+					</div>
+					<div style="display: flex; flex-direction: column; gap: 6px;">
+						<input type="text" name="customer_name" placeholder="Nama pelanggan (opsional)" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
+					</div>
+				</div>
 
 				<!-- Keranjang Belanja -->
 				<div class="hz-card">

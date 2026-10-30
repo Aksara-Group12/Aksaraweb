@@ -133,6 +133,7 @@ class TransaksiController extends BaseController
 		try {
 			// Validate basic transaction data
 			$validated = $request->validate([
+				'customer_name' => 'nullable|string|max:100',
 				'tanggal_transaksi' => 'required|date',
 				'metode_pembayaran' => 'required|in:cash,non-cash',
 				'nominal_bayar' => 'nullable|integer',
@@ -183,6 +184,7 @@ class TransaksiController extends BaseController
 				$transaksiKeluar = TransaksiKeluar::create([
 					'user_id' => auth()->user()->id,
 					'invoice_no' => TransaksiKeluar::generateNumber(),
+					'customer_name' => $validated['customer_name'] ?? null,
 					'tanggal_transaksi' => $validated['tanggal_transaksi'],
 					'status' => 'complete',
 					'metode_pembayaran' => $validated['metode_pembayaran'],

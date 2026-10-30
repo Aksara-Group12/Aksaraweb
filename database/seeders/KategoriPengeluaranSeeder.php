@@ -15,6 +15,11 @@ class KategoriPengeluaranSeeder extends Seeder
     public function run(): void
     {
         $defaultKategoris = [
+            'Pembelian barang dagang / stok',
+            'Pembelian bahan baku',
+            'Bahan kemasan (plastik, box, label, kantong)',
+            'Sewa tempat',
+            'Gaji karyawan',
             'Listrik',
             'Air',
             'Internet dan telepon',

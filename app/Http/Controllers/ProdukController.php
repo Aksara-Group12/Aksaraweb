@@ -166,11 +166,12 @@ class ProdukController extends BaseController
 	{
 		try {
 			$validated = $request->validate([
-				'nama_produk' => 'required|string|max:255',
+				'kategori_produk_id' => 'required|exists:kategoris,id',
 				'harga_jual' => 'required|numeric|min:0',
 				'stock' => 'required|integer|min:0',
-				'kategori_produk_id' => 'nullable|exists:kategoris,id',
 			]);
+
+			$kategori = Kategori::find($validated['kategori_produk_id']);
 
 			// Set default values untuk field lain
 			$validated['code'] = Product::generateCode();
@@ -181,6 +182,7 @@ class ProdukController extends BaseController
 			$validated['is_active'] = true;
 			$validated['harga_beli'] = 0;
 			$validated['min_stock'] = 0;
+			$validated['nama_produk'] = $kategori->name;
 
 			// Membuat produk TIDAK otomatis menambah stok
 			$product = Product::create($validated);

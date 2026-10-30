@@ -399,7 +399,7 @@ class TransaksiController extends BaseController
 	 */
 	public function printKeluar(TransaksiKeluar $transaksiKeluar)
 	{
-		$transaksiKeluar->load('items.product', 'biayaTambahan');
+		$transaksiKeluar->load('items.product');
 		$user = auth()->user();
 		// Table profiles sudah dihapus, gunakan data dari user
 		$storeName = 'Aksara';

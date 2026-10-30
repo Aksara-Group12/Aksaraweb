@@ -43,11 +43,6 @@ class TransaksiKeluar extends Model
 		return $this->hasMany(TransaksiKeluarItem::class, 'transaksi_keluar_id');
 	}
 
-	public function biayaTambahan()
-	{
-		return $this->hasMany(TransaksiBiayaTambahan::class, 'transaksi_keluar_id');
-	}
-
 	/**
 	 * Generate invoice number
 	 */

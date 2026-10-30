@@ -57,7 +57,8 @@ class Product extends Model
      */
     public function transaksiMasukItems()
     {
-        return $this->hasMany(TransaksiMasukItem::class);
+        // TransaksiMasuk dihapus, relationship dihapus
+        // return $this->hasMany(TransaksiMasukItem::class);
     }
 
     /**

@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TransaksiMasuk;
 use App\Models\TransaksiKeluar;
-use App\Models\Expenses;
-use App\Models\TransaksiMasukItem;
+use App\Models\Pengeluaran;
 use App\Models\TransaksiKeluarItem;
 use App\Models\Product;
-use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Carbon\Carbon;
@@ -65,7 +62,7 @@ class LaporanController extends BaseController
 		$grossMargin = $totalRevenue > 0 ? ($grossProfit / $totalRevenue) * 100 : 0.0;
 
 		// Operating expenses dari tabel expenses
-		$expensesQuery = Expenses::where('user_id', auth()->user()->id)
+		$expensesQuery = Pengeluaran::where('user_id', auth()->user()->id)
 			->whereBetween('tanggal', [$start, $end]);
 		$totalOperatingExpenses = (float) $expensesQuery->sum('nominal');
 
@@ -104,20 +101,11 @@ class LaporanController extends BaseController
 			->get();
 
 		// Piutang belum tertagih (AR)
-		$piutangQuery = Invoice::where('user_id', auth()->user()->id)
-			->where('sisa_tagihan', '>', 0);
-
-		$totalPiutang = (float) $piutangQuery->sum('sisa_tagihan');
-
-		// Piutang jatuh tempo
-		$piutangJatuhTempo = (float) (clone $piutangQuery)
-			->where('jatuh_tempo', '<', Carbon::now())
-			->sum('sisa_tagihan');
-
-		// Piutang belum jatuh tempo
-		$piutangBelumJatuhTempo = (float) (clone $piutangQuery)
-			->where('jatuh_tempo', '>=', Carbon::now())
-			->sum('sisa_tagihan');
+		// Piutang dihapus karena Invoice sudah dihapus
+		$totalPiutang = 0;
+		$recentPiutang = collect();
+		$piutangJatuhTempo = 0;
+		$piutangBelumJatuhTempo = 0;
 
 		return view('laporan.ringkasan-keuangan', [
 			'period' => $period,
@@ -265,7 +253,8 @@ class LaporanController extends BaseController
 		}
 
 		// Query semua transaksi masuk items dengan filter tanggal
-		$masukItems = TransaksiMasukItem::with('transaksi', 'product')
+		// TransaksiMasuk dihapus, jadi tidak ada data masuk
+		$masukItems = collect();
 			->whereHas('transaksi', function ($query) use ($startDate, $endDate, $pemasok) {
 				$query->whereBetween('tanggal_transaksi', [$startDate, $endDate])
 					->where('status', 'complete')
@@ -386,7 +375,9 @@ class LaporanController extends BaseController
 		$totalSalesCount = (int) $salesQuery->count();
 
 		// HPP (COGS) - dari Transaksi Masuk
-		$totalHPP = (float) TransaksiMasuk::where('user_id', auth()->user()->id)
+		// TransaksiMasuk dihapus, HPP dihitung dari snapshot di TransaksiKeluarItem
+		$totalHPP = (float) TransaksiKeluarItem::join('transaksi_keluar', 'transaksi_keluar_items.transaksi_keluar_id', '=', 'transaksi_keluar.id')
+			->where('transaksi_keluar.user_id', auth()->user()->id)
 			->whereBetween('tanggal_transaksi', [$start, $end])
 			->where('status', 'complete')
 			->sum('total_harga');
@@ -395,7 +386,7 @@ class LaporanController extends BaseController
 		$grossMargin = $totalRevenue > 0 ? ($grossProfit / $totalRevenue) * 100 : 0.0;
 
 		// Beban Operasional
-		$totalOperatingExpenses = (float) Expenses::where('user_id', auth()->user()->id)
+		$totalOperatingExpenses = (float) Pengeluaran::where('user_id', auth()->user()->id)
 			->whereBetween('tanggal', [$start, $end])
 			->sum('nominal');
 
@@ -403,7 +394,7 @@ class LaporanController extends BaseController
 		$netMargin = $totalRevenue > 0 ? ($netProfit / $totalRevenue) * 100 : 0.0;
 
 		// Breakdown expenses by category
-		$expensesByCategory = Expenses::where('user_id', auth()->user()->id)
+		$expensesByCategory = Pengeluaran::where('user_id', auth()->user()->id)
 			->whereBetween('tanggal', [$start, $end])
 			->selectRaw('kategori, SUM(nominal) as total')
 			->groupBy('kategori')

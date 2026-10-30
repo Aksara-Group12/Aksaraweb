@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\TransaksiMasuk;
 use App\Models\TransaksiKeluar;
 use App\Models\Subscribe;
 use Carbon\Carbon;
@@ -59,7 +58,8 @@ class DashboardSuperadminController extends BaseController
 
 		// ===== STATISTIK KEUANGAN =====
 		// Total uang masuk (pembelian produk - transaksi masuk)
-		$totalMasuk = (float) TransaksiMasuk::whereBetween('tanggal_transaksi', [$start, $end])
+		// TransaksiMasuk dihapus
+		$totalMasuk = 0;
 			->where('status', 'complete')
 			->sum('total_harga');
 
@@ -68,7 +68,8 @@ class DashboardSuperadminController extends BaseController
 			->where('status', 'complete')
 			->sum('total_harga');
 
-		$todayMasuk = (float) TransaksiMasuk::whereDate('tanggal_transaksi', Carbon::today())
+		// TransaksiMasuk dihapus
+		$todayMasuk = 0;
 			->where('status', 'complete')
 			->sum('total_harga');
 
@@ -89,7 +90,8 @@ class DashboardSuperadminController extends BaseController
 			$keluar = (float) TransaksiKeluar::whereDate('tanggal_transaksi', $date)
 				->where('status', 'complete')
 				->sum('total_harga');
-			$masuk = (float) TransaksiMasuk::whereDate('tanggal_transaksi', $date)
+			// TransaksiMasuk dihapus
+			$masuk = 0;
 				->where('status', 'complete')
 				->sum('total_harga');
 

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductSerialNumber;
-use App\Models\TransaksiMasukItem;
 use App\Models\TransaksiKeluarItem;
 use App\Models\KategoriProduk;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -221,27 +220,6 @@ class ProdukController extends BaseController
 			$perPage = 20;
 		}
 
-		// Get masuk items
-		$masukItems = TransaksiMasukItem::with('transaksi', 'product')
-			->where('user_id', auth()->user()->id)
-			->whereHas('transaksi')
-			->get()
-			->map(function ($item) {
-				return (object)[
-					'tipe' => 'masuk',
-					'tanggal_transaksi' => $item->transaksi->tanggal_transaksi,
-					'referensi_no' => $item->transaksi->reference_no,
-					'nama_produk' => $item->product->nama_produk,
-					'sku' => $item->product->sku,
-					'supplier_name' => $item->transaksi->supplier_name,
-					'customer_name' => null,
-					'qty' => $item->qty, // Gunakan qty langsung, bukan count(nomor_seri)
-					'total_harga' => $item->total_harga,
-					'status' => $item->transaksi->status,
-					'id' => 'masuk-' . $item->id,
-				];
-			});
-
 		// Get keluar items
 		$keluarItems = TransaksiKeluarItem::with('transaksi', 'product')
 			->where('user_id', auth()->user()->id)
@@ -263,15 +241,17 @@ class ProdukController extends BaseController
 				];
 			});
 
-		// Merge collections
-		$allHistories = collect(array_merge($masukItems->all(), $keluarItems->all()));
+		// Merge collections (only keluar items since masuk was removed)
+		$allHistories = $keluarItems;
 
-		// Apply filters
+		// Apply filters (tipe filter removed since only keluar is available)
+		/*
 		if ($tipe) {
 			$allHistories = $allHistories->filter(function ($item) use ($tipe) {
 				return $item->tipe === $tipe;
 			});
 		}
+		*/
 
 		if ($search) {
 			$search = strtolower($search);

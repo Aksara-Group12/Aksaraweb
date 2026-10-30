@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\TransaksiKeluar;
-use App\Models\TransaksiMasuk;
 use App\Models\TransaksiKeluarItem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -53,9 +52,7 @@ class DashboardController extends BaseController
 		// Transaksi dalam periode (filter by user_id)
 		$totalSalesTransactions = (int) TransaksiKeluar::where('user_id', auth()->user()->id)
 			->whereBetween('tanggal_transaksi', [$start, $end])->count();
-		$totalPurchaseTransactions = (int) TransaksiMasuk::where('user_id', auth()->user()->id)
-			->whereBetween('tanggal_transaksi', [$start, $end])->count();
-		$totalTransactions = $totalSalesTransactions + $totalPurchaseTransactions;
+		$totalTransactions = $totalSalesTransactions;
 		$todayTransactions = (int) TransaksiKeluar::where('user_id', auth()->user()->id)
 			->whereDate('tanggal_transaksi', $today)->count();
 

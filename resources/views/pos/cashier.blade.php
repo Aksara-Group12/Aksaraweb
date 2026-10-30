@@ -73,20 +73,7 @@
 			<div style="display: flex; flex-direction: column; gap: 16px;">
 				
 				<!-- Info Pelanggan -->
-				<div class="hz-card">
-					<div class="hz-card-header" style="margin-bottom: 12px;">
-						<p class="hz-card-title">Pelanggan</p>
-					</div>
-					<div style="display: flex; flex-direction: column; gap: 6px;">
-						<label style="font-size: 0.85rem; font-weight: 500; color: #1e293b;">Pilih Pelanggan</label>
-						<select name="customer_name" id="customerSelect" style="padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;">
-							<option value="">Pelanggan Umum</option>
-							@foreach ($pelanggan as $pel)
-								<option value="{{ $pel->nama }}">{{ $pel->nama }} ({{ $pel->kontak ?? '-' }})</option>
-							@endforeach
-						</select>
-					</div>
-				</div>
+				<!-- Pelanggan dropdown dihapus karena fitur pelanggan sudah dihapus -->
 
 				<!-- Keranjang Belanja -->
 				<div class="hz-card">

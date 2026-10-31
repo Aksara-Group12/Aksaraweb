@@ -8,15 +8,20 @@
 		<link rel="icon" type="image/png" href="{{ asset('assets/images/aksara-logo.png') }}">
 		<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
-		<!-- Fonts: Newsreader & Inter -->
+		<!-- Fonts: Inter (UI Sans) & Newsreader (Luxury Editorial Serif) -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
 
 		<!-- Lucide Icons (Shadcn Standard) -->
 		<script src="https://unpkg.com/lucide@latest"></script>
 
 		<style>
+			@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+			@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
 			html,
 			body {
 				height: 100%;
@@ -35,6 +40,16 @@
 				color: #0F223D;
 				overflow: hidden;
 				-webkit-font-smoothing: antialiased;
+			}
+
+			/* Headings globally use Newsreader */
+			h1, h2, h3, .hz-card-title, .hz-top-title {
+				font-family: 'Newsreader', Georgia, serif;
+			}
+
+			/* Body & UI elements globally use Inter */
+			p, span, a, button, input, select, textarea, table, th, td, label {
+				font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 			}
 
 			a {

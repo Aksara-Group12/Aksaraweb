@@ -7,11 +7,11 @@
 			@yield('header_content')
 		@else
 			<div class="hz-header-default-title">
-				<h1 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.35rem; font-weight: 500; color: #0F223D; margin: 0; line-height: 1.2;">
+				<h1 style="font-family: 'Newsreader', Georgia, serif !important; font-size: 1.45rem; font-weight: 500; color: #0F223D; margin: 0; line-height: 1.2; letter-spacing: -0.01em;">
 					@yield('page_title', 'Dashboard')
 				</h1>
 				@hasSection('page_subtitle')
-					<p style="font-size: 0.8rem; color: #64748B; margin: 2px 0 0 0;">
+					<p style="font-family: 'Inter', sans-serif !important; font-size: 0.8rem; color: #64748B; margin: 3px 0 0 0;">
 						@yield('page_subtitle')
 					</p>
 				@endif

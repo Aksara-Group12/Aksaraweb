@@ -103,6 +103,7 @@
 		}
 
 		.metric-label-clean {
+			font-family: 'Inter', system-ui, -apple-system, sans-serif;
 			font-size: 0.75rem;
 			font-weight: 700;
 			text-transform: uppercase;
@@ -112,6 +113,7 @@
 		}
 
 		.metric-val-clean {
+			font-family: 'Inter', system-ui, -apple-system, sans-serif;
 			font-size: 1.7rem;
 			font-weight: 800;
 			color: #0F223D;
@@ -121,6 +123,7 @@
 		}
 
 		.metric-sub-clean {
+			font-family: 'Inter', system-ui, -apple-system, sans-serif;
 			font-size: 0.75rem;
 			color: #94A3B8;
 			margin-top: 6px;

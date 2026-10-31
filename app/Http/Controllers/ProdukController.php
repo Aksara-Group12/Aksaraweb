@@ -88,6 +88,12 @@ class ProdukController extends BaseController
 			'barcode' => 'nullable|string|max:50',
 			'is_active' => 'required',
 			'brand' => 'nullable|string|max:100',
+		], [
+			'nama_produk.required' => 'Nama produk wajib diisi.',
+			'unit.required' => 'Satuan (unit) produk wajib diisi.',
+			'tipe.required' => 'Tipe produk wajib dipilih (Barang, Menu, atau Jasa).',
+			'harga_jual.required' => 'Harga jual produk wajib diisi.',
+			'code.unique' => 'Kode produk/SKU ini sudah digunakan.',
 		]);
 
 		// Handle lacak_stok checkbox (flexible - user choice)
@@ -95,6 +101,22 @@ class ProdukController extends BaseController
 
 		// Handle is_active (convert string to boolean)
 		$validated['is_active'] = $validated['is_active'] == '1' ? true : false;
+
+		// Fallback kategori dari master jika dipilih
+		if (!empty($validated['kategori_produk_id'])) {
+			$kat = KategoriProduk::find($validated['kategori_produk_id']);
+			if ($kat && empty($validated['kategori'])) {
+				$validated['kategori'] = $kat->nama_kategori;
+			}
+		}
+
+		// Nilai aman untuk kolom database legacy
+		if (empty($validated['brand'])) {
+			$validated['brand'] = $product->brand ?? 'Umum';
+		}
+		if (!isset($validated['harga_beli']) || $validated['harga_beli'] === null) {
+			$validated['harga_beli'] = $product->harga_beli ?? 0.00;
+		}
 
 		$product->update($validated);
 
@@ -178,6 +200,13 @@ class ProdukController extends BaseController
 				'barcode' => 'nullable|string|max:50',
 				'is_active' => 'required',
 				'brand' => 'nullable|string|max:100',
+			], [
+				'nama_produk.required' => 'Nama produk wajib diisi.',
+				'unit.required' => 'Satuan (unit) produk wajib diisi.',
+				'tipe.required' => 'Tipe produk wajib dipilih (Barang, Menu, atau Jasa).',
+				'harga_jual.required' => 'Harga jual produk wajib diisi.',
+				'harga_jual.numeric' => 'Harga jual harus berupa angka.',
+				'code.unique' => 'Kode produk/SKU ini sudah digunakan.',
 			]);
 
 			// Generate code jika tidak ada
@@ -193,15 +222,37 @@ class ProdukController extends BaseController
 			// Handle is_active (convert string to boolean)
 			$validated['is_active'] = $validated['is_active'] == '1' ? true : false;
 
-			// Membuat produk TIDAK otomatis menambah stok
+			// Fallback kategori dari master jika dipilih
+			if (!empty($validated['kategori_produk_id'])) {
+				$kat = KategoriProduk::find($validated['kategori_produk_id']);
+				if ($kat && empty($validated['kategori'])) {
+					$validated['kategori'] = $kat->nama_kategori;
+				}
+			}
+
+			// Pastikan field legacy dengan NOT NULL di database MySQL terisi default aman
+			$validated['jenis_logam'] = 'emas';
+			$validated['brand'] = !empty($validated['brand']) ? $validated['brand'] : 'Umum';
+			$validated['berat_standar'] = 1.00;
+			$validated['harga_beli'] = isset($validated['harga_beli']) && $validated['harga_beli'] !== null ? $validated['harga_beli'] : 0.00;
+			$validated['stock'] = isset($validated['stock']) && $validated['stock'] !== null ? (int) $validated['stock'] : 0;
+			$validated['min_stock'] = isset($validated['min_stock']) && $validated['min_stock'] !== null ? (int) $validated['min_stock'] : 0;
+			$validated['cost_price'] = $validated['harga_beli'];
+			$validated['stock_minimum'] = $validated['min_stock'];
+
+			// Membuat produk
 			$product = Product::create($validated);
 
 			return redirect()->route('produk.index')
-				->with('success', 'Produk ' . $product->nama_produk . ' berhasil ditambahkan');
+				->with('success', 'Produk "' . $product->nama_produk . '" berhasil ditambahkan');
 
+		} catch (\Illuminate\Validation\ValidationException $e) {
+			return back()
+				->withErrors($e->validator)
+				->withInput();
 		} catch (\Exception $e) {
 			return back()
-				->with('error', 'Terjadi kesalahan: ' . $e->getMessage())
+				->with('error', 'Gagal menyimpan produk: ' . $e->getMessage())
 				->withInput();
 		}
 	}

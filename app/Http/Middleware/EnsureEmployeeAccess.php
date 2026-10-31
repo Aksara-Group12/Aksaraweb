@@ -44,6 +44,15 @@ class EnsureEmployeeAccess
         }
 
         // Route yang tidak boleh diakses karyawan
-        return abort(403, 'Akses ditolak. Karyawan hanya dapat mengakses POS, Shift, dan Riwayat Transaksi.');
+        $pesan = 'Akses ditolak. Karyawan hanya dapat mengakses POS, Shift, dan Riwayat Transaksi.';
+
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => false,
+                'message' => $pesan,
+            ], 403);
+        }
+
+        return redirect()->route('transaksi.pos')->with('employee_access_denied', $pesan);
     }
 }

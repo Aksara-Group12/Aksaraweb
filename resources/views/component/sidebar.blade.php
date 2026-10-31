@@ -9,31 +9,16 @@
 		$storeName = $profile?->store_name ?? 'Aksara';
 	@endphp
 	<div class="hz-sidebar-header">
-		<div class="hz-logo-badge">
-			@if(!$isSuperadmin && $profile && $profile->logo_path)
-				@php
-					$logoPath = asset('storage/' . $profile->logo_path);
-				@endphp
-				<img 
-					src="{{ $logoPath }}" 
-					alt="{{ $storeName }}" 
-					onerror="this.src='{{ asset('assets/images/aksara-logo.png') }}';"
-				>
-			@else
-				<img 
-					src="{{ asset('assets/images/aksara-logo.png') }}" 
-					alt="Aksara Logo" 
-				>
-			@endif
+		<div class="hz-logo-badge" style="background: transparent; border: none; padding: 0; box-shadow: none;">
+			<img 
+				src="{{ asset('assets/images/aksara-logo.png') }}" 
+				alt="Aksara Developer" 
+				style="width: 34px; height: 34px; object-fit: contain;"
+			>
 		</div>
 		<div class="hz-logo-text">
-			@if($isSuperadmin)
-				<p class="hz-logo-title">Aksara <span>Developer</span></p>
-				<p class="hz-logo-sub">Superadmin Konsol</p>
-			@else
-				<p class="hz-logo-title">{{ $storeName }}</p>
-				<p class="hz-logo-sub">Panel Manajemen Toko</p>
-			@endif
+			<p class="hz-logo-title" style="color: #0F223D; font-size: 0.95rem; font-weight: 700; line-height: 1.2; margin: 0;">Aksara <span style="color: #C5A059;">Developer</span></p>
+			<p class="hz-logo-sub" style="color: #64748B; font-size: 0.72rem; margin: 2px 0 0 0;">{{ $isSuperadmin ? 'Superadmin Konsol' : ($storeName !== 'Aksara' ? $storeName : 'Panel Manajemen Toko') }}</p>
 		</div>
 	</div>
 	<nav class="hz-nav">
@@ -96,7 +81,10 @@
 						<span class="hz-nav-label">Data Supplier</span>
 					</a>
 				@endif
-				<a href="{{ $ownerSubscriptionActive ? route('admin.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('admin.*') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
+				<a href="{{ session()->has('admin_id') ? 'javascript:void(0)' : ($ownerSubscriptionActive ? route('admin.index') : 'javascript:void(0)') }}" 
+				   @if(session()->has('admin_id')) onclick="showEmployeeDeniedModal()" 
+				   @elseif(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif 
+				   class="hz-nav-item {{ request()->routeIs('admin.*') ? 'hz-nav-item-active' : '' }}">
 					<i data-lucide="shield-check" class="hz-nav-lucide"></i>
 					<span class="hz-nav-label">Manajemen Admin</span>
 				</a>
@@ -126,16 +114,17 @@
 						<span class="hz-nav-label">Riwayat Penjualan</span>
 					</a>
 				@endif
-				<a href="{{ $ownerSubscriptionActive ? route('expenses.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('expenses.*') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
+				<a href="{{ session()->has('admin_id') ? 'javascript:void(0)' : ($ownerSubscriptionActive ? route('expenses.index') : 'javascript:void(0)') }}" 
+				   @if(session()->has('admin_id')) onclick="showEmployeeDeniedModal()" 
+				   @elseif(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif 
+				   class="hz-nav-item {{ request()->routeIs('expenses.*') ? 'hz-nav-item-active' : '' }}">
 					<i data-lucide="receipt" class="hz-nav-lucide"></i>
 					<span class="hz-nav-label">Expenses</span>
 				</a>
-				@if(!session()->has('admin_id'))
-					<a href="{{ $ownerSubscriptionActive ? route('transaksi.log') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('transaksi.log') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-						<i data-lucide="file-text" class="hz-nav-lucide"></i>
-						<span class="hz-nav-label">Log Transaksi</span>
-					</a>
-				@endif
+				<a href="{{ $ownerSubscriptionActive ? route('transaksi.log') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('transaksi.log') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
+					<i data-lucide="file-text" class="hz-nav-lucide"></i>
+					<span class="hz-nav-label">Riwayat Transaksi</span>
+				</a>
 			</div>
 
 			@if(!session()->has('admin_id'))

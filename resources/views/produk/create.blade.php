@@ -16,13 +16,25 @@
 </div>
 
 @if ($errors->any())
-	<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626;">
-		<p style="font-weight: 600; margin-bottom: 8px;">Terjadi kesalahan validasi:</p>
+	<div style="margin-top: 20px; padding: 14px 18px; background: #FEF2F2; border: 1px solid #FECACA; border-radius: 12px; color: #991B1B;">
+		<p style="font-weight: 600; margin-bottom: 8px;">Perhatian Pengisian Produk:</p>
 		<ul style="margin: 0; padding-left: 20px;">
 			@foreach ($errors->all() as $error)
-				<li style="font-size: 0.9rem;">{{ $error }}</li>
+				<li style="font-size: 0.875rem;">{{ $error }}</li>
 			@endforeach
 		</ul>
+	</div>
+@endif
+
+@if ($message = Session::get('error'))
+	<div style="margin-top: 20px; padding: 14px 18px; background: #FEF2F2; border: 1px solid #FECACA; border-radius: 12px; color: #991B1B; font-size: 0.875rem;">
+		{{ $message }}
+	</div>
+@endif
+
+@if ($message = Session::get('success'))
+	<div style="margin-top: 20px; padding: 14px 18px; background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 12px; color: #065F46; font-size: 0.875rem; font-weight: 500;">
+		{{ $message }}
 	</div>
 @endif
 
@@ -168,11 +180,11 @@
 			</div>
 		</div>
 
-		<div style="margin-top: 24px; display: flex; gap: 8px;">
-			<button type="submit" class="hz-btn hz-btn-primary">
+		<div style="margin-top: 24px; display: flex; gap: 12px; align-items: center;">
+			<button type="submit" style="background: #0F223D; color: #FFFFFF; font-weight: 600; padding: 11px 22px; border-radius: 10px; border: none; cursor: pointer; box-shadow: 0 2px 6px rgba(15,34,61,0.15); font-size: 0.9rem; transition: all 0.15s ease;">
 				Simpan Produk
 			</button>
-			<a href="{{ route('produk.index') }}" class="hz-btn hz-btn-secondary">
+			<a href="{{ route('produk.index') }}" style="background: #FFFFFF; color: #475569; font-weight: 600; padding: 10px 20px; border-radius: 10px; border: 1px solid #CBD5E1; text-decoration: none; font-size: 0.9rem; transition: all 0.15s ease;">
 				Batal
 			</a>
 		</div>

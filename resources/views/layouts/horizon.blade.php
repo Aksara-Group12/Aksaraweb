@@ -57,14 +57,13 @@
 				background: transparent;
 			}
 
-			/* Sidebar Deep Navy (Aksara Luxury Theme) */
+			/* Sidebar Clean White (Aksara Luxury White Theme) */
 			.hz-sidebar {
 				width: 260px;
 				padding: 22px 16px 20px;
-				border-right: 1px solid rgba(255, 255, 255, 0.08);
-				background: #0F223D;
-				background-image: linear-gradient(180deg, #0F223D 0%, #162C50 100%);
-				box-shadow: 4px 0 24px rgba(15, 34, 61, 0.12);
+				border-right: 1px solid #E2E8F0;
+				background: #FFFFFF;
+				box-shadow: 2px 0 16px rgba(15, 34, 61, 0.03);
 				display: flex;
 				flex-direction: column;
 				gap: 20px;
@@ -87,12 +86,12 @@
 			}
 
 			.hz-sidebar::-webkit-scrollbar-thumb {
-				background: rgba(255, 255, 255, 0.15);
+				background: rgba(15, 34, 61, 0.12);
 				border-radius: 999px;
 			}
 
 			.hz-sidebar::-webkit-scrollbar-thumb:hover {
-				background: rgba(255, 255, 255, 0.25);
+				background: rgba(15, 34, 61, 0.22);
 			}
 
 			@media (max-width: 768px) {
@@ -104,6 +103,7 @@
 					transform: translateX(-100%);
 					width: 270px;
 					z-index: 50;
+					box-shadow: 4px 0 24px rgba(15, 34, 61, 0.15);
 				}
 
 				.hz-sidebar.hz-sidebar-open {
@@ -113,7 +113,7 @@
 				.hz-sidebar-backdrop {
 					position: fixed;
 					inset: 0;
-					background: rgba(15, 34, 61, 0.6);
+					background: rgba(15, 34, 61, 0.4);
 					backdrop-filter: blur(4px);
 					display: none;
 					z-index: 45;
@@ -129,20 +129,16 @@
 				align-items: center;
 				gap: 12px;
 				padding: 0 4px 16px;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+				border-bottom: 1px solid #F1F5F9;
 			}
 
 			.hz-logo-badge {
-				width: 38px;
-				height: 38px;
-				border-radius: 10px;
-				background: rgba(255, 255, 255, 0.06);
-				border: 1px solid rgba(255, 255, 255, 0.12);
+				width: 36px;
+				height: 36px;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				flex-shrink: 0;
-				padding: 4px;
 			}
 
 			.hz-logo-badge img {
@@ -160,7 +156,7 @@
 			.hz-logo-title {
 				font-size: 0.95rem;
 				font-weight: 700;
-				color: #FFFFFF;
+				color: #0F223D;
 				letter-spacing: -0.01em;
 				line-height: 1.2;
 				white-space: nowrap;
@@ -176,7 +172,7 @@
 				margin-top: 2px;
 				font-size: 0.68rem;
 				font-weight: 500;
-				color: #94A3B8;
+				color: #64748B;
 				letter-spacing: 0.02em;
 			}
 
@@ -201,18 +197,18 @@
 				text-transform: uppercase;
 				letter-spacing: 0.12em;
 				font-weight: 700;
-				color: #64748B;
+				color: #94A3B8;
 				margin-bottom: 4px;
 			}
 
-			/* Shadcn UI Aligned Navigation Items */
+			/* Shadcn UI Aligned Navigation Items (Clean White Theme) */
 			.hz-nav-item {
 				display: flex;
 				align-items: center;
 				gap: 12px;
 				padding: 9px 12px;
 				border-radius: 10px;
-				color: #94A3B8;
+				color: #475569;
 				font-size: 0.825rem;
 				font-weight: 500;
 				border: 1px solid transparent;
@@ -221,9 +217,9 @@
 			}
 
 			.hz-nav-item:hover {
-				background: rgba(255, 255, 255, 0.06);
-				color: #FFFFFF;
-				border-color: rgba(255, 255, 255, 0.08);
+				background: #FAF8F5;
+				color: #0F223D;
+				border-color: rgba(197, 160, 89, 0.3);
 			}
 
 			.hz-nav-item:hover .hz-nav-lucide {
@@ -231,10 +227,10 @@
 			}
 
 			.hz-nav-item-active {
-				background: rgba(197, 160, 89, 0.15) !important;
-				color: #FFFFFF !important;
+				background: rgba(197, 160, 89, 0.12) !important;
+				color: #0F223D !important;
 				border-color: rgba(197, 160, 89, 0.35) !important;
-				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+				box-shadow: 0 1px 3px rgba(197, 160, 89, 0.08);
 				font-weight: 600;
 			}
 
@@ -245,7 +241,7 @@
 			.hz-nav-lucide {
 				width: 17px;
 				height: 17px;
-				color: #94A3B8;
+				color: #64748B;
 				flex-shrink: 0;
 				stroke-width: 2;
 				transition: color 0.15s ease;
@@ -267,7 +263,7 @@
 				overflow: hidden;
 			}
 
-			/* Header */
+			/* Header Pure White */
 			.hz-header {
 				position: sticky;
 				top: 0;
@@ -276,9 +272,9 @@
 				align-items: center;
 				justify-content: space-between;
 				padding: 16px 32px;
-				border-bottom: 1px solid rgba(226, 232, 240, 0.85);
-				background: rgba(250, 248, 245, 0.88);
-				backdrop-filter: blur(12px);
+				border-bottom: 1px solid #E2E8F0;
+				background: #FFFFFF;
+				box-shadow: 0 1px 4px rgba(15, 34, 61, 0.03);
 			}
 
 			.hz-header-left {
@@ -328,8 +324,8 @@
 				border-radius: 9999px;
 				padding: 5px 14px 5px 6px;
 				border: 1px solid #E2E8F0;
-				background: #FFFFFF;
-				box-shadow: 0 2px 6px rgba(15, 34, 61, 0.04);
+				background: #FAF8F5;
+				box-shadow: 0 1px 3px rgba(15, 34, 61, 0.04);
 				transition: all 0.15s ease;
 			}
 
@@ -415,6 +411,150 @@
 				margin: 0;
 			}
 
+			/* Global Horizon Form & Button Standards (Superadmin Match) */
+			.hz-btn, .hz-btn-primary {
+				background: #0F223D !important;
+				color: #FFFFFF !important;
+				border: none !important;
+				border-radius: 10px !important;
+				padding: 9px 18px !important;
+				font-weight: 600 !important;
+				font-size: 0.85rem !important;
+				display: inline-flex !important;
+				align-items: center !important;
+				gap: 6px !important;
+				text-decoration: none !important;
+				box-shadow: 0 2px 6px rgba(15, 34, 61, 0.15) !important;
+				cursor: pointer !important;
+				transition: all 0.15s ease !important;
+			}
+
+			.hz-btn:hover, .hz-btn-primary:hover {
+				background: #1B355A !important;
+				color: #FFFFFF !important;
+				transform: translateY(-1px);
+			}
+
+			.hz-btn-secondary {
+				background: #FFFFFF !important;
+				color: #475569 !important;
+				border: 1px solid #CBD5E1 !important;
+				box-shadow: none !important;
+			}
+
+			.hz-btn-secondary:hover {
+				background: #F8FAFC !important;
+				color: #0F223D !important;
+			}
+
+			/* Global Form Controls in Top Actions */
+			.hz-top-actions input,
+			.hz-top-actions select,
+			.filter-form input,
+			.filter-form select {
+				border-radius: 10px !important;
+				border: 1px solid #CBD5E1 !important;
+				background: #FFFFFF !important;
+				color: #0F223D !important;
+				font-size: 0.85rem !important;
+				padding: 8px 12px !important;
+				outline: none !important;
+				box-shadow: 0 1px 2px rgba(15, 34, 61, 0.04) !important;
+				font-family: inherit !important;
+			}
+
+			.hz-top-actions input:focus,
+			.hz-top-actions select:focus {
+				border-color: #0F223D !important;
+				box-shadow: 0 0 0 3px rgba(15, 34, 61, 0.08) !important;
+			}
+
+			.hz-top-actions button[type="submit"] {
+				border-radius: 10px !important;
+				border: none !important;
+				background: #0F223D !important;
+				color: #FFFFFF !important;
+				font-size: 0.85rem !important;
+				font-weight: 600 !important;
+				padding: 8px 16px !important;
+				cursor: pointer !important;
+				box-shadow: 0 2px 6px rgba(15, 34, 61, 0.15) !important;
+			}
+
+			/* Global Tables inside hz-card */
+			.hz-card table {
+				width: 100% !important;
+				border-collapse: separate !important;
+				border-spacing: 0 !important;
+			}
+
+			.hz-card table thead tr th {
+				background: #F8FAFC !important;
+				color: #64748B !important;
+				font-size: 0.75rem !important;
+				font-weight: 700 !important;
+				text-transform: uppercase !important;
+				letter-spacing: 0.05em !important;
+				border-bottom: 1px solid #E2E8F0 !important;
+				border-top: none !important;
+				padding: 12px 14px !important;
+			}
+
+			.hz-card table thead tr {
+				border-bottom: none !important;
+			}
+
+			.hz-card table tbody tr {
+				border-bottom: 1px solid #F1F5F9 !important;
+				transition: background 0.15s ease !important;
+			}
+
+			.hz-card table tbody tr:hover td {
+				background: #FAF8F5 !important;
+			}
+
+			.hz-card table tbody tr td {
+				padding: 14px 12px !important;
+				border-bottom: 1px solid #F1F5F9 !important;
+				color: #334155 !important;
+				font-size: 0.875rem !important;
+				vertical-align: middle !important;
+			}
+
+			/* Code & Text Colors in tables */
+			.hz-card table td[style*="color: #3b82f6"],
+			.hz-card table td[style*="color:#3b82f6"] {
+				color: #0F223D !important;
+				font-weight: 600 !important;
+			}
+
+			.hz-card table td[style*="color: #cbd5e1"],
+			.hz-card table td[style*="color:#cbd5e1"] {
+				color: #64748B !important;
+			}
+
+			/* Dropdown actions */
+			.hz-dropdown, .actions-dropdown {
+				background: #FFFFFF !important;
+				border: 1px solid #E2E8F0 !important;
+				border-radius: 12px !important;
+				box-shadow: 0 10px 25px -5px rgba(15, 34, 61, 0.12), 0 8px 10px -6px rgba(15, 34, 61, 0.08) !important;
+				overflow: hidden !important;
+			}
+
+			.hz-dropdown a, .hz-dropdown button,
+			.actions-dropdown a, .actions-dropdown button {
+				color: #0F223D !important;
+				font-size: 0.85rem !important;
+				padding: 9px 14px !important;
+				transition: background 0.15s ease !important;
+			}
+
+			.hz-dropdown a:hover, .hz-dropdown button:hover,
+			.actions-dropdown a:hover, .actions-dropdown button:hover {
+				background: #FAF8F5 !important;
+			}
+
 			@media (max-width: 768px) {
 				.hz-main-content {
 					padding: 20px 16px;
@@ -441,6 +581,8 @@
 		@if(auth()->check() && auth()->user()->role === 'owner')
 			@include('component.subscription_expired_modal')
 		@endif
+
+		@include('component.employee_access_denied_modal')
 		
 		<script>
 			document.addEventListener('DOMContentLoaded', function () {

@@ -9,33 +9,33 @@
         <p class="hz-top-sub">Kelola admin toko Anda</p>
     </div>
     <div class="hz-top-actions" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-        <form method="GET" action="{{ route('admin.index') }}" style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama, email, atau phone" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b; min-width:200px;">
-            <select name="status" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
+        <form method="GET" action="{{ route('admin.index') }}" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama, email, atau phone" style="border-radius:10px; border:1px solid #CBD5E1; background:#FFFFFF; padding:8px 12px; font-size:0.85rem; color:#0F223D; min-width:220px; outline:none;">
+            <select name="status" style="border-radius:10px; border:1px solid #CBD5E1; background:#FFFFFF; padding:8px 12px; font-size:0.85rem; color:#0F223D; outline:none;">
                 <option value="">Semua Status</option>
                 <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Active</option>
                 <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Inactive</option>
             </select>
-            <select name="deleted" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
+            <select name="deleted" style="border-radius:10px; border:1px solid #CBD5E1; background:#FFFFFF; padding:8px 12px; font-size:0.85rem; color:#0F223D; outline:none;">
                 <option value="">Aktif</option>
                 <option value="only" {{ request('deleted') === 'only' ? 'selected' : '' }}>Dihapus</option>
             </select>
-            <select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
+            <select name="per_page" onchange="this.form.submit()" style="border-radius:10px; border:1px solid #CBD5E1; background:#FFFFFF; padding:8px 12px; font-size:0.85rem; color:#0F223D; outline:none;">
                 <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10</option>
                 <option value="25" {{ request('per_page', 10) == 25 ? 'selected' : '' }}>25</option>
                 <option value="50" {{ request('per_page', 10) == 50 ? 'selected' : '' }}>50</option>
             </select>
-            <button type="submit" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; padding:6px 10px; font-size:0.8rem; text-decoration:none; cursor:pointer;">
+            <button type="submit" style="border-radius:10px; border:none; background:#0F223D; color:#FFFFFF; padding:8px 16px; font-size:0.85rem; font-weight:600; cursor:pointer; box-shadow:0 2px 6px rgba(15,34,61,0.15);">
                 Filter
             </button>
         </form>
         <form id="admin-bulk-delete-form" onsubmit="return false;">
-            <button type="button" id="admin-bulk-delete-btn" style="display:none; border-radius:999px; border:none; background:#b91c1c; color:#fee2e2; padding:6px 12px; font-size:0.8rem; font-weight:600; cursor:pointer;">
+            <button type="button" id="admin-bulk-delete-btn" style="display:none; border-radius:10px; border:none; background:#dc2626; color:#ffffff; padding:8px 14px; font-size:0.85rem; font-weight:600; cursor:pointer;">
                 Hapus terpilih
             </button>
         </form>
         @if(!session()->has('admin_id'))
-            <a href="{{ route('admin.create') }}" class="hz-btn-primary" style="text-decoration:none; display:inline-flex; align-items:center; padding:10px 16px; gap:8px;">
+            <a href="{{ route('admin.create') }}" class="hz-btn-primary" style="text-decoration:none; display:inline-flex; align-items:center; padding:9px 18px; gap:8px;">
                 <span>Tambah Admin</span>
             </a>
         @endif
@@ -279,16 +279,18 @@
 </script>
 <style>
 	.hz-btn-primary {
-		background: #3b82f6;
-		color: #020617;
+		background: #0F223D;
+		color: #FFFFFF !important;
 		border: none;
 		border-radius: 10px;
 		font-weight: 600;
-		transition: all 0.2s;
+		box-shadow: 0 2px 6px rgba(15,34,61,0.15);
+		transition: all 0.2s ease;
 	}
 
 	.hz-btn-primary:hover {
-		background: #2563eb;
+		background: #1B355A;
+		color: #FFFFFF !important;
 	}
 
 	.actions-dropdown {

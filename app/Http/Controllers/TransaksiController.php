@@ -461,7 +461,15 @@ class TransaksiController extends BaseController
 	public function storeKeluar(Request $request)
 	{
 		try {
-			// Validate basic transaction data
+			// Auto default jika kosong agar transaksi kasir tidak terhambat
+			if (!$request->filled('customer_name')) {
+				$request->merge(['customer_name' => 'Pelanggan Umum']);
+			}
+			if (!$request->filled('tanggal_transaksi')) {
+				$request->merge(['tanggal_transaksi' => now()->toDateString()]);
+			}
+
+			// Validate basic transaction data dengan pesan Bahasa Indonesia
 			$validated = $request->validate([
 				'customer_name' => 'required|string|max:100',
 				'customer_contact' => 'nullable|string|max:100',
@@ -471,14 +479,21 @@ class TransaksiController extends BaseController
 				'nominal_bayar' => 'nullable|numeric',
 				'kembalian' => 'nullable|numeric|min:0',
 				'catatan' => 'nullable|string',
-				'items' => 'required|json',
+				'items' => 'required',
+			], [
+				'customer_name.required' => 'Nama pelanggan wajib dipilih atau diisi.',
+				'tanggal_transaksi.required' => 'Tanggal transaksi wajib ditentukan.',
+				'tanggal_transaksi.date' => 'Format tanggal transaksi tidak valid.',
+				'metode_pembayaran.required' => 'Silakan pilih metode pembayaran (Cash atau Non-Cash).',
+				'metode_pembayaran.in' => 'Metode pembayaran harus berupa Tunai (Cash) atau Non-Tunai.',
+				'items.required' => 'Keranjang transaksi masih kosong. Silakan pilih minimal 1 produk dari katalog.',
 			]);
 
 			// Parse and validate items
-			$itemsData = json_decode($validated['items'], true);
+			$itemsData = is_array($validated['items']) ? $validated['items'] : json_decode($validated['items'], true);
 			if (!is_array($itemsData) || count($itemsData) === 0) {
 				return back()
-					->with('error', 'Minimal harus ada 1 item transaksi')
+					->with('error', 'Keranjang transaksi masih kosong. Silakan klik produk dari katalog untuk menambahkannya ke keranjang.')
 					->withInput();
 			}
 

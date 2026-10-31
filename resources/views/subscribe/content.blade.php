@@ -1,147 +1,162 @@
-<!-- Status Berlangganan (Sidebar) + Paket List -->
+<!-- Status Berlangganan (Sidebar) + Paket List (Clean Luxury Horizon Theme) -->
 <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 24px;">
     <!-- Status Berlangganan (Sidebar) -->
-    <div style="background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 12px; padding: 20px; height: fit-content;">
-        <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 16px; color: #60a5fa;">
-            📊 Status Berlangganan
+    <div style="background: #FFFFFF; border: 1px solid rgba(226, 232, 240, 0.95); border-radius: 18px; padding: 24px; height: fit-content; box-shadow: 0 4px 16px -2px rgba(15, 34, 61, 0.04);">
+        <h3 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.25rem; font-weight: 600; margin-bottom: 18px; color: #0F223D;">
+            Status Berlangganan
         </h3>
 
         @if ($activeSubscription)
-            <div style="space: 16px;">
-                <div style="background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
-                    <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 4px;">Paket Aktif</p>
-                    <p style="font-size: 1.5rem; font-weight: 700; color: #22c55e;">{{ $activeSubscription->paket_name }}</p>
-                    <p style="font-size: 0.75rem; color: {{ $activeSubscription->is_trial ? '#2563eb' : '#22c55e' }}; margin-top: 4px; font-weight: 600;">
-                        Status: {{ $activeSubscription->is_trial ? 'Trial' : 'Berlangganan' }}
-                    </p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="background: #FAF8F5; border: 1px solid #E2E8F0; border-radius: 12px; padding: 14px;">
+                    <p style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #64748B; margin-bottom: 4px;">Paket Aktif</p>
+                    <p style="font-size: 1.5rem; font-weight: 800; color: #0F223D; margin: 0;">{{ $activeSubscription->paket_name }}</p>
+                    <div style="margin-top: 8px;">
+                        <span style="display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; background: {{ $activeSubscription->is_trial ? '#EFF6FF' : '#ECFDF5' }}; color: {{ $activeSubscription->is_trial ? '#1D4ED8' : '#065F46' }}; border: 1px solid {{ $activeSubscription->is_trial ? '#BFDBFE' : '#A7F3D0' }};">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: {{ $activeSubscription->is_trial ? '#3B82F6' : '#10B981' }};"></span>
+                            {{ $activeSubscription->is_trial ? 'Trial 7 Hari' : 'Berlangganan Aktif' }}
+                        </span>
+                    </div>
                 </div>
 
-                <div style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
-                    <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 4px;">Tanggal Mulai</p>
-                    <p style="font-weight: 600; color: #e0e7ff;">{{ $activeSubscription->start_date->format('d M Y') }}</p>
+                <div style="background: #FAF8F5; border: 1px solid #E2E8F0; border-radius: 12px; padding: 12px 14px;">
+                    <p style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: #64748B; margin-bottom: 2px;">Tanggal Mulai</p>
+                    <p style="font-weight: 600; color: #0F223D; font-size: 0.9rem; margin: 0;">{{ $activeSubscription->start_date->format('d M Y') }}</p>
                 </div>
 
-                <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
-                    <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 4px;">Tanggal Berakhir</p>
-                    <p style="font-weight: 600; color: #dc2626;">{{ $activeSubscription->end_date->format('d M Y') }}</p>
+                <div style="background: #FAF8F5; border: 1px solid #E2E8F0; border-radius: 12px; padding: 12px 14px;">
+                    <p style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: #64748B; margin-bottom: 2px;">Tanggal Berakhir</p>
+                    <p style="font-weight: 600; color: #0F223D; font-size: 0.9rem; margin: 0;">{{ $activeSubscription->end_date->format('d M Y') }}</p>
                 </div>
 
-                <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
-                    <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 4px;">Sisa Hari</p>
-                    <p style="font-size: 1.5rem; font-weight: 700; color: #d8b4fe;">
+                <div style="background: #FAF8F5; border: 1px solid #E2E8F0; border-radius: 12px; padding: 12px 14px;">
+                    <p style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: #64748B; margin-bottom: 2px;">Sisa Durasi</p>
+                    <p style="font-size: 1.4rem; font-weight: 800; color: #C5A059; margin: 0;">
                         {{ $activeSubscription->getDaysRemaining() }}
-                        <span style="font-size: 0.75rem;">hari</span>
+                        <span style="font-size: 0.8rem; font-weight: 600; color: #64748B;">Hari</span>
                     </p>
                 </div>
 
                 <button type="button" 
-                    style="width: 100%; background: #f97316; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 500; margin-top: 8px;"
+                    style="width: 100%; background: #0F223D; color: #FFFFFF; border: none; padding: 11px 16px; border-radius: 10px; cursor: pointer; font-family: inherit; font-size: 0.85rem; font-weight: 600; margin-top: 6px; box-shadow: 0 2px 6px rgba(15, 34, 61, 0.15); transition: background 0.15s ease;"
+                    onmouseover="this.style.background='#162C50'"
+                    onmouseout="this.style.background='#0F223D'"
                     onclick="switchTab('profil')">
-                    ↻ Ganti Paket
+                    ↻ Ubah Profil Toko
                 </button>
             </div>
         @else
-            <div style="background: rgba(234, 179, 8, 0.15); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 8px; padding: 12px; text-align: center;">
-                <p style="color: #2563eb; font-size: 0.9rem; margin-bottom: 8px;">⚠️ Belum ada paket berlangganan aktif</p>
-                <p style="color: #64748b; font-size: 0.8rem;">Pilih salah satu paket di bawah untuk memulai berlangganan</p>
+            <div style="background: #FAF8F5; border: 1px solid #E2E8F0; border-radius: 12px; padding: 20px; text-align: center;">
+                <p style="color: #0F223D; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px;">Belum ada paket aktif</p>
+                <p style="color: #64748B; font-size: 0.8rem; margin: 0;">Pilih salah satu paket di samping untuk berlangganan.</p>
             </div>
         @endif
     </div>
 
     <!-- Paket List -->
     <div>
-        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 16px; color: #fff;">Pilih Paket Berlangganan</h3>
+        <h3 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.35rem; font-weight: 600; margin-bottom: 18px; color: #0F223D;">
+            Pilih Paket Berlangganan
+        </h3>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px;">
             @forelse ($packages as $package)
-                <div style="background: rgba(30, 41, 59, 0.8); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 12px; overflow: hidden; transition: all 0.3s ease; cursor: pointer;"
+                <div style="background: #FFFFFF; border: 1px solid rgba(226, 232, 240, 0.95); border-radius: 18px; overflow: hidden; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 4px 16px -2px rgba(15, 34, 61, 0.04); display: flex; flex-direction: column; justify-content: space-between;"
                     id="package-{{ $package->id }}"
-                    onmouseover="this.style.borderColor='#60a5fa'; this.style.boxShadow='0 0 20px rgba(96, 165, 250, 0.2)';"
-                    onmouseout="this.style.borderColor='rgba(148, 163, 184, 0.2)'; this.style.boxShadow='none';">
+                    onmouseover="this.style.borderColor='rgba(197, 160, 89, 0.45)'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 24px -4px rgba(15, 34, 61, 0.08)';"
+                    onmouseout="this.style.borderColor='rgba(226, 232, 240, 0.95)'; this.style.transform='none'; this.style.boxShadow='0 4px 16px -2px rgba(15, 34, 61, 0.04)';">
                     
-                    <div style="background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); color: white; padding: 16px;">
-                        <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 4px;">{{ $package->nama_paket }}</h4>
-                        <p style="font-size: 0.8rem; opacity: 0.9;">{{ $package->deskripsi }}</p>
-                    </div>
-
-                    <div style="padding: 16px;">
-                        <!-- Harga -->
-                        <div style="border-bottom: 1px solid rgba(148, 163, 184, 0.2); padding-bottom: 12px; margin-bottom: 12px;">
-                            <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 4px;">Harga</p>
-                        @if ($package->harga_diskon)
-                            <div style="display: flex; align-items: center; gap: 12px;">
-                                <p style="font-size: 1.25rem; font-weight: 400; color: #64748b; text-decoration: line-through;">Rp {{ number_format($package->harga, 0, ',', '.') }}</p>
-                                <p style="font-size: 1.75rem; font-weight: 700; color: #22c55e;">Rp {{ number_format($package->harga_diskon, 0, ',', '.') }}</p>
+                    <div>
+                        <!-- Header Card Paket -->
+                        <div style="background: #0F223D; color: #FFFFFF; padding: 20px 22px;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                                <h4 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.25rem; font-weight: 600; color: #FFFFFF; margin: 0;">{{ $package->nama_paket }}</h4>
                             </div>
-                            <p style="font-size: 0.7rem; color: #22c55e; margin-top: 4px; font-weight: 600;">✓ Harga Spesial / Promo</p>
-                        @else
-                            <p style="font-size: 1.75rem; font-weight: 700; color: #60a5fa;">
-                                @if ($package->harga == 0)
-                                    <span>Gratis</span>
-                                @else
-                                    Rp {{ number_format($package->harga, 0, ',', '.') }}
-                                @endif
-                            </p>
-                        @endif
-
-                        <!-- Info Durasi -->
-                        <div style="background: rgba(59, 130, 246, 0.15); padding: 10px; border-radius: 6px; margin-bottom: 12px;">
-                            <p style="font-size: 0.85rem; font-weight: 600; color: #93c5fd;">
-                                📅 Durasi: {{ $package->durasi_bulan }} bulan
-                            </p>
+                            <p style="font-size: 0.8rem; color: #CBD5E1; margin: 0; line-height: 1.4;">{{ $package->deskripsi }}</p>
                         </div>
 
-                        <!-- Button -->
+                        <div style="padding: 20px 22px;">
+                            <!-- Harga -->
+                            <div style="border-bottom: 1px solid #F1F5F9; padding-bottom: 16px; margin-bottom: 16px;">
+                                <p style="font-size: 0.72rem; font-weight: 600; text-transform: uppercase; color: #64748B; margin-bottom: 4px;">Investasi Biaya</p>
+                                @if ($package->harga_diskon)
+                                    <div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;">
+                                        <p style="font-size: 1rem; color: #94A3B8; text-decoration: line-through; margin: 0;">Rp {{ number_format($package->harga, 0, ',', '.') }}</p>
+                                        <p style="font-size: 1.6rem; font-weight: 800; color: #0F223D; margin: 0;">Rp {{ number_format($package->harga_diskon, 0, ',', '.') }}</p>
+                                    </div>
+                                    <p style="font-size: 0.72rem; color: #059669; margin-top: 4px; font-weight: 600;">✓ Harga Spesial / Promo</p>
+                                @else
+                                    <p style="font-size: 1.6rem; font-weight: 800; color: #0F223D; margin: 0;">
+                                        @if ($package->harga == 0)
+                                            <span>Gratis (Trial)</span>
+                                        @else
+                                            Rp {{ number_format($package->harga, 0, ',', '.') }}
+                                        @endif
+                                    </p>
+                                @endif
+                            </div>
+
+                            <!-- Info Durasi -->
+                            <div style="background: #FAF8F5; border: 1px solid #E2E8F0; padding: 10px 14px; border-radius: 10px; margin-bottom: 18px;">
+                                <p style="font-size: 0.825rem; font-weight: 600; color: #0F223D; margin: 0; display: flex; align-items: center; gap: 6px;">
+                                    <span>📅</span> Durasi: {{ $package->durasi_bulan == 0 ? '7 Hari' : $package->durasi_bulan . ' Bulan' }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="padding: 0 22px 22px;">
                         <button type="button" 
-                            style="width: 100%; background: #60a5fa; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 500; transition: background 0.3s;"
-                            onmouseover="this.style.background='#3b82f6';"
-                            onmouseout="this.style.background='#60a5fa';"
+                            style="width: 100%; background: #0F223D; color: #FFFFFF; border: none; padding: 11px 16px; border-radius: 10px; cursor: pointer; font-family: inherit; font-size: 0.85rem; font-weight: 600; transition: all 0.15s ease; box-shadow: 0 2px 6px rgba(15, 34, 61, 0.15);"
+                            onmouseover="this.style.background='#162C50'; this.style.transform='translateY(-1px)';"
+                            onmouseout="this.style.background='#0F223D'; this.style.transform='none';"
                             onclick="selectPackage({{ $package->id }}, '{{ $package->nama_paket }}', {{ $package->harga_diskon ?? $package->harga }}, {{ $package->durasi_bulan }})">
-                            ✓ Pilih Paket
+                            Pilih Paket Ini →
                         </button>
                     </div>
                 </div>
             @empty
-                <div style="grid-column: 1/-1; text-align: center; padding: 40px 20px; background: rgba(30, 41, 59, 0.5); border-radius: 12px;">
-                    <p style="color: #64748b;">Belum ada paket tersedia</p>
+                <div style="grid-column: 1/-1; text-align: center; padding: 40px 20px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px;">
+                    <p style="color: #64748B; font-size: 0.9rem;">Belum ada paket tersedia saat ini.</p>
                 </div>
             @endforelse
         </div>
     </div>
 </div>
 
-<!-- Modal Pembayaran -->
-<div id="paymentModal" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); z-index: 50; align-items: center; justify-content: center; padding: 16px;">
-    <div style="background: #1f293e; border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 12px; width: 100%; max-width: 400px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);">
-        <div style="background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); color: white; padding: 20px; position: sticky; top: 0;">
-            <h2 style="font-size: 1.25rem; font-weight: 700;">💳 Konfirmasi Pembayaran</h2>
+<!-- Modal Pembayaran (Clean White & Navy Horizon) -->
+<div id="paymentModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 34, 61, 0.5); backdrop-filter: blur(4px); z-index: 50; align-items: center; justify-content: center; padding: 16px;">
+    <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 18px; width: 100%; max-width: 440px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 30px -10px rgba(15, 34, 61, 0.2);">
+        <div style="background: #0F223D; color: white; padding: 20px 24px; position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; border-radius: 17px 17px 0 0;">
+            <h2 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.35rem; font-weight: 600; margin: 0; color: #FFFFFF;">Konfirmasi Langganan</h2>
+            <button type="button" onclick="closeModal()" style="background: none; border: none; color: #94A3B8; font-size: 1.25rem; cursor: pointer; line-height: 1;" onmouseover="this.style.color='#FFFFFF'" onmouseout="this.style.color='#94A3B8'">✕</button>
         </div>
 
         <form id="paymentForm" enctype="multipart/form-data" style="padding: 24px;">
             @csrf
 
             <!-- Ringkasan Paket -->
-            <div style="background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 8px; padding: 16px; margin-bottom: 20px;">
-                <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(148, 163, 184, 0.2);">
-                    <p style="font-size: 0.75rem; color: #64748b;">Paket Dipilih</p>
-                    <p style="font-size: 1.125rem; font-weight: 700; color: white;" id="modalPackageName"></p>
+            <div style="background: #FAF8F5; border: 1px solid #E2E8F0; border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+                <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.8rem; color: #64748B;">Paket Dipilih:</span>
+                    <span style="font-size: 0.95rem; font-weight: 700; color: #0F223D;" id="modalPackageName"></span>
                 </div>
-                <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(148, 163, 184, 0.2);">
-                    <p style="font-size: 0.75rem; color: #64748b;">Harga</p>
-                    <p style="font-size: 1.5rem; font-weight: 700; color: #60a5fa;" id="modalPrice"></p>
+                <div style="margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.8rem; color: #64748B;">Total Biaya:</span>
+                    <span style="font-size: 1.15rem; font-weight: 800; color: #0F223D;" id="modalPrice"></span>
                 </div>
-                <div>
-                    <p style="font-size: 0.75rem; color: #64748b;">Durasi</p>
-                    <p style="font-weight: 600; color: white;" id="modalDuration"></p>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-size: 0.8rem; color: #64748B;">Durasi Akses:</span>
+                    <span style="font-weight: 600; color: #0F223D; font-size: 0.875rem;" id="modalDuration"></span>
                 </div>
             </div>
 
             <!-- Pilih Bank -->
             <div style="margin-bottom: 16px;">
-                <label style="display: block; font-size: 0.875rem; font-weight: 600; color: white; margin-bottom: 8px;">
-                    🏦 Pilih Bank
+                <label style="display: block; font-size: 0.825rem; font-weight: 600; color: #0F223D; margin-bottom: 6px;">
+                    Pilih Rekening Bank Pembayaran
                 </label>
-                <select name="bank_id" id="bankSelect" style="width: 100%; border: 1px solid rgba(148, 163, 184, 0.3); background: rgba(30, 41, 59, 0.8); color: white; padding: 10px; border-radius: 8px; font-size: 0.9rem;" required>
+                <select name="bank_id" id="bankSelect" style="width: 100%; border: 1px solid #CBD5E1; background: #FFFFFF; color: #0F223D; padding: 10px 12px; border-radius: 10px; font-size: 0.875rem; outline: none;" required>
                     <option value="">-- Pilih Bank --</option>
                     @foreach ($banks as $bank)
                         <option value="{{ $bank->id }}" data-holder="{{ $bank->account_holder }}" data-account="{{ $bank->account_number }}">
@@ -152,29 +167,28 @@
             </div>
 
             <!-- Info Rekening -->
-            <div id="bankInfo" style="display: none; background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 16px;">
-                <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 4px;">Atas Nama</p>
-                <p style="font-weight: 600; color: white; margin-bottom: 12px;" id="accountHolder"></p>
-                <p style="font-size: 0.75rem; color: #64748b; margin-bottom: 4px;">Nomor Rekening</p>
-                <p style="font-family: monospace; font-size: 1.125rem; font-weight: 700; color: #22c55e; margin-bottom: 12px;" id="accountNumber"></p>
+            <div id="bankInfo" style="display: none; background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 10px; padding: 14px; margin-bottom: 16px;">
+                <p style="font-size: 0.72rem; color: #065F46; font-weight: 600; text-transform: uppercase; margin-bottom: 2px;">Atas Nama Rekening</p>
+                <p style="font-weight: 700; color: #065F46; font-size: 0.95rem; margin-bottom: 10px;" id="accountHolder"></p>
+                <p style="font-size: 0.72rem; color: #065F46; font-weight: 600; text-transform: uppercase; margin-bottom: 2px;">Nomor Rekening</p>
+                <p style="font-family: monospace; font-size: 1.25rem; font-weight: 800; color: #065F46; margin-bottom: 10px;" id="accountNumber"></p>
                 <button type="button" 
-                    style="font-size: 0.8rem; background: #22c55e; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer;"
+                    style="font-size: 0.785rem; background: #0F223D; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 600;"
                     onclick="copyToClipboard()">
-                    📋 Salin Nomor
+                    Salin Nomor Rekening
                 </button>
             </div>
 
             <!-- Upload Bukti Transaksi -->
-            <div style="margin-bottom: 16px;">
-                <label style="display: block; font-size: 0.875rem; font-weight: 600; color: white; margin-bottom: 8px; text-align: center;">
-                    📤 Upload Bukti Transaksi
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-size: 0.825rem; font-weight: 600; color: #0F223D; margin-bottom: 6px;">
+                    Upload Bukti Transfer
                 </label>
-                <div id="dropZone" style="border: 2px dashed rgba(148, 163, 184, 0.3); border-radius: 8px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.3s;"
-                    onmouseover="this.style.borderColor='#60a5fa'; this.style.background='rgba(96, 165, 250, 0.1)';"
-                    onmouseout="this.style.borderColor='rgba(148, 163, 184, 0.3)'; this.style.background='transparent';">
-                    <p style="font-size: 2rem; margin-bottom: 8px;">☁️</p>
-                    <p style="color: #1e293b; font-weight: 500; margin-bottom: 4px;">Klik atau drag file kesini</p>
-                    <p style="font-size: 0.8rem; color: #64748b;">JPG, PNG, atau PDF maksimal 5MB</p>
+                <div id="dropZone" style="border: 2px dashed #CBD5E1; border-radius: 12px; padding: 22px; text-align: center; cursor: pointer; background: #FAF8F5; transition: all 0.2s ease;"
+                    onmouseover="this.style.borderColor='#0F223D'; this.style.background='#FFFFFF';"
+                    onmouseout="this.style.borderColor='#CBD5E1'; this.style.background='#FAF8F5';">
+                    <p style="color: #0F223D; font-weight: 600; font-size: 0.875rem; margin-bottom: 4px;">Klik untuk memilih file bukti transfer</p>
+                    <p style="font-size: 0.75rem; color: #64748B; margin: 0;">JPG, PNG, atau PDF (maksimal 5MB)</p>
                     <input type="file" 
                         name="bukti_transaksi" 
                         id="buktiTransaksi" 
@@ -182,29 +196,29 @@
                         accept="image/jpeg,image/png,application/pdf"
                         required>
                 </div>
-                <p id="fileInfo" style="font-size: 0.8rem; color: #64748b; margin-top: 8px;"></p>
+                <p id="fileInfo" style="font-size: 0.8rem; color: #059669; font-weight: 600; margin-top: 8px;"></p>
             </div>
 
             <!-- Preview Gambar -->
             <div id="imagePreview" style="display: none; margin-bottom: 16px;">
-                <img id="previewImage" style="width: 100%; border-radius: 8px; border: 1px solid rgba(148, 163, 184, 0.2);" alt="Preview">
+                <img id="previewImage" style="width: 100%; border-radius: 10px; border: 1px solid #E2E8F0;" alt="Preview">
                 <button type="button" 
-                    style="margin-top: 8px; font-size: 0.8rem; color: #ef4444; background: none; border: none; cursor: pointer;"
+                    style="margin-top: 6px; font-size: 0.75rem; color: #EF4444; background: none; border: none; cursor: pointer; font-weight: 600;"
                     onclick="clearFile()">
-                    🗑️ Hapus File
+                    Hapus file yang dipilih
                 </button>
             </div>
 
             <!-- Buttons -->
-            <div style="display: flex; gap: 12px; padding-top: 16px; border-top: 1px solid rgba(148, 163, 184, 0.2);">
+            <div style="display: flex; gap: 10px; padding-top: 14px; border-top: 1px solid #F1F5F9;">
                 <button type="button" 
-                    style="flex: 1; background: #6b7280; color: white; border: none; font-weight: 600; padding: 10px; border-radius: 8px; cursor: pointer;"
+                    style="flex: 1; background: #FFFFFF; border: 1px solid #CBD5E1; color: #475569; font-weight: 600; padding: 10px; border-radius: 10px; cursor: pointer; font-size: 0.85rem;"
                     onclick="closeModal()">
-                    ✕ Batal
+                    Batal
                 </button>
                 <button type="submit" 
-                    style="flex: 1; background: #60a5fa; color: white; border: none; font-weight: 600; padding: 10px; border-radius: 8px; cursor: pointer;">
-                    ✓ Konfirmasi
+                    style="flex: 1; background: #0F223D; color: white; border: none; font-weight: 600; padding: 10px; border-radius: 10px; cursor: pointer; font-size: 0.85rem; box-shadow: 0 2px 6px rgba(15, 34, 61, 0.15);">
+                    Kirim Konfirmasi
                 </button>
             </div>
         </form>
@@ -216,7 +230,7 @@
     function selectPackage(paketId, packageName, price, duration) {
         document.getElementById('modalPackageName').textContent = packageName;
         document.getElementById('modalPrice').textContent = price == 0 ? 'Gratis' : 'Rp ' + price.toLocaleString('id-ID');
-        document.getElementById('modalDuration').textContent = duration + ' bulan';
+        document.getElementById('modalDuration').textContent = duration == 0 ? '7 Hari' : duration + ' bulan';
 
         document.getElementById('paymentForm').dataset.paketId = paketId;
         document.getElementById('paymentForm').dataset.packageName = packageName;
@@ -259,19 +273,19 @@
 
     dropZone?.addEventListener('dragover', (e) => {
         e.preventDefault();
-        dropZone.style.borderColor = '#60a5fa';
-        dropZone.style.background = 'rgba(96, 165, 250, 0.1)';
+        dropZone.style.borderColor = '#0F223D';
+        dropZone.style.background = '#FFFFFF';
     });
 
     dropZone?.addEventListener('dragleave', () => {
-        dropZone.style.borderColor = 'rgba(148, 163, 184, 0.3)';
-        dropZone.style.background = 'transparent';
+        dropZone.style.borderColor = '#CBD5E1';
+        dropZone.style.background = '#FAF8F5';
     });
 
     dropZone?.addEventListener('drop', (e) => {
         e.preventDefault();
-        dropZone.style.borderColor = 'rgba(148, 163, 184, 0.3)';
-        dropZone.style.background = 'transparent';
+        dropZone.style.borderColor = '#CBD5E1';
+        dropZone.style.background = '#FAF8F5';
         buktiTransaksi.files = e.dataTransfer.files;
         handleFileSelect();
     });
@@ -334,10 +348,6 @@
         formData.append('bukti_transaksi', buktiTransaksi.files[0]);
         formData.append('_token', document.querySelector('input[name="_token"]').value);
 
-        console.log('Form data ready, submitting to {{ route('subscribe.store') }}');
-        console.log('Paket ID:', this.dataset.paketId);
-        console.log('File:', buktiTransaksi.files[0]?.name);
-
         try {
             const response = await fetch('{{ route('subscribe.store') }}', {
                 method: 'POST',
@@ -348,19 +358,13 @@
                 }
             });
 
-            console.log('Response status:', response.status);
-            console.log('Response type:', response.type);
-            console.log('Content-Type:', response.headers.get('content-type'));
-
             const responseText = await response.text();
-            console.log('Raw response:', responseText);
 
             let data;
             try {
                 data = JSON.parse(responseText);
             } catch (parseError) {
-                console.error('JSON parse error:', parseError);
-                alert('Error: Server mengembalikan response yang tidak valid.\n\nBuka Console (F12 > Console) untuk detail.');
+                alert('Terjadi kesalahan pada server saat memproses konfirmasi.');
                 return;
             }
 
@@ -380,8 +384,7 @@
                 }
             }
         } catch (error) {
-            console.error('Fetch error:', error);
-            alert('Terjadi kesalahan jaringan: ' + error.message + '\n\nBuka Console (F12 > Console) untuk detail.');
+            alert('Terjadi kesalahan jaringan: ' + error.message);
         }
     });
 </script>

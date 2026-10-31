@@ -1,6 +1,7 @@
 @extends('layouts.horizon')
 
-@section('page_title', 'Manajemen Bank')
+@section('page_title', 'Rekening Bank')
+@section('page_subtitle', 'Kelola rekening bank tujuan transfer pembayaran langganan merchant.')
 
 @section('content')
 <style>
@@ -367,12 +368,8 @@
     }
 </style>
 
-<div class="page-header-row">
-    <div class="page-title-block">
-        <h2>Manajemen Bank</h2>
-        <p>Kelola rekening bank tujuan transfer pembayaran paket langganan merchant.</p>
-    </div>
-    <div class="header-actions-wrap">
+<div class="hz-top-row" style="display:flex; justify-content:flex-end; align-items:center; margin-bottom: 20px;">
+    <div class="header-actions-wrap" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
         <a href="{{ route('bank.create') }}" class="btn-add-primary">
             <i data-lucide="plus" style="width: 15px; height: 15px;"></i>
             <span>Tambah Rekening Bank</span>

@@ -463,6 +463,37 @@
 				font-family: inherit !important;
 			}
 
+			.search-input-wrap,
+			.hz-search-wrap {
+				position: relative !important;
+				display: inline-flex !important;
+				align-items: center !important;
+			}
+
+			.search-input-wrap i,
+			.search-input-wrap svg,
+			.hz-search-wrap i,
+			.hz-search-wrap svg {
+				position: absolute !important;
+				left: 12px !important;
+				top: 50% !important;
+				transform: translateY(-50%) !important;
+				width: 15px !important;
+				height: 15px !important;
+				color: #94A3B8 !important;
+				pointer-events: none !important;
+				z-index: 5 !important;
+			}
+
+			.search-input-wrap input,
+			.hz-search-wrap input,
+			.hz-top-actions input.search-input,
+			.hz-top-actions input[name="search"],
+			.filter-form input.search-input,
+			.filter-form input[name="search"] {
+				padding-left: 38px !important;
+			}
+
 			.hz-top-actions input:focus,
 			.hz-top-actions select:focus {
 				border-color: #0F223D !important;

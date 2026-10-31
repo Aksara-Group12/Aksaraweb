@@ -1,6 +1,7 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Manajemen User')
+@section('page_subtitle', 'Kelola seluruh akun merchant pemilik toko (role owner) dan status langganannya.')
 
 @section('content')
 <style>
@@ -538,11 +539,7 @@
     }
 </style>
 
-<div class="page-header-row">
-    <div class="page-title-block">
-        <h2>Manajemen User</h2>
-        <p>Kelola seluruh akun merchant pemilik toko (role owner) dan status langganannya.</p>
-    </div>
+<div class="hz-top-row" style="display:flex; justify-content:flex-end; align-items:center; margin-bottom: 20px;">
     <div class="page-actions">
         <form method="GET" action="{{ route('manajemen-user.index') }}" class="filter-form">
             <div class="search-input-wrap">

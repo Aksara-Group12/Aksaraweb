@@ -1,6 +1,7 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Manajemen Paket')
+@section('page_subtitle', 'Kelola paket berlangganan merchant seperti Standard, Premium, dan Enterprise.')
 
 @section('content')
 @php
@@ -208,32 +209,30 @@
 
 	/* FEATURED CARD: Gradasi Emas Mewah (Aksara Luxury Gold) */
 	.paket-card-highlight {
-		background: linear-gradient(135deg, #F3DEB2 0%, #DFB76C 40%, #C5A059 80%, #A68038 100%) !important;
-		border: 1px solid rgba(255, 255, 255, 0.6) !important;
-		color: #0F223D !important;
-		box-shadow: 0 16px 36px -8px rgba(197, 160, 89, 0.4), 0 8px 16px -4px rgba(15, 34, 61, 0.08) !important;
+		border: 1.5px solid #C5A059 !important;
+		box-shadow: 0 16px 36px -8px rgba(197, 160, 89, 0.35), 0 8px 16px -4px rgba(15, 34, 61, 0.08) !important;
 	}
 
 	.paket-card-highlight:hover {
 		transform: translateY(-4px);
-		box-shadow: 0 20px 40px -6px rgba(197, 160, 89, 0.5), 0 10px 20px -4px rgba(15, 34, 61, 0.12) !important;
+		box-shadow: 0 20px 40px -6px rgba(197, 160, 89, 0.45), 0 10px 20px -4px rgba(15, 34, 61, 0.12) !important;
 	}
 
 	.paket-highlight-tag {
-		position: absolute;
-		top: 18px;
-		right: 18px;
 		background: #0F223D;
-		color: #FFFFFF;
+		color: #FDE68A;
 		font-size: 0.68rem;
 		font-weight: 700;
-		padding: 4px 12px;
+		padding: 4px 10px;
 		border-radius: 9999px;
 		letter-spacing: 0.04em;
 		display: inline-flex;
 		align-items: center;
 		gap: 5px;
 		box-shadow: 0 2px 6px rgba(15, 34, 61, 0.2);
+		border: 1px solid rgba(197, 160, 89, 0.5);
+		white-space: nowrap;
+		flex-shrink: 0;
 	}
 
 	.paket-card-head {
@@ -250,15 +249,8 @@
 		font-weight: 700;
 		letter-spacing: 0.06em;
 		text-transform: uppercase;
-		background: #F1F5F9;
-		color: #0F223D;
-		border: 1px solid #E2E8F0;
-	}
-
-	.paket-card-highlight .paket-badge {
-		background: rgba(15, 34, 61, 0.15);
-		color: #0F223D;
-		border-color: rgba(15, 34, 61, 0.2);
+		white-space: normal;
+		line-height: 1.3;
 	}
 
 	.paket-price {
@@ -332,9 +324,9 @@
 	.paket-cta {
 		margin-top: auto;
 		border-radius: 10px;
-		border: 1px solid #CBD5E1;
-		background: #FFFFFF;
-		color: #0F223D;
+		border: 1px solid #0F223D;
+		background: #0F223D;
+		color: #FFFFFF;
 		padding: 10px 14px;
 		font-family: inherit;
 		font-size: 0.825rem;
@@ -345,23 +337,14 @@
 		align-items: center;
 		justify-content: center;
 		gap: 6px;
+		box-shadow: 0 2px 6px rgba(15, 34, 61, 0.15);
 	}
 
 	.paket-cta:hover {
-		background: #F8FAFC;
-		border-color: #0F223D;
-	}
-
-	.paket-card-highlight .paket-cta {
-		background: #0F223D !important;
-		color: #FFFFFF !important;
-		border: none !important;
-		box-shadow: 0 4px 12px rgba(15, 34, 61, 0.25);
-	}
-
-	.paket-card-highlight .paket-cta:hover {
-		background: #162C50 !important;
+		background: #162C50;
+		border-color: #162C50;
 		transform: translateY(-1px);
+		box-shadow: 0 4px 12px rgba(15, 34, 61, 0.2);
 	}
 
 	/* Table Styling */
@@ -492,12 +475,8 @@
 	}
 </style>
 
-<div class="page-header-row">
-	<div class="page-title-block">
-		<h2>Paket Subscribe</h2>
-		<p>Kelola paket berlangganan merchant kasir seperti Standard, Premium, dan Enterprise.</p>
-	</div>
-	<div class="header-actions-wrap">
+<div class="hz-top-row" style="display:flex; justify-content:flex-end; align-items:center; margin-bottom: 20px;">
+	<div class="header-actions-wrap" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
 		<a href="{{ route('paket.create') }}" class="btn-add-primary">
 			<i data-lucide="plus" style="width: 15px; height: 15px;"></i>
 			<span>Tambah Paket Baru</span>
@@ -542,8 +521,97 @@
 		<p class="section-sub">Tampilan kartu paket langganan yang aktif dan siap dipilih oleh pemilik toko.</p>
 	</div>
 
+	@php
+		$colorThemes = [
+			[
+				'card_border_top' => '#2563EB', // Sapphire Blue (Paket 1 / Kasir + Keuangan)
+				'card_bg' => 'linear-gradient(180deg, #F0F6FF 0%, #FFFFFF 140px)',
+				'card_border' => '#BFDBFE',
+				'badge_bg' => '#EFF6FF',
+				'badge_color' => '#1D4ED8',
+				'badge_border' => '#BFDBFE',
+				'price_color' => '#1E3A8A',
+				'check_color' => '#2563EB',
+				'cta_bg' => '#EFF6FF',
+				'cta_color' => '#1D4ED8',
+				'cta_border' => '#BFDBFE',
+				'cta_hover_bg' => '#1D4ED8',
+			],
+			[
+				'card_border_top' => '#0F223D', // Twilight Navy (Premium)
+				'card_bg' => 'linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 140px)',
+				'card_border' => '#CBD5E1',
+				'badge_bg' => '#0F223D',
+				'badge_color' => '#FFFFFF',
+				'badge_border' => '#0F223D',
+				'price_color' => '#0F223D',
+				'check_color' => '#0F223D',
+				'cta_bg' => '#0F223D',
+				'cta_color' => '#FFFFFF',
+				'cta_border' => '#0F223D',
+				'cta_hover_bg' => '#1E3A8A',
+			],
+			[
+				'card_border_top' => '#059669', // Emerald Jade (Paket 2 / Kasir + Keuangan + Stok)
+				'card_bg' => 'linear-gradient(180deg, #ECFDF5 0%, #FFFFFF 140px)',
+				'card_border' => '#A7F3D0',
+				'badge_bg' => '#ECFDF5',
+				'badge_color' => '#047857',
+				'badge_border' => '#A7F3D0',
+				'price_color' => '#065F46',
+				'check_color' => '#059669',
+				'cta_bg' => '#ECFDF5',
+				'cta_color' => '#047857',
+				'cta_border' => '#A7F3D0',
+				'cta_hover_bg' => '#047857',
+			],
+			[
+				'card_border_top' => '#C5A059', // Imperial Champagne Gold (Paket 3 / Paling Populer)
+				'card_bg' => 'linear-gradient(145deg, #FFFDF8 0%, #FFF9EC 50%, #FAF0DA 100%)',
+				'card_border' => '#E0B46A',
+				'badge_bg' => '#FEF3C7',
+				'badge_color' => '#92400E',
+				'badge_border' => '#FDE68A',
+				'price_color' => '#78350F',
+				'check_color' => '#D97706',
+				'cta_bg' => '#0F223D',
+				'cta_color' => '#FFFFFF',
+				'cta_border' => '#0F223D',
+				'cta_hover_bg' => '#162C50',
+			],
+			[
+				'card_border_top' => '#7C3AED', // Regal Amethyst (Trial / Tambahan)
+				'card_bg' => 'linear-gradient(180deg, #FAF5FF 0%, #FFFFFF 140px)',
+				'card_border' => '#DDD6FE',
+				'badge_bg' => '#F5F3FF',
+				'badge_color' => '#6D28D9',
+				'badge_border' => '#DDD6FE',
+				'price_color' => '#4C1D95',
+				'check_color' => '#7C3AED',
+				'cta_bg' => '#F5F3FF',
+				'cta_color' => '#6D28D9',
+				'cta_border' => '#DDD6FE',
+				'cta_hover_bg' => '#6D28D9',
+			],
+			[
+				'card_border_top' => '#475569', // Pearl Slate
+				'card_bg' => 'linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 140px)',
+				'card_border' => '#CBD5E1',
+				'badge_bg' => '#F1F5F9',
+				'badge_color' => '#334155',
+				'badge_border' => '#CBD5E1',
+				'price_color' => '#0F223D',
+				'check_color' => '#475569',
+				'cta_bg' => '#FFFFFF',
+				'cta_color' => '#334155',
+				'cta_border' => '#CBD5E1',
+				'cta_hover_bg' => '#334155',
+			],
+		];
+	@endphp
+
 	<div class="paket-pricing-grid">
-		@forelse ($paketCards as $card)
+		@forelse ($paketCards as $index => $card)
 			@php
 				$isFeatured = $featuredId && $card->id === $featuredId;
 				$rawFeatures = trim((string) ($card->deskripsi ?? ''));
@@ -558,18 +626,31 @@
 						'Laporan penjualan otomatis',
 					]);
 				}
+
+				if ($isFeatured) {
+					$theme = $colorThemes[3]; // Imperial Gold untuk Featured
+				} else {
+					$availableThemes = [0, 1, 2, 4, 5];
+					$theme = $colorThemes[$availableThemes[$index % count($availableThemes)]];
+				}
 			@endphp
-			<div class="paket-card {{ $isFeatured ? 'paket-card-highlight' : '' }}">
-				@if ($isFeatured)
-					<div class="paket-highlight-tag">
-						<i data-lucide="sparkles" style="width: 12px; height: 12px; color: #C5A059;"></i>
-						<span>Paling Populer</span>
-					</div>
-				@endif
+			<div class="paket-card {{ $isFeatured ? 'paket-card-highlight' : '' }}" 
+				style="border-top: 4px solid {{ $theme['card_border_top'] }} !important; border-color: {{ $theme['card_border'] }} !important; background: {{ $theme['card_bg'] }} !important;">
+				
+				<div class="paket-card-top-bar" style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px;">
+					<span class="paket-badge" style="background: {{ $theme['badge_bg'] }}; color: {{ $theme['badge_color'] }}; border: 1px solid {{ $theme['badge_border'] }};">
+						{{ $card->nama_paket }}
+					</span>
+					@if ($isFeatured)
+						<span class="paket-highlight-tag">
+							<i data-lucide="sparkles" style="width: 12px; height: 12px; color: #F59E0B;"></i>
+							<span>Paling Populer</span>
+						</span>
+					@endif
+				</div>
 
 				<div class="paket-card-head">
-					<span class="paket-badge">{{ $card->nama_paket }}</span>
-					<p class="paket-price">
+					<p class="paket-price" style="color: {{ $theme['price_color'] }};">
 						Rp {{ number_format($card->harga ?? 0, 0, ',', '.') }}<span>/bulan</span>
 					</p>
 					<p class="paket-caption">
@@ -580,7 +661,7 @@
 				<ul class="paket-feature-list">
 					@foreach ($features->take(4) as $feature)
 						<li>
-							<i data-lucide="check" class="feature-check-icon"></i>
+							<i data-lucide="check" class="feature-check-icon" style="color: {{ $theme['check_color'] }};"></i>
 							<span>{{ $feature }}</span>
 						</li>
 					@endforeach

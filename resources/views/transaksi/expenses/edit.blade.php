@@ -1,15 +1,9 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Edit Pengeluaran')
+@section('page_subtitle', 'Perbarui informasi pengeluaran yang sudah tercatat.')
 
 @section('content')
-	<div class="hz-top-row">
-		<div>
-			<h2 class="hz-top-title">Edit Pengeluaran</h2>
-			<p class="hz-top-sub">Perbarui informasi pengeluaran yang sudah tercatat.</p>
-		</div>
-	</div>
-
 	@if ($errors->any())
 		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626;">
 			<p style="font-weight: 600; margin-bottom: 8px;">❌ Terjadi kesalahan validasi:</p>

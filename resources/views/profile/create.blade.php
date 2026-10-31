@@ -1,6 +1,7 @@
 @extends('layouts.horizon')
 
 @section('page_title', isset($profile) ? (auth()->user()?->role === 'superadmin' ? 'Edit Profil Admin' : 'Edit Profil Toko') : 'Atur Profil')
+@section('page_subtitle', 'Lengkapi informasi identitas utama akun dan profil bisnis Anda.')
 
 @section('content')
 <style>
@@ -238,16 +239,10 @@
 	}
 </style>
 
-<div class="page-header-row">
-	<div class="page-title-block">
-		<div style="display: flex; align-items: center; gap: 14px;">
-			<a href="{{ route('profile.index') }}" class="btn-back-circle" title="Kembali ke Informasi Profil">
-				<i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
-			</a>
-			<h2>{{ isset($profile) ? (auth()->user()?->role === 'superadmin' ? 'Edit Profil Admin' : 'Edit Profil Toko') : 'Atur Profil Baru' }}</h2>
-		</div>
-		<p>Lengkapi informasi identitas utama akun dan profil bisnis Anda.</p>
-	</div>
+<div class="hz-top-row" style="display:flex; justify-content:flex-start; align-items:center; margin-bottom: 20px;">
+	<a href="{{ route('profile.index') }}" class="btn-back-circle" title="Kembali ke Informasi Profil">
+		<i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
+	</a>
 </div>
 
 @if ($errors->any())

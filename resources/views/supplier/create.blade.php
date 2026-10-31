@@ -1,16 +1,10 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Tambah Supplier')
+@section('page_subtitle', 'Tambah data supplier baru toko.')
 
 @section('content')
-	<div class="hz-top-row">
-		<div>
-			<h2 class="hz-top-title">Tambah Supplier</h2>
-			<p class="hz-top-sub">Tambah data supplier baru.</p>
-		</div>
-	</div>
-
-	<form action="{{ route('supplier.store') }}" method="POST" style="margin-top: 24px;">
+	<form action="{{ route('supplier.store') }}" method="POST" style="margin-top: 10px;">
 		@csrf
 		<section class="hz-secondary-grid">
 			<div class="hz-card" style="grid-column: 1 / -1;">

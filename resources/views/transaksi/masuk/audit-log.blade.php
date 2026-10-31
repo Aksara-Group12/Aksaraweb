@@ -1,14 +1,11 @@
 @extends('layouts.horizon')
 
-@section('page_title', 'Riwayat Perubahan - ' . ($transaksiMasuk->reference_no ?? 'Transaksi'))
+@section('page_title', 'Riwayat Perubahan Transaksi')
+@section('page_subtitle', ($transaksiMasuk->reference_no ?? '') . ' - ' . ($transaksiMasuk->supplier_name ?? ''))
 
 @section('content')
-	<div class="hz-top-row">
-		<div>
-			<h2 class="hz-top-title">Riwayat Perubahan Transaksi</h2>
-			<p class="hz-top-sub">{{ $transaksiMasuk->reference_no }} - {{ $transaksiMasuk->supplier_name }}</p>
-		</div>
-		<a href="{{ route('transaksi.masuk.edit', $transaksiMasuk->id) }}" class="hz-btn-primary" style="align-self: flex-start;">
+	<div class="hz-top-row" style="display:flex; justify-content:flex-end; align-items:center; margin-bottom: 16px;">
+		<a href="{{ route('transaksi.masuk.edit', $transaksiMasuk->id) }}" class="hz-btn-primary">
 			<span>← Kembali</span>
 		</a>
 	</div>

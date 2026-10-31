@@ -1,13 +1,10 @@
 @extends('layouts.horizon')
 
-@section('page_title', 'Detail Stok')
+@section('page_title', 'Detail Stok Produk')
+@section('page_subtitle', 'Informasi stok dan riwayat pergerakan untuk ' . $product->nama_produk)
 
 @section('content')
-<div class="hz-top-row">
-	<div>
-		<h2 class="hz-top-title">Detail Stok Produk</h2>
-		<p class="hz-top-sub">Informasi stok dan riwayat pergerakan untuk {{ $product->nama_produk }}</p>
-	</div>
+<div class="hz-top-row" style="display:flex; justify-content:flex-end; align-items:center; margin-bottom: 16px;">
 	<div class="hz-top-actions">
 		<a href="{{ route('produkstok.index') }}" class="hz-btn hz-btn-secondary">
 			← Kembali
@@ -15,7 +12,7 @@
 	</div>
 </div>
 
-<section class="hz-secondary-grid" style="margin-top: 24px;">
+<section class="hz-secondary-grid" style="margin-top: 10px;">
 	<div class="hz-card" style="grid-column: 1 / -1;">
 		<div class="hz-card-header" style="margin-bottom: 16px;">
 			<p class="hz-card-title">Informasi Produk</p>

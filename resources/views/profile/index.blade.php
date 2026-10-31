@@ -547,6 +547,10 @@
 				const reader = new FileReader();
 				reader.onload = function(event) {
 					logoPreview.innerHTML = '<img src="' + event.target.result + '" alt="Preview">';
+					// Update foto profil di navbar header dan dropdown akun secara instan
+					document.querySelectorAll('.hz-avatar, .hz-avatar-menu').forEach(function(el) {
+						el.innerHTML = '<img src="' + event.target.result + '" alt="Preview" style="width: 100%; height: 100%; object-fit: cover; border-radius: 9999px; display: block;">';
+					});
 				};
 				reader.readAsDataURL(file);
 			}

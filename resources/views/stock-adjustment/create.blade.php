@@ -1,16 +1,10 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Buat Stock Adjustment')
+@section('page_subtitle', 'Input stok fisik untuk penyesuaian.')
 
 @section('content')
-	<div class="hz-top-row">
-		<div>
-			<h2 class="hz-top-title">Buat Stock Adjustment</h2>
-			<p class="hz-top-sub">Input stok fisik untuk penyesuaian.</p>
-		</div>
-	</div>
-
-	<form id="adjustmentForm" action="{{ route('stock-adjustment.store') }}" method="POST" style="margin-top: 24px;">
+	<form id="adjustmentForm" action="{{ route('stock-adjustment.store') }}" method="POST" style="margin-top: 10px;">
 		@csrf
 		<section class="hz-secondary-grid">
 			<div class="hz-card" style="grid-column: 1 / -1;">

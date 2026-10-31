@@ -8,10 +8,10 @@
 		<link rel="icon" type="image/png" href="{{ asset('assets/images/aksara-logo.png') }}">
 		<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
-		<!-- Fonts: Newsreader & Plus Jakarta Sans (Sesuai Landing Page Aksara Developer) -->
+		<!-- Fonts: Newsreader & Inter -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 
 		<!-- Lucide Icons (Shadcn Standard) -->
 		<script src="https://unpkg.com/lucide@latest"></script>
@@ -30,7 +30,7 @@
 
 			body.hz-body {
 				height: 100vh;
-				font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+				font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 				background-color: #FAF8F5;
 				color: #0F223D;
 				overflow: hidden;

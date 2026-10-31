@@ -1,6 +1,7 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Tambah Paket')
+@section('page_subtitle', 'Buat paket langganan kasir baru untuk merchant dan UMKM.')
 
 @section('content')
 <style>
@@ -177,16 +178,10 @@
 	}
 </style>
 
-<div class="page-header-row">
-	<div class="page-title-block">
-		<div style="display: flex; align-items: center; gap: 14px;">
-			<a href="{{ route('paket.index') }}" class="btn-back-circle" title="Kembali ke Daftar Paket">
-				<i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
-			</a>
-			<h2>Tambah Paket</h2>
-		</div>
-		<p>Buat paket langganan kasir baru untuk merchant dan UMKM.</p>
-	</div>
+<div class="hz-top-row" style="display:flex; justify-content:flex-start; align-items:center; margin-bottom: 20px;">
+	<a href="{{ route('paket.index') }}" class="btn-back-circle" title="Kembali ke Daftar Paket">
+		<i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
+	</a>
 </div>
 
 @if ($errors->any())

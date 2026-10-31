@@ -1,16 +1,10 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Edit Supplier')
+@section('page_subtitle', 'Edit data supplier toko.')
 
 @section('content')
-	<div class="hz-top-row">
-		<div>
-			<h2 class="hz-top-title">Edit Supplier</h2>
-			<p class="hz-top-sub">Edit data supplier.</p>
-		</div>
-	</div>
-
-	<form action="{{ route('supplier.update', $supplier->id) }}" method="POST" style="margin-top: 24px;">
+	<form action="{{ route('supplier.update', $supplier->id) }}" method="POST" style="margin-top: 10px;">
 		@csrf
 		@method('PATCH')
 		<section class="hz-secondary-grid">

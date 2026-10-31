@@ -1,16 +1,10 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Tutup Shift')
+@section('page_subtitle', 'Rekonsiliasi kas dan tutup shift aktif.')
 
 @section('content')
-	<div class="hz-top-row">
-		<div>
-			<h2 class="hz-top-title">Tutup Shift</h2>
-			<p class="hz-top-sub">Rekonsiliasi kas dan tutup shift aktif.</p>
-		</div>
-	</div>
-
-	<section class="hz-secondary-grid" style="margin-top: 24px;">
+	<section class="hz-secondary-grid" style="margin-top: 10px;">
 		<div class="hz-card" style="grid-column: 1 / -1; max-width: 600px; margin: 0 auto;">
 			<div class="hz-card-header" style="margin-bottom: 16px;">
 				<p class="hz-card-title">Rekonsiliasi Shift: {{ $shift->shift_number }}</p>

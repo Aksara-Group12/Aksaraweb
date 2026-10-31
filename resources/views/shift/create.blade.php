@@ -1,21 +1,10 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Buka Shift')
+@section('page_subtitle', 'Input modal awal kas untuk shift baru.' . (session()->has('admin_name') ? ' Kasir: ' . session('admin_name') : ''))
 
 @section('content')
-	<div class="hz-top-row">
-		<div>
-			<h2 class="hz-top-title">Buka Shift</h2>
-			<p class="hz-top-sub">Input modal awal kas untuk shift baru.</p>
-			@if(session()->has('admin_name'))
-				<p style="margin-top: 8px; font-size: 0.85rem; color: #64748b;">
-					Kasir: <strong style="color: #3b82f6;">{{ session('admin_name') }}</strong>
-				</p>
-			@endif
-		</div>
-	</div>
-
-	<section class="hz-secondary-grid" style="margin-top: 24px;">
+	<section class="hz-secondary-grid" style="margin-top: 10px;">
 		<div class="hz-card" style="grid-column: 1 / -1; max-width: 600px; margin: 0 auto;">
 			<div class="hz-card-header" style="margin-bottom: 16px;">
 				<p class="hz-card-title">Form Buka Shift</p>

@@ -25,6 +25,10 @@ Tata Letak POS (Point of Sale)
 |                                                      | [       BAYAR SEKARANG (ENTER)       ] |
 +------------------------------------------------------+----------------------------------------+
 
+
+
+
+
 Tata Letak Manajemen User & Karyawan
 +-----------------------------------------------------------------------------------------------+
 | HEADER: Manajemen Pengguna & Karyawan (Total: 4 User)              [+ Tambah Pengguna Baru]    |
@@ -45,6 +49,10 @@ Tata Letak Manajemen User & Karyawan
 | [ ] (BU) Budi Santoso         Kasir           Cabang 2          ○ Nonaktif     [ ✏️ ] [ 🔄 ]   |
 |     budi@pos.com                                                                              |
 +-----------------------------------------------------------------------------------------------+
+
+
+
+
 
 Tata Letak Dashboard yang Paling User-Friendly
 +-------------------------------------------------------------------------------------------------+

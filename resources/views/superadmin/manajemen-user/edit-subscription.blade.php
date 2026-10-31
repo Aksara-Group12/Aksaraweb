@@ -1,15 +1,9 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Edit Subscription')
+@section('page_subtitle', 'User: ' . $user->name . ' (' . $user->email . ')')
 
 @section('content')
-<div class="hz-top-row">
-    <div>
-        <h2 class="hz-top-title">Edit Subscription</h2>
-        <p class="hz-top-sub">User: {{ $user->name }} ({{ $user->email }})</p>
-    </div>
-</div>
-
 @if ($errors->any())
     <div style="margin: 16px 0; padding: 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; color: #ef4444;">
         <ul style="margin: 0; padding-left: 20px;">

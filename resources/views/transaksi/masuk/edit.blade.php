@@ -1,14 +1,11 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Edit Transaksi Masuk')
+@section('page_subtitle', 'Perbarui informasi header transaksi masuk (status, supplier, pembayaran).')
 
 @section('content')
-	<div class="hz-top-row">
-		<div>
-			<h2 class="hz-top-title">Edit Transaksi Masuk</h2>
-			<p class="hz-top-sub">Perbarui informasi header transaksi masuk (status, supplier, pembayaran).</p>
-		</div>
-		<a href="{{ route('transaksi.masuk.audit-log', $transaksiMasuk->id) }}" class="hz-btn-outline" style="align-self: flex-start; display: flex; align-items: center; gap: 8px;">
+	<div class="hz-top-row" style="display:flex; justify-content:flex-end; align-items:center; margin-bottom: 16px;">
+		<a href="{{ route('transaksi.masuk.audit-log', $transaksiMasuk->id) }}" class="hz-btn-outline" style="display: inline-flex; align-items: center; gap: 8px;">
 			<span>📋 Riwayat Perubahan</span>
 		</a>
 	</div>

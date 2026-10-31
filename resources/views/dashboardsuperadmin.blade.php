@@ -1,745 +1,673 @@
 @extends('layouts.horizon')
 
-@section('page_title', 'Dashboard Superadmin')
-
-@section('header_content')
-	<div>
-		<h1 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.35rem; font-weight: 500; color: #0F223D; margin: 0; line-height: 1.2;">
-			Dashboard Superadmin
-		</h1>
-		<p style="font-size: 0.8rem; color: #64748B; margin: 2px 0 0 0;">
-			Pantau performa sistem, aktivitas pengguna, dan arus transaksi keuangan.
-		</p>
-	</div>
-@endsection
+@section('page_title', 'Dashboard')
+@section('page_subtitle', 'Pantau performa sistem, aktivitas pengguna, dan arus transaksi keuangan.')
 
 @section('content')
 	<style>
-		/* Header Section */
-		.dashboard-header {
-			margin-bottom: 28px;
+		.shadcn-container {
+			max-width: 100%;
+			padding: 4px 0 24px 0;
+			font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 		}
 
-		.header-title-block {
-			margin-bottom: 18px;
+		/* Top Action & Filter Bar */
+		.shadcn-action-bar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 22px;
+			flex-wrap: wrap;
+			gap: 12px;
 		}
 
-		.header-title-block h2 {
-			font-family: 'Newsreader', Georgia, serif;
-			font-size: 2.25rem;
-			font-weight: 500;
-			margin: 0 0 6px 0;
-			color: #0F223D;
-			letter-spacing: -0.01em;
-			line-height: 1.2;
-		}
-
-		.header-title-block p {
-			font-size: 0.95rem;
-			color: #64748B;
-			margin: 0;
-		}
-
-		.header-controls {
+		.shadcn-filter-group {
 			display: flex;
 			align-items: center;
-			gap: 12px;
+			gap: 8px;
 			flex-wrap: wrap;
 		}
 
-		.period-select {
-			border-radius: 10px;
+		.shadcn-period-select {
 			background: #FFFFFF;
-			border: 1px solid #CBD5E1;
-			color: #0F223D;
-			font-family: inherit;
+			border: 1px solid #E4E4E7;
+			border-radius: 8px;
+			color: #09090B;
+			padding: 8px 14px;
 			font-size: 0.825rem;
-			padding: 9px 14px;
+			font-weight: 500;
 			outline: none;
 			cursor: pointer;
+			font-family: inherit;
+			box-shadow: 0 1px 2px rgba(0,0,0,0.03);
 			transition: all 0.15s ease;
+		}
+
+		.shadcn-period-select:focus {
+			border-color: #09090B;
+			box-shadow: 0 0 0 2px rgba(9, 9, 11, 0.1);
+		}
+
+		.btn-shadcn-black {
+			background: #09090B;
+			color: #FFFFFF;
+			border: none;
+			border-radius: 8px;
+			padding: 8px 16px;
+			font-size: 0.825rem;
 			font-weight: 600;
-			box-shadow: 0 1px 3px rgba(15, 34, 61, 0.04);
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			transition: all 0.15s ease;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+			font-family: inherit;
+			text-decoration: none;
 		}
 
-		.period-select:hover {
-			border-color: rgba(197, 160, 89, 0.6);
+		.btn-shadcn-black:hover {
+			background: #27272A;
+			box-shadow: 0 0 14px rgba(9, 9, 11, 0.25);
 		}
 
-		.period-select:focus {
-			border-color: #0F223D;
-			box-shadow: 0 0 0 3px rgba(15, 34, 61, 0.08);
-		}
-
-		.custom-date-range {
+		/* Custom Date Filter Box */
+		.shadcn-custom-box {
 			display: none;
 			align-items: center;
 			gap: 8px;
-		}
-
-		.custom-date-range.active {
-			display: flex;
-		}
-
-		.date-input {
-			background: #FFFFFF;
-			border-radius: 10px;
-			border: 1px solid #CBD5E1;
-			color: #0F223D;
-			font-family: inherit;
-			font-size: 0.825rem;
-			padding: 8px 12px;
-			outline: none;
-			transition: all 0.15s ease;
-			box-shadow: 0 1px 3px rgba(15, 34, 61, 0.04);
-		}
-
-		.date-input:focus {
-			border-color: #0F223D;
-			box-shadow: 0 0 0 3px rgba(15, 34, 61, 0.08);
-		}
-
-		.date-separator {
-			font-size: 0.8rem;
-			color: #64748B;
-			font-weight: 600;
-		}
-
-		.apply-btn {
-			border-radius: 10px;
-			border: none;
-			background: #0F223D;
-			color: #FFFFFF;
-			padding: 9px 16px;
-			font-family: inherit;
-			font-size: 0.825rem;
-			font-weight: 600;
-			cursor: pointer;
-			transition: all 0.15s ease;
-			display: flex;
-			align-items: center;
-			gap: 6px;
-			box-shadow: 0 2px 6px rgba(15, 34, 61, 0.15);
-		}
-
-		.apply-btn:hover {
-			background: #162C50;
-			transform: translateY(-1px);
-			box-shadow: 0 4px 12px rgba(15, 34, 61, 0.2);
-		}
-
-		/* KPI Card Grid: 4 Kolom Rapi & Selaras */
-		.kpi-card-wrapper {
-			display: grid;
-			grid-template-columns: repeat(4, minmax(0, 1fr));
-			gap: 20px;
-			margin-bottom: 28px;
-		}
-
-		.kpi-card {
-			position: relative;
-			background: #FFFFFF;
-			border-radius: 18px;
-			padding: 22px 24px;
-			border: 1px solid rgba(226, 232, 240, 0.95);
-			box-shadow: 0 4px 16px -2px rgba(15, 34, 61, 0.04), 0 2px 4px -2px rgba(15, 34, 61, 0.02);
-			transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-			overflow: hidden;
-		}
-
-		.kpi-card:hover {
-			transform: translateY(-3px);
-			border-color: rgba(197, 160, 89, 0.4);
-			box-shadow: 0 12px 24px -4px rgba(15, 34, 61, 0.08);
-		}
-
-		.kpi-card-inner {
-			position: relative;
-			z-index: 2;
-		}
-
-		.kpi-card-header-section {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			gap: 14px;
-			margin-bottom: 14px;
-		}
-
-		.kpi-card-title-section {
-			display: flex;
-			align-items: center;
-			gap: 12px;
-			flex: 1;
-		}
-
-		/* Shadcn UI Unified Icon Badge (Selaras Warm Gold Aksara) */
-		.kpi-icon-badge {
-			width: 38px;
-			height: 38px;
-			border-radius: 10px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			flex-shrink: 0;
-			background: rgba(197, 160, 89, 0.1);
-			color: #C5A059;
-			border: 1px solid rgba(197, 160, 89, 0.2);
-			transition: all 0.2s ease;
-		}
-
-		.kpi-card:hover .kpi-icon-badge {
-			background: rgba(197, 160, 89, 0.18);
-			border-color: rgba(197, 160, 89, 0.35);
-			transform: scale(1.03);
-		}
-
-		.kpi-icon-badge i,
-		.kpi-icon-badge svg {
-			width: 19px;
-			height: 19px;
-			stroke-width: 2;
-		}
-
-		.kpi-card-title {
-			font-size: 0.75rem;
-			font-weight: 700;
-			letter-spacing: 0.06em;
-			text-transform: uppercase;
-			color: #64748B;
-			margin: 0;
-			line-height: 1.2;
-		}
-
-		.kpi-card-value-section {
 			margin-bottom: 16px;
-		}
-
-		.kpi-card-value {
-			font-size: 2.2rem;
-			font-weight: 800;
-			color: #0F223D;
-			margin: 0;
-			line-height: 1.1;
-			letter-spacing: -0.02em;
-		}
-
-		.kpi-card-value-sub {
-			font-size: 0.75rem;
-			margin-top: 4px;
-			color: #94A3B8;
-		}
-
-		.kpi-card-meta {
-			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			gap: 14px;
-			padding-top: 14px;
-			border-top: 1px solid #F1F5F9;
-		}
-
-		.kpi-meta-item {
-			display: flex;
-			flex-direction: column;
-			gap: 3px;
-		}
-
-		.kpi-meta-label {
-			font-size: 0.68rem;
-			font-weight: 600;
-			text-transform: uppercase;
-			color: #94A3B8;
-			letter-spacing: 0.04em;
-		}
-
-		.kpi-meta-value {
-			font-size: 0.95rem;
-			font-weight: 700;
-			color: #0F223D;
-			margin: 0;
-			line-height: 1.2;
-		}
-
-		/* Status Badge Shadcn Minimalist */
-		.kpi-status-badge {
-			display: inline-flex;
-			align-items: center;
-			gap: 5px;
-			padding: 2px 8px;
-			border-radius: 6px;
-			font-size: 0.72rem;
-			font-weight: 600;
+			padding: 10px 14px;
+			background: #FFFFFF;
+			border: 1px solid #E4E4E7;
+			border-radius: 8px;
 			width: fit-content;
-			line-height: 1.4;
-			margin-top: 2px;
 		}
 
-		.status-indicator-dot {
-			width: 6px;
-			height: 6px;
-			border-radius: 50%;
-			flex-shrink: 0;
-		}
-
-		.kpi-status-active {
-			background: #ECFDF5;
-			color: #065F46;
-			border: 1px solid #A7F3D0;
-		}
-
-		.kpi-status-active .status-indicator-dot {
-			background: #10B981;
-		}
-
-		.kpi-status-wait {
-			background: #F8FAFC;
-			color: #64748B;
-			border: 1px solid #E2E8F0;
-		}
-
-		.kpi-status-wait .status-indicator-dot {
-			background: #94A3B8;
-		}
-
-		/* Secondary Grid */
-		.secondary-grid {
-			display: grid;
-			grid-template-columns: 1fr;
-			gap: 24px;
-			margin-bottom: 32px;
-		}
-
-		.secondary-card {
-			position: relative;
-			border-radius: 18px;
-			padding: 24px;
-			background: #FFFFFF;
-			border: 1px solid rgba(226, 232, 240, 0.95);
-			box-shadow: 0 4px 16px -2px rgba(15, 34, 61, 0.04);
-		}
-
-		.card-header {
+		.shadcn-custom-box.active {
 			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-bottom: 20px;
-			padding-bottom: 14px;
-			border-bottom: 1px solid #F1F5F9;
 		}
 
-		.card-header-title {
-			display: flex;
-			flex-direction: column;
-			gap: 3px;
-		}
-
-		.card-title {
-			font-family: 'Newsreader', Georgia, serif;
-			font-size: 1.35rem;
-			font-weight: 600;
-			color: #0F223D;
-			margin: 0;
-			line-height: 1.2;
-		}
-
-		.card-subtitle {
+		.shadcn-date-input {
+			border: 1px solid #E4E4E7;
+			border-radius: 6px;
+			padding: 6px 10px;
 			font-size: 0.8rem;
-			color: #64748B;
-			margin: 0;
+			color: #09090B;
+			outline: none;
+			font-family: inherit;
 		}
 
-		.card-badge {
-			display: inline-flex;
-			align-items: center;
-			gap: 6px;
-			background: rgba(197, 160, 89, 0.12);
-			color: #9E7E36;
-			padding: 4px 12px;
-			border-radius: 9999px;
-			font-size: 0.7rem;
-			font-weight: 700;
-			text-transform: uppercase;
-			border: 1px solid rgba(197, 160, 89, 0.25);
-			letter-spacing: 0.04em;
+		/* 4 Top KPI Cards Grid */
+		.shadcn-cards-grid {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			gap: 16px;
+			margin-bottom: 22px;
 		}
 
-		.customer-list {
-			list-style: none;
-			padding: 0;
-			margin: 0;
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
+		.shadcn-card {
+			background: #FFFFFF;
+			border: 1px solid #E4E4E7;
+			border-radius: 12px;
+			padding: 20px 22px;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+			transition: border-color 0.2s ease, box-shadow 0.2s ease;
 		}
 
-		.customer-item {
+		.shadcn-card:hover {
+			border-color: rgba(197, 160, 89, 0.55);
+			box-shadow: 0 0 16px rgba(197, 160, 89, 0.18), 0 2px 8px rgba(15, 34, 61, 0.04);
+		}
+
+		.shadcn-card-top {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			padding: 12px 16px;
-			border-radius: 12px;
-			background: #FAF8F5;
-			border: 1px solid #E2E8F0;
-			transition: all 0.15s ease;
+			margin-bottom: 10px;
 		}
 
-		.customer-item:hover {
-			background: #FFFFFF;
-			border-color: rgba(197, 160, 89, 0.4);
-			box-shadow: 0 4px 12px rgba(15, 34, 61, 0.04);
-			transform: translateX(2px);
+		.shadcn-card-label {
+			font-size: 0.85rem;
+			font-weight: 500;
+			color: #09090B;
+			margin: 0;
 		}
 
-		.customer-info {
-			display: flex;
-			align-items: center;
-			gap: 12px;
-			flex: 1;
-			min-width: 0;
-		}
-
-		.customer-avatar {
-			width: 38px;
-			height: 38px;
-			border-radius: 10px;
-			background: #0F223D;
-			color: #C5A059;
+		.shadcn-card-icon {
+			color: #71717A;
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			font-weight: 700;
-			font-size: 0.85rem;
-			flex-shrink: 0;
 		}
 
-		.customer-details {
+		.shadcn-card-icon i,
+		.shadcn-card-icon svg {
+			width: 16px;
+			height: 16px;
+		}
+
+		.shadcn-card-value {
+			font-size: 1.65rem;
+			font-weight: 700;
+			color: #09090B;
+			letter-spacing: -0.025em;
+			margin: 0 0 4px 0;
+			line-height: 1.2;
+		}
+
+		.shadcn-card-subtext {
+			font-size: 0.75rem;
+			color: #71717A;
+			margin: 0;
+		}
+
+		/* 2 Column Main Section (Overview & Recent Sales) */
+		.shadcn-main-grid {
+			display: grid;
+			grid-template-columns: 4fr 3fr;
+			gap: 16px;
+			margin-bottom: 22px;
+		}
+
+		.shadcn-panel-card {
+			background: #FFFFFF;
+			border: 1px solid #E4E4E7;
+			border-radius: 12px;
+			padding: 24px;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+			transition: border-color 0.2s ease, box-shadow 0.2s ease;
+		}
+
+		.shadcn-panel-card:hover {
+			border-color: rgba(197, 160, 89, 0.45);
+			box-shadow: 0 0 16px rgba(197, 160, 89, 0.12), 0 2px 8px rgba(15, 34, 61, 0.03);
+		}
+
+		.shadcn-panel-header {
+			margin-bottom: 20px;
+		}
+
+		.shadcn-panel-title {
+			font-size: 1rem;
+			font-weight: 600;
+			color: #09090B;
+			margin: 0;
+		}
+
+		.shadcn-panel-subtitle {
+			font-size: 0.825rem;
+			color: #71717A;
+			margin: 4px 0 0 0;
+		}
+
+		/* Recent Sales / Merchant List */
+		.shadcn-sales-list {
 			display: flex;
 			flex-direction: column;
-			gap: 2px;
+			gap: 16px;
+		}
+
+		.shadcn-sale-item {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+		}
+
+		.shadcn-sale-left {
+			display: flex;
+			align-items: center;
+			gap: 12px;
 			min-width: 0;
 		}
 
-		.customer-name {
+		.shadcn-sale-avatar {
+			width: 38px;
+			height: 38px;
+			border-radius: 9999px;
+			background: #F4F4F5;
+			color: #09090B;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: 600;
+			font-size: 0.8rem;
+			flex-shrink: 0;
+			border: 1px solid #E4E4E7;
+		}
+
+		.shadcn-sale-meta {
+			min-width: 0;
+		}
+
+		.shadcn-sale-name {
 			font-size: 0.875rem;
 			font-weight: 600;
-			color: #0F223D;
+			color: #09090B;
 			margin: 0;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
 
-		.customer-meta {
-			font-size: 0.75rem;
-			color: #64748B;
-			margin: 0;
+		.shadcn-sale-email {
+			font-size: 0.775rem;
+			color: #71717A;
+			margin: 2px 0 0 0;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
 
-		.customer-stats {
-			display: flex;
-			flex-direction: column;
-			align-items: flex-end;
-			gap: 3px;
-			flex-shrink: 0;
-		}
-
-		.customer-amount {
-			font-size: 0.95rem;
-			font-weight: 700;
-			color: #0F223D;
-			margin: 0;
-		}
-
-		.customer-transaction {
-			font-size: 0.75rem;
-			color: #64748B;
-			margin: 0;
-		}
-
-		.empty-state {
-			text-align: center;
-			padding: 36px 20px;
-		}
-
-		.empty-state-title {
+		.shadcn-sale-amount {
 			font-size: 0.95rem;
 			font-weight: 600;
-			color: #0F223D;
-			margin: 0 0 6px 0;
+			color: #09090B;
+			white-space: nowrap;
+			text-align: right;
 		}
 
-		.empty-state-text {
-			font-size: 0.8rem;
-			color: #64748B;
-			margin: 0;
+		/* Chart Container */
+		.shadcn-chart-box {
+			position: relative;
+			width: 100%;
+			height: 290px;
 		}
 
-		/* Responsive Grid: Rapi di Semua Resolusi */
-		@media (max-width: 1200px) {
-			.kpi-card-wrapper {
+		/* Responsive Breakdown */
+		@media (max-width: 1100px) {
+			.shadcn-cards-grid {
 				grid-template-columns: repeat(2, 1fr);
-				gap: 16px;
+			}
+			.shadcn-main-grid {
+				grid-template-columns: 1fr;
 			}
 		}
 
-		@media (max-width: 768px) {
-			.header-controls {
+		@media (max-width: 640px) {
+			.shadcn-cards-grid {
+				grid-template-columns: 1fr;
+			}
+			.shadcn-action-bar {
 				flex-direction: column;
 				align-items: stretch;
 			}
-
-			.period-select, .date-input, .apply-btn {
+			.shadcn-filter-group {
 				width: 100%;
 			}
-
-			.custom-date-range {
-				flex-direction: column;
-			}
-
-			.kpi-card-wrapper {
-				grid-template-columns: 1fr;
-				gap: 14px;
-			}
-
-			.kpi-card {
-				padding: 18px 20px;
-			}
-
-			.kpi-card-value {
-				font-size: 1.85rem;
+			.shadcn-period-select {
+				flex: 1;
 			}
 		}
 	</style>
 
-	<div class="dashboard-controls-bar" style="display:flex; justify-content:flex-start; align-items:center; margin-bottom: 22px;">
-		<div class="header-controls">
-			<select name="period" id="db-period-select" class="period-select" onchange="changePeriod(this.value)">
-				<option value="today" {{ ($period ?? 'month') === 'today' ? 'selected' : '' }}>Hari Ini</option>
-				<option value="week" {{ ($period ?? 'month') === 'week' ? 'selected' : '' }}>Minggu Ini</option>
-				<option value="month" {{ ($period ?? 'month') === 'month' ? 'selected' : '' }}>Bulan Ini</option>
-				<option value="year" {{ ($period ?? 'month') === 'year' ? 'selected' : '' }}>Tahun Ini</option>
-				<option value="all" {{ ($period ?? 'month') === 'all' ? 'selected' : '' }}>Semua Data</option>
-				<option value="custom" {{ ($period ?? 'month') === 'custom' ? 'selected' : '' }}>Rentang Khusus</option>
-			</select>
-
-			<div id="db-custom-range" class="custom-date-range {{ ($period ?? 'month') === 'custom' ? 'active' : '' }}">
-				<input type="date" name="start_date" value="{{ $startDate ?? '' }}" class="date-input" id="start_date_input">
-				<span class="date-separator">s/d</span>
-				<input type="date" name="end_date" value="{{ $endDate ?? '' }}" class="date-input" id="end_date_input">
-				<button type="button" class="apply-btn" onclick="applyCustomDate()">
-					<i data-lucide="filter" style="width: 14px; height: 14px;"></i>
-					<span>Terapkan Filter</span>
+	<div class="shadcn-container">
+		<!-- Top Action & Filter Bar -->
+		<div class="shadcn-action-bar">
+			<div class="shadcn-filter-group">
+				<select name="period" id="shadcn-period-select" class="shadcn-period-select" onchange="handlePeriodChange(this.value)">
+					<option value="today" {{ ($period ?? 'month') === 'today' ? 'selected' : '' }}>Hari Ini</option>
+					<option value="week" {{ ($period ?? 'month') === 'week' ? 'selected' : '' }}>Minggu Ini</option>
+					<option value="month" {{ ($period ?? 'month') === 'month' ? 'selected' : '' }}>Bulan Ini</option>
+					<option value="year" {{ ($period ?? 'month') === 'year' ? 'selected' : '' }}>Tahun Ini</option>
+					<option value="all" {{ ($period ?? 'month') === 'all' ? 'selected' : '' }}>Semua Data</option>
+					<option value="custom" {{ ($period ?? 'month') === 'custom' ? 'selected' : '' }}>Rentang Khusus</option>
+				</select>
+			</div>
+			<div>
+				<button type="button" class="btn-shadcn-black" onclick="openDownloadReportModal()" title="Unduh Laporan Pemesanan">
+					<i data-lucide="download"></i>
+					<span>Unduh Laporan</span>
 				</button>
+			</div>
+		</div>
+
+		<!-- Kotak Filter Rentang Khusus -->
+		<div id="shadcn-custom-range" class="shadcn-custom-box {{ ($period ?? 'month') === 'custom' ? 'active' : '' }}">
+			<input type="date" id="shadcn_start_date" value="{{ $startDate ?? '' }}" class="shadcn-date-input">
+			<span style="font-size: 0.8rem; color: #71717A;">s/d</span>
+			<input type="date" id="shadcn_end_date" value="{{ $endDate ?? '' }}" class="shadcn-date-input">
+			<button type="button" class="btn-shadcn-black" style="padding: 6px 12px; font-size: 0.78rem;" onclick="applyShadcnCustomDate()">
+				Terapkan Filter
+			</button>
+		</div>
+
+		<!-- 4 Kartu Metrik Utama (Gaya Shadcn UI) -->
+		<div class="shadcn-cards-grid">
+			<!-- Card 1: Total Pendapatan Langganan -->
+			<div class="shadcn-card">
+				<div class="shadcn-card-top">
+					<span class="shadcn-card-label">Total Pendapatan</span>
+					<div class="shadcn-card-icon">
+						<i data-lucide="dollar-sign"></i>
+					</div>
+				</div>
+				<div class="shadcn-card-value">Rp {{ number_format($subscriptionRevenue, 0, ',', '.') }}</div>
+				<p class="shadcn-card-subtext">
+					+{{ $todaySubscriptionRevenue > 0 ? 'Rp ' . number_format($todaySubscriptionRevenue, 0, ',', '.') : 'Rp 0' }} hari ini
+				</p>
+			</div>
+
+			<!-- Card 2: Merchant Berlangganan -->
+			<div class="shadcn-card">
+				<div class="shadcn-card-top">
+					<span class="shadcn-card-label">Merchant Berlangganan</span>
+					<div class="shadcn-card-icon">
+						<i data-lucide="users"></i>
+					</div>
+				</div>
+				<div class="shadcn-card-value">+{{ $totalSubscribedUsers }}</div>
+				<p class="shadcn-card-subtext">
+					{{ $totalActiveUsers > 0 ? number_format(($totalSubscribedUsers / $totalActiveUsers) * 100, 1) : 0 }}% dari total pengguna aktif
+				</p>
+			</div>
+
+			<!-- Card 3: Penjualan Kasir -->
+			<div class="shadcn-card">
+				<div class="shadcn-card-top">
+					<span class="shadcn-card-label">Penjualan Kasir (Sistem)</span>
+					<div class="shadcn-card-icon">
+						<i data-lucide="credit-card"></i>
+					</div>
+				</div>
+				<div class="shadcn-card-value">Rp {{ number_format($totalKeluar, 0, ',', '.') }}</div>
+				<p class="shadcn-card-subtext">
+					Total volume transaksi penjualan selesai
+				</p>
+			</div>
+
+			<!-- Card 4: Pengguna Aktif -->
+			<div class="shadcn-card">
+				<div class="shadcn-card-top">
+					<span class="shadcn-card-label">Pengguna Aktif</span>
+					<div class="shadcn-card-icon">
+						<i data-lucide="activity"></i>
+					</div>
+				</div>
+				<div class="shadcn-card-value">+{{ $totalActiveUsers }}</div>
+				<p class="shadcn-card-subtext">
+					+{{ $todayNewUsers }} akun baru hari ini
+				</p>
+			</div>
+		</div>
+
+		<!-- Bagian Utama: Grafik Ikhtisar & Merchant Teratas -->
+		<div class="shadcn-main-grid">
+			<!-- Kolom Kiri: Grafik Ikhtisar Penjualan -->
+			<div class="shadcn-panel-card">
+				<div class="shadcn-panel-header">
+					<h3 class="shadcn-panel-title">Ikhtisar Penjualan</h3>
+					<p class="shadcn-panel-subtitle">Pergerakan arus transaksi sistem 7 hari terakhir</p>
+				</div>
+				<div class="shadcn-chart-box">
+					<canvas id="shadcnOverviewChart"></canvas>
+				</div>
+			</div>
+
+			<!-- Kolom Kanan: Pengguna Transaksi Teratas -->
+			<div class="shadcn-panel-card">
+				<div class="shadcn-panel-header">
+					<h3 class="shadcn-panel-title">Pengguna Transaksi Teratas</h3>
+					<p class="shadcn-panel-subtitle">
+						Daftar {{ $topUsers->count() }} merchant dengan nilai transaksi terbesar di periode ini.
+					</p>
+				</div>
+
+				<div class="shadcn-sales-list">
+					@forelse($topUsers as $user)
+						@php
+							$nameParts = explode(' ', trim($user->name));
+							$initials = strtoupper(substr($nameParts[0] ?? 'U', 0, 1) . (isset($nameParts[1]) ? substr($nameParts[1], 0, 1) : ''));
+						@endphp
+						<div class="shadcn-sale-item">
+							<div class="shadcn-sale-left">
+								<div class="shadcn-sale-avatar">
+									{{ $initials ?: 'UM' }}
+								</div>
+								<div class="shadcn-sale-meta">
+									<p class="shadcn-sale-name">{{ $user->name }}</p>
+									<p class="shadcn-sale-email">{{ $user->email }}</p>
+								</div>
+							</div>
+							<div class="shadcn-sale-amount">
+								+Rp {{ number_format($user->total_revenue ?? 0, 0, ',', '.') }}
+							</div>
+						</div>
+					@empty
+						<div style="text-align: center; padding: 40px 10px; color: #71717A;">
+							<i data-lucide="inbox" style="width: 32px; height: 32px; margin: 0 auto 8px auto; opacity: 0.5;"></i>
+							<p style="font-size: 0.875rem; margin: 0;">Belum ada riwayat transaksi penjualan.</p>
+						</div>
+					@endforelse
+				</div>
+			</div>
+		</div>
+
+		<!-- Rincian Finansial Tambahan (Arus Kas & Laba Bersih) -->
+		<div class="shadcn-panel-card" style="margin-top: 16px;">
+			<div class="shadcn-panel-header">
+				<h3 class="shadcn-panel-title">Ringkasan Arus Kas Sistem</h3>
+				<p class="shadcn-panel-subtitle">Total pembelian barang, penjualan, dan laba operasional sistem.</p>
+			</div>
+			<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+				<div style="background: #F4F4F5; border-radius: 10px; padding: 18px;">
+					<p style="font-size: 0.75rem; color: #71717A; margin: 0 0 6px 0; text-transform: uppercase; font-weight: 600;">Arus Kas Masuk (Pembelian)</p>
+					<p style="font-size: 1.35rem; font-weight: 700; color: #09090B; margin: 0;">Rp {{ number_format($totalMasuk, 0, ',', '.') }}</p>
+				</div>
+				<div style="background: #F4F4F5; border-radius: 10px; padding: 18px;">
+					<p style="font-size: 0.75rem; color: #71717A; margin: 0 0 6px 0; text-transform: uppercase; font-weight: 600;">Arus Kas Keluar (Penjualan)</p>
+					<p style="font-size: 1.35rem; font-weight: 700; color: #09090B; margin: 0;">Rp {{ number_format($totalKeluar, 0, ',', '.') }}</p>
+				</div>
+				<div style="background: #F4F4F5; border-radius: 10px; padding: 18px;">
+					<p style="font-size: 0.75rem; color: #71717A; margin: 0 0 6px 0; text-transform: uppercase; font-weight: 600;">Laba Bersih Sistem</p>
+					<p style="font-size: 1.35rem; font-weight: 700; color: {{ $netIncome >= 0 ? '#16A34A' : '#DC2626' }}; margin: 0;">
+						{{ $netIncome >= 0 ? '+' : '' }}Rp {{ number_format($netIncome, 0, ',', '.') }}
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal Dialog Pilih Format Unduh Laporan (Shadcn Style) -->
+		<div id="download-report-modal" class="shadcn-modal-backdrop" style="display: none;" onclick="if(event.target === this) closeDownloadReportModal()">
+			<div class="shadcn-modal-card" style="max-width: 440px;" role="dialog" aria-modal="true" aria-labelledby="download-report-title">
+				<div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px;">
+					<div>
+						<h3 id="download-report-title" class="shadcn-modal-title" style="margin: 0; font-size: 1.15rem;">Unduh Laporan Pemesanan</h3>
+						<p class="shadcn-modal-description" style="margin: 4px 0 0 0; font-size: 0.825rem;">
+							Pilih format file laporan pemesanan yang ingin diunduh:
+						</p>
+					</div>
+					<button type="button" onclick="closeDownloadReportModal()" style="border: none; background: transparent; color: #71717A; cursor: pointer; padding: 4px; border-radius: 6px; display: flex; align-items: center; justify-content: center;" onmouseover="this.style.background='#F4F4F5'" onmouseout="this.style.background='transparent'">
+						<i data-lucide="x" style="width: 18px; height: 18px;"></i>
+					</button>
+				</div>
+
+				<div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+					<!-- Opsi PDF -->
+					<a href="{{ route('dashboard-superadmin.export-pdf', ($period === 'custom' && !empty($startDate) && !empty($endDate)) ? ['scope' => 'period', 'start_date' => $startDate, 'end_date' => $endDate] : []) }}" 
+					   onclick="closeDownloadReportModal()"
+					   style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 1px solid #E4E4E7; border-radius: 10px; background: #FFFFFF; text-decoration: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;"
+					   onmouseover="this.style.borderColor='#C5A059'; this.style.boxShadow='0 0 14px rgba(197, 160, 89, 0.25)'"
+					   onmouseout="this.style.borderColor='#E4E4E7'; this.style.boxShadow='none'">
+						<div style="width: 42px; height: 42px; border-radius: 10px; background: #FEF2F2; color: #DC2626; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid #FEE2E2;">
+							<i data-lucide="file-text" style="width: 22px; height: 22px;"></i>
+						</div>
+						<div style="flex: 1; min-width: 0;">
+							<div style="display: flex; align-items: center; justify-content: space-between;">
+								<span style="font-weight: 600; font-size: 0.9rem; color: #09090B;">Dokumen PDF (.pdf)</span>
+								<span style="font-size: 0.72rem; font-weight: 600; padding: 2px 7px; border-radius: 4px; background: #F4F4F5; color: #71717A; border: 1px solid #E4E4E7;">Siap Cetak</span>
+							</div>
+							<p style="margin: 3px 0 0 0; font-size: 0.78rem; color: #71717A;">
+								Format dokumen resmi dengan kop surat, tabel rapi, dan pengesahan.
+							</p>
+						</div>
+					</a>
+
+					<!-- Opsi Excel / CSV -->
+					<a href="{{ route('dashboard-superadmin.export-excel', ($period === 'custom' && !empty($startDate) && !empty($endDate)) ? ['scope' => 'period', 'start_date' => $startDate, 'end_date' => $endDate] : []) }}" 
+					   onclick="closeDownloadReportModal()"
+					   style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 1px solid #E4E4E7; border-radius: 10px; background: #FFFFFF; text-decoration: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;"
+					   onmouseover="this.style.borderColor='#059669'; this.style.boxShadow='0 0 14px rgba(5, 150, 105, 0.22)'"
+					   onmouseout="this.style.borderColor='#E4E4E7'; this.style.boxShadow='none'">
+						<div style="width: 42px; height: 42px; border-radius: 10px; background: #ECFDF5; color: #059669; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid #D1FAE5;">
+							<i data-lucide="file-spreadsheet" style="width: 22px; height: 22px;"></i>
+						</div>
+						<div style="flex: 1; min-width: 0;">
+							<div style="display: flex; align-items: center; justify-content: space-between;">
+								<span style="font-weight: 600; font-size: 0.9rem; color: #09090B;">Spreadsheet Excel (.csv)</span>
+								<span style="font-size: 0.72rem; font-weight: 600; padding: 2px 7px; border-radius: 4px; background: #F4F4F5; color: #71717A; border: 1px solid #E4E4E7;">Data Mentah</span>
+							</div>
+							<p style="margin: 3px 0 0 0; font-size: 0.78rem; color: #71717A;">
+								Format tabel data untuk analisis angka, filter, dan rekap spreadsheet.
+							</p>
+						</div>
+					</a>
+				</div>
+
+				<div style="display: flex; justify-content: flex-end;">
+					<button type="button" class="shadcn-modal-btn-cancel" onclick="closeDownloadReportModal()" style="width: 100%;">
+						Batal
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<section class="kpi-card-wrapper">
-		<!-- Card 1: Total User -->
-		<div class="kpi-card">
-			<div class="kpi-card-inner">
-				<div class="kpi-card-header-section">
-					<div class="kpi-card-title-section">
-						<div class="kpi-icon-badge">
-							<i data-lucide="users"></i>
-						</div>
-						<p class="kpi-card-title">Total User</p>
-					</div>
-				</div>
-
-				<div class="kpi-card-value-section">
-					<p class="kpi-card-value">{{ $totalUsers }}</p>
-					<p class="kpi-card-value-sub">Seluruh Pengguna Terdaftar</p>
-				</div>
-
-				<div class="kpi-card-meta">
-					<div class="kpi-meta-item">
-						<p class="kpi-meta-label">User Aktif</p>
-						<p class="kpi-meta-value">{{ $totalActiveUsers }}</p>
-					</div>
-					<div class="kpi-meta-item">
-						<p class="kpi-meta-label">Hari Ini</p>
-						<p class="kpi-meta-value">+{{ $todayNewUsers }}</p>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Card 2: User Berlangganan -->
-		<div class="kpi-card">
-			<div class="kpi-card-inner">
-				<div class="kpi-card-header-section">
-					<div class="kpi-card-title-section">
-						<div class="kpi-icon-badge">
-							<i data-lucide="user-check"></i>
-						</div>
-						<p class="kpi-card-title">User Berlangganan</p>
-					</div>
-				</div>
-
-				<div class="kpi-card-value-section">
-					<p class="kpi-card-value">{{ $totalSubscribedUsers }}</p>
-					<p class="kpi-card-value-sub">Pengguna Paket Premium Aktif</p>
-				</div>
-
-				<div class="kpi-card-meta">
-					<div class="kpi-meta-item">
-						<p class="kpi-meta-label">Status</p>
-						<span class="kpi-status-badge {{ $totalSubscribedUsers > 0 ? 'kpi-status-active' : 'kpi-status-wait' }}">
-							<span class="status-indicator-dot"></span>
-							<span>{{ $totalSubscribedUsers > 0 ? 'Aktif' : 'Menunggu' }}</span>
-						</span>
-					</div>
-					<div class="kpi-meta-item">
-						<p class="kpi-meta-label">Rasio Konversi</p>
-						<p class="kpi-meta-value">{{ $totalActiveUsers > 0 ? number_format(($totalSubscribedUsers / $totalActiveUsers) * 100, 1) : 0 }}%</p>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Card 3: Pendapatan Subscription -->
-		<div class="kpi-card">
-			<div class="kpi-card-inner">
-				<div class="kpi-card-header-section">
-					<div class="kpi-card-title-section">
-						<div class="kpi-icon-badge">
-							<i data-lucide="credit-card"></i>
-						</div>
-						<p class="kpi-card-title">Pendapatan Langganan</p>
-					</div>
-				</div>
-
-				<div class="kpi-card-value-section">
-					<p class="kpi-card-value" style="font-size: 1.85rem;">Rp {{ number_format($subscriptionRevenue, 0, ',', '.') }}</p>
-					<p class="kpi-card-value-sub">{{ $startDate }} s/d {{ $endDate }}</p>
-				</div>
-
-				<div class="kpi-card-meta">
-					<div class="kpi-meta-item">
-						<p class="kpi-meta-label">Hari Ini</p>
-						<p class="kpi-meta-value" style="font-size: 0.85rem;">Rp {{ number_format($todaySubscriptionRevenue, 0, ',', '.') }}</p>
-					</div>
-					<div class="kpi-meta-item">
-						<p class="kpi-meta-label">Rata-rata/User</p>
-						<p class="kpi-meta-value" style="font-size: 0.85rem;">Rp {{ $totalSubscribedUsers > 0 ? number_format($subscriptionRevenue / $totalSubscribedUsers, 0, ',', '.') : 0 }}</p>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- Card 4: Net Income (Profit/Loss) -->
-		<div class="kpi-card">
-			<div class="kpi-card-inner">
-				<div class="kpi-card-header-section">
-					<div class="kpi-card-title-section">
-						<div class="kpi-icon-badge">
-							<i data-lucide="wallet"></i>
-						</div>
-						<p class="kpi-card-title">Laba Bersih Sistem</p>
-					</div>
-				</div>
-
-				<div class="kpi-card-value-section">
-					<p class="kpi-card-value" style="font-size: 1.85rem; color: {{ $netIncome > 0 ? '#059669' : ($netIncome < 0 ? '#DC2626' : '#0F223D') }}">
-						{{ $netIncome > 0 ? '+' : ($netIncome < 0 ? '-' : '') }}Rp {{ number_format(abs($netIncome), 0, ',', '.') }}
-					</p>
-					<p class="kpi-card-value-sub">{{ $netIncome > 0 ? 'Surplus / Untung' : ($netIncome < 0 ? 'Defisit / Rugi' : 'Imbang / Netral') }}</p>
-				</div>
-
-				<div class="kpi-card-meta">
-					<div class="kpi-meta-item">
-						<p class="kpi-meta-label">Hari Ini</p>
-						<p class="kpi-meta-value" style="font-size: 0.85rem; color: {{ $todayNetIncome > 0 ? '#059669' : ($todayNetIncome < 0 ? '#DC2626' : '#0F223D') }}">
-							{{ $todayNetIncome > 0 ? '+' : ($todayNetIncome < 0 ? '-' : '') }}Rp {{ number_format(abs($todayNetIncome), 0, ',', '.') }}
-						</p>
-					</div>
-					<div class="kpi-meta-item">
-						<p class="kpi-meta-label">Margin</p>
-						<p class="kpi-meta-value" style="font-size: 0.85rem;">{{ $totalKeluar > 0 ? number_format(($netIncome / $totalKeluar) * 100, 1) : 0 }}%</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<section class="secondary-grid">
-		<!-- Top Users Card -->
-		<div class="secondary-card">
-			<div class="card-header">
-				<div class="card-header-title">
-					<p class="card-title">Pengguna Transaksi Teratas</p>
-					<p class="card-subtitle">Daftar pengguna dengan nilai volume penjualan kasir terbesar</p>
-				</div>
-				<span class="card-badge">
-					<i data-lucide="award" style="width: 14px; height: 14px;"></i>
-					<span>Top 5 Pengguna</span>
-				</span>
-			</div>
-			<ul class="customer-list">
-				@forelse($topUsers as $user)
-					<li class="customer-item">
-						<div class="customer-info">
-							<div class="customer-avatar">
-								{{ strtoupper(substr($user->name, 0, 1)) }}
-							</div>
-							<div class="customer-details">
-								<p class="customer-name">{{ $user->name }}</p>
-								<p class="customer-meta">{{ $user->email }}</p>
-							</div>
-						</div>
-						<div class="customer-stats">
-							<p class="customer-amount">Rp {{ number_format($user->total_revenue ?? 0, 0, ',', '.') }}</p>
-							<p class="customer-transaction">{{ $user->total_transaksi_keluar ?? 0 }} Transaksi Penjualan</p>
-						</div>
-					</li>
-				@empty
-					<li>
-						<div class="empty-state">
-							<p class="empty-state-title">Belum ada data transaksi</p>
-							<p class="empty-state-text">Data performa pengguna akan tampil otomatis setelah ada transaksi penjualan di periode ini.</p>
-						</div>
-					</li>
-				@endforelse
-			</ul>
-		</div>
-	</section>
+	<!-- Chart.js CDN -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
 	<script>
-		function changePeriod(period) {
+		// Modal Pilih Format Unduh Laporan
+		function openDownloadReportModal() {
+			var modal = document.getElementById('download-report-modal');
+			if (modal) {
+				modal.style.display = 'flex';
+				if (typeof lucide !== 'undefined') {
+					lucide.createIcons();
+				}
+			}
+		}
+
+		function closeDownloadReportModal() {
+			var modal = document.getElementById('download-report-modal');
+			if (modal) {
+				modal.style.display = 'none';
+			}
+		}
+
+		document.addEventListener('keydown', function(e) {
+			if (e.key === 'Escape') {
+				closeDownloadReportModal();
+			}
+		});
+
+		// Handle Period Change
+		function handlePeriodChange(period) {
 			if (period === 'custom') {
-				document.getElementById('db-custom-range').classList.add('active');
-				if (typeof lucide !== 'undefined') lucide.createIcons();
+				document.getElementById('shadcn-custom-range').classList.add('active');
 			} else {
-				document.getElementById('db-custom-range').classList.remove('active');
+				document.getElementById('shadcn-custom-range').classList.remove('active');
 				const url = new URL(window.location);
 				url.searchParams.set('period', period);
 				window.location = url.toString();
 			}
 		}
 
-		function applyCustomDate() {
-			const startDate = document.getElementById('start_date_input').value;
-			const endDate = document.getElementById('end_date_input').value;
-			
-			if (!startDate || !endDate) {
-				alert('Silakan tentukan tanggal awal dan akhir.');
+		// Apply Custom Date Range
+		function applyShadcnCustomDate() {
+			const start = document.getElementById('shadcn_start_date').value;
+			const end = document.getElementById('shadcn_end_date').value;
+			if (!start || !end) {
+				alert('Silakan pilih tanggal awal dan tanggal akhir.');
 				return;
 			}
-
 			const url = new URL(window.location);
 			url.searchParams.set('period', 'custom');
-			url.searchParams.set('start_date', startDate);
-			url.searchParams.set('end_date', endDate);
+			url.searchParams.set('start_date', start);
+			url.searchParams.set('end_date', end);
 			window.location = url.toString();
 		}
 
+		// Initialize Chart.js Shadcn Bar Chart
 		document.addEventListener('DOMContentLoaded', function () {
 			if (typeof lucide !== 'undefined') {
 				lucide.createIcons();
+			}
+
+			const ctx = document.getElementById('shadcnOverviewChart');
+			if (ctx) {
+				const labels = {!! json_encode($chartsLabels ?? ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min']) !!};
+				const dataKeluar = {!! json_encode($chartsKeluar ?? [0, 0, 0, 0, 0, 0, 0]) !!};
+
+				new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: labels,
+						datasets: [{
+							label: 'Penjualan (Rp)',
+							data: dataKeluar,
+							backgroundColor: '#09090B',
+							hoverBackgroundColor: '#27272A',
+							borderRadius: 4,
+							borderSkipped: false,
+							maxBarThickness: 42
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						legend: {
+							display: false
+						},
+						tooltips: {
+							backgroundColor: '#09090B',
+							titleFontFamily: "'Inter', sans-serif",
+							bodyFontFamily: "'Inter', sans-serif",
+							titleFontSize: 12,
+							bodyFontSize: 12,
+							cornerRadius: 8,
+							xPadding: 12,
+							yPadding: 10,
+							callbacks: {
+								label: function(tooltipItem) {
+									return 'Rp ' + Number(tooltipItem.yLabel).toLocaleString('id-ID');
+								}
+							}
+						},
+						scales: {
+							xAxes: [{
+								gridLines: {
+									display: false,
+									drawBorder: false
+								},
+								ticks: {
+									fontFamily: "'Inter', sans-serif",
+									fontSize: 12,
+									fontColor: '#71717A'
+								}
+							}],
+							yAxes: [{
+								gridLines: {
+									color: '#F4F4F5',
+									drawBorder: false,
+									zeroLineColor: '#F4F4F5'
+								},
+								ticks: {
+									fontFamily: "'Inter', sans-serif",
+									fontSize: 11,
+									fontColor: '#71717A',
+									beginAtZero: true,
+									callback: function(value) {
+										if (value >= 1000000) return 'Rp ' + (value / 1000000).toFixed(1) + 'M';
+										if (value >= 1000) return 'Rp ' + (value / 1000).toFixed(0) + 'k';
+										return 'Rp ' + value;
+									}
+								}
+							}]
+						}
+					}
+				});
 			}
 		});
 	</script>

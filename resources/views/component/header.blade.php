@@ -18,68 +18,92 @@
 			</div>
 		@endif
 	</div>
-	<div class="hz-header-right" style="margin-left:auto; gap: 12px; position: relative;">
+
+	<div class="hz-header-right" style="margin-left:auto; display: flex; align-items: center; gap: 12px; position: relative;">
 		@php
 			$currentUser = auth()->user();
+			$isSuperadmin = $currentUser && $currentUser->role === 'superadmin';
+			$isOwner = $currentUser && $currentUser->role === 'owner';
+			$paketType = $isOwner ? \App\Models\Subscribe::getPackageType($currentUser->id) : 1;
 			$currentProfile = $currentUser ? ($currentUser->profile ?? \App\Models\Profile::where('user_id', $currentUser->id)->first()) : null;
 			$logoPath = $currentProfile?->logo_path;
 			$displayName = session('admin_name') ?? $currentUser?->name ?? 'Pengguna';
+			$nameParts = explode(' ', trim($displayName));
+			$initials = strtoupper(substr($nameParts[0] ?? 'U', 0, 1) . (isset($nameParts[1]) ? substr($nameParts[1], 0, 1) : substr($nameParts[0] ?? '', 1, 1)));
 			$hasAvatar = !empty($logoPath) && (file_exists(public_path('storage/' . $logoPath)) || \Illuminate\Support\Facades\Storage::disk('public')->exists($logoPath));
+			$roleLabel = session()->has('admin_id') 
+				? 'Kasir' 
+				: ($isSuperadmin 
+					? 'Superadmin' 
+					: ($isOwner 
+						? 'Owner' 
+						: ($currentUser?->role === 'kasir' ? 'Kasir' : ($currentUser?->role ? ucfirst($currentUser->role) : 'Pengguna'))));
 		@endphp
-		<div id="hz-user-trigger" class="hz-user-chip" style="cursor: pointer;" title="Menu Akun">
-			<div class="hz-avatar" style="overflow: hidden; width: 32px; height: 32px; border-radius: 9999px; border: 1.5px solid rgba(197, 160, 89, 0.4); display: flex; align-items: center; justify-content: center; background: #0F223D; color: #C5A059; font-weight: 700; flex-shrink: 0;">
+
+
+		<!-- Bulatan Foto Profil / Avatar (Shadcn Navbar Style) -->
+		<div id="hz-user-trigger" style="cursor: pointer; position: relative;" title="{{ $displayName }}">
+			<div class="hz-avatar" style="overflow: hidden; width: 34px; height: 34px; border-radius: 9999px; border: 1px solid #E4E4E7; display: flex; align-items: center; justify-content: center; background: #F4F4F5; color: #09090B; font-weight: 600; font-size: 0.8rem; flex-shrink: 0; box-shadow: 0 1px 2px rgba(0,0,0,0.04); transition: box-shadow 0.2s ease, border-color 0.2s ease;" onmouseover="this.style.boxShadow='0 0 12px rgba(197, 160, 89, 0.45)'; this.style.borderColor='rgba(197, 160, 89, 0.7)'" onmouseout="this.style.boxShadow='0 1px 2px rgba(0,0,0,0.04)'; this.style.borderColor='#E4E4E7'">
 				@if($hasAvatar)
 					<img src="{{ asset('storage/' . $logoPath) }}" alt="{{ $displayName }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 9999px; display: block;">
 				@else
-					{{ strtoupper(substr($displayName, 0, 1)) }}
+					{{ $initials }}
 				@endif
 			</div>
-			<div class="hz-user-text">
-				<p class="hz-user-name">Hai, {{ $displayName }}</p>
-			</div>
-			<i data-lucide="chevron-down" style="width: 14px; height: 14px; color: #64748B;"></i>
 		</div>
-		<div id="hz-user-menu" style="display:none; position:absolute; right:0; top:46px; background: #FFFFFF; border-radius: 12px; border:1px solid #E2E8F0; box-shadow: 0 10px 25px -5px rgba(15, 34, 61, 0.12), 0 8px 10px -6px rgba(15, 34, 61, 0.08); min-width: 220px; padding: 6px; font-size:0.825rem; z-index:50;">
-			<div style="display:flex; align-items:center; gap:10px; padding:8px 10px; margin-bottom: 4px; border-bottom: 1px solid #F1F5F9;">
-				<div class="hz-avatar-menu" style="width: 36px; height: 36px; border-radius: 9999px; background: #0F223D; color: #C5A059; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85rem; overflow: hidden; flex-shrink: 0; border: 1.5px solid rgba(197, 160, 89, 0.4);">
+
+		<!-- Dropdown Menu Kanan Atas (Persis Shadcn Profile Dropdown) -->
+		<div id="hz-user-menu" class="shadcn-dropdown-menu" style="display: none; position: absolute; right: 0; top: calc(100% + 8px); width: 240px; z-index: 60;">
+			<div class="shadcn-dropdown-header-user">
+				<div class="shadcn-dropdown-avatar" style="border-radius: 9999px;">
 					@if($hasAvatar)
-						<img src="{{ asset('storage/' . $logoPath) }}" alt="{{ $displayName }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 9999px; display: block;">
+						<img src="{{ asset('storage/' . $logoPath) }}" alt="{{ $displayName }}" style="border-radius: 9999px;">
 					@else
-						{{ strtoupper(substr($displayName, 0, 1)) }}
+						{{ $initials }}
 					@endif
 				</div>
-				<div style="overflow: hidden; line-height: 1.25;">
-					<p style="margin: 0; font-weight: 600; color: #0F223D; font-size: 0.85rem; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">{{ $displayName }}</p>
-					<p style="margin: 2px 0 0 0; color: #64748B; font-size: 0.72rem; text-transform: capitalize;">{{ $currentUser?->role === 'superadmin' ? 'Superadmin' : ($currentUser?->role === 'owner' ? 'Pemilik Toko' : 'Kasir / Admin') }}</p>
+				<div class="shadcn-dropdown-user-text">
+					<p class="shadcn-dropdown-user-name">{{ $displayName }}</p>
+					<p class="shadcn-dropdown-user-email">{{ $roleLabel }}</p>
 				</div>
 			</div>
-			<a href="{{ route('profile.index') }}" style="display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:8px; color:#0F223D; text-decoration:none; font-weight:500; transition: background 0.15s ease;" onmouseover="this.style.background='#F8FAFC'" onmouseout="this.style.background='transparent'">
-				<i data-lucide="{{ auth()->user()?->role === 'superadmin' ? 'user-cog' : 'store' }}" style="width: 16px; height: 16px; color: #C5A059;"></i>
-				<span>{{ auth()->user()?->role === 'superadmin' ? 'Edit Profil' : 'Profil Toko' }}</span>
+
+			<div class="shadcn-dropdown-sep"></div>
+
+			<a href="{{ route('profile.index') }}" class="shadcn-dropdown-item">
+				<div class="shadcn-dropdown-item-content">
+					<i data-lucide="user" style="width: 16px; height: 16px; color: #71717A;"></i>
+					<span>Edit Profil</span>
+				</div>
 			</a>
-			<div style="height: 1px; background: #F1F5F9; margin: 4px 6px;"></div>
-			<form method="POST" action="{{ route('logout') }}">
-				@csrf
-				<button type="submit" style="width:100%; text-align:left; display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:8px; border:none; background:none; color:#DC2626; cursor:pointer; font-size:0.825rem; font-family: inherit; font-weight: 500; transition: background 0.15s ease;" onmouseover="this.style.background='#FEF2F2'" onmouseout="this.style.background='transparent'">
+
+			<div class="shadcn-dropdown-sep"></div>
+
+			<button type="button" class="shadcn-dropdown-item shadcn-dropdown-item-destructive" onclick="openLogoutModal()">
+				<div class="shadcn-dropdown-item-content">
 					<i data-lucide="log-out" style="width: 16px; height: 16px; color: #DC2626;"></i>
-					<span>Keluar Akun</span>
-				</button>
-			</form>
+					<span>Keluar</span>
+				</div>
+			</button>
 		</div>
 	</div>
+
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
 			var trigger = document.getElementById('hz-user-trigger');
 			var menu = document.getElementById('hz-user-menu');
 			if (!trigger || !menu) return;
 
-			function toggleMenu() {
-				menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-			}
-
 			trigger.addEventListener('click', function (e) {
 				e.stopPropagation();
-				toggleMenu();
+				var sMenu = document.getElementById('hz-sidebar-user-menu');
+				if (sMenu) sMenu.style.display = 'none';
+
+				var isHidden = menu.style.display === 'none' || menu.style.display === '';
+				menu.style.display = isHidden ? 'block' : 'none';
+				if (isHidden && typeof lucide !== 'undefined') {
+					lucide.createIcons();
+				}
 			});
 
 			document.addEventListener('click', function (e) {

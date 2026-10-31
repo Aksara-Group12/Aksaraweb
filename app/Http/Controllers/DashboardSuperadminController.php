@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DashboardSuperadminController extends BaseController
 {
@@ -153,5 +154,129 @@ class DashboardSuperadminController extends BaseController
 			'all' => ['2000-01-01', Carbon::now()],
 			default => [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()],
 		};
+	}
+
+	/**
+	 * Export laporan pemesanan sistem dari awal hingga akhir ke PDF
+	 */
+	public function exportPdf(Request $request)
+	{
+		if (auth()->user()?->role !== 'superadmin') {
+			abort(403, 'Anda tidak memiliki hak akses untuk mengunduh laporan ini.');
+		}
+
+		$query = Subscribe::with(['user.profile', 'bank', 'paket'])
+			->orderBy('created_at', 'asc'); // Riwayat dari awal hingga akhir
+
+		$periodTitle = 'Semua Riwayat (Dari Awal Hingga Akhir)';
+
+		if ($request->input('scope') === 'period' && $request->filled('start_date') && $request->filled('end_date')) {
+			$start = Carbon::parse($request->input('start_date'))->startOfDay();
+			$end = Carbon::parse($request->input('end_date'))->endOfDay();
+			$query->whereBetween('created_at', [$start, $end]);
+			$periodTitle = $start->format('d/m/Y') . ' - ' . $end->format('d/m/Y');
+		}
+
+		$subscriptions = $query->get();
+
+		$totalSubscriptions = $subscriptions->count();
+		$totalRevenue = (float) $subscriptions->where('is_trial', false)->sum('price');
+		$totalActive = $subscriptions->where('status', 'active')->count();
+		$totalPending = $subscriptions->where('approval_status', 'pending')->count();
+
+		$transaksiKeluar = TransaksiKeluar::with(['admin', 'items'])
+			->where('status', 'complete')
+			->orderBy('created_at', 'asc')
+			->get();
+
+		$totalPenjualanKasir = (float) $transaksiKeluar->sum('total_harga');
+
+		$pdf = Pdf::loadView('dashboardsuperadmin-pdf', [
+			'subscriptions' => $subscriptions,
+			'totalSubscriptions' => $totalSubscriptions,
+			'totalRevenue' => $totalRevenue,
+			'totalActive' => $totalActive,
+			'totalPending' => $totalPending,
+			'transaksiKeluar' => $transaksiKeluar,
+			'totalPenjualanKasir' => $totalPenjualanKasir,
+			'periodTitle' => $periodTitle,
+			'documentTitle' => 'Laporan Pemesanan Sistem Aksara Developer',
+		]);
+
+		$pdf->setPaper('a4', 'landscape');
+		$fileName = 'laporan_pemesanan_aksara_' . now()->format('Ymd_His') . '.pdf';
+
+		return $pdf->download($fileName);
+	}
+
+	/**
+	 * Export laporan pemesanan sistem dari awal hingga akhir ke Excel / CSV
+	 */
+	public function exportExcel(Request $request)
+	{
+		if (auth()->user()?->role !== 'superadmin') {
+			abort(403, 'Anda tidak memiliki hak akses untuk mengunduh laporan ini.');
+		}
+
+		$query = Subscribe::with(['user.profile', 'bank', 'paket'])
+			->orderBy('created_at', 'asc');
+
+		if ($request->input('scope') === 'period' && $request->filled('start_date') && $request->filled('end_date')) {
+			$start = Carbon::parse($request->input('start_date'))->startOfDay();
+			$end = Carbon::parse($request->input('end_date'))->endOfDay();
+			$query->whereBetween('created_at', [$start, $end]);
+		}
+
+		$subscriptions = $query->get();
+		$fileName = 'laporan_pemesanan_aksara_' . now()->format('Ymd_His') . '.csv';
+
+		$headers = [
+			'Content-Type' => 'text/csv; charset=UTF-8',
+			'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+			'Pragma' => 'no-cache',
+			'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+			'Expires' => '0',
+		];
+
+		return response()->stream(function () use ($subscriptions) {
+			$handle = fopen('php://output', 'w');
+			fputs($handle, chr(0xEF) . chr(0xBB) . chr(0xBF)); // BOM UTF-8 for Excel
+
+			fputcsv($handle, [
+				'No',
+				'ID Pesanan',
+				'Tanggal Pesan',
+				'Nama Pemesan',
+				'Email Pemesan',
+				'Nama Toko',
+				'Paket Dipesan',
+				'Tipe Paket',
+				'Durasi (Hari)',
+				'Bank Tujuan',
+				'Harga / Biaya (IDR)',
+				'Status Langganan',
+				'Status Approval',
+			]);
+
+			foreach ($subscriptions as $idx => $sub) {
+				fputcsv($handle, [
+					$idx + 1,
+					'#SUB-' . str_pad($sub->id, 5, '0', STR_PAD_LEFT),
+					$sub->created_at ? $sub->created_at->format('Y-m-d H:i:s') : '-',
+					$sub->user->name ?? '-',
+					$sub->user->email ?? '-',
+					$sub->user?->profile?->store_name ?? '-',
+					$sub->paket_name ?? ($sub->paket->nama_paket ?? '-'),
+					$sub->is_trial ? 'Trial' : 'Berbayar',
+					$sub->duration_days ?? 0,
+					$sub->bank->nama_bank ?? '-',
+					$sub->price ?? 0,
+					ucfirst($sub->status ?? '-'),
+					ucfirst($sub->approval_status ?? '-'),
+				]);
+			}
+
+			fclose($handle);
+		}, 200, $headers);
 	}
 }

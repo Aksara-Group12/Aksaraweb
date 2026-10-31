@@ -41,7 +41,7 @@
 
 		.btn-filter-navy:hover {
 			background: #162C50;
-			transform: translateY(-1px);
+			box-shadow: 0 0 12px rgba(15, 34, 61, 0.25);
 		}
 
 		.btn-tracking-export {
@@ -76,12 +76,12 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
-			transition: transform 0.15s ease;
+			transition: border-color 0.2s ease, box-shadow 0.2s ease;
 		}
 
 		.metric-card-clean:hover {
-			transform: translateY(-2px);
-			border-color: rgba(197, 160, 89, 0.4);
+			border-color: rgba(197, 160, 89, 0.6);
+			box-shadow: 0 0 18px rgba(197, 160, 89, 0.18), 0 4px 16px -2px rgba(15, 34, 61, 0.06);
 		}
 
 		.core-metrics-grid-3x2 {

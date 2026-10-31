@@ -69,26 +69,36 @@ class ProfileController extends Controller
 			abort(403, 'Anda tidak memiliki hak akses untuk mengubah profil ini.');
 		}
 
-		$request->validate([
+		$wantsPasswordChange = $request->boolean('change_password') || ($request->filled('password') && $request->filled('password_confirmation'));
+
+		$rules = [
 			'name' => ['required', 'string', 'max:255'],
 			'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-			'password' => ['nullable', 'string', 'min:8', 'confirmed'],
 			'store_name' => ['required', 'string', 'max:255'],
 			'phone' => ['nullable', 'string', 'max:50'],
 			'address' => ['nullable', 'string'],
 			'city' => ['nullable', 'string', 'max:255'],
 			'postal_code' => ['nullable', 'string', 'max:20'],
 			'logo' => ['nullable', 'file', 'image', 'mimes:png,jpg,jpeg', 'max:5120'],
-		], [
+		];
+
+		$messages = [
 			'name.required' => 'Nama lengkap wajib diisi.',
 			'email.required' => 'Alamat email wajib diisi.',
 			'email.unique' => 'Alamat email sudah digunakan oleh akun lain.',
-			'password.min' => 'Kata sandi minimal terdiri dari 8 karakter.',
-			'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.',
 			'store_name.required' => $user->role === 'superadmin' ? 'Nama Sistem / Brand wajib diisi.' : 'Nama Toko wajib diisi.',
 			'logo.image' => 'Logo harus berupa berkas gambar.',
 			'logo.max' => 'Ukuran logo maksimal adalah 5MB.',
-		]);
+		];
+
+		if ($wantsPasswordChange) {
+			$rules['password'] = ['required', 'string', 'min:8', 'confirmed'];
+			$messages['password.required'] = 'Kata sandi baru wajib diisi jika ingin mengubah kata sandi.';
+			$messages['password.min'] = 'Kata sandi minimal terdiri dari 8 karakter.';
+			$messages['password.confirmed'] = 'Konfirmasi kata sandi tidak cocok.';
+		}
+
+		$request->validate($rules, $messages);
 
 		// 1. Update data User
 		$userData = [
@@ -96,7 +106,7 @@ class ProfileController extends Controller
 			'email' => $request->email,
 		];
 
-		if ($request->filled('password')) {
+		if ($wantsPasswordChange && $request->filled('password')) {
 			$userData['password'] = Hash::make($request->password);
 		}
 

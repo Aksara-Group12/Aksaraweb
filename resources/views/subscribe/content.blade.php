@@ -63,8 +63,8 @@
             @forelse ($packages as $package)
                 <div style="background: #FFFFFF; border: 1px solid rgba(226, 232, 240, 0.95); border-radius: 18px; overflow: hidden; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 4px 16px -2px rgba(15, 34, 61, 0.04); display: flex; flex-direction: column; justify-content: space-between;"
                     id="package-{{ $package->id }}"
-                    onmouseover="this.style.borderColor='rgba(197, 160, 89, 0.45)'; this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 24px -4px rgba(15, 34, 61, 0.08)';"
-                    onmouseout="this.style.borderColor='rgba(226, 232, 240, 0.95)'; this.style.transform='none'; this.style.boxShadow='0 4px 16px -2px rgba(15, 34, 61, 0.04)';">
+                    onmouseover="this.style.borderColor='rgba(197, 160, 89, 0.6)'; this.style.boxShadow='0 0 20px rgba(197, 160, 89, 0.2), 0 4px 16px -2px rgba(15, 34, 61, 0.06)';"
+                    onmouseout="this.style.borderColor='rgba(226, 232, 240, 0.95)'; this.style.boxShadow='0 4px 16px -2px rgba(15, 34, 61, 0.04)';">
                     
                     <div>
                         <!-- Header Card Paket -->
@@ -108,8 +108,8 @@
                     <div style="padding: 0 22px 22px;">
                         <button type="button" 
                             style="width: 100%; background: #0F223D; color: #FFFFFF; border: none; padding: 11px 16px; border-radius: 10px; cursor: pointer; font-family: inherit; font-size: 0.85rem; font-weight: 600; transition: all 0.15s ease; box-shadow: 0 2px 6px rgba(15, 34, 61, 0.15);"
-                            onmouseover="this.style.background='#162C50'; this.style.transform='translateY(-1px)';"
-                            onmouseout="this.style.background='#0F223D'; this.style.transform='none';"
+                            onmouseover="this.style.background='#162C50'; this.style.boxShadow='0 0 12px rgba(15, 34, 61, 0.25)';"
+                            onmouseout="this.style.background='#0F223D'; this.style.boxShadow='none';"
                             onclick="selectPackage({{ $package->id }}, '{{ $package->nama_paket }}', {{ $package->harga_diskon ?? $package->harga }}, {{ $package->durasi_bulan }})">
                             Pilih Paket Ini →
                         </button>

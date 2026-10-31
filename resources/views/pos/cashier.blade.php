@@ -103,9 +103,8 @@
 
 		.product-card:hover {
 			background: #FFFFFF;
-			border-color: rgba(197, 160, 89, 0.45);
-			box-shadow: 0 6px 16px -2px rgba(15, 34, 61, 0.06);
-			transform: translateY(-2px);
+			border-color: rgba(197, 160, 89, 0.6);
+			box-shadow: 0 0 16px rgba(197, 160, 89, 0.2);
 		}
 
 		.product-name-txt {
@@ -169,8 +168,7 @@
 
 		.btn-navy:hover {
 			background: #162C50;
-			transform: translateY(-1px);
-			box-shadow: 0 4px 12px rgba(15, 34, 61, 0.2);
+			box-shadow: 0 0 12px rgba(15, 34, 61, 0.25);
 		}
 
 		.btn-secondary-clean {

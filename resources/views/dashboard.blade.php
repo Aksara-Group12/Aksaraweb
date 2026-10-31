@@ -124,8 +124,7 @@
 
 		.apply-btn:hover {
 			background: #162C50;
-			transform: translateY(-1px);
-			box-shadow: 0 4px 12px rgba(15, 34, 61, 0.2);
+			box-shadow: 0 0 12px rgba(15, 34, 61, 0.25);
 		}
 
 		/* KPI Card Grid: 4 Kolom Selaras Horizon Luxury */
@@ -143,14 +142,13 @@
 			padding: 22px 24px;
 			border: 1px solid rgba(226, 232, 240, 0.95);
 			box-shadow: 0 4px 16px -2px rgba(15, 34, 61, 0.04), 0 2px 4px -2px rgba(15, 34, 61, 0.02);
-			transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+			transition: border-color 0.2s ease, box-shadow 0.2s ease;
 			overflow: hidden;
 		}
 
 		.kpi-card:hover {
-			transform: translateY(-3px);
-			border-color: rgba(197, 160, 89, 0.4);
-			box-shadow: 0 12px 24px -4px rgba(15, 34, 61, 0.08);
+			border-color: rgba(197, 160, 89, 0.6);
+			box-shadow: 0 0 20px rgba(197, 160, 89, 0.2), 0 4px 16px -2px rgba(15, 34, 61, 0.06);
 		}
 
 		.kpi-card-inner {
@@ -189,8 +187,8 @@
 
 		.kpi-card:hover .kpi-icon-badge {
 			background: rgba(197, 160, 89, 0.18);
-			border-color: rgba(197, 160, 89, 0.35);
-			transform: scale(1.03);
+			border-color: rgba(197, 160, 89, 0.4);
+			box-shadow: 0 0 10px rgba(197, 160, 89, 0.35);
 		}
 
 		.kpi-icon-badge i,
@@ -398,9 +396,8 @@
 
 		.customer-item:hover, .product-item:hover {
 			background: #FFFFFF;
-			border-color: rgba(197, 160, 89, 0.4);
-			box-shadow: 0 4px 12px rgba(15, 34, 61, 0.04);
-			transform: translateX(2px);
+			border-color: rgba(197, 160, 89, 0.5);
+			box-shadow: 0 0 12px rgba(197, 160, 89, 0.15);
 		}
 
 		.customer-info, .product-info {

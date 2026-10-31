@@ -85,27 +85,30 @@
 				position: relative;
 				height: 100vh;
 				max-height: 100vh;
-				overflow-y: auto;
-				overflow-x: hidden;
+				overflow: hidden;
 				z-index: 15;
 				transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 			}
 
 			/* Custom scrollbar for sidebar */
-			.hz-sidebar::-webkit-scrollbar {
+			.hz-sidebar::-webkit-scrollbar,
+			.hz-nav::-webkit-scrollbar {
 				width: 5px;
 			}
 
-			.hz-sidebar::-webkit-scrollbar-track {
+			.hz-sidebar::-webkit-scrollbar-track,
+			.hz-nav::-webkit-scrollbar-track {
 				background: transparent;
 			}
 
-			.hz-sidebar::-webkit-scrollbar-thumb {
+			.hz-sidebar::-webkit-scrollbar-thumb,
+			.hz-nav::-webkit-scrollbar-thumb {
 				background: rgba(15, 34, 61, 0.12);
 				border-radius: 999px;
 			}
 
-			.hz-sidebar::-webkit-scrollbar-thumb:hover {
+			.hz-sidebar::-webkit-scrollbar-thumb:hover,
+			.hz-nav::-webkit-scrollbar-thumb:hover {
 				background: rgba(15, 34, 61, 0.22);
 			}
 
@@ -198,6 +201,9 @@
 				gap: 18px;
 				font-size: 0.825rem;
 				min-height: 0;
+				overflow-y: auto;
+				overflow-x: hidden;
+				padding-right: 2px;
 			}
 
 			.hz-nav-group {
@@ -410,6 +416,12 @@
 				border: 1px solid rgba(226, 232, 240, 0.95);
 				padding: 22px 24px;
 				box-shadow: 0 4px 16px -2px rgba(15, 34, 61, 0.04);
+				transition: border-color 0.2s ease, box-shadow 0.2s ease;
+			}
+
+			.hz-card:hover {
+				border-color: rgba(197, 160, 89, 0.55);
+				box-shadow: 0 0 16px rgba(197, 160, 89, 0.15), 0 4px 16px -2px rgba(15, 34, 61, 0.04);
 			}
 
 			.hz-card-title {
@@ -447,7 +459,7 @@
 			.hz-btn:hover, .hz-btn-primary:hover {
 				background: #1B355A !important;
 				color: #FFFFFF !important;
-				transform: translateY(-1px);
+				box-shadow: 0 0 14px rgba(15, 34, 61, 0.25) !important;
 			}
 
 			.hz-btn-secondary {
@@ -606,6 +618,226 @@
 					padding: 20px 16px;
 				}
 			}
+
+			/* Shadcn UI Dropdown Menu */
+			.shadcn-dropdown-menu {
+				background: #FFFFFF !important;
+				border: 1px solid #E4E4E7 !important;
+				border-radius: 12px !important;
+				box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05) !important;
+				padding: 6px !important;
+				font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+				animation: shadcnScaleIn 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+			}
+
+			@keyframes shadcnScaleIn {
+				from {
+					opacity: 0;
+					transform: scale(0.96);
+				}
+				to {
+					opacity: 1;
+					transform: scale(1);
+				}
+			}
+
+			.shadcn-dropdown-header-user {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				padding: 8px 10px;
+				border-radius: 8px;
+			}
+
+			.shadcn-dropdown-avatar {
+				width: 36px;
+				height: 36px;
+				border-radius: 9999px;
+				background: #F4F4F5;
+				color: #09090B;
+				border: 1px solid #E4E4E7;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-weight: 700;
+				font-size: 0.85rem;
+				overflow: hidden;
+				flex-shrink: 0;
+			}
+
+			.shadcn-dropdown-avatar img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				display: block;
+			}
+
+			.shadcn-dropdown-user-text {
+				min-width: 0;
+				overflow: hidden;
+				line-height: 1.25;
+			}
+
+			.shadcn-dropdown-user-name {
+				font-size: 0.85rem;
+				font-weight: 600;
+				color: #09090B;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				margin: 0;
+			}
+
+			.shadcn-dropdown-user-email {
+				font-size: 0.72rem;
+				color: #71717A;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				margin: 2px 0 0 0;
+			}
+
+			.shadcn-dropdown-sep {
+				height: 1px;
+				background: #F4F4F5;
+				margin: 5px 0;
+			}
+
+			.shadcn-dropdown-item {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding: 8px 10px;
+				border-radius: 8px;
+				color: #09090B;
+				text-decoration: none;
+				font-size: 0.825rem;
+				font-weight: 500;
+				cursor: pointer;
+				border: none;
+				background: transparent;
+				width: 100%;
+				text-align: left;
+				box-sizing: border-box;
+				transition: background 0.12s ease, color 0.12s ease;
+			}
+
+			.shadcn-dropdown-item:hover {
+				background: #F4F4F5 !important;
+				color: #09090B !important;
+			}
+
+			.shadcn-dropdown-item-content {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				min-width: 0;
+			}
+
+			.shadcn-dropdown-item-destructive {
+				color: #DC2626 !important;
+			}
+
+			.shadcn-dropdown-item-destructive:hover {
+				background: #FEF2F2 !important;
+				color: #DC2626 !important;
+			}
+
+			.shadcn-dropdown-badge {
+				font-size: 0.68rem;
+				font-weight: 600;
+				padding: 2px 6px;
+				border-radius: 6px;
+				background: #F4F4F5;
+				color: #09090B;
+				border: 1px solid #E4E4E7;
+			}
+
+			/* Shadcn Dialog Modal */
+			.shadcn-modal-backdrop {
+				position: fixed;
+				inset: 0;
+				background: rgba(9, 9, 11, 0.45);
+				backdrop-filter: blur(4px);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				z-index: 9999;
+				padding: 16px;
+				animation: shadcnFadeIn 0.15s ease;
+			}
+
+			@keyframes shadcnFadeIn {
+				from { opacity: 0; }
+				to { opacity: 1; }
+			}
+
+			.shadcn-modal-card {
+				background: #FFFFFF;
+				border: 1px solid #E4E4E7;
+				border-radius: 12px;
+				box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+				width: 100%;
+				max-width: 440px;
+				padding: 24px;
+				box-sizing: border-box;
+				animation: shadcnScaleIn 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+				font-family: 'Inter', system-ui, sans-serif;
+			}
+
+			.shadcn-modal-title {
+				font-size: 1.05rem;
+				font-weight: 600;
+				color: #09090B;
+				margin: 0;
+				letter-spacing: -0.01em;
+			}
+
+			.shadcn-modal-description {
+				font-size: 0.85rem;
+				color: #71717A;
+				line-height: 1.5;
+				margin: 0 0 20px 0;
+			}
+
+			.shadcn-modal-footer {
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+				gap: 10px;
+			}
+
+			.shadcn-modal-btn-cancel {
+				background: #FFFFFF;
+				color: #09090B;
+				border: 1px solid #E4E4E7;
+				border-radius: 8px;
+				padding: 8px 16px;
+				font-size: 0.825rem;
+				font-weight: 500;
+				cursor: pointer;
+				transition: background 0.12s ease;
+			}
+
+			.shadcn-modal-btn-cancel:hover {
+				background: #F4F4F5;
+			}
+
+			.shadcn-modal-btn-confirm {
+				background: #DC2626;
+				color: #FFFFFF;
+				border: none;
+				border-radius: 8px;
+				padding: 8px 16px;
+				font-size: 0.825rem;
+				font-weight: 500;
+				cursor: pointer;
+				transition: background 0.12s ease;
+			}
+
+			.shadcn-modal-btn-confirm:hover {
+				background: #B91C1C;
+			}
 		</style>
 	</head>
 	<body class="hz-body" @if(session('subscription_modal') && auth()->check() && auth()->user()->role === 'owner') data-subscription-error="true" @endif>
@@ -629,6 +861,7 @@
 		@endif
 
 		@include('component.employee_access_denied_modal')
+		@include('component.logout_modal')
 		
 		<script>
 			document.addEventListener('DOMContentLoaded', function () {

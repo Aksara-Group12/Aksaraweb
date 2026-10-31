@@ -254,8 +254,7 @@
 
 	.btn-save-profile:hover {
 		background: #162C50;
-		transform: translateY(-1px);
-		box-shadow: 0 4px 12px rgba(15, 34, 61, 0.2);
+		box-shadow: 0 0 12px rgba(15, 34, 61, 0.25);
 	}
 
 	.flash-alert-success {
@@ -329,7 +328,7 @@
 <!-- Tab Content: Form Edit Profil -->
 <div id="content-profil" class="tab-pane">
 	<div class="form-profile-card">
-		<form method="POST" action="{{ route('profile.update', $profile) }}" enctype="multipart/form-data">
+		<form method="POST" action="{{ route('profile.update', $profile) }}" enctype="multipart/form-data" autocomplete="off">
 			@csrf
 			@method('PUT')
 
@@ -389,14 +388,27 @@
 				</div>
 			</div>
 
-			<div class="form-grid-two">
+			<!-- Checkbox / Toggle untuk Ubah Kata Sandi -->
+			<div style="margin-top: 16px; margin-bottom: 12px; padding: 14px 18px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; box-shadow: 0 1px 3px rgba(15, 34, 61, 0.03);">
+				<label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 600; font-size: 0.875rem; color: #0F223D; user-select: none;">
+					<input type="checkbox" id="change_password_toggle" name="change_password" value="1" {{ old('change_password') || $errors->has('password') ? 'checked' : '' }} style="width: 17px; height: 17px; accent-color: #0F223D; cursor: pointer;">
+					<span>Ingin Mengubah Kata Sandi Akun?</span>
+				</label>
+				<p style="margin: 4px 0 0 27px; font-size: 0.78rem; color: #64748B;">
+					Centang opsi ini hanya jika Anda ingin memperbarui kata sandi. Jika tidak dicentang, kata sandi lama Anda tetap aman tanpa perlu konfirmasi.
+				</p>
+			</div>
+
+			<div id="password_fields_container" class="form-grid-two" style="display: {{ old('change_password') || $errors->has('password') ? 'grid' : 'none' }}; margin-bottom: 16px;">
 				<div class="form-group">
 					<label class="form-label" for="password">
-						Kata Sandi Baru <span style="color:#64748B; font-weight:normal;">[Opsional]</span>
+						Kata Sandi Baru <span class="req">*</span>
 					</label>
 					<input type="password" id="password" name="password" 
-						placeholder="Kosongkan jika tidak ingin mengubah kata sandi" 
-						class="form-input {{ $errors->has('password') ? 'is-invalid' : '' }}">
+						autocomplete="new-password"
+						placeholder="Minimal 8 karakter" 
+						class="form-input {{ $errors->has('password') ? 'is-invalid' : '' }}"
+						{{ old('change_password') || $errors->has('password') ? '' : 'disabled' }}>
 					<span class="field-hint">Minimal 8 karakter jika ingin diperbarui.</span>
 					@error('password')
 						<span class="field-error">{{ $message }}</span>
@@ -405,11 +417,13 @@
 
 				<div class="form-group">
 					<label class="form-label" for="password_confirmation">
-						Konfirmasi Kata Sandi Baru
+						Konfirmasi Kata Sandi Baru <span class="req">*</span>
 					</label>
 					<input type="password" id="password_confirmation" name="password_confirmation" 
+						autocomplete="new-password"
 						placeholder="Ulangi kata sandi baru di atas" 
-						class="form-input">
+						class="form-input"
+						{{ old('change_password') || $errors->has('password') ? '' : 'disabled' }}>
 				</div>
 			</div>
 
@@ -553,6 +567,33 @@
 					});
 				};
 				reader.readAsDataURL(file);
+			}
+		});
+	}
+
+	// Toggle Ubah Kata Sandi
+	const pwToggle = document.getElementById('change_password_toggle');
+	const pwContainer = document.getElementById('password_fields_container');
+	const pwInput = document.getElementById('password');
+	const pwConfirmInput = document.getElementById('password_confirmation');
+
+	if (pwToggle && pwContainer) {
+		pwToggle.addEventListener('change', function() {
+			if (this.checked) {
+				pwContainer.style.display = 'grid';
+				if (pwInput) pwInput.removeAttribute('disabled');
+				if (pwConfirmInput) pwConfirmInput.removeAttribute('disabled');
+				if (pwInput) pwInput.focus();
+			} else {
+				pwContainer.style.display = 'none';
+				if (pwInput) {
+					pwInput.setAttribute('disabled', 'disabled');
+					pwInput.value = '';
+				}
+				if (pwConfirmInput) {
+					pwConfirmInput.setAttribute('disabled', 'disabled');
+					pwConfirmInput.value = '';
+				}
 			}
 		});
 	}

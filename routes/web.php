@@ -91,6 +91,10 @@ Route::middleware(['auth', 'subscription.access', 'employee.access'])->group(fun
 
     Route::get('/dashboard-superadmin', [DashboardSuperadminController::class, 'index'])
         ->name('dashboard-superadmin');
+    Route::get('/dashboard-superadmin/export-pdf', [DashboardSuperadminController::class, 'exportPdf'])
+        ->name('dashboard-superadmin.export-pdf');
+    Route::get('/dashboard-superadmin/export-excel', [DashboardSuperadminController::class, 'exportExcel'])
+        ->name('dashboard-superadmin.export-excel');
 
     Route::get('/produk', [ProdukController::class, 'index'])
         ->name('produk.index');

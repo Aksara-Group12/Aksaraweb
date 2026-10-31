@@ -1,37 +1,40 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Transaksi Masuk')
+@section('page_subtitle', 'Pencatatan pembelian barang untuk menambah persediaan inventaris.')
 
 @section('content')
-	<div class="hz-top-row">
-		<div>
-			<h2 class="hz-top-title">Transaksi Masuk</h2>
-			<p class="hz-top-sub">Pencatatan pembelian barang untuk menambah persediaan. Total Transaksi: {{ $transaksi->count() }}</p>
-		</div>
-		<div class="hz-top-actions" style="display:flex; align-items:center; gap:10px;">
-			<form method="GET" action="{{ route('transaksi.masuk') }}" style="display:flex; align-items:center; gap:6px;">
-				<input type="text" name="search" value="{{ request('search') }}" placeholder="Cari referensi / supplier / kota" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b; min-width:220px;">
-				<select name="per_page" onchange="this.form.submit()" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 8px; font-size:0.8rem; color:#1e293b;">
+	<div class="hz-top-row" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px; flex-wrap:wrap; gap:12px;">
+		<div class="hz-top-actions" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; width:100%; justify-content:space-between;">
+			<form method="GET" action="{{ route('transaksi.masuk') }}" style="display:flex; align-items:center; gap:8px;">
+				<div style="position: relative; display: flex; align-items: center;">
+					<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" style="position: absolute; left: 12px; pointer-events: none;">
+						<circle cx="11" cy="11" r="8"></circle>
+						<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+					</svg>
+					<input type="text" name="search" value="{{ request('search') }}" placeholder="Cari referensi / supplier / kota" style="border-radius:10px; border:1px solid #CBD5E1; background:#FFFFFF; padding:8px 12px 8px 34px; font-size:0.85rem; color:#0F223D; min-width:240px; outline:none;">
+				</div>
+				<select name="per_page" onchange="this.form.submit()" style="border-radius:10px; border:1px solid #CBD5E1; background:#FFFFFF; padding:8px 12px; font-size:0.85rem; color:#0F223D; outline:none;">
 					<option value="10" {{ request('per_page', 20) == 10 ? 'selected' : '' }}>10</option>
 					<option value="20" {{ request('per_page', 20) == 20 ? 'selected' : '' }}>20</option>
 					<option value="50" {{ request('per_page', 20) == 50 ? 'selected' : '' }}>50</option>
 				</select>
 			</form>
-			<a href="{{ route('transaksi.masuk.export.excel', request()->only('search')) }}" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; padding:6px 10px; font-size:0.8rem; text-decoration:none;">
-				Export Excel
+			<a href="{{ route('transaksi.masuk.export.excel', request()->only('search')) }}" class="hz-btn" style="border-radius:10px; border:1px solid #E2E8F0; background:#FFFFFF; color:#0F223D; padding:8px 14px; font-size:0.85rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:6px; box-shadow:0 1px 2px rgba(15,34,61,0.04);">
+				<span>📊 Export Excel</span>
 			</a>
-			<a href="{{ route('transaksi.masuk.export.pdf', request()->only('search')) }}" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); color:#1e293b; padding:6px 10px; font-size:0.8rem; text-decoration:none;">
-				Export PDF
+			<a href="{{ route('transaksi.masuk.export.pdf', request()->only('search')) }}" class="hz-btn" style="border-radius:10px; border:1px solid #E2E8F0; background:#FFFFFF; color:#0F223D; padding:8px 14px; font-size:0.85rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:6px; box-shadow:0 1px 2px rgba(15,34,61,0.04);">
+				<span>📄 Export PDF</span>
 			</a>
 			<form id="masuk-bulk-delete-form" onsubmit="return false;">
-				<button type="button" id="masuk-bulk-delete-btn" style="display:none; border-radius:999px; border:none; background:#b91c1c; color:#fee2e2; padding:6px 12px; font-size:0.8rem; font-weight:600; cursor:pointer;">
-					Delete selected
+				<button type="button" id="masuk-bulk-delete-btn" style="display:none; border-radius:10px; border:none; background:#dc2626; color:#ffffff; padding:8px 14px; font-size:0.85rem; font-weight:600; cursor:pointer;">
+					Hapus terpilih
 				</button>
 			</form>
-			<a href="{{ route('transaksi.masuk.create') }}" class="hz-btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; padding: 10px 16px; gap: 8px;">
+			<a href="{{ route('transaksi.masuk.create') }}" class="hz-btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; padding: 9px 18px; gap: 8px;">
 				<svg width="14" height="14" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M10 4.5V15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-					<path d="M4.5 10H15.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+					<path d="M10 4.5V15.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+					<path d="M4.5 10H15.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
 				</svg>
 				<span>Buat Transaksi</span>
 			</a>
@@ -65,54 +68,54 @@
 						<input type="hidden" name="ids" id="masukBulkIds">
 						<table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
 						<thead>
-							<tr style="border-bottom: 1px solid rgba(59, 130, 246, 0.4); color:#9ca3af;">
-									<th style="padding:14px 10px; text-align:center; width:36px;">
+							<tr style="border-bottom: 1px solid #E2E8F0; background: #F8FAFC; color: #475569; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+									<th style="padding:14px 12px; text-align:center; width:36px;">
 										<input type="checkbox" id="masuk-select-all" style="cursor:pointer;">
 									</th>
-									<th style="text-align:left; padding:14px 10px;">Tanggal</th>
-									<th style="text-align:left; padding:14px 10px;">No. Referensi</th>
-									<th style="text-align:left; padding:14px 10px;">Supplier</th>
-									<th style="text-align:left; padding:14px 10px;">Kota/Kabupaten</th>
-									<th style="text-align:right; padding:14px 10px;">Total Harga</th>
-									<th style="text-align:center; padding:14px 10px;">Status</th>
-									<th style="text-align:right; padding:14px 10px;">Aksi</th>
+									<th style="text-align:left; padding:14px 12px; font-weight: 600;">Tanggal</th>
+									<th style="text-align:left; padding:14px 12px; font-weight: 600;">No. Referensi</th>
+									<th style="text-align:left; padding:14px 12px; font-weight: 600;">Supplier</th>
+									<th style="text-align:left; padding:14px 12px; font-weight: 600;">Kota/Kabupaten</th>
+									<th style="text-align:right; padding:14px 12px; font-weight: 600;">Total Harga</th>
+									<th style="text-align:center; padding:14px 12px; font-weight: 600;">Status</th>
+									<th style="text-align:right; padding:14px 12px; font-weight: 600;">Aksi</th>
 								</tr>
 						</thead>
 						<tbody>
 							@forelse ($transaksi as $t)
-								<tr style="border-bottom: 1px solid rgba(15,23,42,0.8); cursor: pointer;" onmouseover="this.style.background='rgba(251,191,36,0.05)'" onmouseout="this.style.background='transparent'">
-									<td style="padding:14px 10px; text-align:center;" onclick="event.stopPropagation();">
+								<tr style="border-bottom: 1px solid #F1F5F9; transition: background 0.15s ease;">
+									<td style="padding:14px 12px; text-align:center;" onclick="event.stopPropagation();">
 										<input type="checkbox" value="{{ $t->id }}" class="masuk-row-checkbox" style="cursor:pointer;">
 									</td>
-									<td style="padding:14px 10px; color: #1e293b;">{{ $t->created_at->format('d/m/Y') }}</td>
-									<td style="padding:14px 10px; font-weight: 500; color: #3b82f6;">{{ $t->reference_no }}</td>
-									<td style="padding:14px 10px; color: #cbd5e1;">{{ $t->supplier_name }}</td>
-									<td style="padding:14px 10px; color: #cbd5e1;">{{ $t->lokasi ?? '-' }}</td>
-									<td style="padding:14px 10px; text-align:right; font-weight: 600; color: #3b82f6;">Rp {{ number_format($t->total_harga, 0, ',', '.') }}</td>
-									<td style="padding:14px 10px; text-align:center;">
+									<td style="padding:14px 12px; color: #64748B;">{{ $t->created_at->format('d/m/Y') }}</td>
+									<td style="padding:14px 12px; font-weight: 600; color: #0F223D;">{{ $t->reference_no }}</td>
+									<td style="padding:14px 12px; color: #0F223D;">{{ $t->supplier_name }}</td>
+									<td style="padding:14px 12px; color: #64748B;">{{ $t->lokasi ?? '-' }}</td>
+									<td style="padding:14px 12px; text-align:right; font-weight: 600; color: #0F223D;">Rp {{ number_format($t->total_harga, 0, ',', '.') }}</td>
+									<td style="padding:14px 12px; text-align:center;">
 										@if ($t->status === 'complete')
-											<span style="background:rgba(34, 197, 94, 0.2); color:#86efac; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">Selesai</span>
+											<span class="hz-pill-success">Selesai</span>
 										@elseif ($t->status === 'pending')
-											<span style="background:rgba(251,191,36,0.2); color:#3b82f6; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">Pending</span>
+											<span class="hz-pill-warning">Pending</span>
 										@elseif ($t->status === 'reopened')
-											<span style="background:rgba(148,163,184,0.2); color:#cbd5e1; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">Reopened</span>
+											<span class="hz-pill-warning">Reopened</span>
 										@else
-											<span style="background:rgba(239, 68, 68, 0.2); color:#fca5a5; padding: 4px 8px; border-radius: 6px; font-size: 0.75rem;">Dibatalkan</span>
+											<span class="hz-pill-danger">Dibatalkan</span>
 										@endif
 									</td>
-									<td style="padding:14px 10px; text-align:right; position: relative;">
-										<button type="button" class="hz-more-btn" style="background: transparent; border:none; color:#9ca3af; cursor:pointer; padding:4px 8px; border-radius:999px;">
+									<td style="padding:14px 12px; text-align:right; position: relative;">
+										<button type="button" class="hz-more-btn" style="background: transparent; border:none; color:#64748B; cursor:pointer; padding:6px 10px; border-radius:8px; font-size:1.1rem; line-height:1;">
 											&#8942;
 										</button>
-										<div class="hz-more-menu actions-dropdown" style="display:none; position:absolute; right:10px; top:32px; background:rgba(255,255,255,0.9); border:1px solid rgba(148,163,184,0.4); border-radius:8px; min-width:160px; z-index:10;">
-											<a href="{{ route('transaksi.masuk.print', $t->id) }}" class="actions-dropdown-item print">
-												<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
+										<div class="hz-more-menu actions-dropdown" style="display:none; position:absolute; right:10px; top:36px; background:#FFFFFF; border:1px solid #E2E8F0; border-radius:10px; min-width:160px; z-index:20; box-shadow:0 10px 25px -5px rgba(15,34,61,0.12); padding: 4px;">
+											<a href="{{ route('transaksi.masuk.print', $t->id) }}" class="actions-dropdown-item print" style="display:flex; align-items:center; gap:8px; padding:8px 12px; color:#0F223D; text-decoration:none; font-size:0.85rem; border-radius:6px;">
+												<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" class="h-4 w-4" style="width:16px; height:16px;" xmlns="http://www.w3.org/2000/svg">
 													<path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
 												</svg>
 												<span>Cetak</span>
 											</a>
-											<button type="button" class="actions-dropdown-item delete js-row-delete" data-url="{{ route('transaksi.masuk.destroy.post', $t->id) }}" style="width:100%; text-align:left;">
-												<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" class="h-4 w-4" xmlns="http://www.w3.org/2000/svg">
+											<button type="button" class="actions-dropdown-item delete js-row-delete" data-url="{{ route('transaksi.masuk.destroy.post', $t->id) }}" style="width:100%; text-align:left; display:flex; align-items:center; gap:8px; padding:8px 12px; color:#DC2626; background:none; border:none; cursor:pointer; font-size:0.85rem; border-radius:6px;">
+												<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" class="h-4 w-4" style="width:16px; height:16px;" xmlns="http://www.w3.org/2000/svg">
 													<path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
 												</svg>
 												<span>Hapus</span>
@@ -122,8 +125,8 @@
 								</tr>
 							@empty
 								<tr>
-									<td colspan="7" style="padding: 40px 10px; text-align: center; color: #64748b;">
-										Belum ada transaksi masuk. <a href="{{ route('transaksi.masuk.create') }}" style="color: #3b82f6; text-decoration: underline;">Buat transaksi pertama</a>
+									<td colspan="8" style="padding: 40px 10px; text-align: center; color: #64748b;">
+										Belum ada transaksi masuk. <a href="{{ route('transaksi.masuk.create') }}" style="color: #0F223D; font-weight:600; text-decoration: underline;">Buat transaksi pertama</a>
 									</td>
 								</tr>
 							@endforelse

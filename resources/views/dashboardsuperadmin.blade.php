@@ -2,6 +2,17 @@
 
 @section('page_title', 'Dashboard Superadmin')
 
+@section('header_content')
+	<div>
+		<h1 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.35rem; font-weight: 500; color: #0F223D; margin: 0; line-height: 1.2;">
+			Dashboard Superadmin
+		</h1>
+		<p style="font-size: 0.8rem; color: #64748B; margin: 2px 0 0 0;">
+			Pantau performa sistem, aktivitas pengguna, dan arus transaksi keuangan.
+		</p>
+	</div>
+@endsection
+
 @section('content')
 	<style>
 		/* Header Section */
@@ -503,11 +514,7 @@
 		}
 	</style>
 
-	<div class="dashboard-header">
-		<div class="header-title-block">
-			<h2>Dashboard Superadmin</h2>
-			<p>Pantau performa sistem, aktivitas pengguna, dan arus transaksi keuangan.</p>
-		</div>
+	<div class="dashboard-controls-bar" style="display:flex; justify-content:flex-start; align-items:center; margin-bottom: 22px;">
 		<div class="header-controls">
 			<select name="period" id="db-period-select" class="period-select" onchange="changePeriod(this.value)">
 				<option value="today" {{ ($period ?? 'month') === 'today' ? 'selected' : '' }}>Hari Ini</option>

@@ -2,6 +2,17 @@
 
 @section('page_title', 'Dashboard')
 
+@section('header_content')
+	<div>
+		<h1 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.35rem; font-weight: 500; color: #0F223D; margin: 0; line-height: 1.2;">
+			Ringkasan Penjualan & Stok
+		</h1>
+		<p style="font-size: 0.8rem; color: #64748B; margin: 2px 0 0 0;">
+			Gambaran performa penjualan, ketersediaan inventaris, dan pelanggan aktif.
+		</p>
+	</div>
+@endsection
+
 @section('content')
 	<style>
 		/* Header Section */
@@ -525,11 +536,7 @@
 		}
 	</style>
 
-	<div class="dashboard-header">
-		<div class="header-title-block">
-			<h2>Ringkasan Penjualan & Stok</h2>
-			<p>Gambaran performa penjualan, ketersediaan inventaris, dan pelanggan aktif.</p>
-		</div>
+	<div class="dashboard-controls-bar" style="display:flex; justify-content:flex-start; align-items:center; margin-bottom: 22px;">
 		<div class="header-controls">
 			<select name="period" id="db-period-select" class="period-select" onchange="changePeriod(this.value)">
 				<option value="today" {{ ($period ?? 'month') === 'today' ? 'selected' : '' }}>Hari Ini</option>

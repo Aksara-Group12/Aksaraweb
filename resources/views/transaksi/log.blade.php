@@ -1,14 +1,11 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Riwayat Transaksi')
+@section('page_subtitle', 'Riwayat lengkap seluruh transaksi masuk, keluar, dan pengeluaran toko.')
 
 @section('content')
-	<div class="hz-top-row">
-		<div>
-			<h2 class="hz-top-title">Riwayat Transaksi</h2>
-			<p class="hz-top-sub">Riwayat lengkap transaksi masuk, keluar, dan pengeluaran lainnya.</p>
-		</div>
-		<div class="hz-top-actions" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+	<div class="hz-top-row" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px; flex-wrap:wrap; gap:12px;">
+		<div class="hz-top-actions" style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; width:100%; justify-content:space-between;">
 			<div style="display:flex; align-items:center; gap:8px;">
 				<form method="GET" action="{{ route('transaksi.log') }}" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
 					<select name="tipe" onchange="this.form.submit()" style="border-radius:10px; border:1px solid #CBD5E1; background:#FFFFFF; padding:8px 12px; font-size:0.85rem; color:#0F223D; outline:none;">

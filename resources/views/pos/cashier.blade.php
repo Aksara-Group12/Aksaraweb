@@ -1,6 +1,7 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'POS Kasir')
+@section('page_subtitle', 'Point of Sale - Layanan transaksi kasir penjualan toko.')
 
 @section('content')
 	<style>
@@ -203,15 +204,8 @@
 		}
 	</style>
 
-	<div class="hz-top-row">
-		<div>
-			<h2 class="pos-header-title">POS Kasir</h2>
-			<p class="pos-header-sub">Point of Sale - Layanan transaksi kasir penjualan toko.</p>
-		</div>
-	</div>
-
 	<!-- Shift Status Header -->
-	<div class="shift-status-banner">
+	<div class="shift-status-banner" style="margin-top: 0;">
 		<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
 			<div class="shift-status-badge">
 				<span class="dot"></span>

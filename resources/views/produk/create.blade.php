@@ -1,16 +1,13 @@
 @extends('layouts.horizon')
 
-@section('page_title', 'Tambah Produk')
+@section('page_title', 'Tambah Produk Baru')
+@section('page_subtitle', 'Tambah produk baru ke katalog untuk inventaris toko.')
 
 @section('content')
-<div class="hz-top-row">
-	<div>
-		<h2 class="hz-top-title">Tambah Produk Baru</h2>
-		<p class="hz-top-sub">Tambah produk baru ke katalog. Menambah produk tidak otomatis menambah stok.</p>
-	</div>
+<div class="hz-top-row" style="display:flex; justify-content:flex-end; align-items:center; margin-bottom: 20px;">
 	<div class="hz-top-actions">
-		<a href="{{ route('produk.index') }}" class="hz-btn hz-btn-secondary">
-			← Kembali
+		<a href="{{ route('produk.index') }}" class="hz-btn" style="border-radius:10px; border:1px solid #CBD5E1; background:#FFFFFF; color:#0F223D; padding:8px 16px; font-size:0.85rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:6px;">
+			← Kembali ke Produk
 		</a>
 	</div>
 </div>

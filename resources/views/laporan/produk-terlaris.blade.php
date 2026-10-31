@@ -1,16 +1,13 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Laporan Produk Terlaris')
+@section('page_subtitle', 'Daftar produk paling diminati berdasarkan total unit terjual.')
 
 @section('content')
-<div class="hz-top-row">
-	<div>
-		<h2 class="hz-top-title">Laporan Produk Terlaris</h2>
-		<p class="hz-top-sub">Daftar produk paling laku berdasarkan jumlah terjual.</p>
-	</div>
-	<div style="display: flex; gap: 10px; align-items: center;">
-		<form action="{{ route('laporan.produk-terlaris') }}" method="GET" style="display: flex; align-items: center; gap: 8px;">
-			<select name="period" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem;">
+<div class="hz-top-row" style="display:flex; justify-content:flex-start; align-items:center; margin-bottom: 22px;">
+	<div class="hz-top-actions" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+		<form action="{{ route('laporan.produk-terlaris') }}" method="GET" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+			<select name="period" style="border-radius:10px; border:1px solid #CBD5E1; background:#FFFFFF; padding:8px 12px; font-size:0.85rem; color:#0F223D; outline:none;">
 				<option value="today" {{ $period === 'today' ? 'selected' : '' }}>Hari ini</option>
 				<option value="week" {{ $period === 'week' ? 'selected' : '' }}>Minggu ini</option>
 				<option value="month" {{ $period === 'month' ? 'selected' : '' }}>Bulan ini</option>
@@ -19,42 +16,49 @@
 				<option value="custom" {{ $period === 'custom' ? 'selected' : '' }}>Custom</option>
 			</select>
 			<div style="display: {{ $period === 'custom' ? 'flex' : 'none' }}; align-items: center; gap: 6px;">
-				<input type="date" name="start_date" value="{{ $startDate }}" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem;">
-				<span>s/d</span>
-				<input type="date" name="end_date" value="{{ $endDate }}" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem;">
+				<input type="date" name="start_date" value="{{ $startDate }}" style="border-radius:10px; border:1px solid #CBD5E1; background:#FFFFFF; padding:8px 12px; font-size:0.85rem; color:#0F223D; outline:none;">
+				<span style="color:#64748B; font-size:0.85rem;">s/d</span>
+				<input type="date" name="end_date" value="{{ $endDate }}" style="border-radius:10px; border:1px solid #CBD5E1; background:#FFFFFF; padding:8px 12px; font-size:0.85rem; color:#0F223D; outline:none;">
 			</div>
-			<button type="submit" style="border-radius:999px; border:none; background:#3b82f6; color:#fff; padding:6px 12px; font-size:0.8rem; cursor:pointer;">Filter</button>
+			<button type="submit" style="border-radius:10px; border:none; background:#0F223D; color:#FFFFFF; padding:8px 16px; font-size:0.85rem; font-weight:600; cursor:pointer;">Filter</button>
 		</form>
 	</div>
 </div>
 
 <section class="hz-secondary-grid" style="margin-top: 24px;">
-	<div class="hz-card" style="grid-column: 1 / -1; padding: 20px;">
-		<h3 class="hz-card-title" style="margin-bottom: 16px;">Daftar Produk Terlaris</h3>
-		<table style="width: 100%; border-collapse: collapse;">
-			<thead>
-				<tr style="border-bottom: 1px solid rgba(59,130,246,0.4);">
-					<th style="text-align: left; padding: 12px;">Produk</th>
-					<th style="text-align: left; padding: 12px;">Tipe</th>
-					<th style="text-align: right; padding: 12px;">Jumlah Terjual</th>
-					<th style="text-align: right; padding: 12px;">Total Revenue</th>
-				</tr>
-			</thead>
-			<tbody>
-				@forelse ($products as $product)
-					<tr style="border-bottom: 1px solid rgba(59,130,246,0.2);">
-						<td style="padding: 12px;">{{ $product->nama_produk }}</td>
-						<td style="padding: 12px;">{{ $product->tipe }}</td>
-						<td style="padding: 12px; text-align: right;">{{ $product->total_qty }}</td>
-						<td style="padding: 12px; text-align: right;">Rp {{ number_format($product->total_revenue, 0, ',', '.') }}</td>
+	<div class="hz-card" style="grid-column: 1 / -1; padding: 24px;">
+		<div class="hz-card-header" style="margin-bottom: 16px;">
+			<h3 class="hz-card-title">Peringkat Produk Terlaris</h3>
+			<p class="hz-card-sub">Data diperbarui otomatis berdasarkan transaksi penjualan kasir.</p>
+		</div>
+		<div style="overflow-x: auto;">
+			<table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
+				<thead>
+					<tr style="border-bottom: 1px solid #E2E8F0; background: #F8FAFC; color: #475569; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+						<th style="text-align: left; padding: 14px 12px; font-weight: 600;">Produk</th>
+						<th style="text-align: left; padding: 14px 12px; font-weight: 600;">Tipe</th>
+						<th style="text-align: right; padding: 14px 12px; font-weight: 600;">Jumlah Terjual</th>
+						<th style="text-align: right; padding: 14px 12px; font-weight: 600;">Total Revenue</th>
 					</tr>
-				@empty
-					<tr>
-						<td colspan="4" style="padding: 20px; text-align: center; color: #64748b;">Belum ada data penjualan</td>
-					</tr>
-				@endforelse
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					@forelse ($products as $product)
+						<tr style="border-bottom: 1px solid #F1F5F9; transition: background 0.15s ease;">
+							<td style="padding: 14px 12px; font-weight: 600; color: #0F223D;">{{ $product->nama_produk }}</td>
+							<td style="padding: 14px 12px; color: #64748B;">
+								<span class="hz-pill-info" style="text-transform: capitalize;">{{ $product->tipe }}</span>
+							</td>
+							<td style="padding: 14px 12px; text-align: right; font-weight: 600; color: #0F223D;">{{ number_format($product->total_qty, 0, ',', '.') }} unit</td>
+							<td style="padding: 14px 12px; text-align: right; font-weight: 600; color: #0F223D;">Rp {{ number_format($product->total_revenue, 0, ',', '.') }}</td>
+						</tr>
+					@empty
+						<tr>
+							<td colspan="4" style="padding: 40px 12px; text-align: center; color: #64748b;">Belum ada data penjualan pada periode ini.</td>
+						</tr>
+					@endforelse
+				</tbody>
+			</table>
+		</div>
 	</div>
 </section>
 @endsection

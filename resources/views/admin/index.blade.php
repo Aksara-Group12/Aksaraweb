@@ -1,14 +1,11 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Manajemen Admin')
+@section('page_subtitle', 'Kelola daftar admin toko dan hak akses pengguna.')
 
 @section('content')
-<div class="hz-top-row">
-    <div>
-        <h2 class="hz-top-title">Manajemen Admin</h2>
-        <p class="hz-top-sub">Kelola admin toko Anda</p>
-    </div>
-    <div class="hz-top-actions" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+<div class="hz-top-row" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px; flex-wrap:wrap; gap:12px;">
+    <div class="hz-top-actions" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; width:100%; justify-content:space-between;">
         <form method="GET" action="{{ route('admin.index') }}" style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama, email, atau phone" style="border-radius:10px; border:1px solid #CBD5E1; background:#FFFFFF; padding:8px 12px; font-size:0.85rem; color:#0F223D; min-width:220px; outline:none;">
             <select name="status" style="border-radius:10px; border:1px solid #CBD5E1; background:#FFFFFF; padding:8px 12px; font-size:0.85rem; color:#0F223D; outline:none;">

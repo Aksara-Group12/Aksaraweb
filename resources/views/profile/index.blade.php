@@ -1,6 +1,7 @@
 @extends('layouts.horizon')
 
-@section('page_title', auth()->user()?->role === 'superadmin' ? 'Edit Profil Admin' : 'Edit Profil Toko')
+@section('page_title', auth()->user()?->role === 'superadmin' ? 'Edit Profil Superadmin' : 'Edit Profil Toko')
+@section('page_subtitle', 'Kelola data akun login, kata sandi, dan identitas profil Anda.')
 
 @section('content')
 <style>
@@ -283,13 +284,6 @@
 		color: #991B1B;
 	}
 </style>
-
-<div class="page-header-row">
-	<div class="page-title-block">
-		<h2>{{ auth()->user()?->role === 'superadmin' ? 'Edit Profil Superadmin' : 'Edit Profil Toko' }}</h2>
-		<p>Kelola data akun login, kata sandi, dan identitas profil Anda.</p>
-	</div>
-</div>
 
 @if (session('success'))
 	<div class="flash-alert-success">

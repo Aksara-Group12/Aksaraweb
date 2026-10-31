@@ -1,6 +1,7 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Laporan Keuangan')
+@section('page_subtitle', 'Ikhtisar pendapatan, HPP, laba kotor, beban operasional, laba bersih, dan arus kas.')
 
 @section('content')
 	<style>
@@ -133,11 +134,7 @@
 		}
 	</style>
 
-	<div class="hz-top-row">
-		<div>
-			<h2 class="hz-top-title">Laporan Keuangan</h2>
-			<p class="hz-top-sub">Ikhtisar pendapatan, HPP, laba kotor, beban operasional, laba bersih, dan arus kas.</p>
-		</div>
+	<div class="hz-top-row" style="display: flex; justify-content: flex-start; align-items: center; margin-bottom: 22px;">
 		<div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
 			<!-- Filter Periode -->
 			<form action="{{ route('laporan.keuangan') }}" method="GET" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">

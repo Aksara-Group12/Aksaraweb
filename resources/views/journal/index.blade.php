@@ -1,55 +1,60 @@
 @extends('layouts.horizon')
 
-@section('page_title', 'Jurnal Finance')
+@section('page_title', 'Jurnal Finansial')
+@section('page_subtitle', 'Pencatatan buku besar dan entri transaksi keuangan toko.')
 
 @section('content')
-	<div class="hz-top-row">
-		<div>
-			<h2 class="hz-top-title">Jurnal Finance</h2>
-			<p class="hz-top-sub">Buku besar akuntansi.</p>
-		</div>
-		<div class="hz-top-actions" style="display:flex; align-items:center; gap:10px;">
+	<div class="hz-top-row" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px; flex-wrap:wrap; gap:12px;">
+		<div class="hz-top-actions" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; width:100%; justify-content:space-between;">
 			<form method="GET" action="{{ route('journal.index') }}" style="display:flex; align-items:center; gap:6px;">
-				<input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nomor jurnal..." style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b; min-width:200px;">
+				<div style="position:relative; display:inline-flex; align-items:center;">
+					<svg style="position:absolute; left:12px; width:15px; height:15px; color:#94A3B8; pointer-events:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<circle cx="11" cy="11" r="8"></circle>
+						<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+					</svg>
+					<input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nomor jurnal..." style="padding-left:36px; min-width:240px;">
+				</div>
 			</form>
 		</div>
 	</div>
 
 	<section class="hz-secondary-grid" style="margin-top: 24px;">
-		<div class="hz-card" style="grid-column: 1 / -1;">
-			<div class="hz-card-header" style="margin-bottom: 12px;">
-				<p class="hz-card-title">Daftar Jurnal ({{ $journals->count() }})</p>
+		<div class="hz-card" style="grid-column: 1 / -1; padding: 24px;">
+			<div class="hz-card-header" style="margin-bottom: 16px;">
+				<p class="hz-card-title">Daftar Jurnal ({{ $journals->total() ?? $journals->count() }})</p>
 			</div>
 			<div style="margin-top: 8px; overflow-x: auto;">
 				@if ($journals->count() > 0)
-					<table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
+					<table>
 						<thead>
-							<tr style="border-bottom: 1px solid rgba(59, 130, 246, 0.4); color:#9ca3af;">
-								<th style="text-align:left; padding:14px 10px;">Nomor</th>
-								<th style="text-align:left; padding:14px 10px;">Tanggal</th>
-								<th style="text-align:left; padding:14px 10px;">Keterangan</th>
-								<th style="text-align:right; padding:14px 10px;">Total Debit</th>
-								<th style="text-align:right; padding:14px 10px;">Total Kredit</th>
+							<tr>
+								<th style="text-align:left;">Nomor</th>
+								<th style="text-align:left;">Tanggal</th>
+								<th style="text-align:left;">Keterangan</th>
+								<th style="text-align:right;">Total Debit</th>
+								<th style="text-align:right;">Total Kredit</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($journals as $journal)
-								<tr style="border-bottom: 1px solid rgba(15,23,42,0.8);">
-									<td style="padding:14px 10px; color: #1e293b; font-weight: 500;">{{ $journal->nomor_jurnal }}</td>
-									<td style="padding:14px 10px; color: #cbd5e1;">{{ $journal->tanggal->format('d/m/Y') }}</td>
-									<td style="padding:14px 10px; color: #cbd5e1;">{{ $journal->keterangan ?? '-' }}</td>
-									<td style="padding:14px 10px; text-align:right; color: #16a34a;">Rp {{ number_format($journal->items->sum('debit'), 0, ',', '.') }}</td>
-									<td style="padding:14px 10px; text-align:right; color: #dc2626;">Rp {{ number_format($journal->items->sum('kredit'), 0, ',', '.') }}</td>
+								<tr>
+									<td style="font-weight: 600; color: #0F223D;">{{ $journal->nomor_jurnal }}</td>
+									<td style="color: #475569;">{{ $journal->tanggal->format('d/m/Y') }}</td>
+									<td style="color: #475569;">{{ $journal->keterangan ?? '-' }}</td>
+									<td style="text-align:right; font-weight:700; color: #059669;">Rp {{ number_format($journal->items->sum('debit'), 0, ',', '.') }}</td>
+									<td style="text-align:right; font-weight:700; color: #DC2626;">Rp {{ number_format($journal->items->sum('kredit'), 0, ',', '.') }}</td>
 								</tr>
 							@endforeach
 						</tbody>
 					</table>
-					<div style="margin-top: 12px; display:flex; justify-content:center;">
-						{{ $journals->links() }}
-					</div>
+					@if (method_exists($journals, 'links'))
+						<div style="margin-top: 18px; display:flex; justify-content:center;">
+							{{ $journals->links() }}
+						</div>
+					@endif
 				@else
-					<div style="padding: 40px; text-align: center; color: #64748b;">
-						<p>Belum ada data jurnal.</p>
+					<div style="padding: 48px; text-align: center; color: #64748b;">
+						<p>Belum ada data jurnal keuangan.</p>
 					</div>
 				@endif
 			</div>

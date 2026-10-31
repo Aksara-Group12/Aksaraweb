@@ -1,8 +1,22 @@
-<header class="hz-header">
-	<div class="hz-header-left">
+<header class="hz-header" style="display:flex; align-items:center; justify-content:space-between; padding: 14px 32px; background: #FFFFFF; border-bottom: 1px solid #E2E8F0; min-height: 72px;">
+	<div class="hz-header-left" style="display: flex; align-items: center; gap: 14px;">
 		<button type="button" class="hz-mobile-toggle" id="hz-sidebar-toggle" aria-label="Buka menu navigasi">
 			<i data-lucide="menu" style="width: 18px; height: 18px;"></i>
 		</button>
+		@hasSection('header_content')
+			@yield('header_content')
+		@else
+			<div class="hz-header-default-title">
+				<h1 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.35rem; font-weight: 500; color: #0F223D; margin: 0; line-height: 1.2;">
+					@yield('page_title', 'Dashboard')
+				</h1>
+				@hasSection('page_subtitle')
+					<p style="font-size: 0.8rem; color: #64748B; margin: 2px 0 0 0;">
+						@yield('page_subtitle')
+					</p>
+				@endif
+			</div>
+		@endif
 	</div>
 	<div class="hz-header-right" style="margin-left:auto; gap: 12px; position: relative;">
 		<div id="hz-user-trigger" class="hz-user-chip" style="cursor: pointer;" title="Menu Akun">

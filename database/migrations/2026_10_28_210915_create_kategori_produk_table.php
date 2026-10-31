@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('kategori_produk');
+
         Schema::create('kategori_produk', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_kategori', 100)->unique();
+            $table->string('nama_kategori', 100);
             $table->string('tipe')->default('produk'); // produk atau expenses
             $table->boolean('is_default')->default(false);
             $table->timestamps();
+
+            $table->unique(['nama_kategori', 'tipe']);
         });
 
         // Insert kategori bawaan untuk Expenses

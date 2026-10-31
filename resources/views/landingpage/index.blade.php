@@ -153,9 +153,9 @@
 
 			<!-- Action Buttons (Shadcn style) -->
 			<div class="flex items-center gap-3">
-				<a href="{{ route('login') }}" class="inline-flex items-center justify-center rounded-lg text-sm font-semibold text-brand-navy hover:bg-slate-200/60 h-10 px-4 transition-colors">
+				{{-- <a href="{{ route('login') }}" class="inline-flex items-center justify-center rounded-lg text-sm font-semibold text-brand-navy hover:bg-slate-200/60 h-10 px-4 transition-colors">
 					Masuk
-				</a>
+				</a> --}}
 				<a href="{{ route('register') }}" class="inline-flex items-center justify-center rounded-lg text-sm font-semibold text-white bg-brand-navy hover:bg-brand-royal border border-brand-navy/30 h-10 px-5 shadow-sm transition-all hover:shadow">
 					Coba Gratis
 				</a>
@@ -579,7 +579,7 @@
 		<div class="mt-10 rounded-2xl bg-white border border-brand-border p-8 text-center space-y-3 shadow-sm reveal-scale delay-200">
 			<h3 class="text-2xl font-normal text-brand-navy">Konsultasikan Kebutuhan Sistem Tokomu Sekarang</h3>
 			<p class="text-sm text-brand-muted">
-				Hubungi kami langsung via WhatsApp: <strong class="text-brand-navy font-bold">+62 813-1355-613</strong>
+				Hubungi kami langsung via WhatsApp
 			</p>
 			<div class="pt-2">
 				<a href="https://wa.me/628131355613?text=Halo%20Aksara%20Developer%2C%20saya%20mau%20konsultasi%20paket%20sistem" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg bg-brand-navy hover:bg-brand-royal text-white text-sm font-semibold px-6 py-2.5 transition">

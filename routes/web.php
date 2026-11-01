@@ -227,14 +227,8 @@ Route::middleware(['auth', 'subscription.access', 'employee.access'])->group(fun
         Route::post('/bulk-destroy', [BankController::class, 'bulkDestroy'])->name('bulk-destroy');
     });
 
-
-
-});
-
-Route::middleware(['auth'])->group(function () {
-    Route::resource('profile', ProfileController::class)->only([
-        'index', 'create', 'store', 'edit', 'update',
-    ]);
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 // Protected application routes

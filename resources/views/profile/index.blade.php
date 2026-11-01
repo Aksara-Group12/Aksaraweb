@@ -335,29 +335,20 @@
 <!-- Tab Content: Form Edit Profil -->
 <div id="content-profil" class="tab-pane">
 	<div class="form-profile-card">
-		<form method="POST" action="{{ route('profile.update', $profile) }}" enctype="multipart/form-data">
+		<form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
 			@csrf
 			@method('PUT')
 
 			<!-- 1. Foto Profil / Logo -->
 			<div class="avatar-upload-row">
 				<div id="logoPreview" class="avatar-preview-circle">
-					@if($profile && $profile->logo_path)
-						<img src="{{ asset('storage/' . $profile->logo_path) }}" alt="{{ $profile->store_name }}">
-					@else
-						{{ strtoupper(substr($user->name ?? 'A', 0, 1)) }}
-					@endif
+					{{ strtoupper(substr($user->name ?? 'A', 0, 1)) }}
 				</div>
 				<div class="avatar-upload-actions">
 					<label for="logoInput">
 						{{ auth()->user()?->role === 'superadmin' ? 'Foto Profil / Logo Brand' : 'Logo Toko' }}
 					</label>
-					<input type="file" name="logo" id="logoInput" accept="image/png,image/jpeg,image/jpg" 
-						class="form-input" style="padding: 7px 10px; background: #FFFFFF; font-size: 0.8rem; cursor: pointer;">
-					<p>Format yang didukung: PNG, JPG, JPEG (maks. 5MB). Rekomendasi rasio 1:1 (persegi/bulat).</p>
-					@error('logo')
-						<span class="field-error">{{ $message }}</span>
-					@enderror
+					<p style="font-size: 0.775rem; color: #64748B; margin: 6px 0 0 0;">Logo saat ini menggunakan default dari sistem.</p>
 				</div>
 			</div>
 
@@ -416,80 +407,6 @@
 					<input type="password" id="password_confirmation" name="password_confirmation" 
 						placeholder="Ulangi kata sandi baru di atas" 
 						class="form-input">
-				</div>
-			</div>
-
-			<!-- 3. Identitas Profil / Toko -->
-			<div class="section-divider-title">
-				<h4>{{ auth()->user()?->role === 'superadmin' ? 'Identitas Sistem & Kontak' : 'Identitas Toko & Usaha' }}</h4>
-				<span>(Informasi publik yang ditampilkan pada nota dan profil)</span>
-			</div>
-
-			<div class="form-grid-two">
-				<div class="form-group">
-					<label class="form-label" for="store_name">
-						{{ auth()->user()?->role === 'superadmin' ? 'Nama Sistem / Brand' : 'Nama Toko' }} <span class="req">*</span>
-					</label>
-					<input type="text" id="store_name" name="store_name" 
-						value="{{ old('store_name', $profile->store_name ?? ($user->role === 'superadmin' ? 'Aksara Developer' : '')) }}" 
-						placeholder="{{ auth()->user()?->role === 'superadmin' ? 'Contoh: Aksara Developer' : 'Contoh: Toko Berkah Aksara' }}" 
-						class="form-input {{ $errors->has('store_name') ? 'is-invalid' : '' }}" required>
-					@error('store_name')
-						<span class="field-error">{{ $message }}</span>
-					@enderror
-				</div>
-
-				<div class="form-group">
-					<label class="form-label" for="phone">
-						Nomor WhatsApp / Telepon
-					</label>
-					<input type="text" id="phone" name="phone" 
-						value="{{ old('phone', $profile->phone ?? '') }}" 
-						placeholder="Contoh: 081234567890" 
-						class="form-input {{ $errors->has('phone') ? 'is-invalid' : '' }}">
-					@error('phone')
-						<span class="field-error">{{ $message }}</span>
-					@enderror
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label class="form-label" for="address">
-					Alamat Lengkap
-				</label>
-				<textarea id="address" name="address" rows="3" 
-					placeholder="Alamat kantor, ruko, atau lokasi toko..." 
-					class="form-textarea {{ $errors->has('address') ? 'is-invalid' : '' }}">{{ old('address', $profile->address ?? '') }}</textarea>
-				@error('address')
-					<span class="field-error">{{ $message }}</span>
-				@enderror
-			</div>
-
-			<div class="form-grid-two">
-				<div class="form-group">
-					<label class="form-label" for="city">
-						Kota / Kabupaten
-					</label>
-					<input type="text" id="city" name="city" 
-						value="{{ old('city', $profile->city ?? '') }}" 
-						placeholder="Contoh: Jakarta Selatan" 
-						class="form-input {{ $errors->has('city') ? 'is-invalid' : '' }}">
-					@error('city')
-						<span class="field-error">{{ $message }}</span>
-					@enderror
-				</div>
-
-				<div class="form-group">
-					<label class="form-label" for="postal_code">
-						Kode Pos
-					</label>
-					<input type="text" id="postal_code" name="postal_code" 
-						value="{{ old('postal_code', $profile->postal_code ?? '') }}" 
-						placeholder="Contoh: 12345" 
-						class="form-input {{ $errors->has('postal_code') ? 'is-invalid' : '' }}">
-					@error('postal_code')
-						<span class="field-error">{{ $message }}</span>
-					@enderror
 				</div>
 			</div>
 

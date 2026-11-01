@@ -20,6 +20,7 @@ use App\Http\Controllers\DataMaster\KategoriPengeluaranController;
 use App\Http\Controllers\DataMaster\KategoriProdukController;
 use App\Http\Controllers\DataMaster\RbacController;
 use App\Http\Controllers\DataMaster\RoleController;
+use App\Http\Controllers\CloseOrderController;
 
 // TEMP: Clear cache (hapus setelah berhasil)
 Route::get('/clear-cache', function () {
@@ -122,6 +123,14 @@ Route::middleware(['auth', 'subscription.access', 'employee.access'])->group(fun
 
     Route::get('/laporan/tracking-produk/export', [LaporanController::class, 'exportTrackingProduk'])
 		->name('laporan.tracking-produk.export');
+
+    Route::prefix('close-order')->name('close-order.')->group(function () {
+        Route::get('/', [CloseOrderController::class, 'index'])->name('index');
+        Route::post('/open', [CloseOrderController::class, 'openShift'])->name('open');
+        Route::post('/close', [CloseOrderController::class, 'closeShift'])->name('close');
+        Route::get('/status', [CloseOrderController::class, 'getCurrentShiftStatus'])->name('status');
+        Route::get('/export/excel', [CloseOrderController::class, 'exportExcel'])->name('export.excel');
+    });
 
     Route::prefix('pengeluaran')->name('pengeluaran.')->group(function () {
         Route::get('/', [PengeluaranController::class, 'index'])->name('index');

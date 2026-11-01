@@ -3,12 +3,55 @@
 @section('page_title', 'POS Kasir')
 
 @section('content')
+	@php
+		// Cek status shift saat ini
+		$currentShift = \App\Models\CloseOrderShift::where('user_id', auth()->id())
+			->where('status', 'open')
+			->first();
+		$isShiftOpen = $currentShift ? true : false;
+	@endphp
 	<div class="hz-top-row">
 		<div>
 			<h2 class="hz-top-title">POS Kasir</h2>
 			<p class="hz-top-sub">Point of Sale - Penjualan dengan layout kasir.</p>
 		</div>
+		<div>
+			@if ($isShiftOpen)
+				<form action="{{ route('close-order.close') }}" method="POST" style="display: inline;">
+					@csrf
+					<button type="submit" class="hz-btn hz-btn-danger" style="display: flex; align-items: center; gap: 8px;">
+						<svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+							<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+						</svg>
+						Close Order
+					</button>
+				</form>
+			@else
+				<form action="{{ route('close-order.open') }}" method="POST" style="display: inline;">
+					@csrf
+					<button type="submit" class="hz-btn hz-btn-primary" style="display: flex; align-items: center; gap: 8px;">
+						<svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+							<path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+						</svg>
+						Open Order
+					</button>
+				</form>
+			@endif
+		</div>
 	</div>
+
+	@if (!$isShiftOpen)
+		<div style="margin-top: 20px; padding: 20px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626; text-align: center;">
+			<svg style="width: 48px; height: 48px; margin-bottom: 12px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+				<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+				<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+			</svg>
+			<p style="font-size: 1.1rem; font-weight: 600; margin: 0 0 8px 0;">POS Kasir Ditutup</p>
+			<p style="font-size: 0.9rem; margin: 0;">Silakan klik tombol "Open Order" di pojok kanan atas untuk membuka shift dan mulai transaksi.</p>
+		</div>
+	@else
 
 	<!-- Shift header dihapus karena fitur shift sudah dihapus -->
 
@@ -148,6 +191,7 @@
 			</div>
 		</div>
 	</form>
+	@endif
 @endsection
 
 @push('scripts')

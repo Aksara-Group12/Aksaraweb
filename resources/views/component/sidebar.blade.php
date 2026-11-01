@@ -127,7 +127,7 @@
 					</a>
 					<a href="{{ $ownerSubscriptionActive ? route('close-order.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('close-order.index') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
 						<i data-lucide="lock" class="hz-nav-lucide"></i>
-						<span class="hz-nav-label">Close Order</span>
+						<span class="hz-nav-label">Export Close Order</span>
 					</a>
 				</div>
 			@endif

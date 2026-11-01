@@ -54,11 +54,6 @@
 					<p style="font-size:1.6rem; font-weight:700; margin-top:4px;">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</p>
 					<p style="font-size:0.75rem; opacity:0.8; margin-top:2px;">{{ $totalSalesCount }} transaksi</p>
 				</div>
-				<div class="hz-metric-card" style="border-radius:16px; padding:16px; background:linear-gradient(135deg,#fb923c,#f97316); color:#fff;">
-					<p style="font-size:0.8rem; opacity:0.8;">HPP / COGS</p>
-					<p style="font-size:1.6rem; font-weight:700; margin-top:4px;">Rp {{ number_format($totalHPP, 0, ',', '.') }}</p>
-					<p style="font-size:0.75rem; opacity:0.8; margin-top:2px;">Harga pokok penjualan (berdasarkan pembelian)</p>
-				</div>
 				<div class="hz-metric-card" style="border-radius:16px; padding:16px; background:linear-gradient(135deg,#22c55e,#16a34a); color:#fff;">
 					<p style="font-size:0.8rem; opacity:0.8;">Gross Profit (Laba Kotor)</p>
 					<p style="font-size:1.6rem; font-weight:700; margin-top:4px;">Rp {{ number_format($grossProfit, 0, ',', '.') }}</p>
@@ -79,30 +74,6 @@
 
 		<div class="hz-card" style="grid-column: 1 / -1; padding: 20px;">
 			<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-				<h3 class="hz-card-title">Piutang Belum Tertagih (AR)</h3>
-				<p style="font-size:0.8rem; color:#9ca3af;">Semua waktu</p>
-			</div>
-			<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
-				<div class="hz-card-soft">
-					<p class="hz-card-sub">Total Piutang</p>
-					<p class="hz-card-metric">Rp {{ number_format($totalPiutang, 0, ',', '.') }}</p>
-					<p style="font-size:0.75rem; color:#9ca3af; margin-top:4px;">Sisa tagihan invoice</p>
-				</div>
-				<div class="hz-card-soft">
-					<p class="hz-card-sub">Jatuh Tempo</p>
-					<p class="hz-card-metric" style="color: #ef4444;">Rp {{ number_format($piutangJatuhTempo, 0, ',', '.') }}</p>
-					<p style="font-size:0.75rem; color:#9ca3af; margin-top:4px;">Invoice overdue</p>
-				</div>
-				<div class="hz-card-soft">
-					<p class="hz-card-sub">Belum Jatuh Tempo</p>
-					<p class="hz-card-metric" style="color: #22c55e;">Rp {{ number_format($piutangBelumJatuhTempo, 0, ',', '.') }}</p>
-					<p style="font-size:0.75rem; color:#9ca3af; margin-top:4px;">Invoice on-time</p>
-				</div>
-			</div>
-		</div>
-
-		<div class="hz-card" style="grid-column: 1 / -1; padding: 20px;">
-			<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
 				<h3 class="hz-card-title">Cash Flow</h3>
 				<p style="font-size:0.8rem; color:#9ca3af;">Periode: {{ $startDate }} s/d {{ $endDate }}</p>
 			</div>
@@ -115,7 +86,7 @@
 				<div class="hz-card-soft">
 					<p class="hz-card-sub">Cash Out</p>
 					<p class="hz-card-metric">Rp {{ number_format($cashOut, 0, ',', '.') }}</p>
-					<p style="font-size:0.75rem; color:#9ca3af; margin-top:4px;">HPP + Expenses</p>
+					<p style="font-size:0.75rem; color:#9ca3af; margin-top:4px;">Total Expenses</p>
 				</div>
 				<div class="hz-card-soft">
 					<p class="hz-card-sub">Free Cash Flow</p>

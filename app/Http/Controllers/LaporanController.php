@@ -46,20 +46,9 @@ class LaporanController extends BaseController
 		$totalRevenue = (float) $salesQuery->sum('total_harga');
 		$totalSalesCount = (int) $salesQuery->count();
 
-		// HPP / COGS: dari hpp_snapshot pada item penjualan (qty × hpp_snapshot)
-		// Hanya transaksi yang tidak void
-		$HPPFromSales = TransaksiKeluarItem::join('transaksi_keluar', 'transaksi_keluar_items.transaksi_keluar_id', '=', 'transaksi_keluar.id')
-			->where('transaksi_keluar.user_id', auth()->user()->id)
-			->whereBetween('transaksi_keluar.tanggal_transaksi', [$start, $end])
-			->where('transaksi_keluar.status', 'complete')
-			->where('transaksi_keluar.is_void', false)
-			->selectRaw('SUM(transaksi_keluar_items.qty_keluar * transaksi_keluar_items.hpp_snapshot) as total_hpp')
-			->value('total_hpp');
-
-		$totalHPP = (float) ($HPPFromSales ?? 0);
-
-		$grossProfit = $totalRevenue - $totalHPP;
-		$grossMargin = $totalRevenue > 0 ? ($grossProfit / $totalRevenue) * 100 : 0.0;
+		// Gross Profit (tanpa HPP/COGS)
+		$grossProfit = $totalRevenue;
+		$grossMargin = 100.0; // Gross margin 100% karena tidak ada HPP
 
 		// Operating expenses dari tabel expenses
 		$expensesQuery = Pengeluaran::where('user_id', auth()->user()->id)
@@ -73,10 +62,8 @@ class LaporanController extends BaseController
 		// Cash In: Total Revenue dari penjualan complete
 		$cashIn = $totalRevenue;
 
-		// Cash Out: HPP + Operating Expenses
-		// HPP adalah cost of goods sold (dari total pembelian)
-		// Operating Expenses dari tabel expenses
-		$cashOut = $totalHPP + $totalOperatingExpenses;
+		// Cash Out: Operating Expenses saja (tanpa HPP)
+		$cashOut = $totalOperatingExpenses;
 
 		$freeCashFlow = $cashIn - $cashOut;
 
@@ -100,20 +87,12 @@ class LaporanController extends BaseController
 			->limit(5)
 			->get();
 
-		// Piutang belum tertagih (AR)
-		// Piutang dihapus karena Invoice sudah dihapus
-		$totalPiutang = 0;
-		$recentPiutang = collect();
-		$piutangJatuhTempo = 0;
-		$piutangBelumJatuhTempo = 0;
-
 		return view('laporan.ringkasan-keuangan', [
 			'period' => $period,
 			'startDate' => $start->toDateString(),
 			'endDate' => $end->toDateString(),
 			'totalRevenue' => $totalRevenue,
 			'totalSalesCount' => $totalSalesCount,
-			'totalHPP' => $totalHPP,
 			'grossProfit' => $grossProfit,
 			'grossMargin' => $grossMargin,
 			'totalOperatingExpenses' => $totalOperatingExpenses,
@@ -126,11 +105,6 @@ class LaporanController extends BaseController
 			'paymentBreakdown' => $paymentBreakdown,
 			'expensesByType' => $expensesByType,
 			'expenses' => $recentExpenses,
-
-			// Piutang belum tertagih
-			'totalPiutang' => $totalPiutang,
-			'piutangJatuhTempo' => $piutangJatuhTempo,
-			'piutangBelumJatuhTempo' => $piutangBelumJatuhTempo,
 		]);
 	}
 
@@ -300,16 +274,9 @@ class LaporanController extends BaseController
 		$totalRevenue = (float) $salesQuery->sum('total_harga');
 		$totalSalesCount = (int) $salesQuery->count();
 
-		// HPP (COGS) - dari Transaksi Masuk
-		// TransaksiMasuk dihapus, HPP dihitung dari snapshot di TransaksiKeluarItem
-		$totalHPP = (float) TransaksiKeluarItem::join('transaksi_keluar', 'transaksi_keluar_items.transaksi_keluar_id', '=', 'transaksi_keluar.id')
-			->where('transaksi_keluar.user_id', auth()->user()->id)
-			->whereBetween('tanggal_transaksi', [$start, $end])
-			->where('status', 'complete')
-			->sum('total_harga');
-
-		$grossProfit = $totalRevenue - $totalHPP;
-		$grossMargin = $totalRevenue > 0 ? ($grossProfit / $totalRevenue) * 100 : 0.0;
+		// Gross Profit (tanpa HPP/COGS)
+		$grossProfit = $totalRevenue;
+		$grossMargin = 100.0; // Gross margin 100% karena tidak ada HPP
 
 		// Beban Operasional
 		$totalOperatingExpenses = (float) Pengeluaran::where('user_id', auth()->user()->id)
@@ -332,7 +299,6 @@ class LaporanController extends BaseController
 			'endDate' => $end->toDateString(),
 			'totalRevenue' => $totalRevenue,
 			'totalSalesCount' => $totalSalesCount,
-			'totalHPP' => $totalHPP,
 			'grossProfit' => $grossProfit,
 			'grossMargin' => $grossMargin,
 			'totalOperatingExpenses' => $totalOperatingExpenses,

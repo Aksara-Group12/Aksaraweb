@@ -8,7 +8,7 @@
 		.shadcn-container {
 			max-width: 100%;
 			padding: 4px 0 24px 0;
-			font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+			font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 		}
 
 		/* Top Action & Filter Bar */
@@ -590,10 +590,12 @@
 		}
 
 		// Initialize Chart.js Shadcn Bar Chart
-		document.addEventListener('DOMContentLoaded', function () {
+		function initShadcnOverviewChart() {
 			if (typeof lucide !== 'undefined') {
 				lucide.createIcons();
 			}
+
+			if (typeof Chart === 'undefined') return;
 
 			const ctx = document.getElementById('shadcnOverviewChart');
 			if (ctx) {
@@ -669,6 +671,9 @@
 					}
 				});
 			}
-		});
+		}
+
+		initShadcnOverviewChart();
+		document.addEventListener('DOMContentLoaded', initShadcnOverviewChart);
 	</script>
 @endsection

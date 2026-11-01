@@ -39,7 +39,7 @@
 			<p class="hz-logo-sub" style="color: #64748B; font-size: 0.72rem; margin: 2px 0 0 0;">{{ $isSuperadmin ? 'Superadmin Konsol' : 'Panel Manajemen Toko' }}</p>
 		</div>
 	</div>
-	<nav class="hz-nav">
+	<nav class="hz-nav" id="hz-nav">
 		<div class="hz-nav-group">
 			<p class="hz-nav-group-title">Menu Utama</p>
 			@if($isSuperadmin)
@@ -193,7 +193,56 @@
 	</div>
 
 	<script>
+		// 1. Instant Scroll Restoration to prevent flicker
+		(function () {
+			try {
+				var nav = document.getElementById('hz-nav');
+				var savedScroll = sessionStorage.getItem('hz_sidebar_scroll');
+				if (nav && savedScroll !== null) {
+					nav.scrollTop = parseInt(savedScroll, 10);
+				}
+			} catch (e) {}
+		})();
+
 		document.addEventListener('DOMContentLoaded', function () {
+			var nav = document.getElementById('hz-nav');
+			var savedScroll = sessionStorage.getItem('hz_sidebar_scroll');
+
+			function restoreNavScroll() {
+				if (nav && savedScroll !== null) {
+					nav.scrollTop = parseInt(savedScroll, 10);
+				}
+			}
+
+			// Restore immediately and after Lucide / fonts layout settle
+			restoreNavScroll();
+			setTimeout(restoreNavScroll, 50);
+			setTimeout(restoreNavScroll, 150);
+
+			// Track scroll position continuously
+			if (nav) {
+				nav.addEventListener('scroll', function () {
+					sessionStorage.setItem('hz_sidebar_scroll', nav.scrollTop);
+				}, { passive: true });
+			}
+
+			// Save on nav item click before navigation
+			var navLinks = document.querySelectorAll('.hz-nav-item');
+			navLinks.forEach(function (link) {
+				link.addEventListener('click', function () {
+					if (nav) {
+						sessionStorage.setItem('hz_sidebar_scroll', nav.scrollTop);
+					}
+				});
+			});
+
+			// Save before page unload
+			window.addEventListener('beforeunload', function () {
+				if (nav) {
+					sessionStorage.setItem('hz_sidebar_scroll', nav.scrollTop);
+				}
+			});
+
 			var sTrigger = document.getElementById('hz-sidebar-user-trigger');
 			var sMenu = document.getElementById('hz-sidebar-user-menu');
 			if (!sTrigger || !sMenu) return;

@@ -62,7 +62,7 @@
 					</span>
 				</div>
 				<div>
-					<h3 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.25rem; font-weight: 600; color: #0F223D; margin: 0 0 4px 0;">
+					<h3 style="font-family: {{ (auth()->check() && auth()->user()->role === 'superadmin') ? "'Geist', 'Geist Sans', system-ui, -apple-system, sans-serif" : "'Newsreader', Georgia, serif" }}; font-size: 1.25rem; font-weight: 600; color: #0F223D; margin: 0 0 4px 0; letter-spacing: -0.015em;">
 						{{ $menu['title'] }}
 					</h3>
 					<p style="font-size: 0.825rem; color: #64748B; margin: 0; line-height: 1.4;">

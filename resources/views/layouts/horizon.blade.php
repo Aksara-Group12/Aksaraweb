@@ -8,10 +8,10 @@
 		<link rel="icon" type="image/png" href="{{ asset('assets/images/aksara-logo.png') }}">
 		<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
-		<!-- Fonts: Inter (UI Sans) & Newsreader (Luxury Editorial Serif) -->
+		<!-- Fonts: Geist Sans, Inter (UI Sans) & Newsreader (Luxury Editorial Serif) -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400&display=swap" rel="stylesheet">
 
 		<!-- Lucide Icons (Shadcn Standard) -->
 		<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
@@ -37,10 +37,29 @@
 				-webkit-font-smoothing: antialiased;
 			}
 
-			/* Headings globally use Newsreader */
-			h1, h2, h3, .hz-card-title, .hz-top-title {
-				font-family: 'Newsreader', Georgia, serif;
-			}
+			@php
+				$isSuperadminLayout = (auth()->check() && auth()->user()->role === 'superadmin') || request()->is('superadmin*') || request()->is('paket*') || request()->is('bank*') || request()->is('dashboardsuperadmin*');
+			@endphp
+
+			@if($isSuperadminLayout)
+				/* Superadmin Typography: Modern Geist Sans */
+				h1, h2, h3, h4, h5, h6, 
+				.hz-card-title, 
+				.hz-top-title, 
+				.card-title, 
+				.modal-title, 
+				.section-title,
+				.hz-header-default-title h1,
+				[style*="Newsreader"] {
+					font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+					letter-spacing: -0.02em;
+				}
+			@else
+				/* Headings globally use Newsreader */
+				h1, h2, h3, .hz-card-title, .hz-top-title {
+					font-family: 'Newsreader', Georgia, serif;
+				}
+			@endif
 
 			/* Body & UI elements globally use Inter */
 			p, span, a, button, input, select, textarea, table, th, td, label {
@@ -232,6 +251,10 @@
 				text-decoration: none;
 			}
 
+			.hz-nav-item:active {
+				transform: scale(0.98);
+			}
+
 			.hz-nav-item:hover {
 				background: #FAF8F5;
 				color: #0F223D;
@@ -379,6 +402,23 @@
 				padding: 32px;
 			}
 
+			/* Glow bersinar halus saat kartu dashboard pertama kali mendarat */
+			.hz-card, .shadcn-card, .shadcn-panel-card {
+				animation: hzCardGlow 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+			}
+
+			@keyframes hzCardGlow {
+				0% {
+					box-shadow: 0 0 0 rgba(197, 160, 89, 0);
+				}
+				50% {
+					box-shadow: 0 0 22px rgba(197, 160, 89, 0.28);
+				}
+				100% {
+					box-shadow: 0 4px 16px -2px rgba(15, 34, 61, 0.04);
+				}
+			}
+
 			/* Global Horizon Page Components */
 			.hz-top-row {
 				display: flex;
@@ -436,13 +476,13 @@
 			}
 
 			.hz-top-title {
-				font-family: 'Newsreader', Georgia, serif;
+				font-family: {{ $isSuperadminLayout ? "'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" : "'Newsreader', Georgia, serif" }};
 				font-size: 2.2rem;
-				font-weight: 500;
+				font-weight: {{ $isSuperadminLayout ? '700' : '500' }};
 				color: #0F223D;
 				margin: 0 0 4px 0;
 				line-height: 1.2;
-				letter-spacing: -0.01em;
+				letter-spacing: {{ $isSuperadminLayout ? '-0.025em' : '-0.01em' }};
 			}
 
 			.hz-top-sub {
@@ -466,11 +506,12 @@
 			}
 
 			.hz-card-title {
-				font-family: 'Newsreader', Georgia, serif;
+				font-family: {{ $isSuperadminLayout ? "'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" : "'Newsreader', Georgia, serif" }};
 				font-size: 1.25rem;
 				font-weight: 600;
 				color: #0F223D;
 				margin: 0;
+				letter-spacing: {{ $isSuperadminLayout ? '-0.015em' : 'normal' }};
 			}
 
 			.hz-card-sub {

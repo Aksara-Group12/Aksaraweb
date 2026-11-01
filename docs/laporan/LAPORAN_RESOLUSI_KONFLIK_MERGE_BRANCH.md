@@ -138,3 +138,4 @@ Semua request yang dikerjakan pada sesi akun Faraysz tetap aktif dan berfungsi s
    ```
 3. **Branch Cadangan**:
    Branch `faraysz-work` tersedia di git lokal jika sewaktu-waktu ingin melihat commit murni Faraysz sebelum merge.
+

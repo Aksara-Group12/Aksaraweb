@@ -41,25 +41,18 @@
 				$isSuperadminLayout = (auth()->check() && auth()->user()->role === 'superadmin') || request()->is('superadmin*') || request()->is('paket*') || request()->is('bank*') || request()->is('dashboardsuperadmin*');
 			@endphp
 
-			@if($isSuperadminLayout)
-				/* Superadmin Typography: Modern Geist Sans */
-				h1, h2, h3, h4, h5, h6, 
-				.hz-card-title, 
-				.hz-top-title, 
-				.card-title, 
-				.modal-title, 
-				.section-title,
-				.hz-header-default-title h1,
-				[style*="Newsreader"] {
-					font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-					letter-spacing: -0.02em;
-				}
-			@else
-				/* Headings globally use Newsreader */
-				h1, h2, h3, .hz-card-title, .hz-top-title {
-					font-family: 'Newsreader', Georgia, serif;
-				}
-			@endif
+			/* Typography: Modern Geist Sans Globally for All Headings & Titles in Admin Panel */
+			h1, h2, h3, h4, h5, h6, 
+			.hz-card-title, 
+			.hz-top-title, 
+			.card-title, 
+			.modal-title, 
+			.section-title,
+			.hz-header-default-title h1,
+			[style*="Newsreader"] {
+				font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+				letter-spacing: -0.02em;
+			}
 
 			/* Body & UI elements globally use Inter */
 			p, span, a, button, input, select, textarea, table, th, td, label {
@@ -476,13 +469,13 @@
 			}
 
 			.hz-top-title {
-				font-family: {{ $isSuperadminLayout ? "'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" : "'Newsreader', Georgia, serif" }};
-				font-size: 2.2rem;
-				font-weight: {{ $isSuperadminLayout ? '700' : '500' }};
+				font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+				font-size: 2rem;
+				font-weight: 700;
 				color: #0F223D;
 				margin: 0 0 4px 0;
 				line-height: 1.2;
-				letter-spacing: {{ $isSuperadminLayout ? '-0.025em' : '-0.01em' }};
+				letter-spacing: -0.025em;
 			}
 
 			.hz-top-sub {
@@ -506,12 +499,12 @@
 			}
 
 			.hz-card-title {
-				font-family: {{ $isSuperadminLayout ? "'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" : "'Newsreader', Georgia, serif" }};
+				font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 				font-size: 1.25rem;
 				font-weight: 600;
 				color: #0F223D;
 				margin: 0;
-				letter-spacing: {{ $isSuperadminLayout ? '-0.015em' : 'normal' }};
+				letter-spacing: -0.015em;
 			}
 
 			.hz-card-sub {

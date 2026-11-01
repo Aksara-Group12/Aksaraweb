@@ -7,14 +7,14 @@
 			@yield('header_content')
 		@else
 			@php
-				$isSuperadminHeader = (auth()->check() && auth()->user()->role === 'superadmin') || request()->is('superadmin*') || request()->is('paket*') || request()->is('bank*') || request()->is('dashboardsuperadmin*');
+				$isSuperadminHeader = true; // Gunakan tipografi modern Geist Sans konsisten di seluruh dashboard
 			@endphp
 			<div class="hz-header-default-title">
-				<h1 style="font-family: {{ $isSuperadminHeader ? "'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" : "'Newsreader', Georgia, serif" }} !important; font-size: 1.45rem; font-weight: {{ $isSuperadminHeader ? '600' : '500' }}; color: #0F223D; margin: 0; line-height: 1.2; letter-spacing: {{ $isSuperadminHeader ? '-0.02em' : '-0.01em' }};">
+				<h1 style="font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important; font-size: 1.45rem; font-weight: 600; color: #0F223D; margin: 0; line-height: 1.2; letter-spacing: -0.02em;">
 					@yield('page_title', 'Dashboard')
 				</h1>
 				@hasSection('page_subtitle')
-					<p style="font-family: 'Inter', sans-serif !important; font-size: 0.8rem; color: #64748B; margin: 3px 0 0 0;">
+					<p style="font-family: 'Geist', 'Geist Sans', 'Inter', system-ui, sans-serif !important; font-size: 0.8rem; color: #64748B; margin: 3px 0 0 0;">
 						@yield('page_subtitle')
 					</p>
 				@endif

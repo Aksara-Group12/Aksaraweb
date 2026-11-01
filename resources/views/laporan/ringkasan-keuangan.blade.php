@@ -4,7 +4,7 @@
 
 @section('header_content')
 	<div>
-		<h1 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.45rem; font-weight: 500; color: #0F223D; margin: 0; line-height: 1.2; letter-spacing: -0.01em;">
+		<h1 style="font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 1.45rem; font-weight: 600; color: #0F223D; margin: 0; line-height: 1.2; letter-spacing: -0.02em;">
 			Laporan Keuangan
 		</h1>
 		<p style="font-family: 'Inter', sans-serif; font-size: 0.8rem; color: #64748B; margin: 3px 0 0 0;">
@@ -73,7 +73,7 @@
 	<div style="background: #FFFFFF; border-radius: 18px; border: 1px solid rgba(226, 232, 240, 0.95); box-shadow: 0 4px 16px -2px rgba(15, 34, 61, 0.04); padding: 24px; margin-bottom: 24px;">
 		<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 8px;">
 			<div>
-				<h3 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.25rem; font-weight: 600; color: #0F223D; margin: 0; line-height: 1.2;">
+				<h3 style="font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 1.2rem; font-weight: 700; color: #0F223D; margin: 0; line-height: 1.2; letter-spacing: -0.015em;">
 					Core Metrics (Indikator Utama)
 				</h3>
 				<p style="font-size: 0.8rem; color: #64748B; margin: 3px 0 0 0;">
@@ -171,7 +171,7 @@
 	<div style="background: #FFFFFF; border-radius: 18px; border: 1px solid rgba(226, 232, 240, 0.95); box-shadow: 0 4px 16px -2px rgba(15, 34, 61, 0.04); padding: 24px; margin-bottom: 24px;">
 		<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 8px;">
 			<div>
-				<h3 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.25rem; font-weight: 600; color: #0F223D; margin: 0; line-height: 1.2;">
+				<h3 style="font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 1.2rem; font-weight: 700; color: #0F223D; margin: 0; line-height: 1.2; letter-spacing: -0.015em;">
 					Arus Kas (Cash Flow)
 				</h3>
 				<p style="font-size: 0.8rem; color: #64748B; margin: 3px 0 0 0;">
@@ -228,7 +228,7 @@
 		<div style="background: #FFFFFF; border-radius: 18px; border: 1px solid rgba(226, 232, 240, 0.95); box-shadow: 0 4px 16px -2px rgba(15, 34, 61, 0.04); padding: 24px;">
 			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
 				<div>
-					<h3 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.25rem; font-weight: 600; color: #0F223D; margin: 0; line-height: 1.2;">
+					<h3 style="font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 1.2rem; font-weight: 700; color: #0F223D; margin: 0; line-height: 1.2; letter-spacing: -0.015em;">
 						Metode Pembayaran
 					</h3>
 					<p style="font-size: 0.8rem; color: #64748B; margin: 3px 0 0 0;">
@@ -275,7 +275,7 @@
 		<div style="background: #FFFFFF; border-radius: 18px; border: 1px solid rgba(226, 232, 240, 0.95); box-shadow: 0 4px 16px -2px rgba(15, 34, 61, 0.04); padding: 24px;">
 			<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
 				<div>
-					<h3 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.25rem; font-weight: 600; color: #0F223D; margin: 0; line-height: 1.2;">
+					<h3 style="font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 1.2rem; font-weight: 700; color: #0F223D; margin: 0; line-height: 1.2; letter-spacing: -0.015em;">
 						Rincian Beban Operasional
 					</h3>
 					<p style="font-size: 0.8rem; color: #64748B; margin: 3px 0 0 0;">

@@ -12,7 +12,7 @@
 				<i data-lucide="arrow-left"></i>
 			</a>
 			<div>
-				<h3 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.35rem; font-weight: 600; color: #0F223D; margin: 0;">Tambah Produk</h3>
+				<h3 style="font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 1.25rem; font-weight: 700; color: #0F223D; margin: 0; letter-spacing: -0.02em;">Tambah Produk</h3>
 				<p style="font-size: 0.8rem; color: #64748B; margin: 2px 0 0 0;">Lengkapi data produk baru</p>
 			</div>
 		</div>

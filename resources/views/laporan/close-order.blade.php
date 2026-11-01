@@ -4,7 +4,7 @@
 
 @section('header_content')
 	<div>
-		<h1 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.45rem; font-weight: 500; color: #0F223D; margin: 0; line-height: 1.2; letter-spacing: -0.01em;">
+		<h1 style="font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 1.45rem; font-weight: 600; color: #0F223D; margin: 0; line-height: 1.2; letter-spacing: -0.02em;">
 			Laporan Close Order
 		</h1>
 		<p style="font-family: 'Inter', sans-serif; font-size: 0.8rem; color: #64748B; margin: 3px 0 0 0;">
@@ -76,7 +76,7 @@
 	<!-- Header Card -->
 	<div style="display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid #F1F5F9; flex-wrap: wrap; gap: 10px;">
 		<div>
-			<h3 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.25rem; font-weight: 600; color: #0F223D; margin: 0; line-height: 1.2;">
+			<h3 style="font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 1.2rem; font-weight: 700; color: #0F223D; margin: 0; line-height: 1.2; letter-spacing: -0.015em;">
 				Riwayat Rekap Shift
 			</h3>
 			<p style="font-size: 0.8rem; color: #64748B; margin: 3px 0 0 0;">
@@ -193,7 +193,7 @@
 								<div style="width: 54px; height: 54px; border-radius: 50%; background: #FAF8F5; border: 1.5px dashed rgba(197, 160, 89, 0.4); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; color: #C5A059;">
 									<i data-lucide="clock-3" style="width: 26px; height: 26px;"></i>
 								</div>
-								<h4 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.15rem; font-weight: 600; color: #0F223D; margin: 0 0 6px 0;">
+								<h4 style="font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 1.1rem; font-weight: 700; color: #0F223D; margin: 0 0 6px 0; letter-spacing: -0.015em;">
 									Belum Ada Riwayat Close Order
 								</h4>
 								<p style="font-size: 0.825rem; color: #64748B; margin: 0; line-height: 1.5;">

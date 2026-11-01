@@ -27,7 +27,7 @@
 		</div>
 
 		<!-- Title -->
-		<h3 id="accessDeniedTitle" style="font-family: {{ (auth()->check() && auth()->user()->role === 'superadmin') ? "'Geist', 'Geist Sans', system-ui, -apple-system, sans-serif" : "'Newsreader', Georgia, serif" }}; font-size: 1.5rem; font-weight: 600; color: #0F223D; margin: 0 0 8px 0; line-height: 1.2; letter-spacing: -0.015em;">
+		<h3 id="accessDeniedTitle" style="font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 1.4rem; font-weight: 700; color: #0F223D; margin: 0 0 8px 0; line-height: 1.2; letter-spacing: -0.02em;">
 			Akses Ditolak
 		</h3>
 

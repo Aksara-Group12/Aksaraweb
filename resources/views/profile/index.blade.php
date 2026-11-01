@@ -10,12 +10,13 @@
 	}
 
 	.page-title-block h2 {
-		font-family: 'Newsreader', Georgia, serif;
-		font-size: 2.2rem;
-		font-weight: 500;
+		font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		font-size: 2rem;
+		font-weight: 700;
 		color: #0F223D;
 		margin: 0 0 4px 0;
 		line-height: 1.2;
+		letter-spacing: -0.025em;
 	}
 
 	.page-title-block p {
@@ -89,11 +90,12 @@
 	}
 
 	.section-divider-title h4 {
-		font-family: 'Newsreader', Georgia, serif;
-		font-size: 1.25rem;
-		font-weight: 600;
+		font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		font-size: 1.15rem;
+		font-weight: 700;
 		color: #0F223D;
 		margin: 0;
+		letter-spacing: -0.015em;
 	}
 
 	.section-divider-title span {
@@ -124,9 +126,9 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-family: 'Newsreader', Georgia, serif;
-		font-size: 2.2rem;
-		font-weight: 600;
+		font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		font-size: 2rem;
+		font-weight: 700;
 		overflow: hidden;
 		flex-shrink: 0;
 		border: 3px solid #FFFFFF;

@@ -5,10 +5,10 @@
 
 @section('content')
 <section class="hz-card" style="margin-top: 4px;">
-	<div class="hz-card-header" style="margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid #F1F5F9;">
+	{{-- <div class="hz-card-header" style="margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid #F1F5F9;">
 		<p class="hz-card-title">Pilihan Modul Data Master</p>
 		<p class="hz-card-sub">Pilih salah satu menu di bawah ini untuk mengelola entitas sistem.</p>
-	</div>
+	</div> --}}
 
 	@php
 		$masterMenus = [
@@ -62,7 +62,7 @@
 					</span>
 				</div>
 				<div>
-					<h3 style="font-family: {{ (auth()->check() && auth()->user()->role === 'superadmin') ? "'Geist', 'Geist Sans', system-ui, -apple-system, sans-serif" : "'Newsreader', Georgia, serif" }}; font-size: 1.25rem; font-weight: 600; color: #0F223D; margin: 0 0 4px 0; letter-spacing: -0.015em;">
+					<h3 style="font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 1.2rem; font-weight: 700; color: #0F223D; margin: 0 0 4px 0; letter-spacing: -0.02em;">
 						{{ $menu['title'] }}
 					</h3>
 					<p style="font-size: 0.825rem; color: #64748B; margin: 0; line-height: 1.4;">

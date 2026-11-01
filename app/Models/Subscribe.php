@@ -79,7 +79,8 @@ class Subscribe extends Model
         if ($this->isExpired()) {
             return 0;
         }
-        return Carbon::now()->diffInDays($this->end_date);
+        $diff = Carbon::now()->diffInDays($this->end_date, false);
+        return max(0, (int) ceil($diff));
     }
 
     /**

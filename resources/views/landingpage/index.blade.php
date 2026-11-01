@@ -195,7 +195,7 @@
 				</a>
 				<a href="https://wa.me/628131355613?text=Halo%20Aksara%20Developer%2C%20saya%20tertarik%20dengan%20sistem%20kasir%20dan%20CRM%20UMKM" target="_blank" rel="noopener" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-white border border-slate-300 hover:border-brand-gold/50 hover:bg-slate-50 text-brand-navy text-sm font-semibold px-8 py-3.5 shadow-sm transition-all">
 					<i data-lucide="message-circle" class="w-4 h-4 text-emerald-600"></i>
-					Chat Aja Dulu (+62 813-1355-613)
+					Chat Sekarang (+62 813-1355-613)
 				</a>
 			</div>
 		</div>
@@ -584,7 +584,7 @@
 			<div class="pt-2">
 				<a href="https://wa.me/628131355613?text=Halo%20Aksara%20Developer%2C%20saya%20mau%20konsultasi%20paket%20sistem" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg bg-brand-navy hover:bg-brand-royal text-white text-sm font-semibold px-6 py-2.5 transition">
 					<i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
-					Chat Aja Dulu
+					Chat Sekarang
 				</a>
 			</div>
 		</div>
@@ -631,7 +631,7 @@
 									</div>
 								@endif
 								<div class="text-[11px] text-slate-500 mt-1">
-									Masa aktif: {{ $paket->durasi_bulan > 0 ? $paket->durasi_bulan . ' Bulan' : 'Akses Uji Coba' }}
+									Masa aktif: {{ $paket->durasi_hari > 0 ? $paket->durasi_hari . ' Hari' : 'Akses Uji Coba' }}
 								</div>
 							</div>
 
@@ -750,7 +750,7 @@
 	<!-- ==================== FLOATING WHATSAPP BUTTON ==================== -->
 	<a href="https://wa.me/628131355613?text=Halo%20Aksara%20Developer%2C%20saya%20tertarik%20dengan%20sistem%20kasir%20dan%20CRM%20UMKM" target="_blank" rel="noopener" class="fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 text-xs font-bold shadow-lg transition-transform hover:scale-105 border border-white" aria-label="Konsultasi WhatsApp">
 		<i data-lucide="message-circle" class="w-4 h-4"></i>
-		<span>Chat Aja Dulu</span>
+		<span>Chat Sekarang</span>
 	</a>
 
 	<!-- ==================== SCRIPT: TABS, LUCIDE & SCROLL ANIMATION ==================== -->

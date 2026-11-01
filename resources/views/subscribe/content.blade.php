@@ -87,16 +87,16 @@
                         <!-- Info Durasi -->
                         <div style="background: rgba(59, 130, 246, 0.15); padding: 10px; border-radius: 6px; margin-bottom: 12px;">
                             <p style="font-size: 0.85rem; font-weight: 600; color: #93c5fd;">
-                                📅 Durasi: {{ $package->durasi_bulan }} bulan
+                                📅 Durasi: {{ $package->durasi_hari }} hari
                             </p>
                         </div>
 
                         <!-- Button -->
-                        <button type="button" 
+                        <button type="button"
                             style="width: 100%; background: #60a5fa; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 500; transition: background 0.3s;"
                             onmouseover="this.style.background='#3b82f6';"
                             onmouseout="this.style.background='#60a5fa';"
-                            onclick="selectPackage({{ $package->id }}, '{{ $package->nama_paket }}', {{ $package->harga_diskon ?? $package->harga }}, {{ $package->durasi_bulan }})">
+                            onclick="selectPackage({{ $package->id }}, '{{ $package->nama_paket }}', {{ $package->harga_diskon ?? $package->harga }}, {{ $package->durasi_hari }})">
                             ✓ Pilih Paket
                         </button>
                     </div>

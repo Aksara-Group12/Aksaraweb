@@ -644,7 +644,7 @@
 							@endif
 						</td>
 						<td style="text-align: center; color: #64748B;">
-							{{ $paket->durasi_bulan ?? 1 }} bulan
+							{{ $paket->durasi_hari ?? 1 }} hari
 						</td>
 						<td style="text-align: center;">
 							@php($status = $paket->is_active ?? 1)

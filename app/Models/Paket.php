@@ -13,14 +13,14 @@ class Paket extends Model
 		'deskripsi',
 		'harga',
 		'harga_diskon',
-		'durasi_bulan',
+		'durasi_hari',
 		'is_active',
 	];
 
 	protected $casts = [
 		'harga' => 'integer',
 		'harga_diskon' => 'integer',
-		'durasi_bulan' => 'integer',
+		'durasi_hari' => 'integer',
 		'is_active' => 'boolean',
 	];
 }

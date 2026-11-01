@@ -155,7 +155,7 @@ class AuthController extends Controller
 			], [
 				'deskripsi' => 'Trial 7 hari',
 				'harga' => 0,
-				'durasi_bulan' => 0,
+				'durasi_hari' => 0,
 				'is_active' => false,
 			]);
 

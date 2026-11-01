@@ -44,16 +44,78 @@
 			letter-spacing: 0.16em;
 		}
 
-		/* Shadcn-like subtle borders and cards */
+		/* ReactBits / Framer Motion Style: Ambient Glow Mesh */
+		.hero-ambient-glow {
+			position: absolute;
+			top: -15%;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 100%;
+			max-width: 900px;
+			height: 480px;
+			background: radial-gradient(ellipse at center, rgba(197, 160, 89, 0.16) 0%, rgba(22, 44, 80, 0.08) 45%, transparent 70%);
+			filter: blur(60px);
+			pointer-events: none;
+			z-index: 0;
+			animation: auraPulse 10s ease-in-out infinite alternate;
+		}
+
+		@keyframes auraPulse {
+			0% { transform: translateX(-50%) scale(0.95); opacity: 0.6; }
+			100% { transform: translateX(-50%) scale(1.08); opacity: 0.95; }
+		}
+
+		/* Gentle Float Animation (ReactBits style) */
+		@keyframes gentleFloat {
+			0%, 100% { transform: translateY(0); }
+			50% { transform: translateY(-5px); }
+		}
+		.animate-float {
+			animation: gentleFloat 5s ease-in-out infinite;
+		}
+
+		/* ReactBits Shimmer Badge */
+		@keyframes badgeShine {
+			0% { background-position: -200% 0; }
+			100% { background-position: 200% 0; }
+		}
+		.shimmer-badge {
+			background: linear-gradient(90deg, #FFFFFF 0%, rgba(232, 202, 133, 0.35) 50%, #FFFFFF 100%);
+			background-size: 200% 100%;
+			animation: badgeShine 5s linear infinite;
+		}
+
+		/* Shadcn-like subtle borders and cards with ReactBits Spotlight */
 		.ui-card {
+			position: relative;
 			background: #FFFFFF;
 			border: 1px solid rgba(226, 232, 240, 0.9);
 			box-shadow: 0 1px 3px 0 rgba(15, 34, 61, 0.04), 0 1px 2px -1px rgba(15, 34, 61, 0.04);
-			transition: all 0.2s ease-in-out;
+			transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 		}
 		.ui-card:hover {
-			border-color: rgba(197, 160, 89, 0.45);
-			box-shadow: 0 10px 25px -5px rgba(15, 34, 61, 0.07), 0 8px 10px -6px rgba(15, 34, 61, 0.04);
+			border-color: rgba(197, 160, 89, 0.55);
+			box-shadow: 0 16px 32px -8px rgba(15, 34, 61, 0.09), 0 8px 12px -4px rgba(15, 34, 61, 0.04);
+			transform: translateY(-2px);
+		}
+
+		/* Spotlight Glow Card */
+		.spotlight-card {
+			position: relative;
+			overflow: hidden;
+		}
+		.spotlight-card::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background: radial-gradient(450px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(197, 160, 89, 0.12), transparent 60%);
+			opacity: 0;
+			transition: opacity 0.4s ease;
+			pointer-events: none;
+			z-index: 1;
+		}
+		.spotlight-card:hover::before {
+			opacity: 1;
 		}
 
 		.bg-pattern {
@@ -61,38 +123,98 @@
 			background-size: 24px 24px;
 		}
 
-		/* Native Scroll Reveal Animations - Fallback to always visible */
+		/* Framer Motion Style: Spring Eased Scroll Reveal */
 		.reveal-on-scroll {
-			opacity: 1;
-			transform: none;
-			transition: opacity 0.4s ease, transform 0.4s ease;
+			opacity: 0;
+			transform: translateY(24px);
+			filter: blur(4px);
+			transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+			            transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+			            filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+			will-change: opacity, transform, filter;
 		}
 
 		.reveal-on-scroll.is-revealed {
 			opacity: 1;
-			transform: none;
+			transform: translateY(0);
+			filter: blur(0);
 		}
 
 		.reveal-scale {
-			opacity: 1;
-			transform: none;
-			transition: opacity 0.4s ease, transform 0.4s ease;
+			opacity: 0;
+			transform: scale(0.96) translateY(20px);
+			filter: blur(4px);
+			transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+			            transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+			            filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+			will-change: opacity, transform, filter;
 		}
 
 		.reveal-scale.is-revealed {
 			opacity: 1;
-			transform: none;
+			transform: scale(1) translateY(0);
+			filter: blur(0);
+		}
+
+		/* Hero load entrance animation (starts immediately on mount) */
+		.hero-fade-in {
+			animation: heroFadeIn 0.85s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+		}
+
+		@keyframes heroFadeIn {
+			0% {
+				opacity: 0;
+				transform: translateY(22px);
+				filter: blur(6px);
+			}
+			100% {
+				opacity: 1;
+				transform: translateY(0);
+				filter: blur(0);
+			}
+		}
+
+		/* Tab Content Fade In */
+		@keyframes tabFadeIn {
+			from {
+				opacity: 0;
+				transform: translateY(12px) scale(0.99);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0) scale(1);
+			}
+		}
+		.tab-animate-in {
+			animation: tabFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 		}
 
 		/* Staggered Delay Utilities */
-		.delay-75  { transition-delay: 75ms; }
-		.delay-150 { transition-delay: 150ms; }
-		.delay-200 { transition-delay: 200ms; }
-		.delay-250 { transition-delay: 250ms; }
-		.delay-300 { transition-delay: 300ms; }
-		.delay-350 { transition-delay: 350ms; }
-		.delay-400 { transition-delay: 400ms; }
-		.delay-500 { transition-delay: 500ms; }
+		.delay-75  { transition-delay: 75ms; animation-delay: 75ms; }
+		.delay-100 { transition-delay: 100ms; animation-delay: 100ms; }
+		.delay-150 { transition-delay: 150ms; animation-delay: 150ms; }
+		.delay-200 { transition-delay: 200ms; animation-delay: 200ms; }
+		.delay-250 { transition-delay: 250ms; animation-delay: 250ms; }
+		.delay-300 { transition-delay: 300ms; animation-delay: 300ms; }
+		.delay-350 { transition-delay: 350ms; animation-delay: 350ms; }
+		.delay-400 { transition-delay: 400ms; animation-delay: 400ms; }
+		.delay-500 { transition-delay: 500ms; animation-delay: 500ms; }
+
+		/* Accessible Motion Preference */
+		@media (prefers-reduced-motion: reduce) {
+			.reveal-on-scroll,
+			.reveal-scale,
+			.hero-fade-in,
+			.tab-animate-in,
+			.animate-float,
+			.shimmer-badge {
+				animation: none !important;
+				transition: none !important;
+				opacity: 1 !important;
+				transform: none !important;
+				filter: none !important;
+			}
+		}
 	</style>
 
 	<script>
@@ -151,9 +273,9 @@
 
 			<!-- Action Buttons (Shadcn style) -->
 			<div class="flex items-center gap-3">
-				{{-- <a href="{{ route('login') }}" class="inline-flex items-center justify-center rounded-lg text-sm font-semibold text-brand-navy hover:bg-slate-200/60 h-10 px-4 transition-colors">
+				<a href="{{ route('login') }}" class="inline-flex items-center justify-center rounded-lg text-sm font-semibold text-brand-navy hover:bg-slate-200/60 h-10 px-4 transition-colors">
 					Masuk
-				</a> --}}
+				</a>
 				<a href="{{ route('register') }}" class="inline-flex items-center justify-center rounded-lg text-sm font-semibold text-white bg-brand-navy hover:bg-brand-royal border border-brand-navy/30 h-10 px-5 shadow-sm transition-all hover:shadow">
 					Coba Gratis
 				</a>
@@ -163,37 +285,40 @@
 
 	<!-- ==================== 2. HOME / HERO SECTION (Full Viewport Height & Editorial Typography) ==================== -->
 	<section class="relative min-h-[calc(100vh-5rem)] flex flex-col justify-center items-center px-6 lg:px-8 bg-pattern overflow-hidden text-center py-10 sm:py-16">
-		<div class="max-w-4xl mx-auto space-y-7 my-auto">
+		<!-- ReactBits Ambient Aura Glow Background -->
+		<div class="hero-ambient-glow"></div>
+
+		<div class="max-w-4xl mx-auto space-y-7 my-auto relative z-10">
 			
 			<!-- Eyebrow Tagline (Center) -->
-			<div class="reveal-on-scroll">
-				<div class="inline-flex items-center gap-2 rounded-full border border-brand-gold/30 bg-white px-4 py-1.5 text-xs font-semibold text-brand-navy shadow-xs">
+			<div class="hero-fade-in animate-float">
+				<div class="shimmer-badge inline-flex items-center gap-2 rounded-full border border-brand-gold/40 px-4 py-1.5 text-xs font-semibold text-brand-navy shadow-xs transition-all duration-300 hover:scale-105 cursor-default">
 					<span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
 					<span class="font-tagline uppercase text-[11px] text-brand-goldDark font-bold">Aksara Sistem Kasir & Bisnis</span>
 				</div>
 			</div>
 
 			<!-- Big Centered Editorial Headline (Newsreader Serif 3 Baris Pas) -->
-			<h1 class="reveal-on-scroll delay-100 font-serif-title text-4xl sm:text-6xl lg:text-[4.75rem] font-normal leading-[1.1] tracking-tight text-brand-navy max-w-4xl mx-auto">
+			<h1 class="hero-fade-in delay-100 font-serif-title text-4xl sm:text-6xl lg:text-[4.75rem] font-normal leading-[1.1] tracking-tight text-brand-navy max-w-4xl mx-auto">
 				Sistem Kasir Terpadu<br class="hidden sm:inline">
 				untuk Semua yang<br class="hidden sm:inline">
 				Bisnismu Butuhkan.
 			</h1>
 
 			<!-- Subheadline (Center) -->
-			<p class="reveal-on-scroll delay-150 text-base sm:text-lg text-brand-muted max-w-2xl mx-auto leading-relaxed font-normal">
+			<p class="hero-fade-in delay-150 text-base sm:text-lg text-brand-muted max-w-2xl mx-auto leading-relaxed font-normal">
 				Aksara Developer siap membantu mendigitalkan operasional tokomu menjadi sistem kasir cepat, inventori akurat, database pelanggan, dan laporan laba rugi otomatis.
 			</p>
 
 			<!-- Centered CTA Buttons -->
-			<div class="reveal-on-scroll delay-200 pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
-				<a href="{{ route('register') }}" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-brand-navy hover:bg-brand-royal text-white text-sm font-semibold px-8 py-3.5 shadow-sm transition-all hover:scale-[1.02]">
-					Mulai Coba Gratis 7 Hari
-					<i data-lucide="arrow-right" class="w-4 h-4"></i>
+			<div class="hero-fade-in delay-200 pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
+				<a href="{{ route('register') }}" class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-brand-navy hover:bg-brand-royal text-white text-sm font-semibold px-8 py-3.5 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0">
+					<span>Mulai Coba Gratis 7 Hari</span>
+					<i data-lucide="arrow-right" class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"></i>
 				</a>
-				<a href="https://wa.me/628131355613?text=Halo%20Aksara%20Developer%2C%20saya%20tertarik%20dengan%20sistem%20kasir%20dan%20CRM%20UMKM" target="_blank" rel="noopener" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-white border border-slate-300 hover:border-brand-gold/50 hover:bg-slate-50 text-brand-navy text-sm font-semibold px-8 py-3.5 shadow-sm transition-all">
+				<a href="https://wa.me/628131355613?text=Halo%20Aksara%20Developer%2C%20saya%20tertarik%20dengan%20sistem%20kasir%20dan%20CRM%20UMKM" target="_blank" rel="noopener" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-white border border-slate-300 hover:border-brand-gold/60 hover:bg-slate-50 text-brand-navy text-sm font-semibold px-8 py-3.5 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0">
 					<i data-lucide="message-circle" class="w-4 h-4 text-emerald-600"></i>
-					Chat Sekarang (+62 813-1355-613)
+					<span>Chat Sekarang (+62 813-1355-613)</span>
 				</a>
 			</div>
 		</div>
@@ -256,8 +381,8 @@
 		</div>
 
 		<!-- Tab Content 1: POS -->
-		<div id="tab-pos" class="tab-content block reveal-scale delay-150">
-			<div class="ui-card rounded-2xl p-8 lg:p-12 grid lg:grid-cols-2 gap-10 items-center">
+		<div id="tab-pos" class="tab-content block tab-animate-in">
+			<div class="ui-card spotlight-card rounded-2xl p-8 lg:p-12 grid lg:grid-cols-2 gap-10 items-center">
 				<div class="space-y-5">
 					<div class="w-10 h-10 rounded-lg bg-brand-navy/5 flex items-center justify-center text-brand-navy">
 						<i data-lucide="receipt" class="w-5 h-5 text-brand-gold"></i>
@@ -309,7 +434,7 @@
 
 		<!-- Tab Content 2: STOK -->
 		<div id="tab-stok" class="tab-content hidden">
-			<div class="ui-card rounded-2xl p-8 lg:p-12 grid lg:grid-cols-2 gap-10 items-center">
+			<div class="ui-card spotlight-card rounded-2xl p-8 lg:p-12 grid lg:grid-cols-2 gap-10 items-center">
 				<div class="space-y-5">
 					<div class="w-10 h-10 rounded-lg bg-brand-navy/5 flex items-center justify-center text-brand-navy">
 						<i data-lucide="boxes" class="w-5 h-5 text-brand-gold"></i>
@@ -359,7 +484,7 @@
 
 		<!-- Tab Content 3: CRM -->
 		<div id="tab-crm" class="tab-content hidden">
-			<div class="ui-card rounded-2xl p-8 lg:p-12 grid lg:grid-cols-2 gap-10 items-center">
+			<div class="ui-card spotlight-card rounded-2xl p-8 lg:p-12 grid lg:grid-cols-2 gap-10 items-center">
 				<div class="space-y-5">
 					<div class="w-10 h-10 rounded-lg bg-brand-navy/5 flex items-center justify-center text-brand-navy">
 						<i data-lucide="users" class="w-5 h-5 text-brand-gold"></i>
@@ -406,7 +531,7 @@
 
 		<!-- Tab Content 4: KEUANGAN -->
 		<div id="tab-keuangan" class="tab-content hidden">
-			<div class="ui-card rounded-2xl p-8 lg:p-12 grid lg:grid-cols-2 gap-10 items-center">
+			<div class="ui-card spotlight-card rounded-2xl p-8 lg:p-12 grid lg:grid-cols-2 gap-10 items-center">
 				<div class="space-y-5">
 					<div class="w-10 h-10 rounded-lg bg-brand-navy/5 flex items-center justify-center text-brand-navy">
 						<i data-lucide="bar-chart-3" class="w-5 h-5 text-brand-gold"></i>
@@ -467,7 +592,7 @@
 
 			<div class="grid md:grid-cols-3 gap-8">
 				<!-- Sektor 1: Retail -->
-				<div class="ui-card rounded-2xl p-7 space-y-4 reveal-on-scroll delay-100">
+				<div class="ui-card spotlight-card rounded-2xl p-7 space-y-4 reveal-on-scroll delay-100">
 					<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-brand-navy">
 						<i data-lucide="store" class="w-6 h-6 text-brand-gold"></i>
 					</div>
@@ -482,7 +607,7 @@
 				</div>
 
 				<!-- Sektor 2: F&B -->
-				<div class="ui-card rounded-2xl p-7 space-y-4 reveal-on-scroll delay-200">
+				<div class="ui-card spotlight-card rounded-2xl p-7 space-y-4 reveal-on-scroll delay-200">
 					<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-brand-navy">
 						<i data-lucide="utensils" class="w-6 h-6 text-brand-gold"></i>
 					</div>
@@ -497,7 +622,7 @@
 				</div>
 
 				<!-- Sektor 3: Jasa -->
-				<div class="ui-card rounded-2xl p-7 space-y-4 reveal-on-scroll delay-300">
+				<div class="ui-card spotlight-card rounded-2xl p-7 space-y-4 reveal-on-scroll delay-300">
 					<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-brand-navy">
 						<i data-lucide="wrench" class="w-6 h-6 text-brand-gold"></i>
 					</div>
@@ -531,7 +656,7 @@
 		<!-- 3 Step Process Grid (Sesuai 3 Poin Awal) -->
 		<div class="grid md:grid-cols-3 gap-6">
 			<!-- Poin 1 -->
-			<div class="ui-card rounded-2xl p-7 bg-white space-y-4 reveal-on-scroll delay-100">
+			<div class="ui-card spotlight-card rounded-2xl p-7 bg-white space-y-4 reveal-on-scroll delay-100">
 				<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-brand-navy">
 					<i data-lucide="receipt" class="w-6 h-6 text-brand-gold"></i>
 				</div>
@@ -545,7 +670,7 @@
 			</div>
 
 			<!-- Poin 2 -->
-			<div class="ui-card rounded-2xl p-7 bg-white space-y-4 reveal-on-scroll delay-200">
+			<div class="ui-card spotlight-card rounded-2xl p-7 bg-white space-y-4 reveal-on-scroll delay-200">
 				<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-brand-navy">
 					<i data-lucide="boxes" class="w-6 h-6 text-brand-gold"></i>
 				</div>
@@ -559,7 +684,7 @@
 			</div>
 
 			<!-- Poin 3 -->
-			<div class="ui-card rounded-2xl p-7 bg-white space-y-4 reveal-on-scroll delay-300">
+			<div class="ui-card spotlight-card rounded-2xl p-7 bg-white space-y-4 reveal-on-scroll delay-300">
 				<div class="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center text-brand-navy">
 					<i data-lucide="trending-up" class="w-6 h-6 text-brand-gold"></i>
 				</div>
@@ -604,7 +729,7 @@
 			<!-- Dynamic Packages from DB -->
 			<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
 				@forelse($packages as $paket)
-					<div class="ui-card rounded-2xl p-7 bg-white flex flex-col justify-between relative reveal-on-scroll delay-{{ ($loop->index % 3 + 1) * 100 }} @if($loop->first) border-brand-gold shadow-md @endif">
+					<div class="ui-card spotlight-card rounded-2xl p-7 bg-white flex flex-col justify-between relative reveal-on-scroll delay-{{ ($loop->index % 3 + 1) * 100 }} @if($loop->first) border-brand-gold shadow-md @endif">
 						@if($loop->first)
 							<div class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-navy text-brand-goldLight px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider border border-brand-gold/40">
 								Paket Pilihan
@@ -692,21 +817,21 @@
 		</div>
 
 		<div class="space-y-3">
-			<div class="ui-card rounded-xl p-5 bg-white reveal-on-scroll delay-100">
+			<div class="ui-card spotlight-card rounded-xl p-5 bg-white reveal-on-scroll delay-100">
 				<h4 class="font-normal text-base text-brand-navy">Apakah butuh perangkat keras khusus untuk menggunakannya?</h4>
 				<p class="text-xs text-brand-muted mt-2 leading-relaxed">
 					Tidak wajib. Aksara berjalan secara online berbasis peramban web modern, sehingga bisa langsung dibuka lewat smartphone Android/iPhone, tablet, maupun laptop/komputer yang sudah Anda miliki. Anda cukup menyambungkan printer struk Bluetooth jika ingin mencetak nota fisik.
 				</p>
 			</div>
 
-			<div class="ui-card rounded-xl p-5 bg-white reveal-on-scroll delay-200">
+			<div class="ui-card spotlight-card rounded-xl p-5 bg-white reveal-on-scroll delay-200">
 				<h4 class="font-normal text-base text-brand-navy">Bagaimana jika staf kasir saya belum terbiasa dengan komputer?</h4>
 				<p class="text-xs text-brand-muted mt-2 leading-relaxed">
 					Tampilan kasir Aksara dirancang sangat sederhana, bersih, dan mudah dipahami dalam sekali lihat. Tim kami juga menyediakan panduan penggunaan dan siap membantu melatih staf toko Anda sampai benar-benar lancar.
 				</p>
 			</div>
 
-			<div class="ui-card rounded-xl p-5 bg-white reveal-on-scroll delay-300">
+			<div class="ui-card spotlight-card rounded-xl p-5 bg-white reveal-on-scroll delay-300">
 				<h4 class="font-normal text-base text-brand-navy">Apakah data transaksi penjualan dan keuangan saya aman?</h4>
 				<p class="text-xs text-brand-muted mt-2 leading-relaxed">
 					Sangat aman. Setiap akun memiliki proteksi hak akses terpisah (Pemilik Toko vs Staf Kasir). Staf kasir hanya bisa memproses transaksi dan tidak dapat mengintip laporan laba bersih, harga modal (HPP), atau data sensitif pemilik toko.
@@ -767,10 +892,11 @@
 				lucide.createIcons();
 			}
 
+			// Framer Motion Style: Spring Eased Intersection Observer
 			var observerOptions = {
 				root: null,
 				rootMargin: '0px 0px -40px 0px',
-				threshold: 0.08
+				threshold: 0.1
 			};
 
 			var revealElements = document.querySelectorAll('.reveal-on-scroll, .reveal-scale');
@@ -787,14 +913,26 @@
 			revealElements.forEach(function(el) {
 				observer.observe(el);
 			});
+
+			// ReactBits Style: Spotlight Hover Glow Tracker for Cards
+			var spotlightCards = document.querySelectorAll('.spotlight-card');
+			spotlightCards.forEach(function(card) {
+				card.addEventListener('pointermove', function(e) {
+					var rect = card.getBoundingClientRect();
+					var x = e.clientX - rect.left;
+					var y = e.clientY - rect.top;
+					card.style.setProperty('--mouse-x', x + 'px');
+					card.style.setProperty('--mouse-y', y + 'px');
+				});
+			});
 		});
 
-		// Pengalih Tab Modul
+		// Pengalih Tab Modul dengan Framer Motion Fade In
 		function switchTab(tabId, el) {
 			document.querySelectorAll('.tab-content').forEach(function(pane) {
 				pane.classList.add('hidden');
 				pane.classList.remove('block');
-				pane.classList.remove('is-revealed');
+				pane.classList.remove('tab-animate-in');
 			});
 
 			document.querySelectorAll('.tab-trigger').forEach(function(btn) {
@@ -806,10 +944,9 @@
 			if (activePane) {
 				activePane.classList.remove('hidden');
 				activePane.classList.add('block');
-				// Re-trigger visual reveal
-				setTimeout(function() {
-					activePane.classList.add('is-revealed');
-				}, 20);
+				// Re-trigger tab entrance
+				void activePane.offsetWidth; // Force reflow
+				activePane.classList.add('tab-animate-in');
 			}
 
 			if (el) {

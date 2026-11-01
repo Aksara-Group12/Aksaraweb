@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Paket;
 use App\Models\Subscribe;
 use App\Models\User;
-use App\Models\Admin;
 use App\Mail\VerifyEmail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -61,60 +60,13 @@ class AuthController extends Controller
 				->onlyInput('email');
 		}
 
-		// Fallback to admin login if user email not found
-		$admin = Admin::where('email', $credentials['email'])->first();
-		if (!$admin) {
-			return back()
-				->with('login_warning', 'Akun belum terdaftar. Silakan daftar terlebih dahulu.')
-				->withErrors([
-					'email' => 'Akun belum terdaftar. Silakan daftar terlebih dahulu.',
-				])
-				->onlyInput('email');
-		}
-
-		if ($admin->status !== 'active') {
-			return back()
-				->withErrors([
-					'email' => 'Admin nonaktif. Hubungi owner untuk mengaktifkan akun.',
-				])
-				->onlyInput('email');
-		}
-
-		if (!$admin->hasVerifiedEmail()) {
-			return back()
-				->withErrors([
-					'email' => 'Email admin belum diverifikasi. Silakan cek email verifikasi.',
-				])
-				->onlyInput('email');
-		}
-
-		if (!Hash::check($credentials['password'], $admin->password)) {
-			return back()
-				->withErrors([
-					'email' => 'Kredensial yang diberikan tidak cocok dengan data kami.',
-				])
-				->onlyInput('email');
-		}
-
-		$owner = User::find($admin->user_id);
-		if (!$owner) {
-			return back()
-				->withErrors([
-					'email' => 'Owner tidak ditemukan untuk admin ini.',
-				])
-				->onlyInput('email');
-		}
-
-		Auth::login($owner, $remember);
-		$request->session()->regenerate();
-
-		$request->session()->put([
-			'admin_id' => $admin->id,
-			'admin_email' => $admin->email,
-			'admin_name' => $admin->name,
-		]);
-
-		return redirect()->intended(route('dashboard'));
+		// Jika user belum terdaftar
+		return back()
+			->with('login_warning', 'Akun belum terdaftar. Silakan daftar terlebih dahulu.')
+			->withErrors([
+				'email' => 'Akun belum terdaftar. Silakan periksa kembali email Anda.',
+			])
+			->onlyInput('email');
 	}
 
 	public function showRegisterForm()

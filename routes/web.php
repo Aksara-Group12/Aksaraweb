@@ -59,8 +59,8 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
 
-    Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.post');
+    Route::get('/admin/login', fn() => redirect()->route('login'))->name('admin.login');
+    Route::post('/admin/login', [AuthController::class, 'login'])->name('admin.login.post');
 
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);

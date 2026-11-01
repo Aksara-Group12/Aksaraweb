@@ -192,7 +192,15 @@
 					<label style="display: block; font-size: 0.85rem; font-weight: 600; color: #0F223D; margin-bottom: 6px;">
 						Password <span style="color: #DC2626;">*</span>
 					</label>
-					<input type="password" name="password" minlength="6" placeholder="Minimal 6 karakter" required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid #CBD5E1; background: #FFFFFF; color: #0F223D; font-size: 0.875rem; outline: none; transition: all 0.15s ease;" onfocus="this.style.borderColor='#C5A059'; this.style.boxShadow='0 0 0 3px rgba(197, 160, 89, 0.15)'" onblur="this.style.borderColor='#CBD5E1'; this.style.boxShadow='none'">
+					<div style="position: relative;">
+						<input type="password" name="password" id="tambah_user_password" minlength="6" placeholder="Minimal 6 karakter" required style="width: 100%; padding: 10px 42px 10px 14px; border-radius: 10px; border: 1px solid #CBD5E1; background: #FFFFFF; color: #0F223D; font-size: 0.875rem; outline: none; transition: all 0.15s ease;" onfocus="this.style.borderColor='#C5A059'; this.style.boxShadow='0 0 0 3px rgba(197, 160, 89, 0.15)'" onblur="this.style.borderColor='#CBD5E1'; this.style.boxShadow='none'">
+						<button type="button" onclick="togglePasswordVisibility('tambah_user_password', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #94A3B8; display: flex; align-items: center; justify-content: center; padding: 4px; transition: color 0.15s ease;" onmouseover="this.style.color='#0F223D'" onmouseout="this.style.color='#94A3B8'" title="Lihat password" aria-label="Lihat password">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+								<circle cx="12" cy="12" r="3"></circle>
+							</svg>
+						</button>
+					</div>
 				</div>
 
 				<div>
@@ -263,7 +271,15 @@
 					<label style="display: block; font-size: 0.85rem; font-weight: 600; color: #0F223D; margin-bottom: 6px;">
 						Password Baru
 					</label>
-					<input type="password" name="password" placeholder="Kosongkan jika tidak ingin mengubah" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid #CBD5E1; background: #FFFFFF; color: #0F223D; font-size: 0.875rem; outline: none; transition: all 0.15s ease;" onfocus="this.style.borderColor='#C5A059'; this.style.boxShadow='0 0 0 3px rgba(197, 160, 89, 0.15)'" onblur="this.style.borderColor='#CBD5E1'; this.style.boxShadow='none'">
+					<div style="position: relative;">
+						<input type="password" name="password" id="edit_user_password" placeholder="Kosongkan jika tidak ingin mengubah" style="width: 100%; padding: 10px 42px 10px 14px; border-radius: 10px; border: 1px solid #CBD5E1; background: #FFFFFF; color: #0F223D; font-size: 0.875rem; outline: none; transition: all 0.15s ease;" onfocus="this.style.borderColor='#C5A059'; this.style.boxShadow='0 0 0 3px rgba(197, 160, 89, 0.15)'" onblur="this.style.borderColor='#CBD5E1'; this.style.boxShadow='none'">
+						<button type="button" onclick="togglePasswordVisibility('edit_user_password', this)" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #94A3B8; display: flex; align-items: center; justify-content: center; padding: 4px; transition: color 0.15s ease;" onmouseover="this.style.color='#0F223D'" onmouseout="this.style.color='#94A3B8'" title="Lihat password" aria-label="Lihat password">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+								<circle cx="12" cy="12" r="3"></circle>
+							</svg>
+						</button>
+					</div>
 					<p style="font-size: 0.73rem; color: #64748B; margin: 4px 0 0;">Minimal 6 karakter jika ingin mengganti.</p>
 				</div>
 

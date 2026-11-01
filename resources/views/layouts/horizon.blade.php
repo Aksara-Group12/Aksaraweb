@@ -939,11 +939,97 @@
 		@include('component.logout_modal')
 		@stack('scripts')
 		<script>
+			// Global Password Visibility Toggle
+			function togglePasswordVisibility(inputOrId, btn) {
+				let input = typeof inputOrId === 'string' ? document.getElementById(inputOrId) : inputOrId;
+				if (!input && btn) {
+					input = btn.closest('div').querySelector('input');
+				}
+				if (!input) return;
+
+				const isPassword = input.type === 'password';
+				input.type = isPassword ? 'text' : 'password';
+
+				const icon = btn ? btn.querySelector('svg, i') : null;
+				if (icon) {
+					if (isPassword) {
+						icon.innerHTML = '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+						btn.setAttribute('title', 'Sembunyikan password');
+						btn.style.color = '#0F223D';
+					} else {
+						icon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
+						btn.setAttribute('title', 'Lihat password');
+						btn.style.color = '#94A3B8';
+					}
+				}
+			}
+
+			// Auto-attach toggle icon ke setiap input type password yang belum punya tombol
+			function initPasswordEyeToggles() {
+				document.querySelectorAll('input[type="password"]').forEach(function(pwInput) {
+					if (pwInput.dataset.hasEyeToggle) return;
+					
+					var parent = pwInput.parentElement;
+					if (parent && parent.querySelector('button[onclick*="togglePasswordVisibility"]')) {
+						pwInput.dataset.hasEyeToggle = 'true';
+						return;
+					}
+
+					pwInput.dataset.hasEyeToggle = 'true';
+					
+					var wrapper = document.createElement('div');
+					wrapper.style.position = 'relative';
+					wrapper.style.width = '100%';
+					wrapper.style.display = 'block';
+
+					pwInput.parentNode.insertBefore(wrapper, pwInput);
+					wrapper.appendChild(pwInput);
+
+					pwInput.style.paddingRight = '42px';
+
+					var btn = document.createElement('button');
+					btn.type = 'button';
+					btn.title = 'Lihat password';
+					btn.setAttribute('aria-label', 'Lihat password');
+					btn.style.position = 'absolute';
+					btn.style.right = '10px';
+					btn.style.top = '50%';
+					btn.style.transform = 'translateY(-50%)';
+					btn.style.background = 'none';
+					btn.style.border = 'none';
+					btn.style.cursor = 'pointer';
+					btn.style.color = '#94A3B8';
+					btn.style.display = 'flex';
+					btn.style.alignItems = 'center';
+					btn.style.justifyContent = 'center';
+					btn.style.padding = '4px';
+					btn.style.transition = 'color 0.15s ease';
+					btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+
+					btn.addEventListener('mouseover', function() { this.style.color = '#0F223D'; });
+					btn.addEventListener('mouseout', function() { 
+						if (pwInput.type === 'password') this.style.color = '#94A3B8'; 
+					});
+
+					btn.addEventListener('click', function() {
+						togglePasswordVisibility(pwInput, btn);
+					});
+
+					wrapper.appendChild(btn);
+				});
+			}
+
 			document.addEventListener('DOMContentLoaded', function () {
 				// Inisialisasi ikon Lucide (Shadcn Standard)
 				if (typeof lucide !== 'undefined') {
 					lucide.createIcons();
 				}
+
+				// Inisialisasi toggle password visibility otomatis
+				initPasswordEyeToggles();
+				document.addEventListener('click', function() {
+					setTimeout(initPasswordEyeToggles, 100);
+				});
 
 				var toggle = document.getElementById('hz-sidebar-toggle');
 				var sidebar = document.getElementById('hz-sidebar');

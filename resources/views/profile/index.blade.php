@@ -397,11 +397,20 @@
 					<label class="form-label" for="password">
 						Kata Sandi Baru <span class="req">*</span>
 					</label>
-					<input type="password" id="password" name="password" 
-						autocomplete="new-password"
-						placeholder="Minimal 8 karakter" 
-						class="form-input {{ $errors->has('password') ? 'is-invalid' : '' }}"
-						{{ old('change_password') || $errors->has('password') ? '' : 'disabled' }}>
+					<div style="position: relative;">
+						<input type="password" id="password" name="password" 
+							autocomplete="new-password"
+							placeholder="Minimal 8 karakter" 
+							class="form-input {{ $errors->has('password') ? 'is-invalid' : '' }}"
+							style="padding-right: 42px;"
+							{{ old('change_password') || $errors->has('password') ? '' : 'disabled' }}>
+						<button type="button" onclick="togglePasswordVisibility('password', this)" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #94A3B8; display: flex; align-items: center; justify-content: center; padding: 4px; transition: color 0.15s ease;" onmouseover="this.style.color='#0F223D'" onmouseout="this.style.color='#94A3B8'" title="Lihat password" aria-label="Lihat password">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+								<circle cx="12" cy="12" r="3"></circle>
+							</svg>
+						</button>
+					</div>
 					<span class="field-hint">Minimal 8 karakter jika ingin diperbarui.</span>
 					@error('password')
 						<span class="field-error">{{ $message }}</span>
@@ -412,11 +421,20 @@
 					<label class="form-label" for="password_confirmation">
 						Konfirmasi Kata Sandi Baru <span class="req">*</span>
 					</label>
-					<input type="password" id="password_confirmation" name="password_confirmation" 
-						autocomplete="new-password"
-						placeholder="Ulangi kata sandi baru di atas" 
-						class="form-input"
-						{{ old('change_password') || $errors->has('password') ? '' : 'disabled' }}>
+					<div style="position: relative;">
+						<input type="password" id="password_confirmation" name="password_confirmation" 
+							autocomplete="new-password"
+							placeholder="Ulangi kata sandi baru di atas" 
+							class="form-input"
+							style="padding-right: 42px;"
+							{{ old('change_password') || $errors->has('password') ? '' : 'disabled' }}>
+						<button type="button" onclick="togglePasswordVisibility('password_confirmation', this)" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #94A3B8; display: flex; align-items: center; justify-content: center; padding: 4px; transition: color 0.15s ease;" onmouseover="this.style.color='#0F223D'" onmouseout="this.style.color='#94A3B8'" title="Lihat password" aria-label="Lihat password">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+								<circle cx="12" cy="12" r="3"></circle>
+							</svg>
+						</button>
+					</div>
 				</div>
 			</div>
 

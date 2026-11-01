@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\TransaksiKeluar;
-use App\Models\TransaksiMasuk;
 use App\Models\TransaksiKeluarItem;
+use App\Models\Pengeluaran;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -53,9 +53,7 @@ class DashboardController extends BaseController
 		// Transaksi dalam periode (filter by user_id)
 		$totalSalesTransactions = (int) TransaksiKeluar::where('user_id', auth()->user()->id)
 			->whereBetween('tanggal_transaksi', [$start, $end])->count();
-		$totalPurchaseTransactions = (int) TransaksiMasuk::where('user_id', auth()->user()->id)
-			->whereBetween('tanggal_transaksi', [$start, $end])->count();
-		$totalTransactions = $totalSalesTransactions + $totalPurchaseTransactions;
+		$totalTransactions = $totalSalesTransactions;
 		$todayTransactions = (int) TransaksiKeluar::where('user_id', auth()->user()->id)
 			->whereDate('tanggal_transaksi', $today)->count();
 
@@ -115,6 +113,65 @@ class DashboardController extends BaseController
 			->limit(5)
 			->get();
 
+		// Ringkasan metode pembayaran
+		$paymentMethods = TransaksiKeluar::where('user_id', auth()->user()->id)
+			->whereBetween('tanggal_transaksi', [$start, $end])
+			->where('status', 'complete')
+			->selectRaw('metode_pembayaran, COUNT(*) as count, SUM(total_harga) as total')
+			->groupBy('metode_pembayaran')
+			->get();
+
+		// Roda penjualan per jam (hari ini)
+		$salesPerHour = collect();
+		for ($i = 0; $i < 24; $i++) {
+			$hourStart = $today->copy()->setHour($i)->startOfHour();
+			$hourEnd = $today->copy()->setHour($i)->endOfHour();
+			$amount = (float) TransaksiKeluar::where('user_id', auth()->user()->id)
+				->whereBetween('tanggal_transaksi', [$hourStart, $hourEnd])
+				->where('status', 'complete')
+				->sum('total_harga');
+			$salesPerHour->push([
+				'hour' => $i . ':00',
+				'amount' => $amount,
+			]);
+		}
+
+		// Total pengeluaran per kategori
+		$expensesByCategory = Pengeluaran::where('user_id', auth()->user()->id)
+			->whereBetween('tanggal', [$start, $end])
+			->selectRaw('kategori, SUM(nominal) as total')
+			->groupBy('kategori')
+			->orderByDesc('total')
+			->get();
+
+		// Detail pengeluaran terbaru
+		$recentExpenses = Pengeluaran::where('user_id', auth()->user()->id)
+			->whereBetween('tanggal', [$start, $end])
+			->orderByDesc('tanggal')
+			->limit(5)
+			->get();
+
+		// Estimasi profit (Total Penjualan - Total Pengeluaran - HPP)
+		$totalHPP = (float) TransaksiKeluarItem::join('transaksi_keluar', 'transaksi_keluar_items.transaksi_keluar_id', '=', 'transaksi_keluar.id')
+			->where('transaksi_keluar.user_id', auth()->user()->id)
+			->whereBetween('transaksi_keluar.tanggal_transaksi', [$start, $end])
+			->where('transaksi_keluar.status', 'complete')
+			->sum('transaksi_keluar_items.hpp_snapshot');
+		
+		$totalExpenses = (float) Pengeluaran::where('user_id', auth()->user()->id)
+			->whereBetween('tanggal', [$start, $end])
+			->sum('nominal');
+		
+		$estimatedProfit = $totalRevenue - $totalHPP - $totalExpenses;
+
+		// Produk stok menipis (stok < min_stock)
+		$lowStockProducts = Product::where('user_id', auth()->user()->id)
+			->whereColumn('stock', '<', 'min_stock')
+			->where('is_active', true)
+			->orderBy('stock', 'asc')
+			->limit(5)
+			->get();
+
 		return view('dashboard', [
 			'period' => $period,
 			'startDate' => $start->toDateString(),
@@ -131,6 +188,12 @@ class DashboardController extends BaseController
 			'revenueChartValues' => $revenueChartValues,
 			'revenueChartHeights' => $revenueChartHeights,
 			'topCustomers' => $topCustomers,
+			'paymentMethods' => $paymentMethods,
+			'salesPerHour' => $salesPerHour,
+			'expensesByCategory' => $expensesByCategory,
+			'recentExpenses' => $recentExpenses,
+			'estimatedProfit' => $estimatedProfit,
+			'lowStockProducts' => $lowStockProducts,
 		]);
 	}
 

@@ -231,9 +231,9 @@
 		</div>
 
 		<div class="form-group">
-			<label class="form-label">Durasi Masa Aktif (Bulan) <span class="req">*</span></label>
-			<input type="number" name="durasi_bulan" value="{{ old('durasi_bulan', $paket->durasi_bulan ?? 1) }}" min="1" class="form-input" required>
-			@error('durasi_bulan')
+			<label class="form-label">Durasi Masa Aktif (Hari) <span class="req">*</span></label>
+			<input type="number" name="durasi_hari" value="{{ old('durasi_hari', $paket->durasi_hari ?? 1) }}" min="1" class="form-input" required>
+			@error('durasi_hari')
 				<span class="field-error">{{ $message }}</span>
 			@enderror
 		</div>

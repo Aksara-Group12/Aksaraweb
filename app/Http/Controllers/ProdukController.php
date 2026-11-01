@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\ProductSerialNumber;
-use App\Models\TransaksiMasukItem;
 use App\Models\TransaksiKeluarItem;
 use App\Models\KategoriProduk;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -55,7 +54,9 @@ class ProdukController extends BaseController
 			abort(403, 'Anda tidak memiliki akses ke produk ini');
 		}
 
-		$kategoriProduk = KategoriProduk::where('tipe', 'produk')->get();
+		$kategoriProduk = KategoriProduk::where('user_id', auth()->id())
+			->active()
+			->get();
 
 		return view('produk.edit', compact('product', 'kategoriProduk'));
 	}
@@ -71,58 +72,18 @@ class ProdukController extends BaseController
 		}
 
 		$validated = $request->validate([
-			'nama_produk' => 'required|string|max:255',
-			'code' => 'nullable|string|max:50|unique:products,code,' . $product->id,
-			'sku' => 'nullable|string|max:50',
-			'unit' => 'required|string|max:50',
-			'tipe' => 'required|in:Barang,Menu,Jasa',
-			'lacak_stok' => 'nullable',
-			'harga_beli' => 'nullable|numeric|min:0',
-			'harga_jual' => 'required|numeric|min:0',
-			'stock' => 'nullable|integer|min:0',
-			'min_stock' => 'nullable|integer|min:0',
-			'kategori' => 'nullable|string',
-			'kategori_produk_id' => 'nullable|exists:kategori_produk,id',
-			'lokasi' => 'nullable|string',
-			'description' => 'nullable|string',
-			'barcode' => 'nullable|string|max:50',
-			'is_active' => 'required',
-			'brand' => 'nullable|string|max:100',
-		], [
-			'nama_produk.required' => 'Nama produk wajib diisi.',
-			'unit.required' => 'Satuan (unit) produk wajib diisi.',
-			'tipe.required' => 'Tipe produk wajib dipilih (Barang, Menu, atau Jasa).',
-			'harga_jual.required' => 'Harga jual produk wajib diisi.',
-			'code.unique' => 'Kode produk/SKU ini sudah digunakan.',
+			'harga_jual' => 'required|integer|min:0',
+			'stock' => 'required|integer|min:0',
 		]);
 
-		// Handle lacak_stok checkbox (flexible - user choice)
-		$validated['lacak_stok'] = isset($validated['lacak_stok']) ? true : false;
-
-		// Handle is_active (convert string to boolean)
-		$validated['is_active'] = $validated['is_active'] == '1' ? true : false;
-
-		// Fallback kategori dari master jika dipilih
-		if (!empty($validated['kategori_produk_id'])) {
-			$kat = KategoriProduk::find($validated['kategori_produk_id']);
-			if ($kat && empty($validated['kategori'])) {
-				$validated['kategori'] = $kat->nama_kategori;
-			}
-		}
-
-		// Nilai aman untuk kolom database legacy
-		if (empty($validated['brand'])) {
-			$validated['brand'] = $product->brand ?? 'Umum';
-		}
-		if (!isset($validated['harga_beli']) || $validated['harga_beli'] === null) {
-			$validated['harga_beli'] = $product->harga_beli ?? 0.00;
-		}
-
-		$product->update($validated);
+		// Tambah stok dan update harga
+		$product->stock += $validated['stock'];
+		$product->harga_jual = $validated['harga_jual'];
+		$product->save();
 
 		return redirect()
 			->route('produk.index')
-			->with('success', 'Produk berhasil diperbarui.');
+			->with('success', 'Produk ' . $product->nama_produk . ' berhasil diperbarui. Stok sekarang: ' . $product->stock);
 	}
 
 	/**
@@ -171,7 +132,9 @@ class ProdukController extends BaseController
 	 */
 	public function create()
 	{
-		$kategoriProduk = KategoriProduk::where('tipe', 'produk')->get();
+		$kategoriProduk = KategoriProduk::where('user_id', auth()->id())
+			->active()
+			->get();
 
 		return view('produk.create', compact('kategoriProduk'));
 	}
@@ -183,76 +146,53 @@ class ProdukController extends BaseController
 	{
 		try {
 			$validated = $request->validate([
-				'nama_produk' => 'required|string|max:255',
-				'code' => 'nullable|string|max:50|unique:products,code',
-				'sku' => 'nullable|string|max:50',
-				'unit' => 'required|string|max:50',
-				'tipe' => 'required|in:Barang,Menu,Jasa',
-				'lacak_stok' => 'nullable',
-				'harga_beli' => 'nullable|numeric|min:0',
-				'harga_jual' => 'required|numeric|min:0',
-				'stock' => 'nullable|integer|min:0',
-				'min_stock' => 'nullable|integer|min:0',
-				'kategori' => 'nullable|string',
-				'kategori_produk_id' => 'nullable|exists:kategori_produk,id',
-				'lokasi' => 'nullable|string',
-				'description' => 'nullable|string',
-				'barcode' => 'nullable|string|max:50',
-				'is_active' => 'required',
-				'brand' => 'nullable|string|max:100',
-			], [
-				'nama_produk.required' => 'Nama produk wajib diisi.',
-				'unit.required' => 'Satuan (unit) produk wajib diisi.',
-				'tipe.required' => 'Tipe produk wajib dipilih (Barang, Menu, atau Jasa).',
-				'harga_jual.required' => 'Harga jual produk wajib diisi.',
-				'harga_jual.numeric' => 'Harga jual harus berupa angka.',
-				'code.unique' => 'Kode produk/SKU ini sudah digunakan.',
+				'kategori_produk_id' => 'required|exists:kategori_produk,id',
+				'harga_jual' => 'required|integer|min:0',
+				'stock' => 'required|integer|min:0',
 			]);
 
-			// Generate code jika tidak ada
-			if (empty($validated['code'])) {
+			$kategori = KategoriProduk::find($validated['kategori_produk_id']);
+
+			// Cek apakah sudah ada produk dengan kategori yang sama
+			$existingProduct = Product::where('user_id', auth()->id())
+				->where('kategori', $kategori->name)
+				->first();
+
+			if ($existingProduct) {
+				// Jika produk sudah ada, tambahkan stoknya saja
+				$existingProduct->stock += $validated['stock'];
+				$existingProduct->harga_jual = $validated['harga_jual']; // Update harga jika berubah
+				$existingProduct->save();
+
+				return redirect()->route('produk.index')
+					->with('success', 'Stok produk ' . $existingProduct->nama_produk . ' berhasil ditambahkan. Stok sekarang: ' . $existingProduct->stock);
+			} else {
+				// Jika belum ada, buat produk baru
+				// Hapus kategori_produk_id dari array sebelum create (tidak ada di fillable)
+				unset($validated['kategori_produk_id']);
+
+				// Default values untuk field lain
 				$validated['code'] = Product::generateCode();
+				$validated['user_id'] = auth()->id();
+				$validated['unit'] = 'pcs';
+				$validated['tipe'] = 'Barang';
+				$validated['lacak_stok'] = true;
+				$validated['is_active'] = true;
+				$validated['harga_beli'] = 0;
+				$validated['min_stock'] = 0;
+				$validated['nama_produk'] = $kategori->name;
+				$validated['kategori'] = $kategori->name; // Simpan nama kategori ke field kategori
+
+				// Membuat produk baru
+				$product = Product::create($validated);
+
+				return redirect()->route('produk.index')
+					->with('success', 'Produk ' . $product->nama_produk . ' berhasil ditambahkan');
 			}
 
-			$validated['user_id'] = auth()->user()->id;
-
-			// Handle lacak_stok checkbox (flexible - user choice)
-			$validated['lacak_stok'] = isset($validated['lacak_stok']) ? true : false;
-
-			// Handle is_active (convert string to boolean)
-			$validated['is_active'] = $validated['is_active'] == '1' ? true : false;
-
-			// Fallback kategori dari master jika dipilih
-			if (!empty($validated['kategori_produk_id'])) {
-				$kat = KategoriProduk::find($validated['kategori_produk_id']);
-				if ($kat && empty($validated['kategori'])) {
-					$validated['kategori'] = $kat->nama_kategori;
-				}
-			}
-
-			// Pastikan field legacy dengan NOT NULL di database MySQL terisi default aman
-			$validated['jenis_logam'] = 'emas';
-			$validated['brand'] = !empty($validated['brand']) ? $validated['brand'] : 'Umum';
-			$validated['berat_standar'] = 1.00;
-			$validated['harga_beli'] = isset($validated['harga_beli']) && $validated['harga_beli'] !== null ? $validated['harga_beli'] : 0.00;
-			$validated['stock'] = isset($validated['stock']) && $validated['stock'] !== null ? (int) $validated['stock'] : 0;
-			$validated['min_stock'] = isset($validated['min_stock']) && $validated['min_stock'] !== null ? (int) $validated['min_stock'] : 0;
-			$validated['cost_price'] = $validated['harga_beli'];
-			$validated['stock_minimum'] = $validated['min_stock'];
-
-			// Membuat produk
-			$product = Product::create($validated);
-
-			return redirect()->route('produk.index')
-				->with('success', 'Produk "' . $product->nama_produk . '" berhasil ditambahkan');
-
-		} catch (\Illuminate\Validation\ValidationException $e) {
-			return back()
-				->withErrors($e->validator)
-				->withInput();
 		} catch (\Exception $e) {
 			return back()
-				->with('error', 'Gagal menyimpan produk: ' . $e->getMessage())
+				->with('error', 'Terjadi kesalahan: ' . $e->getMessage())
 				->withInput();
 		}
 	}
@@ -271,27 +211,6 @@ class ProdukController extends BaseController
 		if ($perPage <= 0) {
 			$perPage = 20;
 		}
-
-		// Get masuk items
-		$masukItems = TransaksiMasukItem::with('transaksi', 'product')
-			->where('user_id', auth()->user()->id)
-			->whereHas('transaksi')
-			->get()
-			->map(function ($item) {
-				return (object)[
-					'tipe' => 'masuk',
-					'tanggal_transaksi' => $item->transaksi->tanggal_transaksi,
-					'referensi_no' => $item->transaksi->reference_no,
-					'nama_produk' => $item->product->nama_produk,
-					'sku' => $item->product->sku,
-					'supplier_name' => $item->transaksi->supplier_name,
-					'customer_name' => null,
-					'qty' => $item->qty, // Gunakan qty langsung, bukan count(nomor_seri)
-					'total_harga' => $item->total_harga,
-					'status' => $item->transaksi->status,
-					'id' => 'masuk-' . $item->id,
-				];
-			});
 
 		// Get keluar items
 		$keluarItems = TransaksiKeluarItem::with('transaksi', 'product')
@@ -314,15 +233,17 @@ class ProdukController extends BaseController
 				];
 			});
 
-		// Merge collections
-		$allHistories = collect(array_merge($masukItems->all(), $keluarItems->all()));
+		// Merge collections (only keluar items since masuk was removed)
+		$allHistories = $keluarItems;
 
-		// Apply filters
+		// Apply filters (tipe filter removed since only keluar is available)
+		/*
 		if ($tipe) {
 			$allHistories = $allHistories->filter(function ($item) use ($tipe) {
 				return $item->tipe === $tipe;
 			});
 		}
+		*/
 
 		if ($search) {
 			$search = strtolower($search);

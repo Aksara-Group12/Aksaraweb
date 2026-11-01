@@ -25,6 +25,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'owner_id',
+        'is_active',
     ];
 
     /**
@@ -59,18 +61,47 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the profile associated with this user.
-     */
-    public function profile()
-    {
-        return $this->hasOne(Profile::class);
-    }
-
-    /**
      * Get the subscriptions for this user.
      */
     public function subscriptions()
     {
         return $this->hasMany(Subscribe::class);
+    }
+
+    /**
+     * Get the owner of this user.
+     */
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    /**
+     * Get the users owned by this user (for owners).
+     */
+    public function ownedUsers()
+    {
+        return $this->hasMany(User::class, 'owner_id');
+    }
+
+    /**
+     * Get the role of this user.
+     */
+    public function userRole()
+    {
+        return $this->belongsTo(Role::class, 'role', 'name');
+    }
+
+    /**
+     * Check if user has specific permission.
+     */
+    public function hasPermission($permission)
+    {
+        $role = $this->userRole;
+        if (!$role || !$role->is_active) {
+            return false;
+        }
+
+        return in_array($permission, $role->permissions ?? []);
     }
 }

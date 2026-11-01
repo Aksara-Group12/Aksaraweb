@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Profile;
 use App\Models\Paket;
 use App\Models\Subscribe;
 use App\Models\Bank;
@@ -19,16 +18,10 @@ class ProfileController extends Controller
 	public function index()
 	{
 		$user = auth()->user();
-		$profile = Profile::where('user_id', $user->id)->first();
 
-		if (!$profile) {
-			$profile = Profile::create([
-				'user_id' => $user->id,
-				'store_name' => $user->role === 'superadmin' ? 'Aksara Developer' : ($user->name . ' Store'),
-				'owner_name' => $user->name,
-				'email' => $user->email,
-			]);
-		}
+		// Gunakan data user langsung (table profiles sudah dihapus)
+		$storeName = 'Aksara';
+		$logoPath = null;
 
 		$packages = [];
 		$activeSubscription = null;
@@ -40,7 +33,7 @@ class ProfileController extends Controller
 			$banks = Bank::all();
 		}
 
-		return view('profile.index', compact('profile', 'user', 'packages', 'activeSubscription', 'banks'));
+		return view('profile.index', compact('user', 'storeName', 'logoPath', 'packages', 'activeSubscription', 'banks'));
 	}
 
 	public function create()
@@ -53,7 +46,7 @@ class ProfileController extends Controller
 		return redirect()->route('profile.index');
 	}
 
-	public function edit(Profile $profile)
+	public function edit()
 	{
 		return redirect()->route('profile.index');
 	}
@@ -61,86 +54,33 @@ class ProfileController extends Controller
 	/**
 	 * Simpan pembaruan profil & data akun pengguna
 	 */
-	public function update(Request $request, Profile $profile)
+	public function update(Request $request)
 	{
 		$user = auth()->user();
 
-		if ((int) $profile->user_id !== (int) $user->id) {
-			abort(403, 'Anda tidak memiliki hak akses untuk mengubah profil ini.');
-		}
-
-		$wantsPasswordChange = $request->boolean('change_password') || ($request->filled('password') && $request->filled('password_confirmation'));
-
-		$rules = [
+		$request->validate([
 			'name' => ['required', 'string', 'max:255'],
 			'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-			'store_name' => ['required', 'string', 'max:255'],
-			'phone' => ['nullable', 'string', 'max:50'],
-			'address' => ['nullable', 'string'],
-			'city' => ['nullable', 'string', 'max:255'],
-			'postal_code' => ['nullable', 'string', 'max:20'],
-			'logo' => ['nullable', 'file', 'image', 'mimes:png,jpg,jpeg', 'max:5120'],
-		];
-
-		$messages = [
+			'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+		], [
 			'name.required' => 'Nama lengkap wajib diisi.',
 			'email.required' => 'Alamat email wajib diisi.',
 			'email.unique' => 'Alamat email sudah digunakan oleh akun lain.',
-			'store_name.required' => $user->role === 'superadmin' ? 'Nama Sistem / Brand wajib diisi.' : 'Nama Toko wajib diisi.',
-			'logo.image' => 'Logo harus berupa berkas gambar.',
-			'logo.max' => 'Ukuran logo maksimal adalah 5MB.',
-		];
+			'password.min' => 'Kata sandi minimal terdiri dari 8 karakter.',
+			'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.',
+		]);
 
-		if ($wantsPasswordChange) {
-			$rules['password'] = ['required', 'string', 'min:8', 'confirmed'];
-			$messages['password.required'] = 'Kata sandi baru wajib diisi jika ingin mengubah kata sandi.';
-			$messages['password.min'] = 'Kata sandi minimal terdiri dari 8 karakter.';
-			$messages['password.confirmed'] = 'Konfirmasi kata sandi tidak cocok.';
-		}
-
-		$request->validate($rules, $messages);
-
-		// 1. Update data User
+		// Update data User
 		$userData = [
 			'name' => $request->name,
 			'email' => $request->email,
 		];
 
-		if ($wantsPasswordChange && $request->filled('password')) {
+		if ($request->filled('password')) {
 			$userData['password'] = Hash::make($request->password);
 		}
 
 		$user->update($userData);
-
-		// 2. Handle upload logo
-		$profileData = [
-			'store_name' => $request->store_name,
-			'owner_name' => $request->name,
-			'email' => $request->email,
-			'phone' => $request->phone,
-			'address' => $request->address,
-			'city' => $request->city,
-			'postal_code' => $request->postal_code,
-		];
-
-		if ($request->hasFile('logo')) {
-			try {
-				if ($profile->logo_path && Storage::disk('public')->exists($profile->logo_path)) {
-					Storage::disk('public')->delete($profile->logo_path);
-				}
-
-				$extension = $request->file('logo')->getClientOriginalExtension();
-				$fileName = 'logo_' . $user->id . '_' . time() . '.' . $extension;
-				$request->file('logo')->storeAs('logos', $fileName, 'public');
-				$profileData['logo_path'] = 'logos/' . $fileName;
-			} catch (\Exception $e) {
-				return back()
-					->withInput()
-					->withErrors(['logo' => 'Gagal mengunggah logo: ' . $e->getMessage()]);
-			}
-		}
-
-		$profile->update($profileData);
 
 		return redirect()
 			->route('profile.index')

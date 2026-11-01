@@ -203,7 +203,7 @@
 <body>
 	<div class="receipt">
 		<div class="header">
-			<h1>{{ $profile->store_name ?? config('app.name', 'TOKO') }}</h1>
+			<h1>{{ $storeName ?? config('app.name', 'TOKO') }}</h1>
 			<div class="type-badge">PENJUALAN</div>
 		</div>
 
@@ -235,16 +235,13 @@
 		<div class="items-table">
 			@foreach($transaksiKeluar->items as $item)
 				@php
-					$serials = json_decode($item->-- hidden nomor_seri -- ?? '[]', true) ?: [];
+					$serials = json_decode($item->nomor_seri ?? '[]', true) ?: [];
 					$qty = max(count($serials), 1);
 					$unitPrice = $qty > 0 ? $item->total_harga / $qty : $item->total_harga;
 				@endphp
 				<div class="item-row">
 					<div class="item-name">
 						{{ $item->product->nama_produk ?? 'Produk' }}
-						@if($item->product && $item->product->brand)
-							- {{ $item->product->brand }}
-						@endif
 					</div>
 					@if(count($serials))
 						<div class="item-details">
@@ -260,24 +257,14 @@
 			@endforeach
 		</div>
 
-		@php
-			$totalBiayaTambahan = $transaksiKeluar->biayaTambahan->sum('nominal');
-		@endphp
-
 		<div class="totals">
 			<div class="total-row">
 				<span>Subtotal:</span>
 				<span>Rp {{ number_format($transaksiKeluar->items->sum('total_harga'), 0, ',', '.') }}</span>
 			</div>
-			@if($totalBiayaTambahan > 0)
-			<div class="total-row">
-				<span>Biaya Tambahan:</span>
-				<span>Rp {{ number_format($totalBiayaTambahan, 0, ',', '.') }}</span>
-			</div>
-			@endif
 			<div class="total-row grand">
 				<span>TOTAL:</span>
-				<span>Rp {{ number_format($transaksiKeluar->total_harga ?? ($transaksiKeluar->items->sum('total_harga') + $totalBiayaTambahan), 0, ',', '.') }}</span>
+				<span>Rp {{ number_format($transaksiKeluar->total_harga ?? $transaksiKeluar->items->sum('total_harga'), 0, ',', '.') }}</span>
 			</div>
 			@if($transaksiKeluar->nominal_bayar > 0)
 			<div class="total-row">
@@ -308,26 +295,8 @@
 			</div>
 		@endif
 
-		@if($totalBiayaTambahan > 0)
-			<div class="info-section">
-				<div class="info-row">
-					<span class="info-label">Rincian Biaya Tambahan:</span>
-				</div>
-				<div style="margin-top: 5px; font-size:10px;">
-					@foreach($transaksiKeluar->biayaTambahan as $b)
-						<div class="info-row">
-							<span>
-								{{ $b->nama }}@if($b->keterangan) - {{ $b->keterangan }}@endif
-							</span>
-							<span>Rp {{ number_format($b->nominal, 0, ',', '.') }}</span>
-						</div>
-					@endforeach
-				</div>
-			</div>
-		@endif
-
 		<div class="footer">
-			<p>{{ $profile->store_name ?? config('app.name', 'TOKO') }}</p>
+			<p>{{ $storeName ?? config('app.name', 'TOKO') }}</p>
 			<p>*** TERIMA KASIH ***</p>
 			<p>Nota Penjualan / Sales Receipt</p>
 			<p>Diinput oleh: {{ $user->name ?? '-' }}</p>

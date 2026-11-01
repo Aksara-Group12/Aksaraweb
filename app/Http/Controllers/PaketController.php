@@ -74,7 +74,7 @@ class PaketController extends BaseController
 			'deskripsi' => 'nullable|string',
 			'harga' => 'required|numeric|min:0',
 			'harga_diskon' => 'nullable|numeric|min:0',
-			'durasi_bulan' => 'required|integer|min:1',
+			'durasi_hari' => 'required|integer|min:1',
 			'is_active' => 'required|boolean',
 		]);
 
@@ -101,7 +101,7 @@ class PaketController extends BaseController
 			'deskripsi' => 'nullable|string',
 			'harga' => 'required|numeric|min:0',
 			'harga_diskon' => 'nullable|numeric|min:0',
-			'durasi_bulan' => 'required|integer|min:1',
+			'durasi_hari' => 'required|integer|min:1',
 			'is_active' => 'required|boolean',
 		]);
 

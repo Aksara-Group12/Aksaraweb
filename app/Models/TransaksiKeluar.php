@@ -9,7 +9,6 @@ class TransaksiKeluar extends Model
 	protected $table = 'transaksi_keluar';
 
 	protected $fillable = [
-		'admin_id',
 		'user_id',
 		'invoice_no',
 		'customer_name',
@@ -22,17 +21,10 @@ class TransaksiKeluar extends Model
 		'nominal_bayar',
 		'kembalian',
 		'catatan',
-		'shift_id',
-		'is_invoice',
 		'is_void',
 		'void_reason',
 		'voided_at',
 	];
-
-	public function admin()
-	{
-		return $this->belongsTo(Admin::class, 'admin_id');
-	}
 
 	protected $casts = [
 		'tanggal_transaksi' => 'date',
@@ -49,11 +41,6 @@ class TransaksiKeluar extends Model
 	public function items()
 	{
 		return $this->hasMany(TransaksiKeluarItem::class, 'transaksi_keluar_id');
-	}
-
-	public function biayaTambahan()
-	{
-		return $this->hasMany(TransaksiBiayaTambahan::class, 'transaksi_keluar_id');
 	}
 
 	/**

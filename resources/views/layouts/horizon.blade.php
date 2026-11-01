@@ -862,7 +862,7 @@
 
 		@include('component.employee_access_denied_modal')
 		@include('component.logout_modal')
-		
+		@stack('scripts')
 		<script>
 			document.addEventListener('DOMContentLoaded', function () {
 				// Inisialisasi ikon Lucide (Shadcn Standard)

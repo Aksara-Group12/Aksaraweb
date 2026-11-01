@@ -107,21 +107,21 @@
                                             @endif
                                         </p>
                                     @endif
-                                    <p class="text-xs text-gray-500 mt-1">per {{ $package->durasi_bulan }} bulan</p>
+                                    <p class="text-xs text-gray-500 mt-1">per {{ $package->durasi_hari }} hari</p>
                                 </div>
 
                                 <!-- Info Durasi -->
                                 <div class="bg-blue-50 p-3 rounded">
                                     <p class="text-sm font-semibold text-blue-900">
                                         <i class="fas fa-calendar mr-2"></i>
-                                        Durasi: {{ $package->durasi_bulan }} bulan
+                                        Durasi: {{ $package->durasi_hari }} hari
                                     </p>
                                 </div>
 
                                 <!-- Button -->
-                                <button type="button" 
+                                <button type="button"
                                     class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg transition"
-                                    onclick="selectPackage({{ $package->id }}, '{{ $package->nama_paket }}', {{ $package->harga_diskon ?? $package->harga }}, {{ $package->durasi_bulan }})">
+                                    onclick="selectPackage({{ $package->id }}, '{{ $package->nama_paket }}', {{ $package->harga_diskon ?? $package->harga }}, {{ $package->durasi_hari }})">
                                     <i class="fas fa-check-circle mr-2"></i>Pilih Paket
                                 </button>
                             </div>

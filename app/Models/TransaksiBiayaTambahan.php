@@ -10,7 +10,6 @@ class TransaksiBiayaTambahan extends Model
 
     protected $fillable = [
         'user_id',
-        'transaksi_masuk_id',
         'transaksi_keluar_id',
         'nama',
         'keterangan',
@@ -21,10 +20,11 @@ class TransaksiBiayaTambahan extends Model
         'nominal' => 'decimal:2',
     ];
 
-    public function transaksiMasuk()
-    {
-        return $this->belongsTo(TransaksiMasuk::class, 'transaksi_masuk_id');
-    }
+    // TransaksiMasuk dihapus
+    // public function transaksiMasuk()
+    // {
+    //     return $this->belongsTo(TransaksiMasuk::class, 'transaksi_masuk_id');
+    // }
 
     public function transaksiKeluar()
     {

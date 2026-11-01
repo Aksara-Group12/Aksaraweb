@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TransaksiMasuk;
 use App\Models\TransaksiKeluar;
-use App\Models\Expenses;
-use App\Models\TransaksiMasukItem;
+use App\Models\Pengeluaran;
 use App\Models\TransaksiKeluarItem;
 use App\Models\Product;
-use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Carbon\Carbon;
@@ -49,23 +46,12 @@ class LaporanController extends BaseController
 		$totalRevenue = (float) $salesQuery->sum('total_harga');
 		$totalSalesCount = (int) $salesQuery->count();
 
-		// HPP / COGS: dari hpp_snapshot pada item penjualan (qty × hpp_snapshot)
-		// Hanya transaksi yang tidak void
-		$HPPFromSales = TransaksiKeluarItem::join('transaksi_keluar', 'transaksi_keluar_items.transaksi_keluar_id', '=', 'transaksi_keluar.id')
-			->where('transaksi_keluar.user_id', auth()->user()->id)
-			->whereBetween('transaksi_keluar.tanggal_transaksi', [$start, $end])
-			->where('transaksi_keluar.status', 'complete')
-			->where('transaksi_keluar.is_void', false)
-			->selectRaw('SUM(transaksi_keluar_items.qty_keluar * transaksi_keluar_items.hpp_snapshot) as total_hpp')
-			->value('total_hpp');
-
-		$totalHPP = (float) ($HPPFromSales ?? 0);
-
-		$grossProfit = $totalRevenue - $totalHPP;
-		$grossMargin = $totalRevenue > 0 ? ($grossProfit / $totalRevenue) * 100 : 0.0;
+		// Gross Profit (tanpa HPP/COGS)
+		$grossProfit = $totalRevenue;
+		$grossMargin = 100.0; // Gross margin 100% karena tidak ada HPP
 
 		// Operating expenses dari tabel expenses
-		$expensesQuery = Expenses::where('user_id', auth()->user()->id)
+		$expensesQuery = Pengeluaran::where('user_id', auth()->user()->id)
 			->whereBetween('tanggal', [$start, $end]);
 		$totalOperatingExpenses = (float) $expensesQuery->sum('nominal');
 
@@ -76,10 +62,8 @@ class LaporanController extends BaseController
 		// Cash In: Total Revenue dari penjualan complete
 		$cashIn = $totalRevenue;
 
-		// Cash Out: HPP + Operating Expenses
-		// HPP adalah cost of goods sold (dari total pembelian)
-		// Operating Expenses dari tabel expenses
-		$cashOut = $totalHPP + $totalOperatingExpenses;
+		// Cash Out: Operating Expenses saja (tanpa HPP)
+		$cashOut = $totalOperatingExpenses;
 
 		$freeCashFlow = $cashIn - $cashOut;
 
@@ -103,29 +87,12 @@ class LaporanController extends BaseController
 			->limit(5)
 			->get();
 
-		// Piutang belum tertagih (AR)
-		$piutangQuery = Invoice::where('user_id', auth()->user()->id)
-			->where('sisa_tagihan', '>', 0);
-
-		$totalPiutang = (float) $piutangQuery->sum('sisa_tagihan');
-
-		// Piutang jatuh tempo
-		$piutangJatuhTempo = (float) (clone $piutangQuery)
-			->where('jatuh_tempo', '<', Carbon::now())
-			->sum('sisa_tagihan');
-
-		// Piutang belum jatuh tempo
-		$piutangBelumJatuhTempo = (float) (clone $piutangQuery)
-			->where('jatuh_tempo', '>=', Carbon::now())
-			->sum('sisa_tagihan');
-
 		return view('laporan.ringkasan-keuangan', [
 			'period' => $period,
 			'startDate' => $start->toDateString(),
 			'endDate' => $end->toDateString(),
 			'totalRevenue' => $totalRevenue,
 			'totalSalesCount' => $totalSalesCount,
-			'totalHPP' => $totalHPP,
 			'grossProfit' => $grossProfit,
 			'grossMargin' => $grossMargin,
 			'totalOperatingExpenses' => $totalOperatingExpenses,
@@ -138,11 +105,6 @@ class LaporanController extends BaseController
 			'paymentBreakdown' => $paymentBreakdown,
 			'expensesByType' => $expensesByType,
 			'expenses' => $recentExpenses,
-
-			// Piutang belum tertagih
-			'totalPiutang' => $totalPiutang,
-			'piutangJatuhTempo' => $piutangJatuhTempo,
-			'piutangBelumJatuhTempo' => $piutangBelumJatuhTempo,
 		]);
 	}
 
@@ -264,82 +226,9 @@ class LaporanController extends BaseController
 			}
 		}
 
-		// Query semua transaksi masuk items dengan filter tanggal
-		$masukItems = TransaksiMasukItem::with('transaksi', 'product')
-			->whereHas('transaksi', function ($query) use ($startDate, $endDate, $pemasok) {
-				$query->whereBetween('tanggal_transaksi', [$startDate, $endDate])
-					->where('status', 'complete')
-					->where('user_id', auth()->user()->id);
-				if ($pemasok) {
-					$query->where('supplier_name', 'like', '%' . $pemasok . '%');
-				}
-			})
-			->orderBy('created_at', 'asc')
-			->get();
-
-		foreach ($masukItems as $masukItem) {
-			// Dapatkan nomor_seri array dari item pembelian
-			$serials = is_array($masukItem->nomor_seri) ? $masukItem->nomor_seri : json_decode($masukItem->nomor_seri ?? '[]', true) ?? [];
-			
-			$transaksiMasuk = $masukItem->transaksi;
-			$product = $masukItem->product;
-
-			// Untuk setiap serial number dalam item, buat satu baris di excel
-			foreach ($serials as $serial) {
-				$normSerial = strtolower(trim($serial));
-				$keluarItem = $serialToKeluarItem[$normSerial] ?? null;
-
-				$tanggalJualText = null;
-				$namaCustomer = null;
-				$kontakCustomer = null;
-				$kotaKabupatenJual = null;
-
-				if ($keluarItem && $keluarItem->transaksi) {
-					$transaksiKeluar = $keluarItem->transaksi;
-					$tanggalJualText = $transaksiKeluar->tanggal_transaksi->format('m/d/y');
-					$namaCustomer = $transaksiKeluar->customer_name;
-					$kontakCustomer = $transaksiKeluar->customer_contact;
-					$kotaKabupatenJual = $transaksiKeluar->lokasi;
-				}
-
-				// Filter berdasarkan status
-				$isSold = !is_null($namaCustomer);
-				if ($status === 'sold' && !$isSold) {
-					continue; // Skip jika hanya filter sold dan belum terjual
-				}
-				if ($status === 'unsold' && $isSold) {
-					continue; // Skip jika hanya filter unsold dan sudah terjual
-				}
-
-				// Pastikan nomor telepon diekspor sebagai teks agar nol di depan tidak hilang di Excel
-				$supplierContact = $transaksiMasuk->supplier_contact;
-				if (!is_null($supplierContact) && $supplierContact !== '') {
-					$supplierContact = "'" . $supplierContact;
-				}
-
-				$customerContact = $kontakCustomer;
-				if (!is_null($customerContact) && $customerContact !== '') {
-					$customerContact = "'" . $customerContact;
-				}
-
-				// Build row
-				$row = [
-					$transaksiMasuk->tanggal_transaksi->format('m/d/y'),     // A: Tanggal Beli
-					$transaksiMasuk->supplier_name,                         // B: Pemasok
-					$supplierContact,                                       // C: Kontak Pemasok
-					$transaksiMasuk->lokasi,                               // D: Kota/Kabupaten
-					$masukItem->berat,                                      // E: Gramasi
-					$product?->jenis_logam,                                 // F: Jenis Logam
-					$masukItem->berat . '/' . $serial,                      // G: Gramasi/Seri
-					$namaCustomer,                                          // H: Nama Customer
-					$customerContact,                                       // I: Kontak Customer
-					$kotaKabupatenJual,                                     // J: Kota/Kabupaten
-					$tanggalJualText,                                       // K: Tanggal Terjual
-				];
-
-				$data[] = $row;
-			}
-		}
+		// TransaksiMasuk dihapus, fitur tracking produk tidak tersedia
+		// Return empty data
+		$data[] = [];
 
 		// Generate CSV filename
 		$fileName = 'tracking-produk_' . $startDate->format('Ymd') . '_' . $endDate->format('Ymd') . '.csv';
@@ -385,17 +274,12 @@ class LaporanController extends BaseController
 		$totalRevenue = (float) $salesQuery->sum('total_harga');
 		$totalSalesCount = (int) $salesQuery->count();
 
-		// HPP (COGS) - dari Transaksi Masuk
-		$totalHPP = (float) TransaksiMasuk::where('user_id', auth()->user()->id)
-			->whereBetween('tanggal_transaksi', [$start, $end])
-			->where('status', 'complete')
-			->sum('total_harga');
-
-		$grossProfit = $totalRevenue - $totalHPP;
-		$grossMargin = $totalRevenue > 0 ? ($grossProfit / $totalRevenue) * 100 : 0.0;
+		// Gross Profit (tanpa HPP/COGS)
+		$grossProfit = $totalRevenue;
+		$grossMargin = 100.0; // Gross margin 100% karena tidak ada HPP
 
 		// Beban Operasional
-		$totalOperatingExpenses = (float) Expenses::where('user_id', auth()->user()->id)
+		$totalOperatingExpenses = (float) Pengeluaran::where('user_id', auth()->user()->id)
 			->whereBetween('tanggal', [$start, $end])
 			->sum('nominal');
 
@@ -403,7 +287,7 @@ class LaporanController extends BaseController
 		$netMargin = $totalRevenue > 0 ? ($netProfit / $totalRevenue) * 100 : 0.0;
 
 		// Breakdown expenses by category
-		$expensesByCategory = Expenses::where('user_id', auth()->user()->id)
+		$expensesByCategory = Pengeluaran::where('user_id', auth()->user()->id)
 			->whereBetween('tanggal', [$start, $end])
 			->selectRaw('kategori, SUM(nominal) as total')
 			->groupBy('kategori')
@@ -415,7 +299,6 @@ class LaporanController extends BaseController
 			'endDate' => $end->toDateString(),
 			'totalRevenue' => $totalRevenue,
 			'totalSalesCount' => $totalSalesCount,
-			'totalHPP' => $totalHPP,
 			'grossProfit' => $grossProfit,
 			'grossMargin' => $grossMargin,
 			'totalOperatingExpenses' => $totalOperatingExpenses,

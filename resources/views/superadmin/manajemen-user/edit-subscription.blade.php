@@ -77,7 +77,7 @@
                     <option value="">-- Pilih Paket --</option>
                     @foreach($packages as $pkg)
                         <option value="{{ $pkg->id }}" {{ $subscription->paket_id == $pkg->id ? 'selected' : '' }}>
-                            {{ $pkg->nama_paket }} - Rp{{ number_format($pkg->harga, 0, ',', '.') }} ({{ $pkg->durasi_bulan }} bulan)
+                            {{ $pkg->nama_paket }} - Rp{{ number_format($pkg->harga, 0, ',', '.') }} ({{ $pkg->durasi_hari }} hari)
                         </option>
                     @endforeach
                 </select>

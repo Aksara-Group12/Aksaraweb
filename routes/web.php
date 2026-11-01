@@ -8,21 +8,19 @@ use App\Http\Controllers\DashboardSuperadminController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\LaporanController;
-use App\Http\Controllers\ExpensesController;
-use App\Http\Controllers\ProdukStokController;
+use App\Http\Controllers\PengeluaranController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ManajemenUserController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\SubscribeController;
 use App\Http\Controllers\BankController;
-use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LandingPageController;
-use App\Http\Controllers\PelangganController;
-use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\StockAdjustmentController;
-use App\Http\Controllers\JournalController;
-use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\ShiftController;
+use App\Http\Controllers\DataMaster\PenggunaController;
+use App\Http\Controllers\DataMaster\KategoriPengeluaranController;
+use App\Http\Controllers\DataMaster\KategoriProdukController;
+use App\Http\Controllers\DataMaster\RbacController;
+use App\Http\Controllers\DataMaster\RoleController;
+use App\Http\Controllers\CloseOrderController;
 
 // TEMP: Clear cache (hapus setelah berhasil)
 Route::get('/clear-cache', function () {
@@ -130,22 +128,69 @@ Route::middleware(['auth', 'subscription.access', 'employee.access'])->group(fun
     Route::get('/laporan/tracking-produk/export', [LaporanController::class, 'exportTrackingProduk'])
 		->name('laporan.tracking-produk.export');
 
-    Route::get('/expenses', [ExpensesController::class, 'index'])->name('expenses.index');
-    Route::get('/expenses/export/excel', [ExpensesController::class, 'exportExcel'])->name('expenses.export.excel');
-    Route::get('/expenses/export/pdf', [ExpensesController::class, 'exportPdf'])->name('expenses.export.pdf');
-    Route::get('/expenses/create', [ExpensesController::class, 'create'])->name('expenses.create');
-    Route::post('/expenses', [ExpensesController::class, 'store'])->name('expenses.store');
-    Route::get('/expenses/{expense}/edit', [ExpensesController::class, 'edit'])->name('expenses.edit');
-    Route::put('/expenses/{expense}', [ExpensesController::class, 'update'])->name('expenses.update');
-    Route::delete('/expenses/{expense}', [ExpensesController::class, 'destroy'])->name('expenses.destroy');
-    Route::post('/expenses/{expense}/destroy', [ExpensesController::class, 'destroy'])->name('expenses.destroy.post');
-    Route::delete('/expenses/bulk-destroy', [ExpensesController::class, 'bulkDestroy'])->name('expenses.bulk-destroy');
-    Route::post('/expenses/bulk-destroy', [ExpensesController::class, 'bulkDestroy'])->name('expenses.bulk-destroy.post');
-    Route::post('/expenses/hapus-massal', [ExpensesController::class, 'bulkDestroy'])->name('expenses.bulk-delete.post');
+    Route::prefix('close-order')->name('close-order.')->group(function () {
+        Route::get('/', [CloseOrderController::class, 'index'])->name('index');
+        Route::post('/open', [CloseOrderController::class, 'openShift'])->name('open');
+        Route::post('/close', [CloseOrderController::class, 'closeShift'])->name('close');
+        Route::get('/status', [CloseOrderController::class, 'getCurrentShiftStatus'])->name('status');
+        Route::get('/export/excel', [CloseOrderController::class, 'exportExcel'])->name('export.excel');
+    });
 
-    Route::prefix('produk-stok')->name('produkstok.')->group(function () {
-        Route::get('/', [ProdukStokController::class, 'index'])->name('index');
-        Route::get('/{id}', [ProdukStokController::class, 'show'])->name('show');
+    Route::prefix('pengeluaran')->name('pengeluaran.')->group(function () {
+        Route::get('/', [PengeluaranController::class, 'index'])->name('index');
+        Route::get('/export/excel', [PengeluaranController::class, 'exportExcel'])->name('export.excel');
+        Route::get('/export/pdf', [PengeluaranController::class, 'exportPdf'])->name('export.pdf');
+        Route::get('/create', [PengeluaranController::class, 'create'])->name('create');
+        Route::post('/', [PengeluaranController::class, 'store'])->name('store');
+        Route::get('/{pengeluaran}/edit', [PengeluaranController::class, 'edit'])->name('edit');
+        Route::put('/{pengeluaran}', [PengeluaranController::class, 'update'])->name('update');
+        Route::delete('/{pengeluaran}', [PengeluaranController::class, 'destroy'])->name('destroy');
+        Route::post('/{pengeluaran}/destroy', [PengeluaranController::class, 'destroy'])->name('destroy.post');
+        Route::delete('/bulk-destroy', [PengeluaranController::class, 'bulkDestroy'])->name('bulk-destroy');
+        Route::post('/bulk-destroy', [PengeluaranController::class, 'bulkDestroy'])->name('bulk-destroy.post');
+        Route::post('/hapus-massal', [PengeluaranController::class, 'bulkDestroy'])->name('bulk-delete.post');
+    });
+
+    // Data Master Routes
+    Route::get('/data-master', function () {
+        return view('data-master.index');
+    })->name('data-master.index');
+    
+    Route::prefix('data-master')->name('data-master.')->group(function () {
+        Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
+        Route::get('/pengguna/create', [PenggunaController::class, 'create'])->name('pengguna.create');
+        Route::post('/pengguna', [PenggunaController::class, 'store'])->name('pengguna.store');
+        Route::get('/pengguna/{pengguna}/edit', [PenggunaController::class, 'edit'])->name('pengguna.edit');
+        Route::put('/pengguna/{pengguna}', [PenggunaController::class, 'update'])->name('pengguna.update');
+        Route::delete('/pengguna/{pengguna}', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');
+
+        Route::get('/kategori-pengeluaran', [KategoriPengeluaranController::class, 'index'])->name('kategori-pengeluaran.index');
+        Route::get('/kategori-pengeluaran/create', [KategoriPengeluaranController::class, 'create'])->name('kategori-pengeluaran.create');
+        Route::post('/kategori-pengeluaran', [KategoriPengeluaranController::class, 'store'])->name('kategori-pengeluaran.store');
+        Route::get('/kategori-pengeluaran/{kategori}/edit', [KategoriPengeluaranController::class, 'edit'])->name('kategori-pengeluaran.edit');
+        Route::put('/kategori-pengeluaran/{kategori}', [KategoriPengeluaranController::class, 'update'])->name('kategori-pengeluaran.update');
+        Route::delete('/kategori-pengeluaran/{kategori}', [KategoriPengeluaranController::class, 'destroy'])->name('kategori-pengeluaran.destroy');
+
+        Route::get('/kategori-produk', [KategoriProdukController::class, 'index'])->name('kategori-produk.index');
+        Route::get('/kategori-produk/create', [KategoriProdukController::class, 'create'])->name('kategori-produk.create');
+        Route::post('/kategori-produk', [KategoriProdukController::class, 'store'])->name('kategori-produk.store');
+        Route::get('/kategori-produk/{kategori}/edit', [KategoriProdukController::class, 'edit'])->name('kategori-produk.edit');
+        Route::put('/kategori-produk/{kategori}', [KategoriProdukController::class, 'update'])->name('kategori-produk.update');
+        Route::delete('/kategori-produk/{kategori}', [KategoriProdukController::class, 'destroy'])->name('kategori-produk.destroy');
+
+        Route::get('/rbac', [RbacController::class, 'index'])->name('rbac.index');
+        Route::get('/rbac/create', [RbacController::class, 'create'])->name('rbac.create');
+        Route::post('/rbac', [RbacController::class, 'store'])->name('rbac.store');
+        Route::get('/rbac/{role}/edit', [RbacController::class, 'edit'])->name('rbac.edit');
+        Route::put('/rbac/{role}', [RbacController::class, 'update'])->name('rbac.update');
+        Route::delete('/rbac/{role}', [RbacController::class, 'destroy'])->name('rbac.destroy');
+
+        Route::get('/role', [RoleController::class, 'index'])->name('role.index');
+        Route::get('/role/create', [RoleController::class, 'create'])->name('role.create');
+        Route::post('/role', [RoleController::class, 'store'])->name('role.store');
+        Route::get('/role/{role}/edit', [RoleController::class, 'edit'])->name('role.edit');
+        Route::put('/role/{role}', [RoleController::class, 'update'])->name('role.update');
+        Route::delete('/role/{role}', [RoleController::class, 'destroy'])->name('role.destroy');
     });
 
     Route::prefix('manajemen-user')->name('manajemen-user.')->group(function () {
@@ -186,88 +231,13 @@ Route::middleware(['auth', 'subscription.access', 'employee.access'])->group(fun
         Route::post('/bulk-destroy', [BankController::class, 'bulkDestroy'])->name('bulk-destroy');
     });
 
-    Route::prefix('pelanggan')->name('pelanggan.')->group(function () {
-        Route::get('/', [PelangganController::class, 'index'])->name('index');
-        Route::get('/create', [PelangganController::class, 'create'])->name('create');
-        Route::post('/', [PelangganController::class, 'store'])->name('store');
-        Route::get('/{pelanggan}/edit', [PelangganController::class, 'edit'])->name('edit');
-        Route::patch('/{pelanggan}', [PelangganController::class, 'update'])->name('update');
-        Route::delete('/{pelanggan}', [PelangganController::class, 'destroy'])->name('destroy');
-    });
-
-    Route::prefix('supplier')->name('supplier.')->group(function () {
-        Route::get('/', [SupplierController::class, 'index'])->name('index');
-        Route::get('/create', [SupplierController::class, 'create'])->name('create');
-        Route::post('/', [SupplierController::class, 'store'])->name('store');
-        Route::get('/{supplier}/edit', [SupplierController::class, 'edit'])->name('edit');
-        Route::patch('/{supplier}', [SupplierController::class, 'update'])->name('update');
-        Route::delete('/{supplier}', [SupplierController::class, 'destroy'])->name('destroy');
-    });
-
-    Route::prefix('stock-adjustment')->name('stock-adjustment.')->group(function () {
-        Route::get('/', [StockAdjustmentController::class, 'index'])->name('index');
-        Route::get('/create', [StockAdjustmentController::class, 'create'])->name('create');
-        Route::post('/', [StockAdjustmentController::class, 'store'])->name('store');
-    });
-
-    Route::prefix('journal')->name('journal.')->group(function () {
-        Route::get('/', [JournalController::class, 'index'])->name('index');
-    });
-
-    Route::prefix('invoice')->name('invoice.')->group(function () {
-        Route::get('/', [InvoiceController::class, 'index'])->name('index');
-        Route::get('/create-manual', [InvoiceController::class, 'createManual'])->name('createManual');
-        Route::post('/manual', [InvoiceController::class, 'storeManual'])->name('storeManual');
-        Route::post('/record-payment/{id}', [InvoiceController::class, 'recordPayment'])->name('recordPayment');
-    });
-
-    Route::prefix('shift')->name('shift.')->group(function () {
-        Route::get('/', [ShiftController::class, 'index'])->name('index');
-        Route::get('/create', [ShiftController::class, 'create'])->name('create');
-        Route::post('/', [ShiftController::class, 'store'])->name('store');
-        Route::get('/close/{id}', [ShiftController::class, 'close'])->name('close');
-        Route::post('/close/{id}', [ShiftController::class, 'updateClose'])->name('updateClose');
-    });
-
-});
-
-// Admin Management Routes - tanpa middleware subscription.access (owner bisa akses walaupun subscription expired)
-Route::get('/admin/verify-email/{id}', [AdminController::class, 'verifyEmail'])
-    ->name('admin.verify-email');
-
-Route::middleware(['auth'])->group(function () {
-    Route::resource('profile', ProfileController::class)->only([
-        'index', 'create', 'store', 'edit', 'update',
-    ]);
-
-    Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/', [AdminController::class, 'index'])->name('index');
-        Route::get('/create', [AdminController::class, 'create'])->name('create');
-        Route::post('/', [AdminController::class, 'store'])->name('store');
-        Route::post('/bulk-destroy', [AdminController::class, 'bulkDestroy'])->name('bulk-destroy');
-        Route::get('/{id}/edit', [AdminController::class, 'edit'])->name('edit');
-        Route::put('/{id}', [AdminController::class, 'update'])->name('update');
-        Route::delete('/{id}', [AdminController::class, 'destroy'])->name('destroy');
-        Route::post('/{id}/destroy', [AdminController::class, 'destroy'])->name('destroy.post');
-        Route::post('/{id}/restore', [AdminController::class, 'restore'])->name('restore');
-    });
+    Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('profile', [ProfileController::class, 'update'])->name('profile.update');
 });
 
 // Protected application routes
 Route::middleware(['auth', 'subscription.access', 'employee.access'])->group(function () {
     Route::prefix('transaksi')->group(function () {
-        Route::get('/masuk', [TransaksiController::class, 'masuk'])->name('transaksi.masuk');
-        Route::get('/masuk/export/excel', [TransaksiController::class, 'exportMasukExcel'])->name('transaksi.masuk.export.excel');
-        Route::get('/masuk/export/pdf', [TransaksiController::class, 'exportMasukPdf'])->name('transaksi.masuk.export.pdf');
-        Route::get('/masuk/create', [TransaksiController::class, 'createMasuk'])->name('transaksi.masuk.create');
-        Route::post('/masuk', [TransaksiController::class, 'storeMasuk'])->name('transaksi.masuk.store');
-        Route::get('/masuk/{transaksiMasuk}/nota', [TransaksiController::class, 'printMasuk'])->name('transaksi.masuk.print');
-        Route::delete('/masuk/{transaksiMasuk}', [TransaksiController::class, 'destroyMasuk'])->name('transaksi.masuk.destroy');
-        Route::post('/masuk/{transaksiMasuk}/destroy', [TransaksiController::class, 'destroyMasuk'])->name('transaksi.masuk.destroy.post');
-        Route::delete('/masuk/bulk-destroy', [TransaksiController::class, 'bulkDestroyMasuk'])->name('transaksi.masuk.bulk-destroy');
-        Route::post('/masuk/bulk-destroy', [TransaksiController::class, 'bulkDestroyMasuk'])->name('transaksi.masuk.bulk-destroy.post');
-        Route::post('/masuk/hapus-massal', [TransaksiController::class, 'bulkDestroyMasuk'])->name('transaksi.masuk.bulk-delete.post');
-
         Route::get('/keluar', [TransaksiController::class, 'keluar'])->name('transaksi.keluar');
         Route::get('/keluar/export/excel', [TransaksiController::class, 'exportKeluarExcel'])->name('transaksi.keluar.export.excel');
         Route::get('/keluar/export/pdf', [TransaksiController::class, 'exportKeluarPdf'])->name('transaksi.keluar.export.pdf');
@@ -283,22 +253,6 @@ Route::middleware(['auth', 'subscription.access', 'employee.access'])->group(fun
     Route::post('/keluar/bulk-destroy', [TransaksiController::class, 'bulkDestroyKeluar'])->name('transaksi.keluar.bulk-destroy.post');
     Route::post('/keluar/hapus-massal', [TransaksiController::class, 'bulkDestroyKeluar'])->name('transaksi.keluar.bulk-delete.post');
     Route::post('/keluar/{id}/void', [TransaksiController::class, 'voidTransaksi'])->name('transaksi.keluar.void');
-
-        Route::get('/laporan', [TransaksiController::class, 'laporan'])->name('transaksi.laporan');
-        // Route::get('/laba-rugi', [LaporanController::class, 'labaRugi'])->name('laporan.laba-rugi'); // Digabung ke laporan.keuangan
-        Route::get('/laba-rugi', [LaporanController::class, 'ringkasanKeuangan'])->name('laporan.laba-rugi'); // Redirect
-
-        Route::get('/log', [TransaksiController::class, 'logTransaksi'])->name('transaksi.log');
-        Route::get('/log/export/excel', [TransaksiController::class, 'logTransaksiExportExcel'])->name('transaksi.log.export.excel');
-        Route::get('/log/export/pdf', [TransaksiController::class, 'logTransaksiExportPdf'])->name('transaksi.log.export.pdf');
-
-        // API endpoints untuk cascading dropdown (disembunyikan - legacy logam mulia)
-        // Route::get('/api/brands/{jenisLogam}', [TransaksiController::class, 'getBrands']);
-        // Route::get('/api/weights/{jenisLogam}/{brand}', [TransaksiController::class, 'getWeights']);
-        // Route::get('/api/products/{jenisLogam}/{brand}/{berat}', [TransaksiController::class, 'getProducts']);
-        // Route::get('/api/products-by-jenis/{jenisLogam}', [TransaksiController::class, 'getProductsByJenisLogam']);
-        // Route::get('/api/all-products', [TransaksiController::class, 'getAllProducts']);
-        // Route::get('/api/serial-numbers/{productId}', [TransaksiController::class, 'getSerialNumbers']);
     });
 
     // Subscribe routes (hanya untuk owner)

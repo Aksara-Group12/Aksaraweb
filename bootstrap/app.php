@@ -24,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'subscription.access' => \App\Http\Middleware\EnsureSubscriptionActive::class,
             'employee.access' => \App\Http\Middleware\EnsureEmployeeAccess::class,
+            'permission' => \App\Http\Middleware\CheckPermission::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

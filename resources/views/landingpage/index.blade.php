@@ -639,23 +639,31 @@
 							<div class="space-y-2.5 text-xs text-slate-700 mb-8 font-medium">
 								<div class="flex items-center gap-2">
 									<i data-lucide="check" class="w-4 h-4 text-emerald-600 stroke-[2.5]"></i>
-									<span>Akses Lengkap Kasir Penjualan</span>
+									<span>Single Outlet</span>
 								</div>
 								<div class="flex items-center gap-2">
 									<i data-lucide="check" class="w-4 h-4 text-emerald-600 stroke-[2.5]"></i>
-									<span>Manajemen Stok & Riwayat Masuk-Keluar</span>
+									<span>Toko Online</span>
 								</div>
 								<div class="flex items-center gap-2">
 									<i data-lucide="check" class="w-4 h-4 text-emerald-600 stroke-[2.5]"></i>
-									<span>Database Pelanggan & Catatan Piutang</span>
+									<span>Aplikasi Kasir Online</span>
 								</div>
 								<div class="flex items-center gap-2">
 									<i data-lucide="check" class="w-4 h-4 text-emerald-600 stroke-[2.5]"></i>
-									<span>Laporan Finansial Laba Rugi Otomatis</span>
+									<span>Manajemen Inventori</span>
 								</div>
 								<div class="flex items-center gap-2">
 									<i data-lucide="check" class="w-4 h-4 text-emerald-600 stroke-[2.5]"></i>
-									<span>Bantuan Teknis & Panduan Awal</span>
+									<span>Laporan</span>
+								</div>
+								<div class="flex items-center gap-2">
+									<i data-lucide="check" class="w-4 h-4 text-emerald-600 stroke-[2.5]"></i>
+									<span>Manajemen Karyawan</span>
+								</div>
+								<div class="flex items-center gap-2">
+									<i data-lucide="check" class="w-4 h-4 text-emerald-600 stroke-[2.5]"></i>
+									<span>Pencatatan Keuangan</span>
 								</div>
 							</div>
 						</div>

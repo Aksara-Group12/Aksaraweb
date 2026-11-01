@@ -150,8 +150,7 @@
 
 	.btn-submit:hover {
 		background: #162C50;
-		transform: translateY(-1px);
-		box-shadow: 0 4px 12px rgba(15, 34, 61, 0.2);
+		box-shadow: 0 0 14px rgba(15, 34, 61, 0.35);
 	}
 
 	.btn-cancel {
@@ -178,9 +177,9 @@
 	}
 </style>
 
-<div class="hz-top-row" style="display:flex; justify-content:flex-start; align-items:center; margin-bottom: 20px;">
-	<a href="{{ route('paket.index') }}" class="btn-back-circle" title="Kembali ke Daftar Paket">
-		<i data-lucide="arrow-left" style="width: 18px; height: 18px;"></i>
+<div style="margin-bottom: 20px;">
+	<a href="{{ route('paket.index') }}" class="hz-btn-back" title="Kembali">
+		<i data-lucide="arrow-left"></i>
 	</a>
 </div>
 

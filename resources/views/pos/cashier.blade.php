@@ -1,6 +1,7 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'POS Kasir')
+@section('page_subtitle', 'Point of Sale - Penjualan dengan layout kasir.')
 
 @section('content')
 	@php
@@ -10,11 +11,7 @@
 			->first();
 		$isShiftOpen = $currentShift ? true : false;
 	@endphp
-	<div class="hz-top-row">
-		<div>
-			<h2 class="hz-top-title">POS Kasir</h2>
-			<p class="hz-top-sub">Point of Sale - Penjualan dengan layout kasir.</p>
-		</div>
+	<div class="hz-top-row" style="display:flex; justify-content:flex-end; align-items:center; margin-bottom: 20px;">
 		<div>
 			@if ($isShiftOpen)
 				<form action="{{ route('close-order.close') }}" method="POST" style="display: inline;">

@@ -21,6 +21,7 @@ return new class extends Migration
         };
 
         // Drop all foreign keys
+        $dropFk('products', 'products_category_id_foreign');
         $dropFk('transaksi_keluar', 'transaksi_keluar_account_id_foreign');
         // Note: products foreign keys already dropped in previous migration
         $dropFk('pengeluaran', 'expenses_account_id_foreign');
@@ -108,6 +109,7 @@ return new class extends Migration
         }
 
         // Drop unused tables
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('transaksi_biaya_tambahan');
         Schema::dropIfExists('shifts');
         Schema::dropIfExists('stock_adjustments');
@@ -141,6 +143,7 @@ return new class extends Migration
         Schema::dropIfExists('paket_module');
         Schema::dropIfExists('profiles');
         Schema::dropIfExists('stock_movements');
+        Schema::enableForeignKeyConstraints();
     }
 
     /**

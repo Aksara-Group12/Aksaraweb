@@ -4,6 +4,11 @@
 @section('page_subtitle', 'User: ' . $user->name . ' (' . $user->email . ')')
 
 @section('content')
+<div style="margin-bottom: 20px;">
+    <a href="{{ route('manajemen-user.index') }}" class="hz-btn-back" title="Kembali">
+        <i data-lucide="arrow-left"></i>
+    </a>
+</div>
 @if ($errors->any())
     <div style="margin: 16px 0; padding: 12px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; color: #ef4444;">
         <ul style="margin: 0; padding-left: 20px;">
@@ -116,11 +121,12 @@
                 <textarea name="admin_notes" id="admin_notes" rows="3" style="width: 100%; background: rgba(148,163,184,0.1); border: 1px solid rgba(148,163,184,0.3); color: #1e293b; padding: 10px 12px; border-radius: 6px; font-size: 0.95rem; font-family: inherit;">{{ $subscription->admin_notes }}</textarea>
             </div>
 
-            <div style="display: flex; gap: 8px;">
-                <button type="submit" style="flex: 1; background: rgba(59,130,246,0.2); color: #3b82f6; border: 1px solid rgba(59,130,246,0.5); padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: 500; font-size: 0.95rem;">
-                    ✓ Simpan Perubahan
+            <div style="display: flex; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid #F1F5F9;">
+                <button type="submit" class="hz-btn hz-btn-primary" style="padding: 10px 24px;">
+                    <i data-lucide="check" style="width: 16px; height: 16px;"></i>
+                    Simpan Perubahan
                 </button>
-                <a href="{{ route('manajemen-user.index') }}" style="flex: 1; background: rgba(148,163,184,0.2); color: #64748b; border: 1px solid rgba(148,163,184,0.5); padding: 10px 16px; border-radius: 6px; text-decoration: none; text-align: center; font-weight: 500; font-size: 0.95rem;">
+                <a href="{{ route('manajemen-user.index') }}" class="hz-btn hz-btn-secondary" style="padding: 10px 20px;">
                     Batal
                 </a>
             </div>

@@ -142,13 +142,12 @@
 	}
 
 	.btn-subscribe:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 16px 50px rgba(59, 130, 246, 0.4);
+		box-shadow: 0 0 28px rgba(59, 130, 246, 0.55);
 		background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
 	}
 
 	.btn-subscribe:active {
-		transform: translateY(0);
+		box-shadow: 0 0 16px rgba(59, 130, 246, 0.4);
 	}
 
 	.btn-dashboard {
@@ -170,13 +169,13 @@
 
 	.btn-dashboard:hover {
 		background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.1) 100%);
-		border-color: rgba(59, 130, 246, 0.6);
+		border-color: rgba(59, 130, 246, 0.8);
 		color: #2563eb;
-		transform: translateY(-1px);
+		box-shadow: 0 0 16px rgba(59, 130, 246, 0.25);
 	}
 
 	.btn-dashboard:active {
-		transform: translateY(0);
+		box-shadow: none;
 	}
 
 	.btn-dismiss {

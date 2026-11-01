@@ -68,7 +68,8 @@ class LaporanController extends BaseController
 		$freeCashFlow = $cashIn - $cashOut;
 
 		// Breakdown metode pembayaran dari penjualan
-		$paymentBreakdown = TransaksiKeluar::whereBetween('tanggal_transaksi', [$start, $end])
+		$paymentBreakdown = TransaksiKeluar::where('user_id', auth()->user()->id)
+			->whereBetween('tanggal_transaksi', [$start, $end])
 			->where('status', 'complete')
 			->selectRaw('metode_pembayaran, SUM(total_harga) as total')
 			->groupBy('metode_pembayaran')

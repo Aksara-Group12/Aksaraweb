@@ -4,7 +4,13 @@
 @section('page_subtitle', 'Buat admin baru untuk toko Anda.')
 
 @section('content')
-<div style="max-width: 640px; margin-top: 10px;">
+<div style="margin-bottom: 20px;">
+	<a href="{{ route('admin.index') }}" class="hz-btn-back" title="Kembali">
+		<i data-lucide="arrow-left"></i>
+	</a>
+</div>
+
+<div style="width: 100%; max-width: 100%; margin-top: 10px;">
     <form method="POST" action="{{ route('admin.store') }}" style="background: #FFFFFF; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 20px rgba(15, 34, 61, 0.04); padding: 28px;">
         @csrf
 

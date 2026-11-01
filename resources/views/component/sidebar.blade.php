@@ -101,10 +101,17 @@
 					</a>
 				@endif
 				@if($hasPermission('riwayat_penjualan') && !session()->has('admin_id'))
-					<a href="{{ $ownerSubscriptionActive ? route('transaksi.keluar') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('transaksi.keluar') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
-						<i data-lucide="arrow-up-right" class="hz-nav-lucide"></i>
-						<span class="hz-nav-label">Riwayat Penjualan</span>
-					</a>
+					@if($isOwner)
+						<a href="{{ $ownerSubscriptionActive ? route('transaksi.keluar') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('transaksi.keluar') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>
+							<i data-lucide="arrow-up-right" class="hz-nav-lucide"></i>
+							<span class="hz-nav-label">Riwayat Penjualan</span>
+						</a>
+					@else
+						<a href="javascript:void(0)" onclick="showAccessDeniedModal('Akses Ditolak', 'Akses ditolak. Hanya owner yang bisa melihat riwayat penjualan.')" class="hz-nav-item">
+							<i data-lucide="arrow-up-right" class="hz-nav-lucide"></i>
+							<span class="hz-nav-label">Riwayat Penjualan</span>
+						</a>
+					@endif
 				@endif
 				@if($hasPermission('pengeluaran'))
 					<a href="{{ $ownerSubscriptionActive ? route('pengeluaran.index') : 'javascript:void(0)' }}" class="hz-nav-item {{ request()->routeIs('pengeluaran.*') ? 'hz-nav-item-active' : '' }}" @if(!$ownerSubscriptionActive) onclick="showSubscriptionModal()" @endif>

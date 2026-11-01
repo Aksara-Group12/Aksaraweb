@@ -124,8 +124,7 @@
 		}
 
 		.apply-btn:hover {
-			transform: translateY(-2px);
-			box-shadow: 0 6px 30px rgba(245, 158, 11, 0.3);
+			box-shadow: 0 0 24px rgba(245, 158, 11, 0.45);
 		}
 
 		/* KPI Card Grid */
@@ -162,8 +161,8 @@
 		}
 
 		.kpi-card:hover {
-			transform: translateY(-10px);
-			box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+			border-color: rgba(197, 160, 89, 0.6) !important;
+			box-shadow: 0 0 32px rgba(197, 160, 89, 0.3), 0 10px 40px rgba(0, 0, 0, 0.45);
 		}
 
 		.kpi-card-inner {
@@ -351,9 +350,8 @@
 		}
 
 		.secondary-card:hover {
-			transform: translateY(-8px);
-			border-color: rgba(51, 65, 85, 0.6);
-			box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+			border-color: rgba(197, 160, 89, 0.5);
+			box-shadow: 0 0 28px rgba(197, 160, 89, 0.25), 0 10px 40px rgba(0, 0, 0, 0.35);
 		}
 
 		.card-header {

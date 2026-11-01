@@ -60,8 +60,7 @@
 
 	.btn-add-primary:hover {
 		background: #162C50;
-		transform: translateY(-1px);
-		box-shadow: 0 4px 12px rgba(15, 34, 61, 0.2);
+		box-shadow: 0 0 14px rgba(15, 34, 61, 0.35);
 	}
 
 	.filter-form-wrap {
@@ -202,20 +201,19 @@
 	}
 
 	.paket-card:hover {
-		transform: translateY(-4px);
-		border-color: rgba(197, 160, 89, 0.4);
-		box-shadow: 0 12px 24px -4px rgba(15, 34, 61, 0.08);
+		border-color: rgba(197, 160, 89, 0.7);
+		box-shadow: 0 0 24px rgba(197, 160, 89, 0.28), 0 4px 16px rgba(15, 34, 61, 0.05);
 	}
 
 	/* FEATURED CARD: Gradasi Emas Mewah (Aksara Luxury Gold) */
 	.paket-card-highlight {
 		border: 1.5px solid #C5A059 !important;
-		box-shadow: 0 16px 36px -8px rgba(197, 160, 89, 0.35), 0 8px 16px -4px rgba(15, 34, 61, 0.08) !important;
+		box-shadow: 0 0 16px rgba(197, 160, 89, 0.25), 0 8px 16px -4px rgba(15, 34, 61, 0.08) !important;
 	}
 
 	.paket-card-highlight:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 20px 40px -6px rgba(197, 160, 89, 0.45), 0 10px 20px -4px rgba(15, 34, 61, 0.12) !important;
+		border-color: #B38E46 !important;
+		box-shadow: 0 0 32px rgba(197, 160, 89, 0.55), 0 8px 24px -4px rgba(15, 34, 61, 0.1) !important;
 	}
 
 	.paket-highlight-tag {
@@ -343,8 +341,7 @@
 	.paket-cta:hover {
 		background: #162C50;
 		border-color: #162C50;
-		transform: translateY(-1px);
-		box-shadow: 0 4px 12px rgba(15, 34, 61, 0.2);
+		box-shadow: 0 0 14px rgba(15, 34, 61, 0.35);
 	}
 
 	/* Table Styling */

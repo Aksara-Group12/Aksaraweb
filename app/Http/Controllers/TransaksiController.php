@@ -20,7 +20,11 @@ class TransaksiController extends BaseController
 	{
 		// Hanya owner yang bisa akses riwayat penjualan
 		if (auth()->user()->role !== 'owner') {
-			abort(403, 'Akses ditolak. Hanya owner yang bisa melihat riwayat penjualan.');
+			$pesan = 'Akses ditolak. Hanya owner yang bisa melihat riwayat penjualan.';
+			$targetRoute = auth()->user()->role === 'superadmin' 
+				? 'dashboard-superadmin' 
+				: (auth()->user()->role === 'kasir' ? 'transaksi.pos' : 'dashboard');
+			return redirect()->route($targetRoute)->with('access_denied', $pesan);
 		}
 
 		$query = TransaksiKeluar::where('user_id', auth()->user()->id)

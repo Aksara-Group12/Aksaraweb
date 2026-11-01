@@ -1,13 +1,10 @@
 @extends('layouts.horizon')
 
 @section('page_title', 'Pengeluaran')
+@section('page_subtitle', 'Daftar biaya dan pengeluaran operasional.')
 
 @section('content')
-	<div class="hz-top-row">
-		<div>
-			<h2 class="hz-top-title">Pengeluaran</h2>
-			<p class="hz-top-sub">Daftar biaya dan pengeluaran operasional.</p>
-		</div>
+	<div class="hz-top-row" style="display:flex; justify-content:flex-end; align-items:center; margin-bottom: 20px;">
 		<div class="hz-top-actions" style="display:flex; align-items:center; gap:10px;">
 			<form method="GET" action="{{ route('pengeluaran.index') }}" style="display:flex; align-items:center; gap:6px;">
 				<input type="text" name="search" value="{{ request('search') }}" placeholder="Cari kategori / keterangan" style="border-radius:999px; border:1px solid rgba(59,130,246,0.3); background:rgba(255,255,255,0.9); padding:6px 10px; font-size:0.8rem; color:#1e293b; min-width:200px;">

@@ -81,7 +81,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     @forelse ($packages as $package)
-                        <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1"
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden transition duration-300 hover:shadow-2xl hover:ring-2 hover:ring-amber-400/60"
                             id="package-{{ $package->id }}">
                             <div class="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6">
                                 <h3 class="text-2xl font-bold mb-2">{{ $package->nama_paket }}</h3>

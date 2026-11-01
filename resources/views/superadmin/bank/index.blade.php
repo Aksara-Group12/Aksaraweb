@@ -54,8 +54,7 @@
 
     .btn-add-primary:hover {
         background: #162C50;
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(15, 34, 61, 0.2);
+        box-shadow: 0 0 14px rgba(15, 34, 61, 0.35);
     }
 
     .filter-form-wrap {
@@ -303,7 +302,7 @@
     .btn-action-edit:hover {
         background: #F8FAFC;
         border-color: #94A3B8;
-        transform: translateY(-1px);
+        box-shadow: 0 0 10px rgba(15, 34, 61, 0.1);
     }
 
     .btn-action-delete {
@@ -325,7 +324,7 @@
     .btn-action-delete:hover {
         background: #FEE2E2;
         border-color: #F87171;
-        transform: translateY(-1px);
+        box-shadow: 0 0 10px rgba(220, 38, 38, 0.2);
     }
 
     /* Modal Confirmation */

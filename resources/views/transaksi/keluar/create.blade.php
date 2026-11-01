@@ -4,6 +4,11 @@
 @section('page_subtitle', 'Pencatatan penjualan barang kepada pelanggan.')
 
 @section('content')
+<div style="margin-bottom: 20px;">
+	<a href="{{ route('transaksi.keluar.index') }}" class="hz-btn-back" title="Kembali">
+		<i data-lucide="arrow-left"></i>
+	</a>
+</div>
 	@if ($errors->any())
 		<div style="margin-top: 20px; padding: 14px 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; color: #dc2626;">
 			<p style="font-weight: 600; margin-bottom: 8px;">❌ Terjadi kesalahan validasi:</p>

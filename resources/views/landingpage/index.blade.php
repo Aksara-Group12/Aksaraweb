@@ -11,8 +11,8 @@
 	<!-- Tailwind CSS -->
 	<script src="https://cdn.tailwindcss.com"></script>
 	
-	<!-- Lucide Icons (Shadcn Standard) -->
-	<script src="https://unpkg.com/lucide@latest"></script>
+	<!-- Lucide Icons -->
+	<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 
 	<!-- Fonts: Newsreader (Editorial Serif) & Plus Jakarta Sans (Modern Clean Sans) -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,29 +61,27 @@
 			background-size: 24px 24px;
 		}
 
-		/* Native Scroll Reveal Animations (Tailwind Transitions + IntersectionObserver) */
+		/* Native Scroll Reveal Animations - Fallback to always visible */
 		.reveal-on-scroll {
-			opacity: 0;
-			transform: translateY(28px);
-			transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-			will-change: opacity, transform;
+			opacity: 1;
+			transform: none;
+			transition: opacity 0.4s ease, transform 0.4s ease;
 		}
 
 		.reveal-on-scroll.is-revealed {
 			opacity: 1;
-			transform: translateY(0);
+			transform: none;
 		}
 
 		.reveal-scale {
-			opacity: 0;
-			transform: scale(0.96) translateY(20px);
-			transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-			will-change: opacity, transform;
+			opacity: 1;
+			transform: none;
+			transition: opacity 0.4s ease, transform 0.4s ease;
 		}
 
 		.reveal-scale.is-revealed {
 			opacity: 1;
-			transform: scale(1) translateY(0);
+			transform: none;
 		}
 
 		/* Staggered Delay Utilities */
@@ -763,11 +761,12 @@
 
 	<!-- ==================== SCRIPT: TABS, LUCIDE & SCROLL ANIMATION ==================== -->
 	<script>
-		// Inisialisasi Ikon Lucide
-		lucide.createIcons();
-
-		// Native Intersection Observer for Scroll Animations
 		document.addEventListener('DOMContentLoaded', function() {
+			// Inisialisasi Ikon Lucide
+			if (typeof lucide !== 'undefined') {
+				lucide.createIcons();
+			}
+
 			var observerOptions = {
 				root: null,
 				rootMargin: '0px 0px -40px 0px',

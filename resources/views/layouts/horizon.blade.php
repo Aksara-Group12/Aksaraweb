@@ -11,17 +11,12 @@
 		<!-- Fonts: Inter (UI Sans) & Newsreader (Luxury Editorial Serif) -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400&display=swap" rel="stylesheet">
 
 		<!-- Lucide Icons (Shadcn Standard) -->
-		<script src="https://unpkg.com/lucide@latest"></script>
+		<script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
 
 		<style>
-			@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-			@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
-
 			html,
 			body {
 				height: 100%;
@@ -392,6 +387,52 @@
 				margin-bottom: 24px;
 				gap: 16px;
 				flex-wrap: wrap;
+			}
+
+			/* CRUD Header with Back Button on the Left */
+			.hz-crud-header {
+				display: flex;
+				align-items: center;
+				gap: 16px;
+				margin-bottom: 24px;
+				flex-wrap: wrap;
+			}
+
+			/* Minimalist Back Button: Murni Icon Panah Tanpa Lapisan Card/Border/Box */
+			.hz-btn-back {
+				display: inline-flex !important;
+				align-items: center !important;
+				justify-content: center !important;
+				width: 36px !important;
+				height: 36px !important;
+				border-radius: 10px !important;
+				background: transparent !important;
+				border: none !important;
+				box-shadow: none !important;
+				color: #0F223D !important;
+				cursor: pointer !important;
+				text-decoration: none !important;
+				transition: color 0.15s ease, background 0.15s ease !important;
+				flex-shrink: 0 !important;
+				padding: 0 !important;
+			}
+
+			.hz-btn-back:hover {
+				color: #C5A059 !important;
+				background: rgba(15, 34, 61, 0.05) !important;
+				border: none !important;
+				box-shadow: none !important;
+			}
+
+			.hz-btn-back svg, .hz-btn-back i {
+				width: 22px !important;
+				height: 22px !important;
+				color: inherit !important;
+				transition: transform 0.15s ease !important;
+			}
+
+			.hz-btn-back:hover svg, .hz-btn-back:hover i {
+				transform: translateX(-3px) !important;
 			}
 
 			.hz-top-title {

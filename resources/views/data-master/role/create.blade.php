@@ -1,40 +1,81 @@
 @extends('layouts.horizon')
 
-@section('page_title', 'Tambah Role')
+@section('page_title', 'Role')
+@section('page_subtitle', 'Kelola role pengguna (owner, admin, kasir).')
 
 @section('content')
-<div class="hz-top-row">
-	<div>
-		<h2 class="hz-top-title">Tambah Role</h2>
-		<p class="hz-top-sub">Tambah role baru</p>
+<!-- Background placeholder -->
+<div class="hz-crud-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+	<a href="{{ route('data-master.index') }}" class="hz-btn-back" title="Kembali ke Data Master">
+		<i data-lucide="arrow-left"></i>
+	</a>
+	<div class="hz-top-actions" style="margin-left: auto;">
+		<a href="{{ route('data-master.role.index') }}" class="hz-btn hz-btn-secondary">
+			Kembali ke Daftar
+		</a>
 	</div>
 </div>
 
-<section class="hz-card" style="margin-top: 24px; max-width: 600px;">
-	<div class="hz-card-body">
+<!-- ==================== POP UP MODAL TAMBAH ROLE ==================== -->
+<div id="modalTambahRole" style="display: flex; position: fixed; inset: 0; background: rgba(15, 34, 61, 0.55); backdrop-filter: blur(6px); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
+	<div style="background: #FFFFFF; border-radius: 20px; max-width: 500px; width: 100%; padding: 28px; box-shadow: 0 25px 50px -12px rgba(15, 34, 61, 0.25); border: 1px solid #E2E8F0; animation: hzModalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1); position: relative;">
+		
+		<!-- Modal Header -->
+		<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid #F1F5F9;">
+			<div>
+				<h3 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.4rem; font-weight: 600; color: #0F223D; margin: 0; line-height: 1.2;">
+					Tambah Role Baru
+				</h3>
+				<p style="font-size: 0.8rem; color: #64748B; margin: 4px 0 0 0;">
+					Definisikan nama teknis role dan nama tampilan wewenangnya.
+				</p>
+			</div>
+			<a href="{{ route('data-master.role.index') }}" style="border: none; background: #F8FAFC; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #64748B; text-decoration: none; transition: all 0.15s ease;" onmouseover="this.style.background='#F1F5F9'; this.style.color='#0F223D'" onmouseout="this.style.background='#F8FAFC'; this.style.color='#64748B'">
+				<i data-lucide="x" style="width: 18px; height: 18px;"></i>
+			</a>
+		</div>
+
+		@if ($errors->any())
+			<div style="margin-bottom: 16px; padding: 12px 14px; background: #FEF2F2; border: 1px solid #FECACA; border-radius: 10px; color: #DC2626; font-size: 0.85rem;">
+				<ul style="margin: 0; padding-left: 20px;">
+					@foreach ($errors->all() as $error)
+						<li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			</div>
+		@endif
+
+		<!-- Modal Form -->
 		<form action="{{ route('data-master.role.store') }}" method="POST">
 			@csrf
 			<div style="display: flex; flex-direction: column; gap: 16px;">
 				<div>
-					<label style="display: block; font-size: 0.85rem; font-weight: 500; color: #1e293b; margin-bottom: 6px;">Nama Role</label>
-					<input type="text" name="name" value="{{ old('name') }}" placeholder="Contoh: manager" style="width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;" required>
-					@if($errors->has('name'))
-						<p style="color: #ef4444; font-size: 0.8rem; margin-top: 4px;">{{ $errors->first('name') }}</p>
-					@endif
+					<label style="display: block; font-size: 0.85rem; font-weight: 600; color: #0F223D; margin-bottom: 6px;">
+						Nama Role (Identifier) <span style="color: #DC2626;">*</span>
+					</label>
+					<input type="text" name="name" value="{{ old('name') }}" placeholder="Contoh: manager, supervisor" required autofocus style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid #CBD5E1; background: #FFFFFF; color: #0F223D; font-size: 0.875rem; outline: none; transition: all 0.15s ease;" onfocus="this.style.borderColor='#C5A059'; this.style.boxShadow='0 0 0 3px rgba(197, 160, 89, 0.15)'" onblur="this.style.borderColor='#CBD5E1'; this.style.boxShadow='none'">
+					<p style="font-size: 0.73rem; color: #64748B; margin: 4px 0 0;">Gunakan huruf kecil tanpa spasi.</p>
 				</div>
+
 				<div>
-					<label style="display: block; font-size: 0.85rem; font-weight: 500; color: #1e293b; margin-bottom: 6px;">Display Name</label>
-					<input type="text" name="display_name" value="{{ old('display_name') }}" placeholder="Contoh: Manager" style="width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(59,130,246,0.4); background: rgba(255,255,255,0.95); color: #1e293b; font-size: 0.9rem;" required>
-					@if($errors->has('display_name'))
-						<p style="color: #ef4444; font-size: 0.8rem; margin-top: 4px;">{{ $errors->first('display_name') }}</p>
-					@endif
+					<label style="display: block; font-size: 0.85rem; font-weight: 600; color: #0F223D; margin-bottom: 6px;">
+						Display Name (Nama Tampilan) <span style="color: #DC2626;">*</span>
+					</label>
+					<input type="text" name="display_name" value="{{ old('display_name') }}" placeholder="Contoh: Manager Operasional" required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid #CBD5E1; background: #FFFFFF; color: #0F223D; font-size: 0.875rem; outline: none; transition: all 0.15s ease;" onfocus="this.style.borderColor='#C5A059'; this.style.boxShadow='0 0 0 3px rgba(197, 160, 89, 0.15)'" onblur="this.style.borderColor='#CBD5E1'; this.style.boxShadow='none'">
 				</div>
-				<div style="display: flex; gap: 10px; margin-top: 8px;">
-					<button type="submit" style="flex: 1; padding: 10px 16px; border-radius: 10px; background: #3b82f6; color: white; font-size: 0.9rem; font-weight: 500; border: none; cursor: pointer;">Simpan</button>
-					<a href="{{ route('data-master.role.index') }}" style="flex: 1; padding: 10px 16px; border-radius: 10px; background: rgba(239,68,68,0.1); color: #ef4444; font-size: 0.9rem; font-weight: 500; text-decoration: none; text-align: center;">Batal</a>
+
+				<!-- Actions -->
+				<div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; padding-top: 16px; border-top: 1px solid #F1F5F9;">
+					<a href="{{ route('data-master.role.index') }}" style="padding: 10px 18px; border-radius: 10px; background: #FAF8F5; border: 1px solid #CBD5E1; color: #475569; font-weight: 600; font-size: 0.875rem; text-decoration: none; display: inline-flex; align-items: center;">
+						Batal
+					</a>
+					<button type="submit" class="hz-btn hz-btn-primary" style="padding: 10px 22px; cursor: pointer;">
+						<i data-lucide="check" style="width: 16px; height: 16px;"></i>
+						Simpan Role
+					</button>
 				</div>
 			</div>
 		</form>
 	</div>
-</section>
+</div>
 @endsection

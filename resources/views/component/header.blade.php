@@ -24,13 +24,10 @@
 			$currentUser = auth()->user();
 			$isSuperadmin = $currentUser && $currentUser->role === 'superadmin';
 			$isOwner = $currentUser && $currentUser->role === 'owner';
-			$paketType = $isOwner ? \App\Models\Subscribe::getPackageType($currentUser->id) : 1;
-			$currentProfile = $currentUser ? ($currentUser->profile ?? \App\Models\Profile::where('user_id', $currentUser->id)->first()) : null;
-			$logoPath = $currentProfile?->logo_path;
 			$displayName = session('admin_name') ?? $currentUser?->name ?? 'Pengguna';
 			$nameParts = explode(' ', trim($displayName));
 			$initials = strtoupper(substr($nameParts[0] ?? 'U', 0, 1) . (isset($nameParts[1]) ? substr($nameParts[1], 0, 1) : substr($nameParts[0] ?? '', 1, 1)));
-			$hasAvatar = !empty($logoPath) && (file_exists(public_path('storage/' . $logoPath)) || \Illuminate\Support\Facades\Storage::disk('public')->exists($logoPath));
+			$hasAvatar = false;
 			$roleLabel = session()->has('admin_id') 
 				? 'Kasir' 
 				: ($isSuperadmin 

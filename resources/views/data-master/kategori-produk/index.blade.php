@@ -1,71 +1,250 @@
 @extends('layouts.horizon')
 
-@section('page_title', 'Data Master - Kategori Produk')
+@section('page_title', 'Kategori Produk')
+@section('page_subtitle', 'Kelola kategori untuk klasifikasi produk pada kasir POS.')
 
 @section('content')
-<div class="hz-top-row">
-	<div>
-		<h2 class="hz-top-title">Kategori Produk</h2>
-		<p class="hz-top-sub">Kelola kategori untuk dropdown produk di POS</p>
-	</div>
-	<div class="hz-top-actions">
-		<a href="{{ route('data-master.kategori-produk.create') }}" class="hz-btn hz-btn-primary">
-			+ Tambah Kategori
-		</a>
+<!-- Top Actions -->
+<div class="hz-crud-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+	<a href="{{ route('data-master.index') }}" class="hz-btn-back" title="Kembali ke Data Master">
+		<i data-lucide="arrow-left"></i>
+	</a>
+	<div class="hz-top-actions" style="margin-left: auto;">
+		<button type="button" onclick="openTambahKategoriProdukModal()" class="hz-btn hz-btn-primary" style="cursor: pointer;">
+			<i data-lucide="plus" style="width: 16px; height: 16px;"></i>
+			<span>Tambah Kategori</span>
+		</button>
 	</div>
 </div>
 
 @if ($message = Session::get('success'))
-	<div style="margin-top: 20px; padding: 14px 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; color: #16a34a;">
-		{{ $message }}
+	<div style="margin-bottom: 20px; padding: 14px 18px; background: #ECFDF5; border: 1px solid #A7F3D0; border-radius: 12px; color: #065F46; font-size: 0.875rem; font-weight: 500; display: flex; align-items: center; gap: 10px;">
+		<i data-lucide="check-circle" style="width: 18px; height: 18px; color: #10B981; flex-shrink: 0;"></i>
+		<span>{{ $message }}</span>
 	</div>
 @endif
 
-<section class="hz-secondary-grid" style="margin-top: 24px;">
-	<div class="hz-card" style="grid-column: 1 / -1;">
-		<div class="hz-card-header" style="margin-bottom: 12px;">
-			<p class="hz-card-title">Daftar Kategori</p>
-		</div>
-		<div style="margin-top: 8px; overflow-x: auto;">
-			@if ($kategoris->count() > 0)
-				<table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
-					<thead>
-						<tr style="border-bottom: 1px solid rgba(59, 130, 246, 0.4); color:#9ca3af;">
-							<th style="text-align:left; padding:14px 10px;">Nama Kategori</th>
-							<th style="text-align:left; padding:14px 10px;">Status</th>
-							<th style="text-align:right; padding:14px 10px;">Aksi</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach ($kategoris as $kategori)
-							<tr style="border-bottom: 1px solid rgba(15,23,42,0.8);">
-								<td style="padding:14px 10px; color: #1e293b;">{{ $kategori->name }}</td>
-								<td style="padding:14px 10px;">
-									<span style="padding: 4px 8px; border-radius: 999px; font-size: 0.8rem; {{ $kategori->is_active ? 'background: rgba(34, 197, 94, 0.1); color: #16a34a;' : 'background: rgba(239, 68, 68, 0.1); color: #dc2626;' }}">
-										{{ $kategori->is_active ? 'Aktif' : 'Non-aktif' }}
-									</span>
-								</td>
-								<td style="padding:14px 10px; text-align:right;">
-									<a href="{{ route('data-master.kategori-produk.edit', $kategori) }}" style="color: #3b82f6; text-decoration: none; font-size: 0.85rem;">Edit</a>
-									<form action="{{ route('data-master.kategori-produk.destroy', $kategori) }}" method="POST" style="display:inline;">
+@if ($errors->any())
+	<div style="margin-bottom: 20px; padding: 12px 16px; background: #FEF2F2; border: 1px solid #FECACA; border-radius: 10px; color: #DC2626; font-size: 0.85rem;">
+		<ul style="margin: 0; padding-left: 20px;">
+			@foreach ($errors->all() as $error)
+				<li>{{ $error }}</li>
+			@endforeach
+		</ul>
+	</div>
+@endif
+
+<section class="hz-card">
+	<div class="hz-card-header" style="margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center;">
+		<p class="hz-card-title">Daftar Kategori Produk</p>
+		<span style="font-size: 0.78rem; font-weight: 600; color: #64748B; background: #F8FAFC; padding: 4px 10px; border-radius: 999px; border: 1px solid #E2E8F0;">
+			Total: {{ $kategoris->total() ?? $kategoris->count() }} Kategori
+		</span>
+	</div>
+	<div style="overflow-x: auto;">
+		@if ($kategoris->count() > 0)
+			<table style="width: 100%; border-collapse: separate; border-spacing: 0; font-size: 0.875rem;">
+				<thead>
+					<tr style="background: #F8FAFC; border-bottom: 1px solid #E2E8F0; color: #64748B; font-size: 0.73rem; text-transform: uppercase; letter-spacing: 0.05em;">
+						<th style="text-align: left; padding: 13px 18px; font-weight: 600; border-bottom: 1px solid #E2E8F0;">Nama Kategori</th>
+						<th style="text-align: left; padding: 13px 18px; font-weight: 600; border-bottom: 1px solid #E2E8F0;">Status</th>
+						<th style="text-align: right; padding: 13px 18px; font-weight: 600; border-bottom: 1px solid #E2E8F0;">Aksi</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach ($kategoris as $kategori)
+						<tr style="border-bottom: 1px solid #F1F5F9; transition: background 0.15s ease;" onmouseover="this.style.background='#FAF8F5'" onmouseout="this.style.background='transparent'">
+							<td style="padding: 14px 18px; color: #0F223D; font-weight: 600; border-bottom: 1px solid #F1F5F9;">
+								{{ $kategori->name }}
+							</td>
+							<td style="padding: 14px 18px; border-bottom: 1px solid #F1F5F9;">
+								<span style="display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 600; {{ $kategori->is_active ? 'background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0;' : 'background: #FEF2F2; color: #991B1B; border: 1px solid #FECACA;' }}">
+									{{ $kategori->is_active ? 'Aktif' : 'Non-aktif' }}
+								</span>
+							</td>
+							<td style="padding: 14px 18px; text-align: right; border-bottom: 1px solid #F1F5F9;">
+								<div style="display: inline-flex; align-items: center; gap: 8px;">
+									<button type="button" 
+										onclick="openEditKategoriProdukModal('{{ $kategori->id }}', '{{ addslashes($kategori->name) }}', '{{ $kategori->is_active }}', '{{ route('data-master.kategori-produk.update', $kategori) }}')" 
+										style="padding: 5px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; background: #F1F5F9; color: #0F223D; border: 1px solid #E2E8F0; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+										<i data-lucide="edit-2" style="width: 13px; height: 13px;"></i>
+										Edit
+									</button>
+									<form action="{{ route('data-master.kategori-produk.destroy', $kategori) }}" method="POST" style="display: inline;">
 										@csrf
 										@method('DELETE')
-										<button type="submit" onclick="return confirm('Hapus kategori ini?')" style="background:none; border:none; color: #dc2626; cursor:pointer; font-size: 0.85rem;">Hapus</button>
+										<button type="submit" onclick="return confirm('Hapus kategori ini?')" style="padding: 5px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+											<i data-lucide="trash-2" style="width: 13px; height: 13px;"></i>
+											Hapus
+										</button>
 									</form>
-								</td>
-							</tr>
-						@endforeach
-					</tbody>
-				</table>
-				<div style="margin-top: 12px;">
-					{{ $kategoris->links() }}
-				</div>
-			@else
-				<div style="padding: 40px; text-align: center; color: #64748b;">
-					<p>Belum ada kategori.</p>
-				</div>
-			@endif
-		</div>
+								</div>
+							</td>
+						</tr>
+					@endforeach
+				</tbody>
+			</table>
+			<div style="margin-top: 16px; padding: 10px 18px;">
+				{{ $kategoris->links() }}
+			</div>
+		@else
+			<div style="padding: 48px; text-align: center; color: #64748B;">
+				<i data-lucide="package" style="width: 42px; height: 42px; color: #CBD5E1; margin: 0 auto 12px; display: block;"></i>
+				<p style="margin: 0; font-size: 0.95rem; font-weight: 600; color: #0F223D;">Belum ada kategori produk</p>
+				<p style="margin: 4px 0 16px 0; font-size: 0.8rem; color: #64748B;">Tambahkan kategori baru untuk memudahkan pengelompokan menu kasir POS.</p>
+				<button type="button" onclick="openTambahKategoriProdukModal()" class="hz-btn hz-btn-primary" style="padding: 8px 18px; font-size: 0.825rem; cursor: pointer;">
+					+ Tambah Kategori Baru
+				</button>
+			</div>
+		@endif
 	</div>
 </section>
+
+<!-- ==================== POP UP MODAL TAMBAH KATEGORI PRODUK ==================== -->
+<div id="modalTambahKategoriProduk" style="display: none; position: fixed; inset: 0; background: rgba(15, 34, 61, 0.5); backdrop-filter: blur(6px); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
+	<div style="background: #FFFFFF; border-radius: 20px; max-width: 480px; width: 100%; padding: 28px; box-shadow: 0 25px 50px -12px rgba(15, 34, 61, 0.25); border: 1px solid #E2E8F0; animation: hzModalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1); position: relative;">
+		
+		<!-- Modal Header -->
+		<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid #F1F5F9;">
+			<div>
+				<h3 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.4rem; font-weight: 600; color: #0F223D; margin: 0; line-height: 1.2;">
+					Tambah Kategori Produk
+				</h3>
+				<p style="font-size: 0.8rem; color: #64748B; margin: 4px 0 0 0;">
+					Buat kategori baru untuk mengelompokkan menu dan item jualan di POS.
+				</p>
+			</div>
+			<button type="button" onclick="closeTambahKategoriProdukModal()" style="border: none; background: #F8FAFC; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #64748B; cursor: pointer; transition: all 0.15s ease;" onmouseover="this.style.background='#F1F5F9'; this.style.color='#0F223D'" onmouseout="this.style.background='#F8FAFC'; this.style.color='#64748B'">
+				<i data-lucide="x" style="width: 18px; height: 18px;"></i>
+			</button>
+		</div>
+
+		<!-- Modal Form -->
+		<form action="{{ route('data-master.kategori-produk.store') }}" method="POST">
+			@csrf
+			<div style="display: flex; flex-direction: column; gap: 16px;">
+				<div>
+					<label style="display: block; font-size: 0.85rem; font-weight: 600; color: #0F223D; margin-bottom: 6px;">
+						Nama Kategori <span style="color: #DC2626;">*</span>
+					</label>
+					<input type="text" name="name" id="tambah_kategori_produk_name" required placeholder="Contoh: Makanan Utama, Minuman Segar, Camilan" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid #CBD5E1; background: #FFFFFF; color: #0F223D; font-size: 0.875rem; outline: none; transition: all 0.15s ease;" onfocus="this.style.borderColor='#C5A059'; this.style.boxShadow='0 0 0 3px rgba(197, 160, 89, 0.15)'" onblur="this.style.borderColor='#CBD5E1'; this.style.boxShadow='none'">
+				</div>
+
+				<!-- Actions -->
+				<div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; padding-top: 16px; border-top: 1px solid #F1F5F9;">
+					<button type="button" onclick="closeTambahKategoriProdukModal()" style="padding: 10px 18px; border-radius: 10px; background: #FAF8F5; border: 1px solid #CBD5E1; color: #475569; font-weight: 600; font-size: 0.875rem; cursor: pointer;">
+						Batal
+					</button>
+					<button type="submit" class="hz-btn hz-btn-primary" style="padding: 10px 22px; cursor: pointer;">
+						<i data-lucide="check" style="width: 16px; height: 16px;"></i>
+						Simpan Kategori
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<!-- ==================== POP UP MODAL EDIT KATEGORI PRODUK ==================== -->
+<div id="modalEditKategoriProduk" style="display: none; position: fixed; inset: 0; background: rgba(15, 34, 61, 0.5); backdrop-filter: blur(6px); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
+	<div style="background: #FFFFFF; border-radius: 20px; max-width: 480px; width: 100%; padding: 28px; box-shadow: 0 25px 50px -12px rgba(15, 34, 61, 0.25); border: 1px solid #E2E8F0; animation: hzModalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1); position: relative;">
+		
+		<!-- Modal Header -->
+		<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid #F1F5F9;">
+			<div>
+				<h3 style="font-family: 'Newsreader', Georgia, serif; font-size: 1.4rem; font-weight: 600; color: #0F223D; margin: 0; line-height: 1.2;">
+					Edit Kategori Produk
+				</h3>
+				<p style="font-size: 0.8rem; color: #64748B; margin: 4px 0 0 0;">
+					Perbarui nama atau status keaktifan kelompok produk kasir POS.
+				</p>
+			</div>
+			<button type="button" onclick="closeEditKategoriProdukModal()" style="border: none; background: #F8FAFC; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #64748B; cursor: pointer; transition: all 0.15s ease;" onmouseover="this.style.background='#F1F5F9'; this.style.color='#0F223D'" onmouseout="this.style.background='#F8FAFC'; this.style.color='#64748B'">
+				<i data-lucide="x" style="width: 18px; height: 18px;"></i>
+			</button>
+		</div>
+
+		<!-- Modal Form -->
+		<form id="formEditKategoriProduk" action="" method="POST">
+			@csrf
+			@method('PUT')
+			<div style="display: flex; flex-direction: column; gap: 16px;">
+				<div>
+					<label style="display: block; font-size: 0.85rem; font-weight: 600; color: #0F223D; margin-bottom: 6px;">
+						Nama Kategori <span style="color: #DC2626;">*</span>
+					</label>
+					<input type="text" name="name" id="edit_kategori_produk_name" required style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid #CBD5E1; background: #FFFFFF; color: #0F223D; font-size: 0.875rem; outline: none; transition: all 0.15s ease;" onfocus="this.style.borderColor='#C5A059'; this.style.boxShadow='0 0 0 3px rgba(197, 160, 89, 0.15)'" onblur="this.style.borderColor='#CBD5E1'; this.style.boxShadow='none'">
+				</div>
+
+				<div>
+					<label style="display: block; font-size: 0.85rem; font-weight: 600; color: #0F223D; margin-bottom: 6px;">
+						Status Kategori
+					</label>
+					<select name="is_active" id="edit_kategori_produk_is_active" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid #CBD5E1; background: #FFFFFF; color: #0F223D; font-size: 0.875rem; outline: none; cursor: pointer;">
+						<option value="1">Aktif</option>
+						<option value="0">Non-aktif</option>
+					</select>
+				</div>
+
+				<!-- Actions -->
+				<div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; padding-top: 16px; border-top: 1px solid #F1F5F9;">
+					<button type="button" onclick="closeEditKategoriProdukModal()" style="padding: 10px 18px; border-radius: 10px; background: #FAF8F5; border: 1px solid #CBD5E1; color: #475569; font-weight: 600; font-size: 0.875rem; cursor: pointer;">
+						Batal
+					</button>
+					<button type="submit" class="hz-btn hz-btn-primary" style="padding: 10px 22px; cursor: pointer;">
+						<i data-lucide="check" style="width: 16px; height: 16px;"></i>
+						Simpan Perubahan
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script>
+function openTambahKategoriProdukModal() {
+	const modal = document.getElementById('modalTambahKategoriProduk');
+	if (modal) {
+		modal.style.display = 'flex';
+		setTimeout(() => {
+			const inp = document.getElementById('tambah_kategori_produk_name');
+			if (inp) inp.focus();
+		}, 50);
+	}
+}
+
+function closeTambahKategoriProdukModal() {
+	const modal = document.getElementById('modalTambahKategoriProduk');
+	if (modal) modal.style.display = 'none';
+}
+
+function openEditKategoriProdukModal(id, name, isActive, updateUrl) {
+	const modal = document.getElementById('modalEditKategoriProduk');
+	const form = document.getElementById('formEditKategoriProduk');
+	const nameInp = document.getElementById('edit_kategori_produk_name');
+	const activeSel = document.getElementById('edit_kategori_produk_is_active');
+
+	if (form) form.action = updateUrl;
+	if (nameInp) nameInp.value = name;
+	if (activeSel) activeSel.value = (isActive == '1' || isActive == 'true' || isActive == true) ? '1' : '0';
+
+	if (modal) {
+		modal.style.display = 'flex';
+		setTimeout(() => {
+			if (nameInp) nameInp.focus();
+		}, 50);
+	}
+}
+
+function closeEditKategoriProdukModal() {
+	const modal = document.getElementById('modalEditKategoriProduk');
+	if (modal) modal.style.display = 'none';
+}
+
+@if($errors->any())
+document.addEventListener('DOMContentLoaded', function() {
+	openTambahKategoriProdukModal();
+});
+@endif
+</script>
 @endsection

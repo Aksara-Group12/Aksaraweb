@@ -164,9 +164,9 @@ class DashboardController extends BaseController
 		
 		$estimatedProfit = $totalRevenue - $totalHPP - $totalExpenses;
 
-		// Produk stok menipis (stok < min_stock)
+		// Produk stok menipis (stok < 10)
 		$lowStockProducts = Product::where('user_id', auth()->user()->id)
-			->whereColumn('stock', '<', 'min_stock')
+			->where('stock', '<', 10)
 			->where('is_active', true)
 			->orderBy('stock', 'asc')
 			->limit(5)

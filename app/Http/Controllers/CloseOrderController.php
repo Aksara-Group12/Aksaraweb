@@ -49,13 +49,19 @@ class CloseOrderController extends Controller
 		}
 
 		// Hitung total pendapatan dan transaksi selama shift
+		// Gunakan date() untuk comparison karena tanggal_transaksi hanya tanggal (tanpa jam)
+		$openedDate = $shift->opened_at->toDateString();
+		$closedDate = now()->toDateString();
+
 		$totalRevenue = TransaksiKeluar::where('user_id', auth()->id())
-			->whereBetween('tanggal_transaksi', [$shift->opened_at, now()])
+			->whereDate('tanggal_transaksi', '>=', $openedDate)
+			->whereDate('tanggal_transaksi', '<=', $closedDate)
 			->where('status', 'complete')
 			->sum('total_harga');
 
 		$totalTransactions = TransaksiKeluar::where('user_id', auth()->id())
-			->whereBetween('tanggal_transaksi', [$shift->opened_at, now()])
+			->whereDate('tanggal_transaksi', '>=', $openedDate)
+			->whereDate('tanggal_transaksi', '<=', $closedDate)
 			->where('status', 'complete')
 			->count();
 

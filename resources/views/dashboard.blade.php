@@ -30,91 +30,188 @@
 			font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 		}
 
-		/* Top Action & Filter Bar */
+		/* Top Action & Filter Header Bar */
 		.shadcn-action-bar {
 			display: flex;
-			justify-content: flex-start;
+			justify-content: space-between;
 			align-items: center;
 			margin-bottom: 22px;
 			flex-wrap: wrap;
 			gap: 12px;
 		}
 
-		.shadcn-filter-group {
+		.filter-action-wrapper {
 			display: flex;
 			align-items: center;
-			gap: 8px;
-			flex-wrap: wrap;
+			justify-content: flex-end;
+			gap: 10px;
 		}
 
-		.shadcn-period-select {
-			background: #FFFFFF;
-			border: 1px solid #E4E4E7;
-			border-radius: 8px;
-			color: #09090B;
-			padding: 8px 14px;
-			font-size: 0.825rem;
-			font-weight: 500;
-			outline: none;
-			cursor: pointer;
-			font-family: inherit;
-			box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-			transition: all 0.15s ease;
-		}
-
-		.shadcn-period-select:focus {
-			border-color: #09090B;
-			box-shadow: 0 0 0 2px rgba(9, 9, 11, 0.1);
-		}
-
-		.btn-shadcn-black {
-			background: #09090B;
+		.btn-filter-trigger {
+			background: #2563EB;
 			color: #FFFFFF;
-			border: none;
+			border: 1px solid #2563EB;
 			border-radius: 8px;
-			padding: 8px 16px;
+			padding: 8px 18px;
 			font-size: 0.825rem;
 			font-weight: 600;
 			cursor: pointer;
 			display: inline-flex;
 			align-items: center;
 			gap: 8px;
-			transition: all 0.15s ease;
-			box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-			font-family: inherit;
-			text-decoration: none;
+			transition: all 0.2s ease;
+			box-shadow: 0 1px 2px rgba(37, 99, 235, 0.15);
+			font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
 		}
 
-		.btn-shadcn-black:hover {
-			background: #27272A;
-			box-shadow: 0 0 14px rgba(9, 9, 11, 0.25);
+		.btn-filter-trigger:hover {
+			background: #1D4ED8;
+			border-color: #1D4ED8;
 		}
 
-		/* Custom Date Filter Box */
-		.shadcn-custom-box {
-			display: none;
-			align-items: center;
-			gap: 8px;
-			margin-bottom: 16px;
-			padding: 10px 14px;
+		.btn-filter-trigger.is-active {
+			background: #1E40AF;
+			border-color: #1E40AF;
+			box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+		}
+
+		/* Collapsible Filter Panel */
+		.superadmin-filter-panel {
+			background: #FFFFFF;
+			border: 1px solid #E4E4E7;
+			border-radius: 14px;
+			padding: 22px 24px;
+			margin-bottom: 22px;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+			animation: slideDownFade 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+		}
+
+		@keyframes slideDownFade {
+			from {
+				opacity: 0;
+				transform: translateY(-8px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.filter-grid-row-bottom {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr 1.2fr;
+			gap: 20px;
+			align-items: flex-end;
+		}
+
+		.filter-field-group {
+			display: flex;
+			flex-direction: column;
+			gap: 6px;
+		}
+
+		.filter-field-label {
+			font-size: 0.8rem;
+			font-weight: 600;
+			color: #09090B;
+			font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+		}
+
+		.filter-select,
+		.filter-select option,
+		.filter-select optgroup,
+		.filter-input-date,
+		.filter-field-label,
+		.btn-filter-reset,
+		.btn-filter-submit {
+			font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+		}
+
+		.filter-select,
+		.filter-input-date {
+			width: 100%;
 			background: #FFFFFF;
 			border: 1px solid #E4E4E7;
 			border-radius: 8px;
-			width: fit-content;
-		}
-
-		.shadcn-custom-box.active {
-			display: flex;
-		}
-
-		.shadcn-date-input {
-			border: 1px solid #E4E4E7;
-			border-radius: 6px;
-			padding: 6px 10px;
-			font-size: 0.8rem;
+			padding: 9px 12px;
+			font-size: 0.825rem;
 			color: #09090B;
 			outline: none;
-			font-family: inherit;
+			transition: all 0.15s ease;
+		}
+
+		.filter-select option {
+			padding: 8px 12px;
+			background-color: #FFFFFF;
+			color: #09090B;
+			font-size: 0.825rem;
+		}
+
+		.filter-select:focus,
+		.filter-input-date:focus {
+			border-color: #2563EB;
+			box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+		}
+
+		.filter-buttons-group {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			gap: 10px;
+		}
+
+		.btn-filter-reset {
+			background: #FFFFFF;
+			color: #09090B;
+			border: 1px solid #E4E4E7;
+			border-radius: 8px;
+			padding: 9px 18px;
+			font-size: 0.825rem;
+			font-weight: 600;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			text-decoration: none;
+			transition: all 0.15s ease;
+		}
+
+		.btn-filter-reset:hover {
+			background: #F4F4F5;
+		}
+
+		.btn-filter-submit {
+			background: #09090B;
+			color: #FFFFFF;
+			border: 1px solid #09090B;
+			border-radius: 8px;
+			padding: 9px 22px;
+			font-size: 0.825rem;
+			font-weight: 600;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			transition: all 0.15s ease;
+		}
+
+		.btn-filter-submit:hover {
+			background: #27272A;
+		}
+
+		@media (max-width: 900px) {
+			.filter-grid-row-bottom {
+				grid-template-columns: 1fr;
+				gap: 14px;
+			}
+			.filter-buttons-group {
+				justify-content: stretch;
+			}
+			.btn-filter-reset,
+			.btn-filter-submit {
+				flex: 1;
+				justify-content: center;
+			}
 		}
 
 		/* 4 Top KPI Cards Grid (Format 2x2) */
@@ -277,28 +374,69 @@
 	</style>
 
 	<div class="shadcn-container">
-		<!-- Top Action & Filter Bar (Gaya Shadcn UI) -->
+		<!-- Top Action & Filter Header Bar -->
 		<div class="shadcn-action-bar">
-			<form action="{{ route('dashboard') }}" method="GET" class="shadcn-filter-group">
-				<select name="period" id="db-period-select" class="shadcn-period-select">
-					<option value="today" {{ ($period ?? 'month') === 'today' ? 'selected' : '' }}>Hari Ini</option>
-					<option value="week" {{ ($period ?? 'month') === 'week' ? 'selected' : '' }}>Minggu Ini</option>
-					<option value="month" {{ ($period ?? 'month') === 'month' ? 'selected' : '' }}>Bulan Ini</option>
-					<option value="year" {{ ($period ?? 'month') === 'year' ? 'selected' : '' }}>Tahun Ini</option>
-					<option value="all" {{ ($period ?? 'month') === 'all' ? 'selected' : '' }}>Semua Data</option>
-					<option value="custom" {{ ($period ?? 'month') === 'custom' ? 'selected' : '' }}>Rentang Khusus</option>
-				</select>
+			<div class="flex items-center gap-3">
+				@if($isFilterActive)
+					<div class="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-50 border border-blue-200 rounded-full text-xs font-medium text-blue-800">
+						<span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+						<span>Filter Aktif: <strong>{{ $period === 'custom' ? 'Rentang Khusus' : ($period === 'month' ? 'Bulan Ini' : ($period === 'today' ? 'Hari Ini' : ($period === 'week' ? 'Minggu Ini' : ($period === 'year' ? 'Tahun Ini' : 'Semua Data')))) }}</strong></span>
+						@if($startDate && $endDate)
+							<span class="text-blue-400">•</span>
+							<span>{{ \Carbon\Carbon::parse($startDate)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($endDate)->format('d/m/Y') }}</span>
+						@endif
+					</div>
+				@endif
+			</div>
 
-				<div id="db-custom-range" class="shadcn-custom-box {{ ($period ?? 'month') === 'custom' ? 'active' : '' }}" style="margin-bottom: 0; padding: 4px 8px;">
-					<input type="date" name="start_date" value="{{ $startDate ?? '' }}" class="shadcn-date-input">
-					<span style="font-size: 0.8rem; color: #71717A;">s/d</span>
-					<input type="date" name="end_date" value="{{ $endDate ?? '' }}" class="shadcn-date-input">
-				</div>
-
-				<button type="submit" class="btn-shadcn-black">
-					<i data-lucide="filter" style="width: 14px; height: 14px;"></i>
-					<span>Terapkan</span>
+			<div class="filter-action-wrapper">
+				<button type="button" id="btn-toggle-owner-filter" class="btn-filter-trigger {{ $isFilterActive ? 'is-active' : '' }}" onclick="toggleOwnerDashboardFilter()" title="Buka / Tutup Panel Filter">
+					<i data-lucide="filter" class="w-4 h-4"></i>
+					<span>Filter</span>
+					@if($isFilterActive)
+						<span class="inline-block w-2 h-2 rounded-full bg-amber-300 ml-0.5"></span>
+					@endif
 				</button>
+			</div>
+		</div>
+
+		<!-- Collapsible Filter Panel -->
+		<div id="owner-dashboard-filter-panel" class="superadmin-filter-panel" style="{{ $isFilterActive ? 'display: block;' : 'display: none;' }}">
+			<form method="GET" action="{{ route('dashboard') }}" id="owner-dashboard-filter-form">
+				<div class="filter-grid-row-bottom">
+					<div class="filter-field-group">
+						<label for="owner_filter_period" class="filter-field-label">Periode Waktu</label>
+						<select name="period" id="owner_filter_period" class="filter-select" onchange="handleOwnerPeriodChange(this.value)">
+							<option value="month" {{ ($period ?? 'month') === 'month' ? 'selected' : '' }}>Bulan Ini</option>
+							<option value="today" {{ ($period ?? '') === 'today' ? 'selected' : '' }}>Hari Ini</option>
+							<option value="week" {{ ($period ?? '') === 'week' ? 'selected' : '' }}>Minggu Ini</option>
+							<option value="year" {{ ($period ?? '') === 'year' ? 'selected' : '' }}>Tahun Ini</option>
+							<option value="all" {{ ($period ?? '') === 'all' ? 'selected' : '' }}>Semua Data</option>
+							<option value="custom" {{ ($period ?? '') === 'custom' ? 'selected' : '' }}>Rentang Khusus</option>
+						</select>
+					</div>
+
+					<div class="filter-field-group">
+						<label for="owner_filter_start_date" class="filter-field-label">Tanggal Awal</label>
+						<input type="date" name="start_date" id="owner_filter_start_date" value="{{ $startDate ?? '' }}" class="filter-input-date" onchange="markOwnerPeriodAsCustom()">
+					</div>
+
+					<div class="filter-field-group">
+						<label for="owner_filter_end_date" class="filter-field-label">Tanggal Akhir</label>
+						<input type="date" name="end_date" id="owner_filter_end_date" value="{{ $endDate ?? '' }}" class="filter-input-date" onchange="markOwnerPeriodAsCustom()">
+					</div>
+
+					<div class="filter-buttons-group">
+						<a href="{{ route('dashboard') }}" class="btn-filter-reset" title="Kembalikan Filter ke Awal">
+							<i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+							<span>Reset</span>
+						</a>
+						<button type="submit" class="btn-filter-submit" title="Terapkan Filter">
+							<i data-lucide="search" class="w-3.5 h-3.5"></i>
+							<span>Cari</span>
+						</button>
+					</div>
+				</div>
 			</form>
 		</div>
 
@@ -615,5 +753,68 @@
 			lucide.createIcons();
 		}
 	});
+
+	// Toggle Filter Panel Owner Dashboard
+	function toggleOwnerDashboardFilter() {
+		var panel = document.getElementById('owner-dashboard-filter-panel');
+		var btn = document.getElementById('btn-toggle-owner-filter');
+		if (!panel) return;
+
+		if (panel.style.display === 'none' || panel.classList.contains('hidden')) {
+			panel.style.display = 'block';
+			panel.classList.remove('hidden');
+			if (btn) btn.classList.add('is-active');
+		} else {
+			panel.style.display = 'none';
+			panel.classList.add('hidden');
+			if (btn && !{{ $isFilterActive ? 'true' : 'false' }}) {
+				btn.classList.remove('is-active');
+			}
+		}
+	}
+
+	function handleOwnerPeriodChange(period) {
+		const today = new Date();
+		const pad = (n) => String(n).padStart(2, '0');
+		const formatDate = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+
+		let start = new Date();
+		let end = new Date();
+
+		if (period === 'today') {
+			// today
+		} else if (period === 'week') {
+			const day = today.getDay();
+			const diff = today.getDate() - day + (day === 0 ? -6 : 1);
+			start = new Date(today.setDate(diff));
+			end = new Date(start);
+			end.setDate(start.getDate() + 6);
+		} else if (period === 'month') {
+			start = new Date(today.getFullYear(), today.getMonth(), 1);
+			end = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+		} else if (period === 'year') {
+			start = new Date(today.getFullYear(), 0, 1);
+			end = new Date(today.getFullYear(), 11, 31);
+		} else if (period === 'all') {
+			start = new Date(2020, 0, 1);
+			end = new Date();
+		} else if (period === 'custom') {
+			var startInput = document.getElementById('owner_filter_start_date');
+			if (startInput) startInput.focus();
+			return;
+		}
+
+		var startEl = document.getElementById('owner_filter_start_date');
+		var endEl = document.getElementById('owner_filter_end_date');
+		if (startEl) startEl.value = formatDate(start);
+		if (endEl) endEl.value = formatDate(end);
+	}
+
+	function markOwnerPeriodAsCustom() {
+		var periodSelect = document.getElementById('owner_filter_period');
+		if (periodSelect) {
+			periodSelect.value = 'custom';
+		}
+	}
 	</script>
 @endsection

@@ -88,10 +88,13 @@ class LaporanController extends BaseController
 			->limit(5)
 			->get();
 
+		$isFilterActive = ($period !== 'month') || ($request->filled('start_date') && $period === 'custom');
+
 		return view('laporan.ringkasan-keuangan', [
 			'period' => $period,
 			'startDate' => $start->toDateString(),
 			'endDate' => $end->toDateString(),
+			'isFilterActive' => $isFilterActive,
 			'totalRevenue' => $totalRevenue,
 			'totalSalesCount' => $totalSalesCount,
 			'grossProfit' => $grossProfit,
@@ -139,10 +142,13 @@ class LaporanController extends BaseController
 			->orderByDesc('total_qty')
 			->get();
 
+		$isFilterActive = ($period !== 'month') || ($request->filled('start_date') && $period === 'custom');
+
 		return view('laporan.produk-terlaris', [
 			'period' => $period,
 			'startDate' => $start->toDateString(),
 			'endDate' => $end->toDateString(),
+			'isFilterActive' => $isFilterActive,
 			'products' => $products,
 		]);
 	}

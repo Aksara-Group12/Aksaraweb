@@ -54,9 +54,14 @@
 				letter-spacing: -0.02em;
 			}
 
-			/* Body & UI elements globally use Inter */
-			p, span, a, button, input, select, textarea, table, th, td, label {
+			/* Body & UI elements globally use Geist Sans & Inter */
+			p, span, a, table, th, td {
 				font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+			}
+
+			/* Form controls, select dropdowns and options typography */
+			input, select, select *, select option, optgroup, textarea, button, label, .form-control, .form-select {
+				font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 			}
 
 			a {

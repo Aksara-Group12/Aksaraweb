@@ -172,10 +172,13 @@ class DashboardController extends BaseController
 			->limit(5)
 			->get();
 
+		$isFilterActive = ($period !== 'month') || ($request->filled('start_date') && $period === 'custom');
+
 		return view('dashboard', [
 			'period' => $period,
 			'startDate' => $start->toDateString(),
 			'endDate' => $end->toDateString(),
+			'isFilterActive' => $isFilterActive,
 			'totalRevenue' => $totalRevenue,
 			'todayRevenue' => $todayRevenue,
 			'topProducts' => $topProducts,

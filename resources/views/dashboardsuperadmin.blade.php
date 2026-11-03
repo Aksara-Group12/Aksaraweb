@@ -21,37 +21,46 @@
 			gap: 12px;
 		}
 
-		.shadcn-filter-group {
+		/* Filter Action Bar (Reference Gambar 2) */
+		.filter-action-wrapper {
 			display: flex;
 			align-items: center;
-			gap: 8px;
-			flex-wrap: wrap;
+			justify-content: flex-end;
+			gap: 10px;
 		}
 
-		.shadcn-period-select {
-			background: #FFFFFF;
-			border: 1px solid #E4E4E7;
-			border-radius: 8px;
-			color: #09090B;
-			padding: 8px 14px;
-			font-size: 0.825rem;
-			font-weight: 500;
-			outline: none;
-			cursor: pointer;
-			font-family: inherit;
-			box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-			transition: all 0.15s ease;
-		}
-
-		.shadcn-period-select:focus {
-			border-color: #09090B;
-			box-shadow: 0 0 0 2px rgba(9, 9, 11, 0.1);
-		}
-
-		.btn-shadcn-black {
-			background: #09090B;
+		.btn-filter-trigger {
+			background: #2563EB;
 			color: #FFFFFF;
-			border: none;
+			border: 1px solid #2563EB;
+			border-radius: 8px;
+			padding: 8px 18px;
+			font-size: 0.825rem;
+			font-weight: 600;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			transition: all 0.2s ease;
+			box-shadow: 0 1px 2px rgba(37, 99, 235, 0.15);
+			font-family: inherit;
+		}
+
+		.btn-filter-trigger:hover {
+			background: #1D4ED8;
+			border-color: #1D4ED8;
+		}
+
+		.btn-filter-trigger.is-active {
+			background: #1E40AF;
+			border-color: #1E40AF;
+			box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+		}
+
+		.btn-outline-action {
+			background: #FFFFFF;
+			color: #09090B;
+			border: 1px solid #E4E4E7;
 			border-radius: 8px;
 			padding: 8px 16px;
 			font-size: 0.825rem;
@@ -61,41 +70,145 @@
 			align-items: center;
 			gap: 8px;
 			transition: all 0.15s ease;
-			box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+			box-shadow: 0 1px 2px rgba(0,0,0,0.03);
 			font-family: inherit;
 			text-decoration: none;
 		}
 
-		.btn-shadcn-black:hover {
-			background: #27272A;
-			box-shadow: 0 0 14px rgba(9, 9, 11, 0.25);
+		.btn-outline-action:hover {
+			background: #F4F4F5;
+			border-color: #D4D4D8;
 		}
 
-		/* Custom Date Filter Box */
-		.shadcn-custom-box {
-			display: none;
-			align-items: center;
-			gap: 8px;
-			margin-bottom: 16px;
-			padding: 10px 14px;
+		/* Collapsible Filter Panel (Reference Gambar 3) */
+		.superadmin-filter-panel {
+			background: #FFFFFF;
+			border: 1px solid #E4E4E7;
+			border-radius: 14px;
+			padding: 22px 24px;
+			margin-bottom: 22px;
+			box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+			animation: slideDownFade 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+		}
+
+		@keyframes slideDownFade {
+			from {
+				opacity: 0;
+				transform: translateY(-8px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.filter-grid-row {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 20px;
+			margin-bottom: 18px;
+		}
+
+		.filter-grid-row-bottom {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1.2fr;
+			gap: 20px;
+			align-items: flex-end;
+		}
+
+		.filter-field-group {
+			display: flex;
+			flex-direction: column;
+			gap: 6px;
+		}
+
+		.filter-field-label {
+			font-size: 0.8rem;
+			font-weight: 600;
+			color: #09090B;
+		}
+
+		.filter-select,
+		.filter-select option,
+		.filter-select optgroup,
+		.filter-input-date,
+		.filter-field-label,
+		.btn-filter-reset,
+		.btn-filter-submit {
+			font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+		}
+
+		.filter-select,
+		.filter-input-date {
+			width: 100%;
 			background: #FFFFFF;
 			border: 1px solid #E4E4E7;
 			border-radius: 8px;
-			width: fit-content;
-		}
-
-		.shadcn-custom-box.active {
-			display: flex;
-		}
-
-		.shadcn-date-input {
-			border: 1px solid #E4E4E7;
-			border-radius: 6px;
-			padding: 6px 10px;
-			font-size: 0.8rem;
+			padding: 9px 12px;
+			font-size: 0.825rem;
 			color: #09090B;
 			outline: none;
-			font-family: inherit;
+			transition: all 0.15s ease;
+		}
+
+		.filter-select option {
+			font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+			padding: 8px 12px;
+			background-color: #FFFFFF;
+			color: #09090B;
+			font-size: 0.825rem;
+		}
+
+		.filter-select:focus,
+		.filter-input-date:focus {
+			border-color: #2563EB;
+			box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+		}
+
+		.filter-buttons-group {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			gap: 10px;
+		}
+
+		.btn-filter-reset {
+			background: #FFFFFF;
+			color: #09090B;
+			border: 1px solid #E4E4E7;
+			border-radius: 8px;
+			padding: 9px 18px;
+			font-size: 0.825rem;
+			font-weight: 600;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			text-decoration: none;
+			transition: all 0.15s ease;
+		}
+
+		.btn-filter-reset:hover {
+			background: #F4F4F5;
+		}
+
+		.btn-filter-submit {
+			background: #09090B;
+			color: #FFFFFF;
+			border: 1px solid #09090B;
+			border-radius: 8px;
+			padding: 9px 22px;
+			font-size: 0.825rem;
+			font-weight: 600;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			transition: all 0.15s ease;
+		}
+
+		.btn-filter-submit:hover {
+			background: #27272A;
 		}
 
 		/* 4 Top KPI Cards Grid */
@@ -303,34 +416,102 @@
 	</style>
 
 	<div class="shadcn-container">
-		<!-- Top Action & Filter Bar -->
+		<!-- Top Action & Filter Header Bar (Reference Gambar 2) -->
 		<div class="shadcn-action-bar">
-			<div class="shadcn-filter-group">
-				<select name="period" id="shadcn-period-select" class="shadcn-period-select" onchange="handlePeriodChange(this.value)">
-					<option value="today" {{ ($period ?? 'month') === 'today' ? 'selected' : '' }}>Hari Ini</option>
-					<option value="week" {{ ($period ?? 'month') === 'week' ? 'selected' : '' }}>Minggu Ini</option>
-					<option value="month" {{ ($period ?? 'month') === 'month' ? 'selected' : '' }}>Bulan Ini</option>
-					<option value="year" {{ ($period ?? 'month') === 'year' ? 'selected' : '' }}>Tahun Ini</option>
-					<option value="all" {{ ($period ?? 'month') === 'all' ? 'selected' : '' }}>Semua Data</option>
-					<option value="custom" {{ ($period ?? 'month') === 'custom' ? 'selected' : '' }}>Rentang Khusus</option>
-				</select>
+			<div class="flex items-center gap-3">
+				@if($isFilterActive)
+					<div class="inline-flex items-center gap-2 px-3 py-1.5 bg-blue-50 border border-blue-200 rounded-full text-xs font-medium text-blue-800">
+						<span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+						<span>Filter Aktif: <strong>{{ $period === 'custom' ? 'Rentang Khusus' : ($period === 'month' ? 'Bulan Ini' : ($period === 'today' ? 'Hari Ini' : ($period === 'week' ? 'Minggu Ini' : ($period === 'year' ? 'Tahun Ini' : 'Semua Data')))) }}</strong></span>
+						@if($paketId && $paketId !== 'all')
+							<span class="text-blue-400">•</span>
+							<span>Paket: <strong>{{ $daftarPaket->firstWhere('id', $paketId)?->nama_paket ?? 'Khusus' }}</strong></span>
+						@endif
+						@if($statusLangganan && $statusLangganan !== 'all')
+							<span class="text-blue-400">•</span>
+							<span>Status: <strong>{{ ucfirst($statusLangganan) }}</strong></span>
+						@endif
+					</div>
+				@endif
 			</div>
-			<div>
-				<button type="button" class="btn-shadcn-black" onclick="openDownloadReportModal()" title="Unduh Laporan Pemesanan">
-					<i data-lucide="download"></i>
+
+			<div class="filter-action-wrapper">
+				<button type="button" class="btn-outline-action" onclick="openDownloadReportModal()" title="Unduh Laporan Pemesanan">
+					<i data-lucide="download" class="w-4 h-4"></i>
 					<span>Unduh Laporan</span>
+				</button>
+				<button type="button" id="btn-toggle-filter" class="btn-filter-trigger {{ $isFilterActive ? 'is-active' : '' }}" onclick="toggleSuperadminFilter()" title="Buka / Tutup Panel Filter">
+					<i data-lucide="filter" class="w-4 h-4"></i>
+					<span>Filter</span>
+					@if($isFilterActive)
+						<span class="inline-block w-2 h-2 rounded-full bg-amber-300 ml-0.5"></span>
+					@endif
 				</button>
 			</div>
 		</div>
 
-		<!-- Kotak Filter Rentang Khusus -->
-		<div id="shadcn-custom-range" class="shadcn-custom-box {{ ($period ?? 'month') === 'custom' ? 'active' : '' }}">
-			<input type="date" id="shadcn_start_date" value="{{ $startDate ?? '' }}" class="shadcn-date-input">
-			<span style="font-size: 0.8rem; color: #71717A;">s/d</span>
-			<input type="date" id="shadcn_end_date" value="{{ $endDate ?? '' }}" class="shadcn-date-input">
-			<button type="button" class="btn-shadcn-black" style="padding: 6px 12px; font-size: 0.78rem;" onclick="applyShadcnCustomDate()">
-				Terapkan Filter
-			</button>
+		<!-- Collapsible Filter Panel (Reference Gambar 3) -->
+		<div id="superadmin-filter-panel" class="superadmin-filter-panel" style="{{ $isFilterActive ? 'display: block;' : 'display: none;' }}">
+			<form method="GET" action="{{ route('dashboard-superadmin') }}" id="superadmin-filter-form">
+				<!-- Baris 1: 3 Dropdown (Status, Paket, Periode) -->
+				<div class="filter-grid-row">
+					<div class="filter-field-group">
+						<label for="filter_status" class="filter-field-label">Status Langganan</label>
+						<select name="status_langganan" id="filter_status" class="filter-select">
+							<option value="all" {{ ($statusLangganan ?? 'all') === 'all' ? 'selected' : '' }}>Semua Status</option>
+							<option value="active" {{ ($statusLangganan ?? '') === 'active' ? 'selected' : '' }}>Berlangganan Aktif</option>
+							<option value="trial" {{ ($statusLangganan ?? '') === 'trial' ? 'selected' : '' }}>Uji Coba (Trial)</option>
+							<option value="expired" {{ ($statusLangganan ?? '') === 'expired' ? 'selected' : '' }}>Kedaluwarsa</option>
+						</select>
+					</div>
+
+					<div class="filter-field-group">
+						<label for="filter_paket" class="filter-field-label">Paket Langganan</label>
+						<select name="paket_id" id="filter_paket" class="filter-select">
+							<option value="all" {{ ($paketId ?? 'all') === 'all' ? 'selected' : '' }}>Semua Paket</option>
+							@foreach($daftarPaket as $p)
+								<option value="{{ $p->id }}" {{ ($paketId ?? '') == $p->id ? 'selected' : '' }}>{{ $p->nama_paket }}</option>
+							@endforeach
+						</select>
+					</div>
+
+					<div class="filter-field-group">
+						<label for="filter_period" class="filter-field-label">Periode Waktu</label>
+						<select name="period" id="filter_period" class="filter-select" onchange="handleFilterPeriodChange(this.value)">
+							<option value="month" {{ ($period ?? 'month') === 'month' ? 'selected' : '' }}>Bulan Ini</option>
+							<option value="today" {{ ($period ?? '') === 'today' ? 'selected' : '' }}>Hari Ini</option>
+							<option value="week" {{ ($period ?? '') === 'week' ? 'selected' : '' }}>Minggu Ini</option>
+							<option value="year" {{ ($period ?? '') === 'year' ? 'selected' : '' }}>Tahun Ini</option>
+							<option value="all" {{ ($period ?? '') === 'all' ? 'selected' : '' }}>Semua Data</option>
+							<option value="custom" {{ ($period ?? '') === 'custom' ? 'selected' : '' }}>Rentang Khusus</option>
+						</select>
+					</div>
+				</div>
+
+				<!-- Baris 2: Tanggal Awal, Tanggal Akhir, dan Tombol Aksi -->
+				<div class="filter-grid-row-bottom">
+					<div class="filter-field-group">
+						<label for="filter_start_date" class="filter-field-label">Tanggal Awal</label>
+						<input type="date" name="start_date" id="filter_start_date" value="{{ $startDate ?? '' }}" class="filter-input-date" onchange="markPeriodAsCustom()">
+					</div>
+
+					<div class="filter-field-group">
+						<label for="filter_end_date" class="filter-field-label">Tanggal Akhir</label>
+						<input type="date" name="end_date" id="filter_end_date" value="{{ $endDate ?? '' }}" class="filter-input-date" onchange="markPeriodAsCustom()">
+					</div>
+
+					<div class="filter-buttons-group">
+						<a href="{{ route('dashboard-superadmin') }}" class="btn-filter-reset" title="Kembalikan Filter ke Awal">
+							<i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+							<span>Reset</span>
+						</a>
+						<button type="submit" class="btn-filter-submit" title="Terapkan Filter">
+							<i data-lucide="search" class="w-3.5 h-3.5"></i>
+							<span>Cari</span>
+						</button>
+					</div>
+				</div>
+			</form>
 		</div>
 
 		<!-- 4 Kartu Metrik Utama (Gaya Shadcn UI) -->
@@ -485,7 +666,7 @@
 
 				<div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
 					<!-- Opsi PDF -->
-					<a href="{{ route('dashboard-superadmin.export-pdf', ($period === 'custom' && !empty($startDate) && !empty($endDate)) ? ['scope' => 'period', 'start_date' => $startDate, 'end_date' => $endDate] : []) }}" 
+					<a href="{{ route('dashboard-superadmin.export-pdf', ['scope' => 'period', 'start_date' => $startDate, 'end_date' => $endDate]) }}" 
 					   onclick="closeDownloadReportModal()"
 					   style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 1px solid #E4E4E7; border-radius: 10px; background: #FFFFFF; text-decoration: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;"
 					   onmouseover="this.style.borderColor='#C5A059'; this.style.boxShadow='0 0 14px rgba(197, 160, 89, 0.25)'"
@@ -505,7 +686,7 @@
 					</a>
 
 					<!-- Opsi Excel / CSV -->
-					<a href="{{ route('dashboard-superadmin.export-excel', ($period === 'custom' && !empty($startDate) && !empty($endDate)) ? ['scope' => 'period', 'start_date' => $startDate, 'end_date' => $endDate] : []) }}" 
+					<a href="{{ route('dashboard-superadmin.export-excel', ['scope' => 'period', 'start_date' => $startDate, 'end_date' => $endDate]) }}" 
 					   onclick="closeDownloadReportModal()"
 					   style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 1px solid #E4E4E7; border-radius: 10px; background: #FFFFFF; text-decoration: none; transition: border-color 0.2s ease, box-shadow 0.2s ease;"
 					   onmouseover="this.style.borderColor='#059669'; this.style.boxShadow='0 0 14px rgba(5, 150, 105, 0.22)'"
@@ -562,31 +743,68 @@
 			}
 		});
 
-		// Handle Period Change
-		function handlePeriodChange(period) {
-			if (period === 'custom') {
-				document.getElementById('shadcn-custom-range').classList.add('active');
+		// Toggle Buka/Tutup Filter Panel (Reference Gambar 2 & 3)
+		function toggleSuperadminFilter() {
+			var panel = document.getElementById('superadmin-filter-panel');
+			var btn = document.getElementById('btn-toggle-filter');
+			if (!panel) return;
+
+			if (panel.style.display === 'none' || panel.classList.contains('hidden')) {
+				panel.style.display = 'block';
+				panel.classList.remove('hidden');
+				if (btn) btn.classList.add('is-active');
 			} else {
-				document.getElementById('shadcn-custom-range').classList.remove('active');
-				const url = new URL(window.location);
-				url.searchParams.set('period', period);
-				window.location = url.toString();
+				panel.style.display = 'none';
+				panel.classList.add('hidden');
+				if (btn && !{{ $isFilterActive ? 'true' : 'false' }}) {
+					btn.classList.remove('is-active');
+				}
 			}
 		}
 
-		// Apply Custom Date Range
-		function applyShadcnCustomDate() {
-			const start = document.getElementById('shadcn_start_date').value;
-			const end = document.getElementById('shadcn_end_date').value;
-			if (!start || !end) {
-				alert('Silakan pilih tanggal awal dan tanggal akhir.');
+		// Handle Sinkronisasi Dropdown Periode ke Tanggal
+		function handleFilterPeriodChange(period) {
+			const today = new Date();
+			const pad = (n) => String(n).padStart(2, '0');
+			const formatDate = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+
+			let start = new Date();
+			let end = new Date();
+
+			if (period === 'today') {
+				// start and end are today
+			} else if (period === 'week') {
+				const day = today.getDay();
+				const diff = today.getDate() - day + (day === 0 ? -6 : 1); // Senin
+				start = new Date(today.setDate(diff));
+				end = new Date(start);
+				end.setDate(start.getDate() + 6); // Minggu
+			} else if (period === 'month') {
+				start = new Date(today.getFullYear(), today.getMonth(), 1);
+				end = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+			} else if (period === 'year') {
+				start = new Date(today.getFullYear(), 0, 1);
+				end = new Date(today.getFullYear(), 11, 31);
+			} else if (period === 'all') {
+				start = new Date(2020, 0, 1);
+				end = new Date();
+			} else if (period === 'custom') {
+				var startInput = document.getElementById('filter_start_date');
+				if (startInput) startInput.focus();
 				return;
 			}
-			const url = new URL(window.location);
-			url.searchParams.set('period', 'custom');
-			url.searchParams.set('start_date', start);
-			url.searchParams.set('end_date', end);
-			window.location = url.toString();
+
+			var startEl = document.getElementById('filter_start_date');
+			var endEl = document.getElementById('filter_end_date');
+			if (startEl) startEl.value = formatDate(start);
+			if (endEl) endEl.value = formatDate(end);
+		}
+
+		function markPeriodAsCustom() {
+			var periodSelect = document.getElementById('filter_period');
+			if (periodSelect) {
+				periodSelect.value = 'custom';
+			}
 		}
 
 		// Initialize Chart.js Shadcn Bar Chart

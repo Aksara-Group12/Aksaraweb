@@ -8,11 +8,10 @@
 		<link rel="icon" type="image/png" href="{{ asset('assets/images/aksara-logo.png') }}">
 		<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
-		<!-- Fonts: Newsreader & Inter -->
+		<!-- Fonts: Geist Sans & Inter -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 		<style>
 			* { box-sizing: border-box; margin: 0; padding: 0; }
@@ -106,11 +105,11 @@
 			}
 
 			.auth-title {
-				font-family: 'Newsreader', Georgia, serif;
-				font-size: 1.75rem;
-				font-weight: 400;
+				font-family: 'Geist', 'Geist Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+				font-size: 1.65rem;
+				font-weight: 700;
 				color: #0F223D;
-				letter-spacing: -0.02em;
+				letter-spacing: -0.025em;
 				line-height: 1.2;
 			}
 

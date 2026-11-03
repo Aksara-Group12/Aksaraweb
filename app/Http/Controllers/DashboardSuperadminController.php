@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\TransaksiKeluar;
 use App\Models\Subscribe;
+use App\Models\Paket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -23,6 +24,8 @@ class DashboardSuperadminController extends BaseController
 		$period = $request->input('period', 'month');
 		$startDate = $request->input('start_date');
 		$endDate = $request->input('end_date');
+		$paketId = $request->input('paket_id', 'all');
+		$statusLangganan = $request->input('status_langganan', 'all');
 
 		if ($period !== 'custom') {
 			[$startDate, $endDate] = $this->resolvePeriodRange($period);
@@ -36,26 +39,57 @@ class DashboardSuperadminController extends BaseController
 		$start = Carbon::parse($startDate)->startOfDay();
 		$end = Carbon::parse($endDate)->endOfDay();
 
+		// ===== DAFTAR PAKET UNTUK FILTER =====
+		$daftarPaket = Paket::all();
+
 		// ===== STATISTIK USER =====
 		$totalUsers = (int) User::count();
 		$totalActiveUsers = (int) User::where('role', '!=', 'superadmin')->count();
 		$todayNewUsers = (int) User::whereDate('created_at', Carbon::today())->count();
 
-		// ===== STATISTIK SUBSCRIPTION =====
-		// Total user yang berlangganan (is_trial = 0)
-		$totalSubscribedUsers = (int) Subscribe::where('is_trial', 0)
+		// ===== STATISTIK SUBSCRIPTION DENGAN FILTER =====
+		$subBaseQuery = Subscribe::query();
+		if ($paketId && $paketId !== 'all') {
+			$subBaseQuery->where('paket_id', $paketId);
+		}
+		if ($statusLangganan === 'active') {
+			$subBaseQuery->where('status', 'active');
+		} elseif ($statusLangganan === 'trial') {
+			$subBaseQuery->where('is_trial', 1);
+		} elseif ($statusLangganan === 'expired') {
+			$subBaseQuery->where(function($q) {
+				$q->where('status', 'expired')->orWhere('end_date', '<', Carbon::today());
+			});
+		}
+
+		// Total user yang berlangganan (is_trial = 0 atau sesuai status)
+		$userSubQuery = (clone $subBaseQuery);
+		if ($statusLangganan === 'all') {
+			$userSubQuery->where('is_trial', 0);
+		}
+		$totalSubscribedUsers = (int) $userSubQuery
 			->distinct('user_id')
 			->count('user_id');
 
-		// Pendapatan dari subscription (is_trial = 0) dalam periode
-		$subscriptionRevenue = (float) Subscribe::whereBetween('start_date', [$start, $end])
-			->where('is_trial', 0)
-			->sum('price');
+		// Pendapatan dari subscription dalam periode
+		$revenueQuery = (clone $subBaseQuery)->whereBetween('start_date', [$start, $end]);
+		if ($statusLangganan === 'all' || $statusLangganan === 'active') {
+			$revenueQuery->where('is_trial', 0);
+		}
+		$subscriptionRevenue = (float) $revenueQuery->sum('price');
 
 		// Pendapatan subscription hari ini
-		$todaySubscriptionRevenue = (float) Subscribe::whereDate('start_date', Carbon::today())
-			->where('is_trial', 0)
-			->sum('price');
+		$todayRevenueQuery = (clone $subBaseQuery)->whereDate('start_date', Carbon::today());
+		if ($statusLangganan === 'all' || $statusLangganan === 'active') {
+			$todayRevenueQuery->where('is_trial', 0);
+		}
+		$todaySubscriptionRevenue = (float) $todayRevenueQuery->sum('price');
+
+		// Cek apakah filter aktif selain default
+		$isFilterActive = ($period !== 'month')
+			|| ($paketId && $paketId !== 'all')
+			|| ($statusLangganan && $statusLangganan !== 'all')
+			|| ($request->filled('start_date') && $period === 'custom');
 
 		// ===== STATISTIK KEUANGAN =====
 		// Total uang masuk (pembelian produk - transaksi masuk)
@@ -120,6 +154,10 @@ class DashboardSuperadminController extends BaseController
 			'period' => $period,
 			'startDate' => $start->toDateString(),
 			'endDate' => $end->toDateString(),
+			'paketId' => $paketId,
+			'statusLangganan' => $statusLangganan,
+			'daftarPaket' => $daftarPaket,
+			'isFilterActive' => $isFilterActive,
 			'totalUsers' => $totalUsers,
 			'totalActiveUsers' => $totalActiveUsers,
 			'todayNewUsers' => $todayNewUsers,

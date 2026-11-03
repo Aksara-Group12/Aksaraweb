@@ -621,11 +621,9 @@
 						<li class="shadcn-list-item">
 							<div>
 								<p style="font-size: 0.85rem; font-weight: 600; color: #09090B; margin: 0;">{{ $product->nama_produk }}</p>
-								<p style="font-size: 0.725rem; color: #71717A; margin: 2px 0 0 0;">Kategori: {{ $product->kategori }}</p>
 							</div>
 							<div style="text-align: right;">
 								<p style="font-size: 0.875rem; font-weight: 700; color: #DC2626; margin: 0;">Sisa: {{ $product->stock }}</p>
-								<p style="font-size: 0.7rem; color: #71717A; margin: 2px 0 0 0;">Min: {{ $product->min_stock }}</p>
 							</div>
 						</li>
 					@empty

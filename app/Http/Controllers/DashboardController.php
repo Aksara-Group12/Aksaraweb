@@ -169,7 +169,6 @@ class DashboardController extends BaseController
 			->where('stock', '<', 10)
 			->where('is_active', true)
 			->orderBy('stock', 'asc')
-			->limit(5)
 			->get();
 
 		$isFilterActive = ($period !== 'month') || ($request->filled('start_date') && $period === 'custom');
